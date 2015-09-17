@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <property name="now" value="now()" dbms="mysql,h2"/>
+    <property name="now" value="current_timestamp" dbms="postgresql"/>
+    <property name="now" value="sysdate" dbms="oracle"/>
+
+    <property name="autoIncrement" value="true" dbms="mysql,h2,postgresql"/>
+    <property name="autoIncrement" value="false" dbms="oracle"/>
+
+    <property name="floatType" value="real" dbms="postgresql, h2"/>
+    <property name="floatType" value="float" dbms="mysql, oracle"/>
+
+    <!--
+        Added the entity Property.
+    -->
+    <changeSet id="20150917133415" author="jhipster">
+        <createTable tableName="PROPERTY">
+            <column name="id" type="bigint" autoIncrement="${autoIncrement}" >
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="code" type="varchar(255)"/>
+            <column name="description_hu" type="varchar(255)"/>
+            <column name="description_en" type="varchar(255)"/>
+            <column name="description_de" type="varchar(255)"/>
+            <column name="room" type="integer"/>
+            <column name="half_room" type="integer"/>
+            <column name="floor_area" type="integer"/>
+            <column name="parcel_area" type="integer"/>
+            <column name="pracel_number" type="varchar(255)"/>
+            <column name="address1" type="varchar(255)"/>
+            <column name="address2" type="varchar(255)"/>
+            <column name="active" type="bit"/>
+            <column name="kitchen" type="integer"/>
+            <column name="livingroom" type="integer"/>
+            <column name="floor" type="integer"/>
+            <column name="bathroom" type="integer"/>
+            <column name="toilet" type="integer"/>
+            <column name="furnished" type="bit"/>
+            <column name="for_sale" type="bit"/>
+            <column name="sale_huf" type="decimal(10,2)"/>
+            <column name="sale_eur" type="decimal(10,2)"/>
+            <column name="for_rent" type="bit"/>
+            <column name="rent_huf" type="decimal(10,2)"/>
+            <column name="rent_eur" type="decimal(10,2)"/>
+            <column name="rent_peak_huf" type="decimal(10,2)"/>
+            <column name="rent_peak_eur" type="decimal(10,2)"/>
+            <column name="for_medium_term" type="bit"/>
+            <column name="medium_term_huf" type="decimal(10,2)"/>
+            <column name="medium_term_eur" type="decimal(10,2)"/>
+            <column name="for_long_term" type="bit"/>
+            <column name="long_term_huf" type="decimal(10,2)"/>
+            <column name="long_term_eur" type="decimal(10,2)"/>
+            <column name="featured" type="bit"/>
+            <column name="category_id" type="bigint"/>
+            <column name="city_id" type="bigint"/>
+            <column name="user_id" type="bigint"/>
+        </createTable>
+        
+        <addForeignKeyConstraint baseColumnNames="category_id"
+                                 baseTableName="PROPERTY"
+                                 constraintName="fk_property_category_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="CATEGORY"/>
+
+        <createTable tableName="PROPERTY_FEATURE">
+            <column name="features_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="propertys_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="propertys_id, features_id" tableName="PROPERTY_FEATURE"/>
+
+        <addForeignKeyConstraint baseColumnNames="propertys_id"
+                                 baseTableName="PROPERTY_FEATURE"
+                                 constraintName="fk_property_feature_feature_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="PROPERTY"/>
+
+        <addForeignKeyConstraint baseColumnNames="features_id"
+                                 baseTableName="PROPERTY_FEATURE"
+                                 constraintName="fk_feature_feature_property_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="FEATURE"/>
+        
+        <addForeignKeyConstraint baseColumnNames="city_id"
+                                 baseTableName="PROPERTY"
+                                 constraintName="fk_property_city_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="CITY"/>
+
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="PROPERTY"
+                                 constraintName="fk_property_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="JHI_USER"/>
+
+    </changeSet>
+</databaseChangeLog>

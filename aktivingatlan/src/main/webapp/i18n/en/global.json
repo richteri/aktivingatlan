@@ -8,6 +8,8 @@
                 "main": "Entities",
                 "city": "City",
                 "category": "Category",
+                "feature": "Feature",
+                "property": "Property",
                 "additionalEntity": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

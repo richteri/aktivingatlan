@@ -1,0 +1,163 @@
+<div>
+
+    <h2 translate="aktivingatlanApp.property.home.title">Propertys</h2>
+    <jh-alert></jh-alert>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <button class="btn btn-primary" ui-sref="property.new">
+                    <span class="glyphicon glyphicon-flash"></span> <span translate="aktivingatlanApp.property.home.createLabel">Create a new Property</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deletePropertyConfirmation">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form name="deleteForm" ng-submit="confirmDelete(property.id)">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                                ng-click="clear()">&times;</button>
+                        <h4 class="modal-title" translate="entity.delete.title">Confirm delete operation</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p translate="aktivingatlanApp.property.delete.question" translate-values="{id: '{{property.id}}'}">Are you sure you want to delete this Property?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+                            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+                        </button>
+                        <button type="submit" ng-disabled="deleteForm.$invalid" class="btn btn-danger">
+                            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span translate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th translate="global.field.id">ID</th>
+                    <th translate="aktivingatlanApp.property.code">Code</th>
+                    <th translate="aktivingatlanApp.property.descriptionHu">DescriptionHu</th>
+                    <th translate="aktivingatlanApp.property.descriptionEn">DescriptionEn</th>
+                    <th translate="aktivingatlanApp.property.descriptionDe">DescriptionDe</th>
+                    <th translate="aktivingatlanApp.property.room">Room</th>
+                    <th translate="aktivingatlanApp.property.halfRoom">HalfRoom</th>
+                    <th translate="aktivingatlanApp.property.floorArea">FloorArea</th>
+                    <th translate="aktivingatlanApp.property.parcelArea">ParcelArea</th>
+                    <th translate="aktivingatlanApp.property.pracelNumber">PracelNumber</th>
+                    <th translate="aktivingatlanApp.property.address1">Address1</th>
+                    <th translate="aktivingatlanApp.property.address2">Address2</th>
+                    <th translate="aktivingatlanApp.property.active">Active</th>
+                    <th translate="aktivingatlanApp.property.kitchen">Kitchen</th>
+                    <th translate="aktivingatlanApp.property.livingroom">Livingroom</th>
+                    <th translate="aktivingatlanApp.property.floor">Floor</th>
+                    <th translate="aktivingatlanApp.property.bathroom">Bathroom</th>
+                    <th translate="aktivingatlanApp.property.toilet">Toilet</th>
+                    <th translate="aktivingatlanApp.property.furnished">Furnished</th>
+                    <th translate="aktivingatlanApp.property.forSale">ForSale</th>
+                    <th translate="aktivingatlanApp.property.saleHuf">SaleHuf</th>
+                    <th translate="aktivingatlanApp.property.saleEur">SaleEur</th>
+                    <th translate="aktivingatlanApp.property.forRent">ForRent</th>
+                    <th translate="aktivingatlanApp.property.rentHuf">RentHuf</th>
+                    <th translate="aktivingatlanApp.property.rentEur">RentEur</th>
+                    <th translate="aktivingatlanApp.property.rentPeakHuf">RentPeakHuf</th>
+                    <th translate="aktivingatlanApp.property.rentPeakEur">RentPeakEur</th>
+                    <th translate="aktivingatlanApp.property.forMediumTerm">ForMediumTerm</th>
+                    <th translate="aktivingatlanApp.property.mediumTermHuf">MediumTermHuf</th>
+                    <th translate="aktivingatlanApp.property.mediumTermEur">MediumTermEur</th>
+                    <th translate="aktivingatlanApp.property.forLongTerm">ForLongTerm</th>
+                    <th translate="aktivingatlanApp.property.longTermHuf">LongTermHuf</th>
+                    <th translate="aktivingatlanApp.property.longTermEur">LongTermEur</th>
+                    <th translate="aktivingatlanApp.property.featured">Featured</th>
+                    <th translate="aktivingatlanApp.property.category">category</th>
+                    <th translate="aktivingatlanApp.property.city">city</th>
+                    <th translate="aktivingatlanApp.property.user">user</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="property in propertys">
+                    <td><a ui-sref="property.detail({id:property.id})">{{property.id}}</a></td>
+                    <td>{{property.code}}</td>
+                    <td>{{property.descriptionHu}}</td>
+                    <td>{{property.descriptionEn}}</td>
+                    <td>{{property.descriptionDe}}</td>
+                    <td>{{property.room}}</td>
+                    <td>{{property.halfRoom}}</td>
+                    <td>{{property.floorArea}}</td>
+                    <td>{{property.parcelArea}}</td>
+                    <td>{{property.pracelNumber}}</td>
+                    <td>{{property.address1}}</td>
+                    <td>{{property.address2}}</td>
+                    <td>{{property.active}}</td>
+                    <td>{{property.kitchen}}</td>
+                    <td>{{property.livingroom}}</td>
+                    <td>{{property.floor}}</td>
+                    <td>{{property.bathroom}}</td>
+                    <td>{{property.toilet}}</td>
+                    <td>{{property.furnished}}</td>
+                    <td>{{property.forSale}}</td>
+                    <td>{{property.saleHuf}}</td>
+                    <td>{{property.saleEur}}</td>
+                    <td>{{property.forRent}}</td>
+                    <td>{{property.rentHuf}}</td>
+                    <td>{{property.rentEur}}</td>
+                    <td>{{property.rentPeakHuf}}</td>
+                    <td>{{property.rentPeakEur}}</td>
+                    <td>{{property.forMediumTerm}}</td>
+                    <td>{{property.mediumTermHuf}}</td>
+                    <td>{{property.mediumTermEur}}</td>
+                    <td>{{property.forLongTerm}}</td>
+                    <td>{{property.longTermHuf}}</td>
+                    <td>{{property.longTermEur}}</td>
+                    <td>{{property.featured}}</td>
+                    <td>
+                        <a ui-sref="category.detail({id:property.category.id})">{{property.category.nameHu}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="city.detail({id:property.city.id})">{{property.city.name}}</a>
+                    </td>
+                    <td>
+                        {{property.user.name}}
+                    </td>
+                    <td>
+                        <button type="submit"
+                                ui-sref="property.detail({id:property.id})"
+                                class="btn btn-info btn-sm">
+                            <span class="glyphicon glyphicon-eye-open"></span>&nbsp;<span translate="entity.action.view"> View</span>
+                        </button>
+                        <button type="submit"
+                                ui-sref="property.edit({id:property.id})"
+                                class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-pencil"></span>&nbsp;<span translate="entity.action.edit"> Edit</span>
+                        </button>
+                        <button type="submit"
+                                ng-click="delete(property.id)"
+                                class="btn btn-danger btn-sm">
+                            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span translate="entity.action.delete"> Delete</span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <nav>
+            <ul class="pagination">
+                <li ng-show="links['first']" ng-click="loadPage(links['first'])"><a>&lt;&lt;</a></li>
+                <li ng-show="links['prev']" ng-click="loadPage(links['prev'])"><a>&lt;</a></li>
+                <li ng-show="page > 2" ng-click="loadPage(page - 2)"><a>{{page - 2}}</a></li>
+                <li ng-show="page > 1" ng-click="loadPage(page - 1)"><a>{{page - 1}}</a></li>
+                <li class="active"><a>{{page}}</a></li>
+                <li ng-show="page < links['last']" ng-click="loadPage(page + 1)"><a>{{page + 1}}</a></li>
+                <li ng-show="page < links['last'] - 1" ng-click="loadPage(page + 2)"><a>{{page + 2}}</a></li>
+                <li ng-show="links['next']" ng-click="loadPage(links['next'])"><a>&gt;</a></li>
+                <li ng-show="links['last']" ng-click="loadPage(links['last'])"><a>&gt;&gt;</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>

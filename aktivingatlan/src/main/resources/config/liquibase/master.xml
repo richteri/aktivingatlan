@@ -7,5 +7,7 @@
     <include file="classpath:config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20150913164718_added_entity_City.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20150913165245_added_entity_Category.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150917132701_added_entity_Feature.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150917133415_added_entity_Property.xml" relativeToChangelogFile="false"/>
     <!-- JHipster will add liquibase changelogs here -->
 </databaseChangeLog>

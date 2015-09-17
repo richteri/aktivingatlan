@@ -1,0 +1,21 @@
+{
+    "aktivingatlanApp": {
+        "feature" : {
+            "home": {
+                "title": "Features",
+                "createLabel": "Créer un nouveau Feature",
+                "createOrEditLabel": "Créer ou éditer un Feature"
+            },
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Feature {{ id }} ?"
+            },
+            "detail": {
+                "title": "Feature"
+            },
+            "nameHu": "NameHu",
+            "nameEn": "NameEn",
+            "nameDe": "NameDe"
+        }
+    }
+}
+

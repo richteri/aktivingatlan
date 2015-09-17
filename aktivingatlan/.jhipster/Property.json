@@ -1,0 +1,232 @@
+{
+    "relationships": [
+        {
+            "relationshipId": 1,
+            "relationshipName": "category",
+            "otherEntityName": "category",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "nameHu"
+        },
+        {
+            "relationshipId": 2,
+            "relationshipName": "photo",
+            "otherEntityName": "photo",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "property"
+        },
+        {
+            "relationshipId": 3,
+            "relationshipName": "statement",
+            "otherEntityName": "statement",
+            "relationshipType": "many-to-many",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "property"
+        },
+        {
+            "relationshipId": 4,
+            "relationshipName": "feature",
+            "otherEntityName": "feature",
+            "relationshipType": "many-to-many",
+            "otherEntityField": "nameHu",
+            "ownerSide": true
+        },
+        {
+            "relationshipId": 5,
+            "relationshipName": "ownership",
+            "otherEntityName": "ownership",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "property"
+        },
+        {
+            "relationshipId": 6,
+            "relationshipName": "city",
+            "otherEntityName": "city",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "name"
+        },
+        {
+            "relationshipId": 7,
+            "relationshipName": "contract",
+            "otherEntityName": "contract",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "property"
+        },
+        {
+            "relationshipId": 8,
+            "relationshipName": "user",
+            "otherEntityName": "user",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "name"
+        }
+    ],
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "code",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "descriptionHu",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 3,
+            "fieldName": "descriptionEn",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 4,
+            "fieldName": "descriptionDe",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 5,
+            "fieldName": "room",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldId": 6,
+            "fieldName": "halfRoom",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldId": 7,
+            "fieldName": "floorArea",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldId": 8,
+            "fieldName": "parcelArea",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldId": 9,
+            "fieldName": "pracelNumber",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 10,
+            "fieldName": "address1",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 11,
+            "fieldName": "address2",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 12,
+            "fieldName": "active",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldId": 13,
+            "fieldName": "kitchen",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldId": 14,
+            "fieldName": "livingroom",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldId": 15,
+            "fieldName": "floor",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldId": 16,
+            "fieldName": "bathroom",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldId": 17,
+            "fieldName": "toilet",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldId": 18,
+            "fieldName": "furnished",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldId": 19,
+            "fieldName": "forSale",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldId": 20,
+            "fieldName": "saleHuf",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldId": 21,
+            "fieldName": "saleEur",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldId": 22,
+            "fieldName": "forRent",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldId": 23,
+            "fieldName": "rentHuf",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldId": 24,
+            "fieldName": "rentEur",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldId": 25,
+            "fieldName": "rentPeakHuf",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldId": 26,
+            "fieldName": "rentPeakEur",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldId": 27,
+            "fieldName": "forMediumTerm",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldId": 28,
+            "fieldName": "mediumTermHuf",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldId": 29,
+            "fieldName": "mediumTermEur",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldId": 30,
+            "fieldName": "forLongTerm",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldId": 31,
+            "fieldName": "longTermHuf",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldId": 32,
+            "fieldName": "longTermEur",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldId": 33,
+            "fieldName": "featured",
+            "fieldType": "Boolean"
+        }
+    ],
+    "changelogDate": "20150917133415",
+    "dto": "no",
+    "pagination": "pagination"
+}
