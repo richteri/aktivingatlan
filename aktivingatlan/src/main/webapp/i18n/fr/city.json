@@ -1,0 +1,20 @@
+{
+    "aktivingatlanApp": {
+        "city" : {
+            "home": {
+                "title": "Citys",
+                "createLabel": "Créer un nouveau City",
+                "createOrEditLabel": "Créer ou éditer un City"
+            },
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le City {{ id }} ?"
+            },
+            "detail": {
+                "title": "City"
+            },
+            "zip": "Zip",
+            "name": "Name"
+        }
+    }
+}
+

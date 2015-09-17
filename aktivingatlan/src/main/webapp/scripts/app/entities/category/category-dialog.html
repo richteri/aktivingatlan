@@ -1,0 +1,47 @@
+
+<form name="editForm" role="form" novalidate ng-submit="save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="clear()">&times;</button>
+        <h4 class="modal-title" id="myCategoryLabel" translate="aktivingatlanApp.category.home.createOrEditLabel">Create or edit a Category</h4>
+    </div>
+    <div class="modal-body">
+        <jh-alert-error></jh-alert-error>
+        <div class="form-group">
+            <label for="id" translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="category.id" readonly>
+        </div>
+
+        <div class="form-group">
+            <label translate="aktivingatlanApp.category.nameHu" for="field_nameHu">NameHu</label>
+            <input type="text" class="form-control" name="nameHu" id="field_nameHu"
+                    ng-model="category.nameHu"
+                    >
+
+        </div>
+        <div class="form-group">
+            <label translate="aktivingatlanApp.category.nameEn" for="field_nameEn">NameEn</label>
+            <input type="text" class="form-control" name="nameEn" id="field_nameEn"
+                    ng-model="category.nameEn"
+                    >
+
+        </div>
+        <div class="form-group">
+            <label translate="aktivingatlanApp.category.nameDe" for="field_nameDe">NameDe</label>
+            <input type="text" class="form-control" name="nameDe" id="field_nameDe"
+                    ng-model="category.nameDe"
+                    >
+
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || editForm.$submitted" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>
