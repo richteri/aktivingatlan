@@ -11,5 +11,7 @@
     <include file="classpath:config/liquibase/changelog/20150917133415_added_entity_Property.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20150917134402_added_entity_Client.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20150917134704_added_entity_Ownership.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150917135023_added_entity_Statement.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150917135259_added_entity_Contract.xml" relativeToChangelogFile="false"/>
     <!-- JHipster will add liquibase changelogs here -->
 </databaseChangeLog>

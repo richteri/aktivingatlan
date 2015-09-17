@@ -12,6 +12,8 @@
                 "property": "Property",
                 "client": "Client",
                 "ownership": "Ownership",
+                "statement": "Statement",
+                "contract": "Contract",
                 "additionalEntity": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

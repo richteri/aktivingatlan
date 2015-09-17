@@ -1,0 +1,48 @@
+
+<form name="editForm" role="form" novalidate ng-submit="save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="clear()">&times;</button>
+        <h4 class="modal-title" id="myStatementLabel" translate="aktivingatlanApp.statement.home.createOrEditLabel">Create or edit a Statement</h4>
+    </div>
+    <div class="modal-body">
+        <jh-alert-error></jh-alert-error>
+        <div class="form-group">
+            <label for="id" translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="statement.id" readonly>
+        </div>
+
+        <div class="form-group">
+            <label translate="aktivingatlanApp.statement.date" for="field_date">Date</label>
+            <input type="date" class="form-control" name="date" id="field_date"
+                    ng-model="statement.date"
+                    >
+
+        </div>
+        <div class="form-group">
+            <label translate="aktivingatlanApp.statement.note" for="field_note">Note</label>
+            <input type="text" class="form-control" name="note" id="field_note"
+                    ng-model="statement.note"
+                    >
+
+        </div>
+        <div class="form-group">
+            <label translate="aktivingatlanApp.statement.client" for="field_client">client</label>
+            <select class="form-control" id="field_client" multiple name="client" ng-model="statement.clients" ng-options="client as client.name for client in clients track by client.id"></select>
+        </div>
+        <div class="form-group">
+            <label translate="aktivingatlanApp.statement.property" for="field_property">property</label>
+            <select class="form-control" id="field_property" multiple name="property" ng-model="statement.propertys" ng-options="property as property.code for property in propertys track by property.id"></select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || editForm.$submitted" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

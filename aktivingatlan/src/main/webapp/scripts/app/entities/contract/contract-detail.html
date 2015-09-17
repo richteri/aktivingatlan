@@ -1,0 +1,80 @@
+
+<div>
+    <h2><span translate="aktivingatlanApp.contract.detail.title">Contract</span> {{contract.id}}</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th translate="entity.detail.field">Field</th>
+                <th translate="entity.detail.value">Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <span translate="aktivingatlanApp.contract.idNo">IdNo</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{contract.idNo}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate="aktivingatlanApp.contract.exclusive">Exclusive</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{contract.exclusive}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate="aktivingatlanApp.contract.startDate">StartDate</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{contract.startDate}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate="aktivingatlanApp.contract.endDate">EndDate</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{contract.endDate}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate="aktivingatlanApp.contract.note">Note</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{contract.note}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate="aktivingatlanApp.contract.property">property</span>
+                </td>
+                <td>
+                    <a class="form-control-static" ui-sref="property.detail({id:contract.property.id})">{{contract.property.code}}</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate="aktivingatlanApp.contract.client">client</span>
+                </td>
+                <td>
+                    <span ng-repeat="client in contract.clients">
+                        <a class="form-control-static" ui-sref="client.detail({id: {{client.id}}})">{{client.name}}</a>{{$last ? '' : ', '}}
+                    <span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

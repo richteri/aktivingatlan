@@ -1,0 +1,25 @@
+{
+    "aktivingatlanApp": {
+        "contract" : {
+            "home": {
+                "title": "Contracts",
+                "createLabel": "Créer un nouveau Contract",
+                "createOrEditLabel": "Créer ou éditer un Contract"
+            },
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Contract {{ id }} ?"
+            },
+            "detail": {
+                "title": "Contract"
+            },
+            "idNo": "IdNo",
+            "exclusive": "Exclusive",
+            "startDate": "StartDate",
+            "endDate": "EndDate",
+            "note": "Note",
+            "property": "Property",
+            "client": "Client"
+        }
+    }
+}
+

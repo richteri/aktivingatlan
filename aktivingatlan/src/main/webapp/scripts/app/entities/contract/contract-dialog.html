@@ -1,0 +1,73 @@
+
+<form name="editForm" role="form" novalidate ng-submit="save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="clear()">&times;</button>
+        <h4 class="modal-title" id="myContractLabel" translate="aktivingatlanApp.contract.home.createOrEditLabel">Create or edit a Contract</h4>
+    </div>
+    <div class="modal-body">
+        <jh-alert-error></jh-alert-error>
+        <div class="form-group">
+            <label for="id" translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="contract.id" readonly>
+        </div>
+
+        <div class="form-group">
+            <label translate="aktivingatlanApp.contract.idNo" for="field_idNo">IdNo</label>
+            <input type="text" class="form-control" name="idNo" id="field_idNo"
+                    ng-model="contract.idNo"
+                    >
+
+        </div>
+        <div class="form-group">
+            <label translate="aktivingatlanApp.contract.exclusive" for="field_exclusive">Exclusive</label>
+            <input type="checkbox" class="form-control" name="exclusive" id="field_exclusive"
+                    ng-model="contract.exclusive"
+                    >
+
+        </div>
+        <div class="form-group">
+            <label translate="aktivingatlanApp.contract.startDate" for="field_startDate">StartDate</label>
+            <input type="date" class="form-control" name="startDate" id="field_startDate"
+                    ng-model="contract.startDate"
+                    >
+
+        </div>
+        <div class="form-group">
+            <label translate="aktivingatlanApp.contract.endDate" for="field_endDate">EndDate</label>
+            <input type="date" class="form-control" name="endDate" id="field_endDate"
+                    ng-model="contract.endDate"
+                    >
+
+        </div>
+        <div class="form-group">
+            <label translate="aktivingatlanApp.contract.note" for="field_note">Note</label>
+            <input type="text" class="form-control" name="note" id="field_note"
+                    ng-model="contract.note"
+                    >
+
+        </div>
+        <div class="form-group">
+            <label translate="aktivingatlanApp.contract.property" for="field_property">property</label>
+            
+            <select class="form-control" id="field_property" name="property" ng-model="contract.property" ng-options="property as property.code for property in propertys track by property.id">
+                <option value=""></option>
+            </select>
+            
+        </div>
+        <div class="form-group">
+            <label translate="aktivingatlanApp.contract.client" for="field_client">client</label>
+            <select class="form-control" id="field_client" multiple name="client" ng-model="contract.clients" ng-options="client as client.name for client in clients track by client.id"></select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || editForm.$submitted" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>
