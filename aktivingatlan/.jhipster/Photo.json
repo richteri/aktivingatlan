@@ -1,0 +1,41 @@
+{
+    "relationships": [
+        {
+            "relationshipId": 1,
+            "relationshipName": "property",
+            "otherEntityName": "property",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "code"
+        }
+    ],
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "header",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "descriptionHu",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 3,
+            "fieldName": "descriptionEn",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 4,
+            "fieldName": "descriptionDe",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 5,
+            "fieldName": "filename",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20150917135818",
+    "dto": "no",
+    "pagination": "pagination"
+}
