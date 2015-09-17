@@ -1,0 +1,31 @@
+{
+    "aktivingatlanApp": {
+        "client" : {
+            "home": {
+                "title": "Clients",
+                "createLabel": "Create a new Client",
+                "createOrEditLabel": "Create or edit a Client"
+            },
+            "created": "A new Client is created with identifier {{ param }}",
+            "updated": "A Client is updated with identifier {{ param }}",
+            "deleted": "A Client is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Client {{ id }}?"
+            },
+            "detail": {
+                "title": "Client"
+            },
+            "name": "Name",
+            "email": "Email",
+            "phone1": "Phone1",
+            "phone2": "Phone2",
+            "address1": "Address1",
+            "address2": "Address2",
+            "idNo": "IdNo",
+            "note": "Note",
+            "ownership": "Ownership",
+            "statement": "Statement",
+            "contract": "Contract"
+        }
+    }
+}

@@ -1,0 +1,86 @@
+
+<div>
+    <h2><span translate="aktivingatlanApp.client.detail.title">Client</span> {{client.id}}</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th translate="entity.detail.field">Field</th>
+                <th translate="entity.detail.value">Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <span translate="aktivingatlanApp.client.name">Name</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{client.name}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate="aktivingatlanApp.client.email">Email</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{client.email}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate="aktivingatlanApp.client.phone1">Phone1</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{client.phone1}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate="aktivingatlanApp.client.phone2">Phone2</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{client.phone2}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate="aktivingatlanApp.client.address1">Address1</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{client.address1}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate="aktivingatlanApp.client.address2">Address2</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{client.address2}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate="aktivingatlanApp.client.idNo">IdNo</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{client.idNo}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span translate="aktivingatlanApp.client.note">Note</span>
+                </td>
+                <td>
+                    <span class="form-control-static">{{client.note}}</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

@@ -1,0 +1,72 @@
+{
+    "relationships": [
+        {
+            "relationshipId": 1,
+            "relationshipName": "ownership",
+            "otherEntityName": "ownership",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "client"
+        },
+        {
+            "relationshipId": 2,
+            "relationshipName": "statement",
+            "otherEntityName": "statement",
+            "relationshipType": "many-to-many",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "client"
+        },
+        {
+            "relationshipId": 3,
+            "relationshipName": "contract",
+            "otherEntityName": "contract",
+            "relationshipType": "many-to-many",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "client"
+        }
+    ],
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "email",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 3,
+            "fieldName": "phone1",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 4,
+            "fieldName": "phone2",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 5,
+            "fieldName": "address1",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 6,
+            "fieldName": "address2",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 7,
+            "fieldName": "idNo",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 8,
+            "fieldName": "note",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20150917134402",
+    "dto": "no",
+    "pagination": "pagination"
+}

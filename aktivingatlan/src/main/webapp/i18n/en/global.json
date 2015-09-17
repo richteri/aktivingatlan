@@ -10,6 +10,8 @@
                 "category": "Category",
                 "feature": "Feature",
                 "property": "Property",
+                "client": "Client",
+                "ownership": "Ownership",
                 "additionalEntity": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
