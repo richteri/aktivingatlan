@@ -1,0 +1,109 @@
+<div>
+
+    <h2 translate="aktivingatlanApp.apartment.home.title">Apartments</h2>
+    <jh-alert></jh-alert>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <button class="btn btn-primary" ui-sref="apartment.new">
+                    <span class="glyphicon glyphicon-flash"></span> <span translate="aktivingatlanApp.apartment.home.createLabel">Create a new Apartment</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteApartmentConfirmation">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form name="deleteForm" ng-submit="confirmDelete(apartment.id)">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                                ng-click="clear()">&times;</button>
+                        <h4 class="modal-title" translate="entity.delete.title">Confirm delete operation</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p translate="aktivingatlanApp.apartment.delete.question" translate-values="{id: '{{apartment.id}}'}">Are you sure you want to delete this Apartment?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+                            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+                        </button>
+                        <button type="submit" ng-disabled="deleteForm.$invalid" class="btn btn-danger">
+                            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span translate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th translate="global.field.id">ID</th>
+                    <th translate="aktivingatlanApp.apartment.bed">Bed</th>
+                    <th translate="aktivingatlanApp.apartment.bathroom">Bathroom</th>
+                    <th translate="aktivingatlanApp.apartment.toilet">Toilet</th>
+                    <th translate="aktivingatlanApp.apartment.rentHuf">RentHuf</th>
+                    <th translate="aktivingatlanApp.apartment.rentEur">RentEur</th>
+                    <th translate="aktivingatlanApp.apartment.rentPeakHuf">RentPeakHuf</th>
+                    <th translate="aktivingatlanApp.apartment.rentPeakEur">RentPeakEur</th>
+                    <th translate="aktivingatlanApp.apartment.descriptionHu">DescriptionHu</th>
+                    <th translate="aktivingatlanApp.apartment.descriptionEn">DescriptionEn</th>
+                    <th translate="aktivingatlanApp.apartment.descriptionDe">DescriptionDe</th>
+                    <th translate="aktivingatlanApp.apartment.property">property</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="apartment in apartments">
+                    <td><a ui-sref="apartment.detail({id:apartment.id})">{{apartment.id}}</a></td>
+                    <td>{{apartment.bed}}</td>
+                    <td>{{apartment.bathroom}}</td>
+                    <td>{{apartment.toilet}}</td>
+                    <td>{{apartment.rentHuf}}</td>
+                    <td>{{apartment.rentEur}}</td>
+                    <td>{{apartment.rentPeakHuf}}</td>
+                    <td>{{apartment.rentPeakEur}}</td>
+                    <td>{{apartment.descriptionHu}}</td>
+                    <td>{{apartment.descriptionEn}}</td>
+                    <td>{{apartment.descriptionDe}}</td>
+                    <td>
+                        <a ui-sref="property.detail({id:apartment.property.id})">{{apartment.property.code}}</a>
+                    </td>
+                    <td>
+                        <button type="submit"
+                                ui-sref="apartment.detail({id:apartment.id})"
+                                class="btn btn-info btn-sm">
+                            <span class="glyphicon glyphicon-eye-open"></span>&nbsp;<span translate="entity.action.view"> View</span>
+                        </button>
+                        <button type="submit"
+                                ui-sref="apartment.edit({id:apartment.id})"
+                                class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-pencil"></span>&nbsp;<span translate="entity.action.edit"> Edit</span>
+                        </button>
+                        <button type="submit"
+                                ng-click="delete(apartment.id)"
+                                class="btn btn-danger btn-sm">
+                            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span translate="entity.action.delete"> Delete</span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <nav>
+            <ul class="pagination">
+                <li ng-show="links['first']" ng-click="loadPage(links['first'])"><a>&lt;&lt;</a></li>
+                <li ng-show="links['prev']" ng-click="loadPage(links['prev'])"><a>&lt;</a></li>
+                <li ng-show="page > 2" ng-click="loadPage(page - 2)"><a>{{page - 2}}</a></li>
+                <li ng-show="page > 1" ng-click="loadPage(page - 1)"><a>{{page - 1}}</a></li>
+                <li class="active"><a>{{page}}</a></li>
+                <li ng-show="page < links['last']" ng-click="loadPage(page + 1)"><a>{{page + 1}}</a></li>
+                <li ng-show="page < links['last'] - 1" ng-click="loadPage(page + 2)"><a>{{page + 2}}</a></li>
+                <li ng-show="links['next']" ng-click="loadPage(links['next'])"><a>&gt;</a></li>
+                <li ng-show="links['last']" ng-click="loadPage(links['last'])"><a>&gt;&gt;</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>

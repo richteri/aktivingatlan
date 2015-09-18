@@ -1,0 +1,66 @@
+{
+    "relationships": [
+        {
+            "relationshipId": 1,
+            "relationshipName": "property",
+            "otherEntityName": "property",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "code"
+        }
+    ],
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "bed",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "bathroom",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldId": 3,
+            "fieldName": "toilet",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldId": 4,
+            "fieldName": "rentHuf",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldId": 5,
+            "fieldName": "rentEur",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldId": 6,
+            "fieldName": "rentPeakHuf",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldId": 7,
+            "fieldName": "rentPeakEur",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldId": 8,
+            "fieldName": "descriptionHu",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 9,
+            "fieldName": "descriptionEn",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 10,
+            "fieldName": "descriptionDe",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20150918134158",
+    "dto": "no",
+    "pagination": "pagination"
+}

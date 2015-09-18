@@ -52,7 +52,8 @@
             "ownership": "Ownership",
             "city": "City",
             "contract": "Contract",
-            "user": "User"
+            "user": "User",
+            "apartment": "Apartment"
         }
     }
 }

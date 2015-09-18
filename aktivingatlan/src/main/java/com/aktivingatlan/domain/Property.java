@@ -160,6 +160,11 @@ public class Property implements Serializable {
     @ManyToOne
     private User user;
 
+    @OneToMany(mappedBy = "apartment")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Apartment> apartments = new HashSet<>();
+
     public Long getId() {
         return id;
     }
@@ -494,6 +499,14 @@ public class Property implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Set<Apartment> getApartments() {
+        return apartments;
+    }
+
+    public void setApartments(Set<Apartment> apartments) {
+        this.apartments = apartments;
     }
 
     @Override

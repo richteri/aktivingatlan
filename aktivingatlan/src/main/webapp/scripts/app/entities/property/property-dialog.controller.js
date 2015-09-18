@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('aktivingatlanApp').controller('PropertyDialogController',
-    ['$scope', '$stateParams', '$modalInstance', 'entity', 'Property', 'Category', 'Photo', 'Statement', 'Feature', 'Ownership', 'City', 'Contract', 'User',
-        function($scope, $stateParams, $modalInstance, entity, Property, Category, Photo, Statement, Feature, Ownership, City, Contract, User) {
+    ['$scope', '$stateParams', '$modalInstance', 'entity', 'Property', 'Category', 'Photo', 'Statement', 'Feature', 'Ownership', 'City', 'Contract', 'User', 'Apartment',
+        function($scope, $stateParams, $modalInstance, entity, Property, Category, Photo, Statement, Feature, Ownership, City, Contract, User, Apartment) {
 
         $scope.property = entity;
         $scope.categorys = Category.query();
@@ -13,6 +13,7 @@ angular.module('aktivingatlanApp').controller('PropertyDialogController',
         $scope.citys = City.query();
         $scope.contracts = Contract.query();
         $scope.users = User.query();
+        $scope.apartments = Apartment.query();
         $scope.load = function(id) {
             Property.get({id : id}, function(result) {
                 $scope.property = result;

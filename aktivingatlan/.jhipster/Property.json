@@ -56,8 +56,16 @@
             "relationshipName": "user",
             "otherEntityName": "user",
             "relationshipType": "many-to-one",
-            "otherEntityField": "name"
+            "otherEntityField": "login"
+        },
+		{
+            "relationshipId": 9,
+            "relationshipName": "apartment",
+            "otherEntityName": "apartment",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "apartment"
         }
+
     ],
     "fields": [
         {
