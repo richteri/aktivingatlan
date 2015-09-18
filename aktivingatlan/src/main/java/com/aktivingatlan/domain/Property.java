@@ -1,15 +1,27 @@
 package com.aktivingatlan.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 /**
@@ -23,104 +35,104 @@ public class Property implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
-    
+
+
     @Column(name = "code")
     private String code;
-    
+
     @Column(name = "description_hu")
     private String descriptionHu;
-    
+
     @Column(name = "description_en")
     private String descriptionEn;
-    
+
     @Column(name = "description_de")
     private String descriptionDe;
-    
+
     @Column(name = "room")
     private Integer room;
-    
+
     @Column(name = "half_room")
     private Integer halfRoom;
-    
+
     @Column(name = "floor_area")
     private Integer floorArea;
-    
+
     @Column(name = "parcel_area")
     private Integer parcelArea;
-    
+
     @Column(name = "pracel_number")
     private String pracelNumber;
-    
+
     @Column(name = "address1")
     private String address1;
-    
+
     @Column(name = "address2")
     private String address2;
-    
+
     @Column(name = "active")
     private Boolean active;
-    
+
     @Column(name = "kitchen")
     private Integer kitchen;
-    
+
     @Column(name = "livingroom")
     private Integer livingroom;
-    
+
     @Column(name = "floor")
     private Integer floor;
-    
+
     @Column(name = "bathroom")
     private Integer bathroom;
-    
+
     @Column(name = "toilet")
     private Integer toilet;
-    
+
     @Column(name = "furnished")
     private Boolean furnished;
-    
+
     @Column(name = "for_sale")
     private Boolean forSale;
-    
+
     @Column(name = "sale_huf", precision=10, scale=2)
     private BigDecimal saleHuf;
-    
+
     @Column(name = "sale_eur", precision=10, scale=2)
     private BigDecimal saleEur;
-    
+
     @Column(name = "for_rent")
     private Boolean forRent;
-    
+
     @Column(name = "rent_huf", precision=10, scale=2)
     private BigDecimal rentHuf;
-    
+
     @Column(name = "rent_eur", precision=10, scale=2)
     private BigDecimal rentEur;
-    
+
     @Column(name = "rent_peak_huf", precision=10, scale=2)
     private BigDecimal rentPeakHuf;
-    
+
     @Column(name = "rent_peak_eur", precision=10, scale=2)
     private BigDecimal rentPeakEur;
-    
+
     @Column(name = "for_medium_term")
     private Boolean forMediumTerm;
-    
+
     @Column(name = "medium_term_huf", precision=10, scale=2)
     private BigDecimal mediumTermHuf;
-    
+
     @Column(name = "medium_term_eur", precision=10, scale=2)
     private BigDecimal mediumTermEur;
-    
+
     @Column(name = "for_long_term")
     private Boolean forLongTerm;
-    
+
     @Column(name = "long_term_huf", precision=10, scale=2)
     private BigDecimal longTermHuf;
-    
+
     @Column(name = "long_term_eur", precision=10, scale=2)
     private BigDecimal longTermEur;
-    
+
     @Column(name = "featured")
     private Boolean featured;
 
@@ -160,7 +172,7 @@ public class Property implements Serializable {
     @ManyToOne
     private User user;
 
-    @OneToMany(mappedBy = "apartment")
+    @OneToMany(mappedBy = "property")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Apartment> apartments = new HashSet<>();
@@ -520,7 +532,9 @@ public class Property implements Serializable {
 
         Property property = (Property) o;
 
-        if ( ! Objects.equals(id, property.id)) return false;
+        if ( ! Objects.equals(id, property.id)) {
+            return false;
+        }
 
         return true;
     }

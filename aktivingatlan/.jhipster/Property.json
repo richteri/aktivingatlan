@@ -63,7 +63,7 @@
             "relationshipName": "apartment",
             "otherEntityName": "apartment",
             "relationshipType": "one-to-many",
-            "otherEntityRelationshipName": "apartment"
+            "otherEntityRelationshipName": "property"
         }
 
     ],
