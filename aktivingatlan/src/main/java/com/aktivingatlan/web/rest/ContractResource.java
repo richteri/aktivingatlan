@@ -3,6 +3,7 @@ package com.aktivingatlan.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.aktivingatlan.domain.Contract;
 import com.aktivingatlan.repository.ContractRepository;
+import com.aktivingatlan.repository.search.ContractSearchRepository;
 import com.aktivingatlan.web.rest.util.HeaderUtil;
 import com.aktivingatlan.web.rest.util.PaginationUtil;
 import org.slf4j.Logger;
@@ -19,6 +20,10 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing Contract.
@@ -31,6 +36,9 @@ public class ContractResource {
 
     @Inject
     private ContractRepository contractRepository;
+
+    @Inject
+    private ContractSearchRepository contractSearchRepository;
 
     /**
      * POST  /contracts -> Create a new contract.
@@ -45,6 +53,7 @@ public class ContractResource {
             return ResponseEntity.badRequest().header("Failure", "A new contract cannot already have an ID").body(null);
         }
         Contract result = contractRepository.save(contract);
+        contractSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/contracts/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert("contract", result.getId().toString()))
                 .body(result);
@@ -63,6 +72,7 @@ public class ContractResource {
             return create(contract);
         }
         Contract result = contractRepository.save(contract);
+        contractSearchRepository.save(contract);
         return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityUpdateAlert("contract", contract.getId().toString()))
                 .body(result);
@@ -109,6 +119,21 @@ public class ContractResource {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete Contract : {}", id);
         contractRepository.delete(id);
+        contractSearchRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("contract", id.toString())).build();
+    }
+
+    /**
+     * SEARCH  /_search/contracts/:query -> search for the contract corresponding
+     * to the query.
+     */
+    @RequestMapping(value = "/_search/contracts/{query}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public List<Contract> search(@PathVariable String query) {
+        return StreamSupport
+            .stream(contractSearchRepository.search(queryString(query)).spliterator(), false)
+            .collect(Collectors.toList());
     }
 }

@@ -3,6 +3,7 @@ package com.aktivingatlan.web.rest;
 import com.aktivingatlan.Application;
 import com.aktivingatlan.domain.Photo;
 import com.aktivingatlan.repository.PhotoRepository;
+import com.aktivingatlan.repository.search.PhotoSearchRepository;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -56,6 +57,9 @@ public class PhotoResourceTest {
     private PhotoRepository photoRepository;
 
     @Inject
+    private PhotoSearchRepository photoSearchRepository;
+
+    @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     private MockMvc restPhotoMockMvc;
@@ -67,6 +71,7 @@ public class PhotoResourceTest {
         MockitoAnnotations.initMocks(this);
         PhotoResource photoResource = new PhotoResource();
         ReflectionTestUtils.setField(photoResource, "photoRepository", photoRepository);
+        ReflectionTestUtils.setField(photoResource, "photoSearchRepository", photoSearchRepository);
         this.restPhotoMockMvc = MockMvcBuilders.standaloneSetup(photoResource).setMessageConverters(jacksonMessageConverter).build();
     }
 

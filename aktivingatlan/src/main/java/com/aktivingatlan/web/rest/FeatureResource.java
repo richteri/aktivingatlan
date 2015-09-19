@@ -3,6 +3,7 @@ package com.aktivingatlan.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.aktivingatlan.domain.Feature;
 import com.aktivingatlan.repository.FeatureRepository;
+import com.aktivingatlan.repository.search.FeatureSearchRepository;
 import com.aktivingatlan.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,10 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing Feature.
@@ -29,6 +34,9 @@ public class FeatureResource {
 
     @Inject
     private FeatureRepository featureRepository;
+
+    @Inject
+    private FeatureSearchRepository featureSearchRepository;
 
     /**
      * POST  /features -> Create a new feature.
@@ -43,6 +51,7 @@ public class FeatureResource {
             return ResponseEntity.badRequest().header("Failure", "A new feature cannot already have an ID").body(null);
         }
         Feature result = featureRepository.save(feature);
+        featureSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/features/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert("feature", result.getId().toString()))
                 .body(result);
@@ -61,6 +70,7 @@ public class FeatureResource {
             return create(feature);
         }
         Feature result = featureRepository.save(feature);
+        featureSearchRepository.save(feature);
         return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityUpdateAlert("feature", feature.getId().toString()))
                 .body(result);
@@ -104,6 +114,21 @@ public class FeatureResource {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete Feature : {}", id);
         featureRepository.delete(id);
+        featureSearchRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("feature", id.toString())).build();
+    }
+
+    /**
+     * SEARCH  /_search/features/:query -> search for the feature corresponding
+     * to the query.
+     */
+    @RequestMapping(value = "/_search/features/{query}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public List<Feature> search(@PathVariable String query) {
+        return StreamSupport
+            .stream(featureSearchRepository.search(queryString(query)).spliterator(), false)
+            .collect(Collectors.toList());
     }
 }

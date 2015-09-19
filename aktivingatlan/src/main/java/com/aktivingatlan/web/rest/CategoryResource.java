@@ -3,6 +3,7 @@ package com.aktivingatlan.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.aktivingatlan.domain.Category;
 import com.aktivingatlan.repository.CategoryRepository;
+import com.aktivingatlan.repository.search.CategorySearchRepository;
 import com.aktivingatlan.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,10 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing Category.
@@ -29,6 +34,9 @@ public class CategoryResource {
 
     @Inject
     private CategoryRepository categoryRepository;
+
+    @Inject
+    private CategorySearchRepository categorySearchRepository;
 
     /**
      * POST  /categorys -> Create a new category.
@@ -43,6 +51,7 @@ public class CategoryResource {
             return ResponseEntity.badRequest().header("Failure", "A new category cannot already have an ID").body(null);
         }
         Category result = categoryRepository.save(category);
+        categorySearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/categorys/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert("category", result.getId().toString()))
                 .body(result);
@@ -61,6 +70,7 @@ public class CategoryResource {
             return create(category);
         }
         Category result = categoryRepository.save(category);
+        categorySearchRepository.save(category);
         return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityUpdateAlert("category", category.getId().toString()))
                 .body(result);
@@ -104,6 +114,21 @@ public class CategoryResource {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete Category : {}", id);
         categoryRepository.delete(id);
+        categorySearchRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("category", id.toString())).build();
+    }
+
+    /**
+     * SEARCH  /_search/categorys/:query -> search for the category corresponding
+     * to the query.
+     */
+    @RequestMapping(value = "/_search/categorys/{query}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public List<Category> search(@PathVariable String query) {
+        return StreamSupport
+            .stream(categorySearchRepository.search(queryString(query)).spliterator(), false)
+            .collect(Collectors.toList());
     }
 }

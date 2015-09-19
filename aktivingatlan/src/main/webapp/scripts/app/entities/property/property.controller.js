@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('aktivingatlanApp')
-    .controller('PropertyController', function ($scope, Property, ParseLinks) {
+    .controller('PropertyController', function ($scope, Property, PropertySearch, ParseLinks) {
         $scope.propertys = [];
         $scope.page = 1;
         $scope.loadAll = function() {
@@ -30,6 +30,16 @@ angular.module('aktivingatlanApp')
                     $('#deletePropertyConfirmation').modal('hide');
                     $scope.clear();
                 });
+        };
+
+        $scope.search = function () {
+            PropertySearch.query({query: $scope.searchQuery}, function(result) {
+                $scope.propertys = result;
+            }, function(response) {
+                if(response.status === 404) {
+                    $scope.loadAll();
+                }
+            });
         };
 
         $scope.refresh = function () {

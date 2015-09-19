@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('aktivingatlanApp')
-    .controller('ClientController', function ($scope, Client, ParseLinks) {
+    .controller('ClientController', function ($scope, Client, ClientSearch, ParseLinks) {
         $scope.clients = [];
         $scope.page = 1;
         $scope.loadAll = function() {
@@ -30,6 +30,16 @@ angular.module('aktivingatlanApp')
                     $('#deleteClientConfirmation').modal('hide');
                     $scope.clear();
                 });
+        };
+
+        $scope.search = function () {
+            ClientSearch.query({query: $scope.searchQuery}, function(result) {
+                $scope.clients = result;
+            }, function(response) {
+                if(response.status === 404) {
+                    $scope.loadAll();
+                }
+            });
         };
 
         $scope.refresh = function () {

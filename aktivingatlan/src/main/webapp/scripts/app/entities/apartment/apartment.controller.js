@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('aktivingatlanApp')
-    .controller('ApartmentController', function ($scope, Apartment, ParseLinks) {
+    .controller('ApartmentController', function ($scope, Apartment, ApartmentSearch, ParseLinks) {
         $scope.apartments = [];
         $scope.page = 1;
         $scope.loadAll = function() {
@@ -30,6 +30,16 @@ angular.module('aktivingatlanApp')
                     $('#deleteApartmentConfirmation').modal('hide');
                     $scope.clear();
                 });
+        };
+
+        $scope.search = function () {
+            ApartmentSearch.query({query: $scope.searchQuery}, function(result) {
+                $scope.apartments = result;
+            }, function(response) {
+                if(response.status === 404) {
+                    $scope.loadAll();
+                }
+            });
         };
 
         $scope.refresh = function () {

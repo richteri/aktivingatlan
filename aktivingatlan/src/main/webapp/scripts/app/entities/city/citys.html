@@ -9,6 +9,15 @@
                     <span class="glyphicon glyphicon-flash"></span> <span translate="aktivingatlanApp.city.home.createLabel">Create a new City</span>
                 </button>
             </div>
+            <div class="col-md-8">
+                <form name="searchForm" class="form-inline">
+                    <div class="form-group">
+                        <input type="text" class="form-control" ng-model="searchQuery" id="searchQuery" placeholder="query">
+                    </div>
+                    <button class="btn btn-info" ng-click="search()"><span class="glyphicon glyphicon-search"></span> <span>Search a City</span>
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
 

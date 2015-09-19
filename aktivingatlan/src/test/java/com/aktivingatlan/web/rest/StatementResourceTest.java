@@ -3,6 +3,7 @@ package com.aktivingatlan.web.rest;
 import com.aktivingatlan.Application;
 import com.aktivingatlan.domain.Statement;
 import com.aktivingatlan.repository.StatementRepository;
+import com.aktivingatlan.repository.search.StatementSearchRepository;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -51,6 +52,9 @@ public class StatementResourceTest {
     private StatementRepository statementRepository;
 
     @Inject
+    private StatementSearchRepository statementSearchRepository;
+
+    @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     private MockMvc restStatementMockMvc;
@@ -62,6 +66,7 @@ public class StatementResourceTest {
         MockitoAnnotations.initMocks(this);
         StatementResource statementResource = new StatementResource();
         ReflectionTestUtils.setField(statementResource, "statementRepository", statementRepository);
+        ReflectionTestUtils.setField(statementResource, "statementSearchRepository", statementSearchRepository);
         this.restStatementMockMvc = MockMvcBuilders.standaloneSetup(statementResource).setMessageConverters(jacksonMessageConverter).build();
     }
 

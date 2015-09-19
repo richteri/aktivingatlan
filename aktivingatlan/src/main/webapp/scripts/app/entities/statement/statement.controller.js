@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('aktivingatlanApp')
-    .controller('StatementController', function ($scope, Statement, ParseLinks) {
+    .controller('StatementController', function ($scope, Statement, StatementSearch, ParseLinks) {
         $scope.statements = [];
         $scope.page = 1;
         $scope.loadAll = function() {
@@ -30,6 +30,16 @@ angular.module('aktivingatlanApp')
                     $('#deleteStatementConfirmation').modal('hide');
                     $scope.clear();
                 });
+        };
+
+        $scope.search = function () {
+            StatementSearch.query({query: $scope.searchQuery}, function(result) {
+                $scope.statements = result;
+            }, function(response) {
+                if(response.status === 404) {
+                    $scope.loadAll();
+                }
+            });
         };
 
         $scope.refresh = function () {

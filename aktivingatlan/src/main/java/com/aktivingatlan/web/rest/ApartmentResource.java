@@ -3,6 +3,7 @@ package com.aktivingatlan.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.aktivingatlan.domain.Apartment;
 import com.aktivingatlan.repository.ApartmentRepository;
+import com.aktivingatlan.repository.search.ApartmentSearchRepository;
 import com.aktivingatlan.web.rest.util.HeaderUtil;
 import com.aktivingatlan.web.rest.util.PaginationUtil;
 import org.slf4j.Logger;
@@ -19,6 +20,10 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing Apartment.
@@ -31,6 +36,9 @@ public class ApartmentResource {
 
     @Inject
     private ApartmentRepository apartmentRepository;
+
+    @Inject
+    private ApartmentSearchRepository apartmentSearchRepository;
 
     /**
      * POST  /apartments -> Create a new apartment.
@@ -45,6 +53,7 @@ public class ApartmentResource {
             return ResponseEntity.badRequest().header("Failure", "A new apartment cannot already have an ID").body(null);
         }
         Apartment result = apartmentRepository.save(apartment);
+        apartmentSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/apartments/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert("apartment", result.getId().toString()))
                 .body(result);
@@ -63,6 +72,7 @@ public class ApartmentResource {
             return create(apartment);
         }
         Apartment result = apartmentRepository.save(apartment);
+        apartmentSearchRepository.save(apartment);
         return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityUpdateAlert("apartment", apartment.getId().toString()))
                 .body(result);
@@ -109,6 +119,21 @@ public class ApartmentResource {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete Apartment : {}", id);
         apartmentRepository.delete(id);
+        apartmentSearchRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("apartment", id.toString())).build();
+    }
+
+    /**
+     * SEARCH  /_search/apartments/:query -> search for the apartment corresponding
+     * to the query.
+     */
+    @RequestMapping(value = "/_search/apartments/{query}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public List<Apartment> search(@PathVariable String query) {
+        return StreamSupport
+            .stream(apartmentSearchRepository.search(queryString(query)).spliterator(), false)
+            .collect(Collectors.toList());
     }
 }

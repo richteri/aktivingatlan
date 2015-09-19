@@ -3,6 +3,7 @@ package com.aktivingatlan.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.aktivingatlan.domain.Property;
 import com.aktivingatlan.repository.PropertyRepository;
+import com.aktivingatlan.repository.search.PropertySearchRepository;
 import com.aktivingatlan.web.rest.util.HeaderUtil;
 import com.aktivingatlan.web.rest.util.PaginationUtil;
 import org.slf4j.Logger;
@@ -19,6 +20,10 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing Property.
@@ -31,6 +36,9 @@ public class PropertyResource {
 
     @Inject
     private PropertyRepository propertyRepository;
+
+    @Inject
+    private PropertySearchRepository propertySearchRepository;
 
     /**
      * POST  /propertys -> Create a new property.
@@ -45,6 +53,7 @@ public class PropertyResource {
             return ResponseEntity.badRequest().header("Failure", "A new property cannot already have an ID").body(null);
         }
         Property result = propertyRepository.save(property);
+        propertySearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/propertys/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert("property", result.getId().toString()))
                 .body(result);
@@ -63,6 +72,7 @@ public class PropertyResource {
             return create(property);
         }
         Property result = propertyRepository.save(property);
+        propertySearchRepository.save(property);
         return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityUpdateAlert("property", property.getId().toString()))
                 .body(result);
@@ -109,6 +119,21 @@ public class PropertyResource {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete Property : {}", id);
         propertyRepository.delete(id);
+        propertySearchRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("property", id.toString())).build();
+    }
+
+    /**
+     * SEARCH  /_search/propertys/:query -> search for the property corresponding
+     * to the query.
+     */
+    @RequestMapping(value = "/_search/propertys/{query}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public List<Property> search(@PathVariable String query) {
+        return StreamSupport
+            .stream(propertySearchRepository.search(queryString(query)).spliterator(), false)
+            .collect(Collectors.toList());
     }
 }

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('aktivingatlanApp')
-    .controller('PhotoController', function ($scope, Photo, ParseLinks) {
+    .controller('PhotoController', function ($scope, Photo, PhotoSearch, ParseLinks) {
         $scope.photos = [];
         $scope.page = 1;
         $scope.loadAll = function() {
@@ -30,6 +30,16 @@ angular.module('aktivingatlanApp')
                     $('#deletePhotoConfirmation').modal('hide');
                     $scope.clear();
                 });
+        };
+
+        $scope.search = function () {
+            PhotoSearch.query({query: $scope.searchQuery}, function(result) {
+                $scope.photos = result;
+            }, function(response) {
+                if(response.status === 404) {
+                    $scope.loadAll();
+                }
+            });
         };
 
         $scope.refresh = function () {

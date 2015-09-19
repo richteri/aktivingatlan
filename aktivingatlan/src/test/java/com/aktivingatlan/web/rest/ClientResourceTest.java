@@ -3,6 +3,7 @@ package com.aktivingatlan.web.rest;
 import com.aktivingatlan.Application;
 import com.aktivingatlan.domain.Client;
 import com.aktivingatlan.repository.ClientRepository;
+import com.aktivingatlan.repository.search.ClientSearchRepository;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -61,6 +62,9 @@ public class ClientResourceTest {
     private ClientRepository clientRepository;
 
     @Inject
+    private ClientSearchRepository clientSearchRepository;
+
+    @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     private MockMvc restClientMockMvc;
@@ -72,6 +76,7 @@ public class ClientResourceTest {
         MockitoAnnotations.initMocks(this);
         ClientResource clientResource = new ClientResource();
         ReflectionTestUtils.setField(clientResource, "clientRepository", clientRepository);
+        ReflectionTestUtils.setField(clientResource, "clientSearchRepository", clientSearchRepository);
         this.restClientMockMvc = MockMvcBuilders.standaloneSetup(clientResource).setMessageConverters(jacksonMessageConverter).build();
     }
 

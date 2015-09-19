@@ -3,6 +3,7 @@ package com.aktivingatlan.web.rest;
 import com.aktivingatlan.Application;
 import com.aktivingatlan.domain.Apartment;
 import com.aktivingatlan.repository.ApartmentRepository;
+import com.aktivingatlan.repository.search.ApartmentSearchRepository;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -73,6 +74,9 @@ public class ApartmentResourceTest {
     private ApartmentRepository apartmentRepository;
 
     @Inject
+    private ApartmentSearchRepository apartmentSearchRepository;
+
+    @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     private MockMvc restApartmentMockMvc;
@@ -84,6 +88,7 @@ public class ApartmentResourceTest {
         MockitoAnnotations.initMocks(this);
         ApartmentResource apartmentResource = new ApartmentResource();
         ReflectionTestUtils.setField(apartmentResource, "apartmentRepository", apartmentRepository);
+        ReflectionTestUtils.setField(apartmentResource, "apartmentSearchRepository", apartmentSearchRepository);
         this.restApartmentMockMvc = MockMvcBuilders.standaloneSetup(apartmentResource).setMessageConverters(jacksonMessageConverter).build();
     }
 

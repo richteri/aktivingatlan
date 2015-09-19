@@ -3,6 +3,7 @@ package com.aktivingatlan.web.rest;
 import com.aktivingatlan.Application;
 import com.aktivingatlan.domain.Ownership;
 import com.aktivingatlan.repository.OwnershipRepository;
+import com.aktivingatlan.repository.search.OwnershipSearchRepository;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -47,6 +48,9 @@ public class OwnershipResourceTest {
     private OwnershipRepository ownershipRepository;
 
     @Inject
+    private OwnershipSearchRepository ownershipSearchRepository;
+
+    @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     private MockMvc restOwnershipMockMvc;
@@ -58,6 +62,7 @@ public class OwnershipResourceTest {
         MockitoAnnotations.initMocks(this);
         OwnershipResource ownershipResource = new OwnershipResource();
         ReflectionTestUtils.setField(ownershipResource, "ownershipRepository", ownershipRepository);
+        ReflectionTestUtils.setField(ownershipResource, "ownershipSearchRepository", ownershipSearchRepository);
         this.restOwnershipMockMvc = MockMvcBuilders.standaloneSetup(ownershipResource).setMessageConverters(jacksonMessageConverter).build();
     }
 

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('aktivingatlanApp')
-    .controller('CategoryController', function ($scope, Category) {
+    .controller('CategoryController', function ($scope, Category, CategorySearch) {
         $scope.categorys = [];
         $scope.loadAll = function() {
             Category.query(function(result) {
@@ -24,6 +24,16 @@ angular.module('aktivingatlanApp')
                     $('#deleteCategoryConfirmation').modal('hide');
                     $scope.clear();
                 });
+        };
+
+        $scope.search = function () {
+            CategorySearch.query({query: $scope.searchQuery}, function(result) {
+                $scope.categorys = result;
+            }, function(response) {
+                if(response.status === 404) {
+                    $scope.loadAll();
+                }
+            });
         };
 
         $scope.refresh = function () {

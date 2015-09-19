@@ -3,6 +3,7 @@ package com.aktivingatlan.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.aktivingatlan.domain.Statement;
 import com.aktivingatlan.repository.StatementRepository;
+import com.aktivingatlan.repository.search.StatementSearchRepository;
 import com.aktivingatlan.web.rest.util.HeaderUtil;
 import com.aktivingatlan.web.rest.util.PaginationUtil;
 import org.slf4j.Logger;
@@ -19,6 +20,10 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing Statement.
@@ -31,6 +36,9 @@ public class StatementResource {
 
     @Inject
     private StatementRepository statementRepository;
+
+    @Inject
+    private StatementSearchRepository statementSearchRepository;
 
     /**
      * POST  /statements -> Create a new statement.
@@ -45,6 +53,7 @@ public class StatementResource {
             return ResponseEntity.badRequest().header("Failure", "A new statement cannot already have an ID").body(null);
         }
         Statement result = statementRepository.save(statement);
+        statementSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/statements/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert("statement", result.getId().toString()))
                 .body(result);
@@ -63,6 +72,7 @@ public class StatementResource {
             return create(statement);
         }
         Statement result = statementRepository.save(statement);
+        statementSearchRepository.save(statement);
         return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityUpdateAlert("statement", statement.getId().toString()))
                 .body(result);
@@ -109,6 +119,21 @@ public class StatementResource {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete Statement : {}", id);
         statementRepository.delete(id);
+        statementSearchRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("statement", id.toString())).build();
+    }
+
+    /**
+     * SEARCH  /_search/statements/:query -> search for the statement corresponding
+     * to the query.
+     */
+    @RequestMapping(value = "/_search/statements/{query}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public List<Statement> search(@PathVariable String query) {
+        return StreamSupport
+            .stream(statementSearchRepository.search(queryString(query)).spliterator(), false)
+            .collect(Collectors.toList());
     }
 }

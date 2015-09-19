@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('aktivingatlanApp')
-    .controller('ContractController', function ($scope, Contract, ParseLinks) {
+    .controller('ContractController', function ($scope, Contract, ContractSearch, ParseLinks) {
         $scope.contracts = [];
         $scope.page = 1;
         $scope.loadAll = function() {
@@ -30,6 +30,16 @@ angular.module('aktivingatlanApp')
                     $('#deleteContractConfirmation').modal('hide');
                     $scope.clear();
                 });
+        };
+
+        $scope.search = function () {
+            ContractSearch.query({query: $scope.searchQuery}, function(result) {
+                $scope.contracts = result;
+            }, function(response) {
+                if(response.status === 404) {
+                    $scope.loadAll();
+                }
+            });
         };
 
         $scope.refresh = function () {

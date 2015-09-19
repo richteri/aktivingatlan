@@ -3,6 +3,7 @@ package com.aktivingatlan.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.aktivingatlan.domain.Ownership;
 import com.aktivingatlan.repository.OwnershipRepository;
+import com.aktivingatlan.repository.search.OwnershipSearchRepository;
 import com.aktivingatlan.web.rest.util.HeaderUtil;
 import com.aktivingatlan.web.rest.util.PaginationUtil;
 import org.slf4j.Logger;
@@ -19,6 +20,10 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing Ownership.
@@ -31,6 +36,9 @@ public class OwnershipResource {
 
     @Inject
     private OwnershipRepository ownershipRepository;
+
+    @Inject
+    private OwnershipSearchRepository ownershipSearchRepository;
 
     /**
      * POST  /ownerships -> Create a new ownership.
@@ -45,6 +53,7 @@ public class OwnershipResource {
             return ResponseEntity.badRequest().header("Failure", "A new ownership cannot already have an ID").body(null);
         }
         Ownership result = ownershipRepository.save(ownership);
+        ownershipSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/ownerships/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert("ownership", result.getId().toString()))
                 .body(result);
@@ -63,6 +72,7 @@ public class OwnershipResource {
             return create(ownership);
         }
         Ownership result = ownershipRepository.save(ownership);
+        ownershipSearchRepository.save(ownership);
         return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityUpdateAlert("ownership", ownership.getId().toString()))
                 .body(result);
@@ -109,6 +119,21 @@ public class OwnershipResource {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete Ownership : {}", id);
         ownershipRepository.delete(id);
+        ownershipSearchRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("ownership", id.toString())).build();
+    }
+
+    /**
+     * SEARCH  /_search/ownerships/:query -> search for the ownership corresponding
+     * to the query.
+     */
+    @RequestMapping(value = "/_search/ownerships/{query}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public List<Ownership> search(@PathVariable String query) {
+        return StreamSupport
+            .stream(ownershipSearchRepository.search(queryString(query)).spliterator(), false)
+            .collect(Collectors.toList());
     }
 }

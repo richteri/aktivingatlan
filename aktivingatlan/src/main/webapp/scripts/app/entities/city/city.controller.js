@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('aktivingatlanApp')
-    .controller('CityController', function ($scope, City) {
+    .controller('CityController', function ($scope, City, CitySearch) {
         $scope.citys = [];
         $scope.loadAll = function() {
             City.query(function(result) {
@@ -24,6 +24,16 @@ angular.module('aktivingatlanApp')
                     $('#deleteCityConfirmation').modal('hide');
                     $scope.clear();
                 });
+        };
+
+        $scope.search = function () {
+            CitySearch.query({query: $scope.searchQuery}, function(result) {
+                $scope.citys = result;
+            }, function(response) {
+                if(response.status === 404) {
+                    $scope.loadAll();
+                }
+            });
         };
 
         $scope.refresh = function () {

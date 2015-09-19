@@ -3,6 +3,7 @@ package com.aktivingatlan.web.rest;
 import com.aktivingatlan.Application;
 import com.aktivingatlan.domain.Category;
 import com.aktivingatlan.repository.CategoryRepository;
+import com.aktivingatlan.repository.search.CategorySearchRepository;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -51,6 +52,9 @@ public class CategoryResourceTest {
     private CategoryRepository categoryRepository;
 
     @Inject
+    private CategorySearchRepository categorySearchRepository;
+
+    @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     private MockMvc restCategoryMockMvc;
@@ -62,6 +66,7 @@ public class CategoryResourceTest {
         MockitoAnnotations.initMocks(this);
         CategoryResource categoryResource = new CategoryResource();
         ReflectionTestUtils.setField(categoryResource, "categoryRepository", categoryRepository);
+        ReflectionTestUtils.setField(categoryResource, "categorySearchRepository", categorySearchRepository);
         this.restCategoryMockMvc = MockMvcBuilders.standaloneSetup(categoryResource).setMessageConverters(jacksonMessageConverter).build();
     }
 

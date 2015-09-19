@@ -10,7 +10,7 @@
     "databaseType": "sql",
     "devDatabaseType": "mysql",
     "prodDatabaseType": "mysql",
-    "searchEngine": "no",
+    "searchEngine": "elasticsearch",
     "useSass": false,
     "buildTool": "maven",
     "frontendBuilder": "grunt",

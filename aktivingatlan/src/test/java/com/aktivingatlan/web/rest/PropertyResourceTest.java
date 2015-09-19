@@ -3,6 +3,7 @@ package com.aktivingatlan.web.rest;
 import com.aktivingatlan.Application;
 import com.aktivingatlan.domain.Property;
 import com.aktivingatlan.repository.PropertyRepository;
+import com.aktivingatlan.repository.search.PropertySearchRepository;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -138,6 +139,9 @@ public class PropertyResourceTest {
     private PropertyRepository propertyRepository;
 
     @Inject
+    private PropertySearchRepository propertySearchRepository;
+
+    @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     private MockMvc restPropertyMockMvc;
@@ -149,6 +153,7 @@ public class PropertyResourceTest {
         MockitoAnnotations.initMocks(this);
         PropertyResource propertyResource = new PropertyResource();
         ReflectionTestUtils.setField(propertyResource, "propertyRepository", propertyRepository);
+        ReflectionTestUtils.setField(propertyResource, "propertySearchRepository", propertySearchRepository);
         this.restPropertyMockMvc = MockMvcBuilders.standaloneSetup(propertyResource).setMessageConverters(jacksonMessageConverter).build();
     }
 

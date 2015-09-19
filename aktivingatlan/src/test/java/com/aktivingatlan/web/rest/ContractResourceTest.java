@@ -3,6 +3,7 @@ package com.aktivingatlan.web.rest;
 import com.aktivingatlan.Application;
 import com.aktivingatlan.domain.Contract;
 import com.aktivingatlan.repository.ContractRepository;
+import com.aktivingatlan.repository.search.ContractSearchRepository;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -59,6 +60,9 @@ public class ContractResourceTest {
     private ContractRepository contractRepository;
 
     @Inject
+    private ContractSearchRepository contractSearchRepository;
+
+    @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     private MockMvc restContractMockMvc;
@@ -70,6 +74,7 @@ public class ContractResourceTest {
         MockitoAnnotations.initMocks(this);
         ContractResource contractResource = new ContractResource();
         ReflectionTestUtils.setField(contractResource, "contractRepository", contractRepository);
+        ReflectionTestUtils.setField(contractResource, "contractSearchRepository", contractSearchRepository);
         this.restContractMockMvc = MockMvcBuilders.standaloneSetup(contractResource).setMessageConverters(jacksonMessageConverter).build();
     }
 

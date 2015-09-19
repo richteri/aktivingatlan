@@ -3,6 +3,7 @@ package com.aktivingatlan.web.rest;
 import com.aktivingatlan.Application;
 import com.aktivingatlan.domain.Feature;
 import com.aktivingatlan.repository.FeatureRepository;
+import com.aktivingatlan.repository.search.FeatureSearchRepository;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -51,6 +52,9 @@ public class FeatureResourceTest {
     private FeatureRepository featureRepository;
 
     @Inject
+    private FeatureSearchRepository featureSearchRepository;
+
+    @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     private MockMvc restFeatureMockMvc;
@@ -62,6 +66,7 @@ public class FeatureResourceTest {
         MockitoAnnotations.initMocks(this);
         FeatureResource featureResource = new FeatureResource();
         ReflectionTestUtils.setField(featureResource, "featureRepository", featureRepository);
+        ReflectionTestUtils.setField(featureResource, "featureSearchRepository", featureSearchRepository);
         this.restFeatureMockMvc = MockMvcBuilders.standaloneSetup(featureResource).setMessageConverters(jacksonMessageConverter).build();
     }
 

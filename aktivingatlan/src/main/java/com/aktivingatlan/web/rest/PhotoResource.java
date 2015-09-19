@@ -3,6 +3,7 @@ package com.aktivingatlan.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.aktivingatlan.domain.Photo;
 import com.aktivingatlan.repository.PhotoRepository;
+import com.aktivingatlan.repository.search.PhotoSearchRepository;
 import com.aktivingatlan.web.rest.util.HeaderUtil;
 import com.aktivingatlan.web.rest.util.PaginationUtil;
 import org.slf4j.Logger;
@@ -19,6 +20,10 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing Photo.
@@ -31,6 +36,9 @@ public class PhotoResource {
 
     @Inject
     private PhotoRepository photoRepository;
+
+    @Inject
+    private PhotoSearchRepository photoSearchRepository;
 
     /**
      * POST  /photos -> Create a new photo.
@@ -45,6 +53,7 @@ public class PhotoResource {
             return ResponseEntity.badRequest().header("Failure", "A new photo cannot already have an ID").body(null);
         }
         Photo result = photoRepository.save(photo);
+        photoSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/photos/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert("photo", result.getId().toString()))
                 .body(result);
@@ -63,6 +72,7 @@ public class PhotoResource {
             return create(photo);
         }
         Photo result = photoRepository.save(photo);
+        photoSearchRepository.save(photo);
         return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityUpdateAlert("photo", photo.getId().toString()))
                 .body(result);
@@ -109,6 +119,21 @@ public class PhotoResource {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete Photo : {}", id);
         photoRepository.delete(id);
+        photoSearchRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("photo", id.toString())).build();
+    }
+
+    /**
+     * SEARCH  /_search/photos/:query -> search for the photo corresponding
+     * to the query.
+     */
+    @RequestMapping(value = "/_search/photos/{query}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public List<Photo> search(@PathVariable String query) {
+        return StreamSupport
+            .stream(photoSearchRepository.search(queryString(query)).spliterator(), false)
+            .collect(Collectors.toList());
     }
 }

@@ -3,6 +3,7 @@ package com.aktivingatlan.web.rest;
 import com.aktivingatlan.Application;
 import com.aktivingatlan.domain.City;
 import com.aktivingatlan.repository.CityRepository;
+import com.aktivingatlan.repository.search.CitySearchRepository;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -50,6 +51,9 @@ public class CityResourceTest {
     private CityRepository cityRepository;
 
     @Inject
+    private CitySearchRepository citySearchRepository;
+
+    @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     private MockMvc restCityMockMvc;
@@ -61,6 +65,7 @@ public class CityResourceTest {
         MockitoAnnotations.initMocks(this);
         CityResource cityResource = new CityResource();
         ReflectionTestUtils.setField(cityResource, "cityRepository", cityRepository);
+        ReflectionTestUtils.setField(cityResource, "citySearchRepository", citySearchRepository);
         this.restCityMockMvc = MockMvcBuilders.standaloneSetup(cityResource).setMessageConverters(jacksonMessageConverter).build();
     }
 
