@@ -1,12 +1,18 @@
 'use strict';
 
 angular.module('aktivingatlanApp')
-    .controller('CityController', function ($scope, City, CitySearch) {
+    .controller('CityController', function ($scope, City, CitySearch, ParseLinks) {
         $scope.citys = [];
+        $scope.page = 1;
         $scope.loadAll = function() {
-            City.query(function(result) {
-               $scope.citys = result;
+            City.query({page: $scope.page, per_page: 20}, function(result, headers) {
+                $scope.links = ParseLinks.parse(headers('link'));
+                $scope.citys = result;
             });
+        };
+        $scope.loadPage = function(page) {
+            $scope.page = page;
+            $scope.loadAll();
         };
         $scope.loadAll();
 

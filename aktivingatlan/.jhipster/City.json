@@ -4,7 +4,7 @@
         {
             "fieldId": 1,
             "fieldName": "zip",
-            "fieldType": "Integer"
+            "fieldType": "String"
         },
         {
             "fieldId": 2,
@@ -14,5 +14,5 @@
     ],
     "changelogDate": "20150913164718",
     "dto": "no",
-    "pagination": "no"
+    "pagination": "pagination"
 }

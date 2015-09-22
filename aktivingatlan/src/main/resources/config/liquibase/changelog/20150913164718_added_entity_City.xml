@@ -22,9 +22,18 @@
             <column name="id" type="bigint" autoIncrement="${autoIncrement}" >
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="zip" type="integer"/>
+            <column name="zip" type="varchar(255)"/>
             <column name="name" type="varchar(255)"/>
         </createTable>
+		<!-- loadData encoding="UTF-8"
+                  file="config/liquibase/cities.csv"
+                  separator=";"
+                  tableName="CITY">
+        </loadData -->
+        
+        <sqlFile dbms="mysql"
+            encoding="utf8"
+            path="config/liquibase/cities.sql"/>
         
     </changeSet>
 </databaseChangeLog>

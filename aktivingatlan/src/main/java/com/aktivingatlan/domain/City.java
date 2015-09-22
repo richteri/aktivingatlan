@@ -24,7 +24,7 @@ public class City implements Serializable {
     
     
     @Column(name = "zip")
-    private Integer zip;
+    private String zip;
     
     @Column(name = "name")
     private String name;
@@ -37,11 +37,11 @@ public class City implements Serializable {
         this.id = id;
     }
 
-    public Integer getZip() {
+    public String getZip() {
         return zip;
     }
 
-    public void setZip(Integer zip) {
+    public void setZip(String zip) {
         this.zip = zip;
     }
 

@@ -41,9 +41,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @IntegrationTest
 public class CityResourceTest {
 
-
-    private static final Integer DEFAULT_ZIP = 1;
-    private static final Integer UPDATED_ZIP = 2;
+    private static final String DEFAULT_ZIP = "SAMPLE_TEXT";
+    private static final String UPDATED_ZIP = "UPDATED_TEXT";
     private static final String DEFAULT_NAME = "SAMPLE_TEXT";
     private static final String UPDATED_NAME = "UPDATED_TEXT";
 
@@ -107,7 +106,7 @@ public class CityResourceTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(city.getId().intValue())))
-                .andExpect(jsonPath("$.[*].zip").value(hasItem(DEFAULT_ZIP)))
+                .andExpect(jsonPath("$.[*].zip").value(hasItem(DEFAULT_ZIP.toString())))
                 .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())));
     }
 
@@ -122,7 +121,7 @@ public class CityResourceTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(city.getId().intValue()))
-            .andExpect(jsonPath("$.zip").value(DEFAULT_ZIP))
+            .andExpect(jsonPath("$.zip").value(DEFAULT_ZIP.toString()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()));
     }
 
