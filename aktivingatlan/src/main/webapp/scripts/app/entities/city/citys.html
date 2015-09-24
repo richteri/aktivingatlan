@@ -16,6 +16,8 @@
                     </div>
                     <button class="btn btn-info" ng-click="search()"><span class="glyphicon glyphicon-search"></span> <span>Search a City</span>
                     </button>
+                    <button class="btn btn-info" ng-click="clearSearch()" ng-show="filtered"><span class="glyphicon glyphicon-search"></span> <span>Show all</span>
+                    </button>
                 </form>
             </div>
         </div>
@@ -45,19 +47,18 @@
             </div>
         </div>
     </div>
-
     <div class="table-responsive">
-        <table class="table table-striped">
+        <table st-table="citys" class="table table-striped">
             <thead>
                 <tr>
-                    <th translate="global.field.id">ID</th>
-                    <th translate="aktivingatlanApp.city.zip">Zip</th>
-                    <th translate="aktivingatlanApp.city.name">Name</th>
+                    <th translate="global.field.id" st-sort="id" ng-click="sortBy('id')">ID</th>
+                    <th translate="aktivingatlanApp.city.zip" st-sort="zip" ng-click="sortBy('zip')">Zip</th>
+                    <th translate="aktivingatlanApp.city.name" st-sort="name" ng-click="sortBy('name')">Name</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="city in citys">
+				<tr ng-repeat="city in citys">
                     <td><a ui-sref="city.detail({id:city.id})">{{city.id}}</a></td>
                     <td>{{city.zip}}</td>
                     <td>{{city.name}}</td>

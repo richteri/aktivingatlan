@@ -1,29 +1,33 @@
 package com.aktivingatlan.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
+
+import javax.inject.Inject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.aktivingatlan.domain.City;
 import com.aktivingatlan.repository.CityRepository;
 import com.aktivingatlan.repository.search.CitySearchRepository;
 import com.aktivingatlan.web.rest.util.HeaderUtil;
 import com.aktivingatlan.web.rest.util.PaginationUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.inject.Inject;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import com.codahale.metrics.annotation.Timed;
 
 /**
  * REST controller for managing City.
@@ -124,16 +128,22 @@ public class CityResource {
     }
 
     /**
-     * SEARCH  /_search/citys/:query -> search for the city corresponding
-     * to the query.
+     * SEARCH /_search/citys/:query -> search for the city corresponding to the query.
+     * @throws URISyntaxException
      */
     @RequestMapping(value = "/_search/citys/{query}",
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public List<City> search(@PathVariable String query) {
-        return StreamSupport
-            .stream(citySearchRepository.search(queryString(query)).spliterator(), false)
-            .collect(Collectors.toList());
+    public ResponseEntity<List<City>> search(
+            @PathVariable String query, 
+            @RequestParam(value = "page", required = false) Integer offset, 
+            @RequestParam(value = "per_page", required = false) Integer limit,
+            @RequestParam(value = "direction", required = false, defaultValue = "ASC") String direction,
+            @RequestParam(value = "property", required = false, defaultValue = "id") String property) throws URISyntaxException {
+        Page<City> page = cityRepository.findByNameContainingOrZipContainingAllIgnoreCase(query, query, 
+                PaginationUtil.generatePageRequest(offset, limit, Direction.fromString(direction), property));
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/_search/citys", offset, limit);
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 }
