@@ -12,9 +12,11 @@
             <div class="col-md-8">
                 <form name="searchForm" class="form-inline">
                     <div class="form-group">
-                        <input type="text" class="form-control" ng-model="searchQuery" id="searchQuery" placeholder="query">
+                        <input type="text" class="form-control" ng-model="pageable.query" id="pageable.query" placeholder="query">
                     </div>
                     <button class="btn btn-info" ng-click="search()"><span class="glyphicon glyphicon-search"></span> <span>Search a Client</span>
+                    </button>
+                    <button class="btn btn-info" ng-click="clearSearch()" ng-show="pageable.filtered"><span class="glyphicon glyphicon-search"></span> <span>Show all</span>
                     </button>
                 </form>
             </div>
@@ -50,29 +52,35 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th translate="global.field.id">ID</th>
-                    <th translate="aktivingatlanApp.client.name">Name</th>
-                    <th translate="aktivingatlanApp.client.email">Email</th>
-                    <th translate="aktivingatlanApp.client.phone1">Phone1</th>
-                    <th translate="aktivingatlanApp.client.phone2">Phone2</th>
-                    <th translate="aktivingatlanApp.client.address1">Address1</th>
-                    <th translate="aktivingatlanApp.client.address2">Address2</th>
-                    <th translate="aktivingatlanApp.client.idNo">IdNo</th>
-                    <th translate="aktivingatlanApp.client.note">Note</th>
+                    <th ng-click="sortBy('name')">
+                        <span translate="aktivingatlanApp.client.name">Name</span>
+                        <span class="glyphicon glyphicon-sort-by-attributes fa-sm" aria-hidden="true" ng-show="pageable.property == 'name' && pageable.direction == 'ASC'"></span>
+                        <span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true" ng-show="pageable.property == 'name' && pageable.direction == 'DESC'"></span>
+                    </th>
+                    <th ng-click="sortBy('phone1')">
+                        <span translate="aktivingatlanApp.client.phone1">Phone1</span>
+                        <span class="glyphicon glyphicon-sort-by-attributes fa-sm" aria-hidden="true" ng-show="pageable.property == 'phone1' && pageable.direction == 'ASC'"></span>
+                        <span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true" ng-show="pageable.property == 'phone1' && pageable.direction == 'DESC'"></span>
+                    </th>
+                    <th ng-click="sortBy('address1')">
+                        <span translate="aktivingatlanApp.client.address1">Address1</span>
+                        <span class="glyphicon glyphicon-sort-by-attributes fa-sm" aria-hidden="true" ng-show="pageable.property == 'address1' && pageable.direction == 'ASC'"></span>
+                        <span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true" ng-show="pageable.property == 'address1' && pageable.direction == 'DESC'"></span>
+                    </th>
+                    <th ng-click="sortBy('idNo')">
+                        <span translate="aktivingatlanApp.client.idNo">IdNo</span>
+                        <span class="glyphicon glyphicon-sort-by-attributes fa-sm" aria-hidden="true" ng-show="pageable.property == 'idNo' && pageable.direction == 'ASC'"></span>
+                        <span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true" ng-show="pageable.property == 'idNo' && pageable.direction == 'DESC'"></span>
+                    </th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="client in clients">
-                    <td><a ui-sref="client.detail({id:client.id})">{{client.id}}</a></td>
-                    <td>{{client.name}}</td>
-                    <td>{{client.email}}</td>
+                    <td><a ui-sref="client.detail({id:client.id})">{{client.name}}</a></td>
                     <td>{{client.phone1}}</td>
-                    <td>{{client.phone2}}</td>
                     <td>{{client.address1}}</td>
-                    <td>{{client.address2}}</td>
                     <td>{{client.idNo}}</td>
-                    <td>{{client.note}}</td>
                     <td>
                         <button type="submit"
                                 ui-sref="client.detail({id:client.id})"
@@ -97,11 +105,11 @@
             <ul class="pagination">
                 <li ng-show="links['first']" ng-click="loadPage(links['first'])"><a>&lt;&lt;</a></li>
                 <li ng-show="links['prev']" ng-click="loadPage(links['prev'])"><a>&lt;</a></li>
-                <li ng-show="page > 2" ng-click="loadPage(page - 2)"><a>{{page - 2}}</a></li>
-                <li ng-show="page > 1" ng-click="loadPage(page - 1)"><a>{{page - 1}}</a></li>
-                <li class="active"><a>{{page}}</a></li>
-                <li ng-show="page < links['last']" ng-click="loadPage(page + 1)"><a>{{page + 1}}</a></li>
-                <li ng-show="page < links['last'] - 1" ng-click="loadPage(page + 2)"><a>{{page + 2}}</a></li>
+                <li ng-show="pageable.page > 2" ng-click="loadPage(pageable.page - 2)"><a>{{pageable.page - 2}}</a></li>
+                <li ng-show="pageable.page > 1" ng-click="loadPage(pageable.page - 1)"><a>{{pageable.page - 1}}</a></li>
+                <li class="active"><a>{{pageable.page}}</a></li>
+                <li ng-show="pageable.page < links['last']" ng-click="loadPage(pageable.page + 1)"><a>{{pageable.page + 1}}</a></li>
+                <li ng-show="pageable.page < links['last'] - 1" ng-click="loadPage(pageable.page + 2)"><a>{{pageable.page + 2}}</a></li>
                 <li ng-show="links['next']" ng-click="loadPage(links['next'])"><a>&gt;</a></li>
                 <li ng-show="links['last']" ng-click="loadPage(links['last'])"><a>&gt;&gt;</a></li>
             </ul>
