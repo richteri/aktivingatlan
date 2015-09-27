@@ -1,6 +1,8 @@
 package com.aktivingatlan.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -24,44 +26,42 @@ public class Client implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
-    
+
+
     @Column(name = "name")
     private String name;
-    
+
     @Column(name = "email")
     private String email;
-    
+
     @Column(name = "phone1")
     private String phone1;
-    
+
     @Column(name = "phone2")
     private String phone2;
-    
+
     @Column(name = "address1")
     private String address1;
-    
+
     @Column(name = "address2")
     private String address2;
-    
+
     @Column(name = "id_no")
     private String idNo;
-    
+
     @Column(name = "note")
     private String note;
 
     @OneToMany(mappedBy = "client")
-    @JsonIgnore
+    @JsonManagedReference
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Ownership> ownerships = new HashSet<>();
 
     @ManyToMany(mappedBy = "clients")
-    @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Statement> statements = new HashSet<>();
 
     @ManyToMany(mappedBy = "clients")
-    @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Contract> contracts = new HashSet<>();
 

@@ -4,6 +4,8 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -32,6 +34,7 @@ public class Ownership implements Serializable {
     private Property property;
 
     @ManyToOne
+    @JsonBackReference
     private Client client;
 
     public Long getId() {

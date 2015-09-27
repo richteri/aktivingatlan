@@ -25,104 +25,104 @@ public class Property implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
-    
+
+
     @Column(name = "code")
     private String code;
-    
+
     @Column(name = "description_hu")
     private String descriptionHu;
-    
+
     @Column(name = "description_en")
     private String descriptionEn;
-    
+
     @Column(name = "description_de")
     private String descriptionDe;
-    
+
     @Column(name = "room")
     private Integer room;
-    
+
     @Column(name = "half_room")
     private Integer halfRoom;
-    
+
     @Column(name = "floor_area")
     private Integer floorArea;
-    
+
     @Column(name = "parcel_area")
     private Integer parcelArea;
-    
+
     @Column(name = "pracel_number")
     private String pracelNumber;
-    
+
     @Column(name = "address1")
     private String address1;
-    
+
     @Column(name = "address2")
     private String address2;
-    
+
     @Column(name = "active")
     private Boolean active;
-    
+
     @Column(name = "kitchen")
     private Integer kitchen;
-    
+
     @Column(name = "livingroom")
     private Integer livingroom;
-    
+
     @Column(name = "floor")
     private Integer floor;
-    
+
     @Column(name = "bathroom")
     private Integer bathroom;
-    
+
     @Column(name = "toilet")
     private Integer toilet;
-    
+
     @Column(name = "furnished")
     private Boolean furnished;
-    
+
     @Column(name = "for_sale")
     private Boolean forSale;
-    
+
     @Column(name = "sale_huf", precision=10, scale=2)
     private BigDecimal saleHuf;
-    
+
     @Column(name = "sale_eur", precision=10, scale=2)
     private BigDecimal saleEur;
-    
+
     @Column(name = "for_rent")
     private Boolean forRent;
-    
+
     @Column(name = "rent_huf", precision=10, scale=2)
     private BigDecimal rentHuf;
-    
+
     @Column(name = "rent_eur", precision=10, scale=2)
     private BigDecimal rentEur;
-    
+
     @Column(name = "rent_peak_huf", precision=10, scale=2)
     private BigDecimal rentPeakHuf;
-    
+
     @Column(name = "rent_peak_eur", precision=10, scale=2)
     private BigDecimal rentPeakEur;
-    
+
     @Column(name = "for_medium_term")
     private Boolean forMediumTerm;
-    
+
     @Column(name = "medium_term_huf", precision=10, scale=2)
     private BigDecimal mediumTermHuf;
-    
+
     @Column(name = "medium_term_eur", precision=10, scale=2)
     private BigDecimal mediumTermEur;
-    
+
     @Column(name = "for_long_term")
     private Boolean forLongTerm;
-    
+
     @Column(name = "long_term_huf", precision=10, scale=2)
     private BigDecimal longTermHuf;
-    
+
     @Column(name = "long_term_eur", precision=10, scale=2)
     private BigDecimal longTermEur;
-    
+
     @Column(name = "featured")
     private Boolean featured;
 
@@ -130,12 +130,10 @@ public class Property implements Serializable {
     private Category category;
 
     @OneToMany(mappedBy = "property")
-    @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Photo> photos = new HashSet<>();
 
     @ManyToMany(mappedBy = "propertys")
-    @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Statement> statements = new HashSet<>();
 
@@ -147,7 +145,6 @@ public class Property implements Serializable {
     private Set<Feature> features = new HashSet<>();
 
     @OneToMany(mappedBy = "property")
-    @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Ownership> ownerships = new HashSet<>();
 
@@ -155,7 +152,6 @@ public class Property implements Serializable {
     private City city;
 
     @OneToMany(mappedBy = "property")
-    @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Contract> contracts = new HashSet<>();
 
@@ -163,7 +159,6 @@ public class Property implements Serializable {
     private User user;
 
     @OneToMany(mappedBy = "property")
-    @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Apartment> apartments = new HashSet<>();
 
