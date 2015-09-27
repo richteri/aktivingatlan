@@ -12,11 +12,11 @@
             <div class="col-md-8">
                 <form name="searchForm" class="form-inline">
                     <div class="form-group">
-                        <input type="text" class="form-control" ng-model="searchQuery" id="searchQuery" placeholder="query">
+                        <input type="text" class="form-control" ng-model="pageable.query" id="pageable.query" placeholder="query">
                     </div>
                     <button class="btn btn-info" ng-click="search()"><span class="glyphicon glyphicon-search"></span> <span>Search a City</span>
                     </button>
-                    <button class="btn btn-info" ng-click="clearSearch()" ng-show="filtered"><span class="glyphicon glyphicon-search"></span> <span>Show all</span>
+                    <button class="btn btn-info" ng-click="clearSearch()" ng-show="pageable.filtered"><span class="glyphicon glyphicon-search"></span> <span>Show all</span>
                     </button>
                 </form>
             </div>
@@ -47,13 +47,26 @@
             </div>
         </div>
     </div>
+
     <div class="table-responsive">
-        <table st-table="citys" class="table table-striped">
+        <table class="table table-striped">
             <thead>
                 <tr>
-                    <th translate="global.field.id" st-sort="id" ng-click="sortBy('id')">ID</th>
-                    <th translate="aktivingatlanApp.city.zip" st-sort="zip" ng-click="sortBy('zip')">Zip</th>
-                    <th translate="aktivingatlanApp.city.name" st-sort="name" ng-click="sortBy('name')">Name</th>
+                    <th ng-click="sortBy('id')">
+                        <span translate="global.field.id">ID</span>
+                        <span class="glyphicon glyphicon-sort-by-attributes fa-sm" aria-hidden="true" ng-show="pageable.property == 'id' && pageable.direction == 'ASC'"></span>
+                        <span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true" ng-show="pageable.property == 'id' && pageable.direction == 'DESC'"></span>
+                    </th>
+                    <th ng-click="sortBy('zip')">
+                        <span translate="aktivingatlanApp.city.zip">Zip</span>
+                        <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true" ng-show="pageable.property == 'zip' && pageable.direction == 'ASC'"></span>
+                        <span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true" ng-show="pageable.property == 'zip' && pageable.direction == 'DESC'"></span>
+                    </th>
+                    <th ng-click="sortBy('name')">
+                        <span translate="aktivingatlanApp.city.name">Name</span>
+                        <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true" ng-show="pageable.property == 'name' && pageable.direction == 'ASC'"></span>
+                        <span class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true" ng-show="pageable.property == 'name' && pageable.direction == 'DESC'"></span>
+                    </th>
                     <th></th>
                 </tr>
             </thead>
@@ -86,11 +99,11 @@
             <ul class="pagination">
                 <li ng-show="links['first']" ng-click="loadPage(links['first'])"><a>&lt;&lt;</a></li>
                 <li ng-show="links['prev']" ng-click="loadPage(links['prev'])"><a>&lt;</a></li>
-                <li ng-show="page > 2" ng-click="loadPage(page - 2)"><a>{{page - 2}}</a></li>
-                <li ng-show="page > 1" ng-click="loadPage(page - 1)"><a>{{page - 1}}</a></li>
-                <li class="active"><a>{{page}}</a></li>
-                <li ng-show="page < links['last']" ng-click="loadPage(page + 1)"><a>{{page + 1}}</a></li>
-                <li ng-show="page < links['last'] - 1" ng-click="loadPage(page + 2)"><a>{{page + 2}}</a></li>
+                <li ng-show="pageable.page > 2" ng-click="loadPage(pageable.page - 2)"><a>{{pageable.page - 2}}</a></li>
+                <li ng-show="pageable.page > 1" ng-click="loadPage(pageable.page - 1)"><a>{{pageable.page - 1}}</a></li>
+                <li class="active"><a>{{pageable.page}}</a></li>
+                <li ng-show="pageable.page < links['last']" ng-click="loadPage(pageable.page + 1)"><a>{{pageable.page + 1}}</a></li>
+                <li ng-show="pageable.page < links['last'] - 1" ng-click="loadPage(pageable.page + 2)"><a>{{pageable.page + 2}}</a></li>
                 <li ng-show="links['next']" ng-click="loadPage(links['next'])"><a>&gt;</a></li>
                 <li ng-show="links['last']" ng-click="loadPage(links['last'])"><a>&gt;&gt;</a></li>
             </ul>

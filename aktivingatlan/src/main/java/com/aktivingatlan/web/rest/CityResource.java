@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.aktivingatlan.domain.City;
 import com.aktivingatlan.repository.CityRepository;
-import com.aktivingatlan.repository.search.CitySearchRepository;
 import com.aktivingatlan.web.rest.util.HeaderUtil;
 import com.aktivingatlan.web.rest.util.PaginationUtil;
 import com.codahale.metrics.annotation.Timed;
@@ -41,9 +40,6 @@ public class CityResource {
     @Inject
     private CityRepository cityRepository;
 
-    @Inject
-    private CitySearchRepository citySearchRepository;
-
     /**
      * POST  /citys -> Create a new city.
      */
@@ -57,7 +53,6 @@ public class CityResource {
             return ResponseEntity.badRequest().header("Failure", "A new city cannot already have an ID").body(null);
         }
         City result = cityRepository.save(city);
-        citySearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/citys/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert("city", result.getId().toString()))
                 .body(result);
@@ -76,7 +71,6 @@ public class CityResource {
             return create(city);
         }
         City result = cityRepository.save(city);
-        citySearchRepository.save(city);
         return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityUpdateAlert("city", city.getId().toString()))
                 .body(result);
@@ -89,10 +83,14 @@ public class CityResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<List<City>> getAll(@RequestParam(value = "page" , required = false) Integer offset,
-                                  @RequestParam(value = "per_page", required = false) Integer limit)
+    public ResponseEntity<List<City>> getAll(
+            @RequestParam(value = "page" , required = false) Integer offset,
+            @RequestParam(value = "per_page", required = false) Integer limit,
+            @RequestParam(value = "direction", required = false, defaultValue = "ASC") String direction,
+            @RequestParam(value = "property", required = false, defaultValue = "id") String property)
         throws URISyntaxException {
-        Page<City> page = cityRepository.findAll(PaginationUtil.generatePageRequest(offset, limit));
+        Page<City> page = cityRepository.findAll(
+                PaginationUtil.generatePageRequest(offset, limit, Direction.fromString(direction), property));
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/citys", offset, limit);
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
@@ -123,7 +121,6 @@ public class CityResource {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete City : {}", id);
         cityRepository.delete(id);
-        citySearchRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("city", id.toString())).build();
     }
 
@@ -136,12 +133,13 @@ public class CityResource {
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<List<City>> search(
-            @PathVariable String query, 
-            @RequestParam(value = "page", required = false) Integer offset, 
+            @PathVariable String query,
+            @RequestParam(value = "page", required = false) Integer offset,
             @RequestParam(value = "per_page", required = false) Integer limit,
             @RequestParam(value = "direction", required = false, defaultValue = "ASC") String direction,
-            @RequestParam(value = "property", required = false, defaultValue = "id") String property) throws URISyntaxException {
-        Page<City> page = cityRepository.findByNameContainingOrZipContainingAllIgnoreCase(query, query, 
+            @RequestParam(value = "property", required = false, defaultValue = "id") String property)
+        throws URISyntaxException {
+        Page<City> page = cityRepository.findByNameContainingOrZipContainingAllIgnoreCase(query, query,
                 PaginationUtil.generatePageRequest(offset, limit, Direction.fromString(direction), property));
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/_search/citys", offset, limit);
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
