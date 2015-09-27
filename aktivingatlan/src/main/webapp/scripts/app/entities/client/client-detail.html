@@ -88,9 +88,13 @@
                         <img src="http://lorempixel.com/100/100/city/">
                     </div>
                     <div class="col-lg-8">
-                        <div><a href="#" popover="{{ownership.property.descriptionHu}}" popover-trigger="mouseenter">{{ownership.property.code}}</a> {{ownership.property.city.name}}</div>
+                        <div><a ng-href="#/property/{{ownership.property.id}}" popover="{{ownership.property.descriptionHu}}" popover-trigger="mouseenter">{{ownership.property.code}}</a> {{ownership.property.city.name}}</div>
                         <div>{{ownership.note}}</div>
-                        <button class="btn btn-primary btn-sm">Edit</button>
+                        <button type="submit"
+                                ui-sref="client.detail.ownership({id:client.id, ownershipId:ownership.id})"
+                                class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-pencil"></span>&nbsp;<span translate="entity.action.edit"> Edit</span>
+                        </button>
                     </div>
                 </div>
                 <hr>
@@ -106,7 +110,7 @@
                         <img src="http://lorempixel.com/100/100/city/">
                     </div>
                     <div class="col-lg-8">
-                        <div><a href="#" popover="{{contract.note}}" popover-trigger="mouseenter">{{contract.idNo}}</a></div>
+                        <div><a ng-href="#/contract/{{contract.id}}" popover="{{contract.note}}" popover-trigger="mouseenter">{{contract.idNo}}</a></div>
                         <div>{{contract.exclusive ? 'kizárólagos' : 'nem kizárólagos'}}</div>
                         <div>{{contract.startDate}} - {{contract.endDate}}</div>
                         <div><a href="#" popover="{{contract.property.descriptionHu}}" popover-trigger="mouseenter">{{contract.property.code}}</a> {{contract.property.city.name}}</div>
@@ -127,7 +131,7 @@
                         </div>
                         <div class="col-lg-8">
                         	<div>{{statement.date}}</div>
-                            <div><a href="#" popover="{{property.descriptionHu}}" popover-trigger="mouseenter">{{property.code}}</a> {{property.city.name}}</div>
+                            <div><a popover="{{property.descriptionHu}}" popover-trigger="mouseenter">{{property.code}}</a> {{property.city.name}}</div>
                         </div>
                     </div>
                 </div>
