@@ -76,27 +76,66 @@
             </tr>
             </tbody>
         </table>
-        <div ng-repeat="ownership in client.ownerships">
-        	<div>{{ownership.property.code}}</div>
-        	<div>{{ownership.property.descriptionHu}}</div>
-        	<div>{{ownership.property.city.name}}</div>
-        	<div>{{ownership.note}}</div>
-        </div>
-        <div ng-repeat="contract in client.contracts">
-        	<div>{{contract.idNo}}</div>
-        	<div>{{contract.exclusive}}</div>
-        	<div>{{contract.startDate}}</div>
-        	<div>{{contract.endDate}}</div>
-        	<div>{{contract.property.code}}</div>
-        	<div>{{contract.property.descriptionHu}}</div>
-        	<div>{{contract.property.city.name}}</div>
-        </div>
-        <div ng-repeat="statement in client.statements">
-        	<div>{{statement.date}}
-        	<div>{{statement.property.code}}</div>
-        </div>
-
     </div>
+    
+    <div class="row">
+        <div class="col-lg-4">
+        	<h3><span translate="aktivingatlanApp.ownership.home.title">Ownerships</span></h3>
+        	<hr>
+            <div ng-repeat="ownership in client.ownerships">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <img src="http://lorempixel.com/100/100/city/">
+                    </div>
+                    <div class="col-lg-8">
+                        <div><a href="#" popover="{{ownership.property.descriptionHu}}" popover-trigger="mouseenter">{{ownership.property.code}}</a> {{ownership.property.city.name}}</div>
+                        <div>{{ownership.note}}</div>
+                        <button class="btn btn-primary btn-sm">Edit</button>
+                    </div>
+                </div>
+                <hr>
+            </div>
+        </div>                
+        
+        <div class="col-lg-4">
+        	<h3 translate="aktivingatlanApp.contract.home.title">Contracts</h3>
+        	<hr>
+            <div ng-repeat="contract in client.contracts">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <img src="http://lorempixel.com/100/100/city/">
+                    </div>
+                    <div class="col-lg-8">
+                        <div><a href="#" popover="{{contract.note}}" popover-trigger="mouseenter">{{contract.idNo}}</a></div>
+                        <div>{{contract.exclusive ? 'kizárólagos' : 'nem kizárólagos'}}</div>
+                        <div>{{contract.startDate}} - {{contract.endDate}}</div>
+                        <div><a href="#" popover="{{contract.property.descriptionHu}}" popover-trigger="mouseenter">{{contract.property.code}}</a> {{contract.property.city.name}}</div>
+                    </div>
+                </div>
+                <hr>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+        	<h3 translate="aktivingatlanApp.statement.home.title">Statements</h3>
+        	<hr>
+            <div ng-repeat="statement in client.statements">
+                <div ng-repeat="property in statement.propertys">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <img src="http://lorempixel.com/100/100/city/">
+                        </div>
+                        <div class="col-lg-8">
+                        	<div>{{statement.date}}</div>
+                            <div><a href="#" popover="{{property.descriptionHu}}" popover-trigger="mouseenter">{{property.code}}</a> {{property.city.name}}</div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            </div>
+        </div>
+    </div>
+    
 
     <a href back-button class="btn btn-info">
         <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>

@@ -40,6 +40,9 @@ angular.module('aktivingatlanApp')
                 resolve: {
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('client');
+                        $translatePartialLoader.addPart('ownership');
+                        $translatePartialLoader.addPart('statement');
+                        $translatePartialLoader.addPart('contract');
                         return $translate.refresh();
                     }],
                     entity: ['$stateParams', 'Client', function($stateParams, Client) {
