@@ -26,6 +26,10 @@
             <column name="name_en" type="varchar(255)"/>
             <column name="name_de" type="varchar(255)"/>
         </createTable>
-        
+        <loadData encoding="UTF-8"
+            file="config/liquibase/categories.csv"
+            separator=";"
+            tableName="CATEGORY">
+        </loadData>
     </changeSet>
 </databaseChangeLog>
