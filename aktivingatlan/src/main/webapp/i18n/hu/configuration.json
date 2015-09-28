@@ -1,0 +1,10 @@
+{
+    "configuration": {
+        "title": "Konfiguráció",
+        "filter": "Szűrő",
+        "table": {
+            "prefix": "Előtag",
+            "properties": "Tulajdonságok"
+        }
+    }
+}

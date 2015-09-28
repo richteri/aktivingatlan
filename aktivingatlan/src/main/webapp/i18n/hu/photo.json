@@ -1,0 +1,26 @@
+{
+    "aktivingatlanApp": {
+        "photo" : {
+            "home": {
+                "title": "Fotók",
+                "createLabel": "Új fotó feltöltése",
+                "createOrEditLabel": "Fotó feltöltése vagy szerkesztése"
+            },
+            "created": "Új fotó feltöltve {{ param }}",
+            "updated": "Fotó módosítva {{ param }}",
+            "deleted": "Fotó törölve {{ param }}",
+            "delete": {
+                "question": "Biztosan törli a fotót {{ id }}?"
+            },
+            "detail": {
+                "title": "Fotó"
+            },
+            "header": "Nyitókép",
+            "descriptionHu": "Magyar leírás",
+            "descriptionEn": "Angol leírás",
+            "descriptionDe": "Német leírás",
+            "filename": "Fájlnév",
+            "property": "Ingatlan"
+        }
+    }
+}

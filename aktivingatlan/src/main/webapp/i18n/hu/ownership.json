@@ -1,0 +1,23 @@
+{
+    "aktivingatlanApp": {
+        "ownership" : {
+            "home": {
+                "title": "Tulajdonjogok",
+                "createLabel": "Új tulajdonjog létrehozása",
+                "createOrEditLabel": "Tulajdonjog létrehozása vagy szerkesztése"
+            },
+            "created": "Tulajdonjog létrehozva {{ param }}",
+            "updated": "Tulajdonjog módosítva {{ param }}",
+            "deleted": "Tulajdonjog törölve {{ param }}",
+            "delete": {
+                "question": "Biztosan törli a tulajdonjogot {{ id }}?"
+            },
+            "detail": {
+                "title": "Tulajdonjog"
+            },
+            "note": "Megjegyzés",
+            "property": "Ingatlan",
+            "client": "Ügyfél"
+        }
+    }
+}

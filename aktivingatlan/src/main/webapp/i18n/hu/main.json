@@ -1,0 +1,9 @@
+{
+    "main": {
+        "title": "Üdvözöljük az Aktivingatlan.com oldalon!",
+        "subtitle": "Ez a nyitólap",
+        "logged": {
+            "message": "Ön bejelentkezett a(z) \"{{username}}\" fiókba."
+        }
+    }
+}

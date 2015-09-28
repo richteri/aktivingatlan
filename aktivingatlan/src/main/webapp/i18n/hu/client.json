@@ -1,0 +1,31 @@
+{
+    "aktivingatlanApp": {
+        "client" : {
+            "home": {
+                "title": "Ügyfél",
+                "createLabel": "Új ügyfél létrehozása",
+                "createOrEditLabel": "Ügyfél létrehozása vagy szerkesztése"
+            },
+            "created": "Új ügyfél létrehozva {{ param }}",
+            "updated": "Ügyfél módosítva {{ param }}",
+            "deleted": "Ügyfél törölve {{ param }}",
+            "delete": {
+                "question": "Biztosan törli az ügyfelet {{ id }}?"
+            },
+            "detail": {
+                "title": "Ügyfél"
+            },
+            "name": "Név",
+            "email": "Email",
+            "phone1": "Telefon 1",
+            "phone2": "Telefon 2",
+            "address1": "Cím 1",
+            "address2": "Cím 2",
+            "idNo": "Sz.ig.sz.",
+            "note": "Megjegyzés",
+            "ownership": "Saját ingatlanok",
+            "statement": "Megtekintett ingatlanok",
+            "contract": "Szerződések"
+        }
+    }
+}

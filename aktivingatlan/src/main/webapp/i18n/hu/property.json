@@ -1,0 +1,62 @@
+{
+    "aktivingatlanApp": {
+        "property" : {
+            "home": {
+                "title": "Ingatlanok",
+                "createLabel": "Új ingatlan létrehozása",
+                "createOrEditLabel": "Ingatlan létrehozása vagy szerkesztése"
+            },
+            "created": "Új ingatlan létrehozva {{ param }}",
+            "updated": "Ingatlan módosítva {{ param }}",
+            "deleted": "Ingatlan törölve {{ param }}",
+            "delete": {
+                "question": "Biztosan törli az ingatlant {{ id }}?"
+            },
+            "detail": {
+                "title": "Ingatlan"
+            },
+            "code": "Kód",
+            "descriptionHu": "Magyar leírás",
+            "descriptionEn": "Angol leírás",
+            "descriptionDe": "Német leírás",
+            "room": "Szobák száma",
+            "halfRoom": "Félszobák száma",
+            "floorArea": "Alapterület",
+            "parcelArea": "Telekterület",
+            "pracelNumber": "Helyrajzi szám",
+            "address1": "Cím 1",
+            "address2": "Cím 2",
+            "active": "Aktív",
+            "kitchen": "Konyha",
+            "livingroom": "Nappali",
+            "floor": "Emelet",
+            "bathroom": "Fürdőszoba",
+            "toilet": "WC",
+            "furnished": "Bútorozott",
+            "forSale": "Eladó",
+            "saleHuf": "Eladási ár",
+            "saleEur": "Eladási ár EUR",
+            "forRent": "Kiadó",
+            "rentHuf": "Bérleti díj",
+            "rentEur": "Bérleti díj EUR",
+            "rentPeakHuf": "Bérleti díj a főszezonban",
+            "rentPeakEur": "Bérleti díj a főszezonban EUR",
+            "forMediumTerm": "Középtávra kiadó",
+            "mediumTermHuf": "Bérleti díj középtávra",
+            "mediumTermEur": "Bérleti díj középtávra EUR",
+            "forLongTerm": "Hosszú távra kiadó",
+            "longTermHuf": "Bérleti díj hosszútávra",
+            "longTermEur": "Bérleti díj hosszútávra EUR",
+            "featured": "Kiemelt hirdetés",
+            "category": "Kategória",
+            "photo": "Fényképek",
+            "statement": "Megtekintési nyilatkozatok",
+            "feature": "Jellemzők",
+            "ownership": "Tulajdonosok",
+            "city": "Város",
+            "contract": "Szerződések",
+            "user": "Referens",
+            "apartment": "Apartmanok"
+        }
+    }
+}

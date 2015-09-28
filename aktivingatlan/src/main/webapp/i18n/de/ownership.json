@@ -1,0 +1,23 @@
+{
+    "aktivingatlanApp": {
+        "ownership" : {
+            "home": {
+                "title": "Ownerships",
+                "createLabel": "Create a new Ownership",
+                "createOrEditLabel": "Create or edit a Ownership"
+            },
+            "created": "A new Ownership is created with identifier {{ param }}",
+            "updated": "A Ownership is updated with identifier {{ param }}",
+            "deleted": "A Ownership is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Ownership {{ id }}?"
+            },
+            "detail": {
+                "title": "Ownership"
+            },
+            "note": "Note",
+            "property": "Property",
+            "client": "Client"
+        }
+    }
+}

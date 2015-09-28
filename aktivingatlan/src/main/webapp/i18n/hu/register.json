@@ -1,0 +1,24 @@
+{
+    "register": {
+        "title": "Regisztráció",
+        "form": {
+            "button": "Regisztráció"
+        },
+        "messages": {
+            "validate": {
+                "login": {
+                    "required": "Felhasználónév megadása kötelező.",
+                    "minlength": "A felhasználónév minimális hossza 1 karakter.",
+                    "maxlength": "A felhasználónév nem lehet hosszabb 50 karakternél.",
+                    "pattern": "Felhasználóneve csak kisbetűket és számjegyeket tartalmazhat."
+                }
+            },
+            "success": "<strong>Regisztráció elmentve!</strong> Kérjük ellenőrizze az email fiókját a regisztráció megerősítéséhez.",
+            "error": {
+                "fail": "<strong>Sikertelen regisztráció!</strong> Kérjük próbálja újra később.",
+                "userexists": "<strong>A felhasználónév már foglalt!</strong> Kérjük válasszon másikat.",
+                "emailexists": "<strong>Az email cím már foglalt!</strong> Kérjük válasszon másikat."
+            }
+        }
+    }
+}

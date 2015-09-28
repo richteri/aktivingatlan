@@ -69,9 +69,9 @@ Browser Upgrade Prompt
 
 .hipster {
     display: inline-block;
-    width: 347px;
-    height: 497px;
-    background: url("../images/hipster.png") no-repeat center top;
+    width: 302px;
+    height: 302px;
+    background: url("../images/aktivingatlan-logo.png") no-repeat center top;
     background-size: contain;
 }
 
@@ -87,7 +87,7 @@ only screen and (        min-device-pixel-ratio: 2),
 only screen and (                min-resolution: 192dpi),
 only screen and (                min-resolution: 2dppx) {
     .hipster {
-        background: url("../images/hipster2x.png") no-repeat center top;
+        background: url("../images/aktivingatlan-logo2x.png") no-repeat center top;
         background-size: contain;
     }
 }

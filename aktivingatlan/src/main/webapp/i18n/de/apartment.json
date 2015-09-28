@@ -1,0 +1,31 @@
+{
+    "aktivingatlanApp": {
+        "apartment" : {
+            "home": {
+                "title": "Apartments",
+                "createLabel": "Create a new Apartment",
+                "createOrEditLabel": "Create or edit a Apartment"
+            },
+            "created": "A new Apartment is created with identifier {{ param }}",
+            "updated": "A Apartment is updated with identifier {{ param }}",
+            "deleted": "A Apartment is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Apartment {{ id }}?"
+            },
+            "detail": {
+                "title": "Apartment"
+            },
+            "bed": "Bed",
+            "bathroom": "Bathroom",
+            "toilet": "Toilet",
+            "rentHuf": "RentHuf",
+            "rentEur": "RentEur",
+            "rentPeakHuf": "RentPeakHuf",
+            "rentPeakEur": "RentPeakEur",
+            "descriptionHu": "DescriptionHu",
+            "descriptionEn": "DescriptionEn",
+            "descriptionDe": "DescriptionDe",
+            "property": "Property"
+        }
+    }
+}

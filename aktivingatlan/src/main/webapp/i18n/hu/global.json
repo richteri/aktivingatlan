@@ -1,0 +1,121 @@
+{
+    "global": {
+        "title": "Aktivingatlan.com",
+        "browsehappy": "Ön egy <strong>nem támogatott</strong> böngészőt használ. Kérjük <a href=\"http://browsehappy.com/?locale=en\">frissítse a böngészőjét</a> az oldal használatához.",
+        "menu": {
+            "home": "Nyitólap",
+            "entities": {
+                "main": "Törzsadatok",
+                "city": "Városok",
+                "category": "Kategóriák",
+                "feature": "Jellemzők",
+                "property": "Ingatlanok",
+                "client": "Ügyfelek",
+                "ownership": "Tulajdonjogok",
+                "statement": "Megtekintési nyilatkozatok",
+                "contract": "Szerződések",
+                "photo": "Fényképek",
+                "apartment": "Apartmanok",
+                "additionalEntity": "JHipster will add additional entities here (do not translate!)"
+            },
+            "account": {
+                "main": "Felhasználók",
+                "settings": "Beállítások",
+                "password": "Jelszó",
+                "sessions": "Munkamenetek",
+                "login": "Bejelentkezés",
+                "logout": "Kijelentkezés",
+                "register": "Regisztráció"
+            },
+            "admin": {
+                "main": "Adminisztráció",
+                "tracker": "Felhasználó követés",
+                "metrics": "Futási jellemzők",
+                "health": "Állapot",
+                "configuration": "Beállítások",
+                "logs": "Naplózás",
+                "audits": "Biztonsági napló",
+                "apidocs": "API",
+                "database": "Adatbázis"
+            },
+            "language": "Nyelv"
+        },
+        "form": {
+            "username": "Belejentkezés",
+            "username.placeholder": "Felhasználó",
+            "newpassword": "Új jelszó",
+            "newpassword.placeholder": "Adja meg a jelszót",
+            "confirmpassword": "Új jelszó megerősítése",
+            "confirmpassword.placeholder": "Erősítse meg a jelszót",
+            "email": "Email",
+            "email.placeholder": "Adja meg email címét"
+        },
+        "messages": {
+            "info": {
+                "authenticated": "Teszt <a href=\"#/login\">bejelentkezés</a>: admin/admin",
+                "register": "<a href=\"#/register\">Új felhasználó regisztrációja</a>"
+            },
+            "error": {
+                "dontmatch" : "A beírt jelszavak nem egyeznek!"
+            },
+            "validate": {
+                "newpassword": {
+                    "required": "A jelszó megadása kötelező.",
+                    "minlength": "A jelszó minimális hossza 5 karakter.",
+                    "maxlength": "A jelszó nem lehet hosszabb 50 karakternél.",
+                    "strength": "Jelszó erőssége:"
+                },
+                "confirmpassword": {
+                    "required": "A jelszó megerősítése kötelező.",
+                    "minlength": "A megerősítő jelszó minimális hossza 5 karakter.",
+                    "maxlength": "A megerősítő jelszó nem lehet hosszabb 50 karakternél."
+                },
+                "email": {
+                    "required": "Az email cím megadása kötelező.",
+                    "invalid": "Érvénytelen email cím.",
+                    "minlength": "Az email cím minimális hossza 5 karakter.",
+                    "maxlength": "Az email cím nem lehet hosszabb 50 karakternél."
+                }
+            }
+        },
+        "field": {
+            "id" : "ID"
+        }
+    },
+    "entity": {
+        "action": {
+            "addblob": "Fájl hozzáadása",
+            "addimage": "Kép hozzáadása",
+            "back": "Vissza",
+            "cancel": "Mégse",
+            "delete": "Törlés",
+            "edit": "Szerkesztés",
+            "save": "Mentés",
+            "view": "Részletek"
+        },
+        "detail": {
+            "field": "Mező",
+            "value": "Érték"
+        },
+        "delete": {
+            "title": "Törlés megerősítése"
+        },
+        "validation": {
+            "required": "A mező kitöltése kötelező.",
+            "minlength": "A mező minimális hossza {{min}} karakter.",
+            "maxlength": "A mező nem lehet hosszabb, mint {{max}} karakter.",
+            "min": "A mező minimális értéke {{min}}.",
+            "max": "A mező maximális értéke {{max}}.",
+            "minbytes": "A mező mérete legalább {{min}} byte.",
+            "maxbytes": "A mező mérete legfeljebb {{max}} byte.",
+            "pattern": "A mező formátuma {{pattern}}.",
+            "number": "A mezőbe szám érték rögzíthatő.",
+            "datetimelocal": "A mezőbe dátum-idő érték rögzíthető."
+        }
+    },
+    "error" : {
+        "serverNotReachable" : "A szerver nem érhető el",
+        "NotNull" : "A(z) {{fieldName}} mező nem lehet üres!"
+    },
+    "footer": "Ide jön a lábléc"
+}

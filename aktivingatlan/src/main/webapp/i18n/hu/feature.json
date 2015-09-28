@@ -1,0 +1,23 @@
+{
+    "aktivingatlanApp": {
+        "feature" : {
+            "home": {
+                "title": "Jellemzők",
+                "createLabel": "Új jellemző létrehozása",
+                "createOrEditLabel": "Jellemző létrehozása vagy szerkesztése"
+            },
+            "created": "Jellemző létrehozva {{ param }}",
+            "updated": "Jellemző módosítva {{ param }}",
+            "deleted": "Jellemző törölve {{ param }}",
+            "delete": {
+                "question": "Biztosan törli a jellemzőt {{ id }}?"
+            },
+            "detail": {
+                "title": "Jellemző"
+            },
+            "nameHu": "Magyar megnevezés",
+            "nameEn": "Angol megnevezés",
+            "nameDe": "Német megnevezés"
+        }
+    }
+}

@@ -1,0 +1,24 @@
+{
+    "aktivingatlanApp": {
+        "statement" : {
+            "home": {
+                "title": "Megtekintési nyilatkozatok",
+                "createLabel": "Új megtekintési nyilatkozat létrehozása",
+                "createOrEditLabel": "Megtekintési nyilatkozat létrehozása vagy szerkesztése"
+            },
+            "created": "Új Megtekintési nyilatkozat létrehozva {{ param }}",
+            "updated": "A Megtekintési nyilatkozat módosítva {{ param }}",
+            "deleted": "A Megtekintési nyilatkozat törölve {{ param }}",
+            "delete": {
+                "question": "Biztosan törli a Megtekintési nyilatkozatot {{ id }}?"
+            },
+            "detail": {
+                "title": "Megtekintési nyilatkozat"
+            },
+            "date": "Dátum",
+            "note": "Megjegyzés",
+            "client": "Ügyfelek",
+            "property": "Ingatlanok"
+        }
+    }
+}

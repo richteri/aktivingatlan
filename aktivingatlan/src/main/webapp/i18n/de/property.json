@@ -1,0 +1,62 @@
+{
+    "aktivingatlanApp": {
+        "property" : {
+            "home": {
+                "title": "Propertys",
+                "createLabel": "Create a new Property",
+                "createOrEditLabel": "Create or edit a Property"
+            },
+            "created": "A new Property is created with identifier {{ param }}",
+            "updated": "A Property is updated with identifier {{ param }}",
+            "deleted": "A Property is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Property {{ id }}?"
+            },
+            "detail": {
+                "title": "Property"
+            },
+            "code": "Code",
+            "descriptionHu": "DescriptionHu",
+            "descriptionEn": "DescriptionEn",
+            "descriptionDe": "DescriptionDe",
+            "room": "Room",
+            "halfRoom": "HalfRoom",
+            "floorArea": "FloorArea",
+            "parcelArea": "ParcelArea",
+            "pracelNumber": "PracelNumber",
+            "address1": "Address1",
+            "address2": "Address2",
+            "active": "Active",
+            "kitchen": "Kitchen",
+            "livingroom": "Livingroom",
+            "floor": "Floor",
+            "bathroom": "Bathroom",
+            "toilet": "Toilet",
+            "furnished": "Furnished",
+            "forSale": "ForSale",
+            "saleHuf": "SaleHuf",
+            "saleEur": "SaleEur",
+            "forRent": "ForRent",
+            "rentHuf": "RentHuf",
+            "rentEur": "RentEur",
+            "rentPeakHuf": "RentPeakHuf",
+            "rentPeakEur": "RentPeakEur",
+            "forMediumTerm": "ForMediumTerm",
+            "mediumTermHuf": "MediumTermHuf",
+            "mediumTermEur": "MediumTermEur",
+            "forLongTerm": "ForLongTerm",
+            "longTermHuf": "LongTermHuf",
+            "longTermEur": "LongTermEur",
+            "featured": "Featured",
+            "category": "Category",
+            "photo": "Photo",
+            "statement": "Statement",
+            "feature": "Feature",
+            "ownership": "Ownership",
+            "city": "City",
+            "contract": "Contract",
+            "user": "User",
+            "apartment": "Apartment"
+        }
+    }
+}

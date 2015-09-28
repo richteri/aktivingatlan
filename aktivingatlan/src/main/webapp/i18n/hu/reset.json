@@ -1,0 +1,30 @@
+{
+    "reset": {
+        "request": {
+            "title": "Jelszó helyreállítása",
+            "form": {
+                "button": "Jelszó helyreállítása"
+            },
+            "messages": {
+                "info": "Adja meg a regisztrációkor megadott email címét.",
+                "success": "Ellenőrizze email fiókját a jelszó helyreállításához.",
+                "notfound": "<strong>A megadott emailcím nem szerepel a nyilvántartásban!</strong> Kérjük ellenőrizze és próbálja újra."
+
+            }
+
+        },
+        "finish" : {
+            "title": "Jelszó helyreállítása",
+            "form": {
+                "button": "Új jelszó érvényesítése"
+            },
+            "messages": {
+                "info": "Válasszon új jelszót",
+                "success": "<strong>Jelszava helyreállítva.</strong> Kérjük <a href=\"#/login\">jelentkezzen be</a>.",
+                "keymissing": "A helyreállító kulcs hiányzik.",
+                "error": "Jelszavát nem sikerült helyreállítanunk. A jelszó helyreállítás csak 24 óráig érvényes."
+            }
+        }
+    }
+
+}

@@ -1,0 +1,27 @@
+{
+    "aktivingatlanApp": {
+        "contract" : {
+            "home": {
+                "title": "Szerződések",
+                "createLabel": "Új szerződés létrehozása",
+                "createOrEditLabel": "Szerződés létrehozása vagy szerkesztése"
+            },
+            "created": "Új szerződés létrehozva {{ param }}",
+            "updated": "Szerződés módosítva {{ param }}",
+            "deleted": "Szerződés törölve {{ param }}",
+            "delete": {
+                "question": "Biztosan törli a szerződést {{ id }}?"
+            },
+            "detail": {
+                "title": "Szerződés"
+            },
+            "idNo": "Kód",
+            "exclusive": "Exkluzív",
+            "startDate": "Kezdete",
+            "endDate": "Vége",
+            "note": "Megjegyzés",
+            "property": "Ingatlan",
+            "client": "Ügyfél"
+        }
+    }
+}

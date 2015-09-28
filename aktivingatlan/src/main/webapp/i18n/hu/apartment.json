@@ -1,0 +1,31 @@
+{
+    "aktivingatlanApp": {
+        "apartment" : {
+            "home": {
+                "title": "Apartmanok",
+                "createLabel": "Új apartman létrehozása",
+                "createOrEditLabel": "Apartman létrehozása vagy szerkesztése"
+            },
+            "created": "Új apartman létrehozva {{ param }}",
+            "updated": "Apartman módosítva {{ param }}",
+            "deleted": "Apartman törölve {{ param }}",
+            "delete": {
+                "question": "Biztosan törli az apartmant {{ id }}?"
+            },
+            "detail": {
+                "title": "Apartman"
+            },
+            "bed": "Férőhely",
+            "bathroom": "Saját fürdőszoba",
+            "toilet": "Saját WC",
+            "rentHuf": "Bérleti díj",
+            "rentEur": "Bérleti díj EUR",
+            "rentPeakHuf": "Bérleti díj főszezonban",
+            "rentPeakEur": "Bérleti díj főszezonban EUR",
+            "descriptionHu": "Magyar leírás",
+            "descriptionEn": "Angol leírás",
+            "descriptionDe": "Német leírás",
+            "property": "Ingatlan"
+        }
+    }
+}

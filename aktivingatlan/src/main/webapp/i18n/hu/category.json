@@ -1,0 +1,23 @@
+{
+    "aktivingatlanApp": {
+        "category" : {
+            "home": {
+                "title": "Kategória",
+                "createLabel": "Új kategória létrehozása",
+                "createOrEditLabel": "Kategória létrehozása vagy szerkesztése"
+            },
+            "created": "Új kategória létrehozva {{ param }}",
+            "updated": "Kategória módosítva {{ param }}",
+            "deleted": "Kategória törölve {{ param }}",
+            "delete": {
+                "question": "Biztosan törli a kategóriát {{ id }}?"
+            },
+            "detail": {
+                "title": "Kategória"
+            },
+            "nameHu": "Magyar megnevezés",
+            "nameEn": "Angol megnevezés",
+            "nameDe": "Német megnevezés"
+        }
+    }
+}

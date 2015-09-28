@@ -1,0 +1,32 @@
+{
+    "settings": {
+        "title": "A(z) [<b>{{username}}</b>] fiók beállításai",
+        "form": {
+            "firstname": "Vezetéknév",
+            "firstname.placeholder": "Adja meg a vezetéknevét",
+            "lastname": "Keresztnév",
+            "lastname.placeholder": "Adja meg a keresztnevét",
+            "language": "Nyelv",
+            "button": "Mentés"
+        },
+        "messages": {
+            "error": {
+                "fail": "<strong>Hiba!</strong> A beállítások mentése sikertelen.",
+                "emailexists": "<strong>Az emailcím már használatban van!</strong> Kérjük válasszon másikat."
+            },
+            "success": "<strong>Beállítások elmentve!</strong>",
+            "validate": {
+                "firstname": {
+                    "required": "Vezetéknév megadása kötelező.",
+                    "minlength": "A vezetéknév minimális hossza 1 karakter.",
+                    "maxlength": "A vezetéknév mayimális hossza 50 karakter."
+                },
+                "lastname": {
+                    "required": "Keresztnév megadása kötelező.",
+                    "minlength": "A keresztnév minimális hossza 1 karakter.",
+                    "maxlength": "A keresztnév mayimális hossza 50 karakter."
+                }
+            }
+        }
+    }
+}
