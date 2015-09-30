@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.aktivingatlan.domain.Feature;
+import com.aktivingatlan.domain.Photo;
 
 import java.util.Objects;
 
@@ -86,6 +87,7 @@ public class PropertyDTO implements Serializable {
     private Long categoryId;
 
     private String categoryNameHu;
+    
     private Set<Feature> features = new HashSet<>();
 
     private Long cityId;
@@ -95,7 +97,9 @@ public class PropertyDTO implements Serializable {
     private Long userId;
 
     private String userLogin;
-
+    
+    private Set<Photo> photos = new HashSet<>();
+    
     public Long getId() {
         return id;
     }
@@ -423,8 +427,16 @@ public class PropertyDTO implements Serializable {
     public void setUserLogin(String userLogin) {
         this.userLogin = userLogin;
     }
+    
+	public Set<Photo> getPhotos() {
+		return photos;
+	}
 
-    @Override
+	public void setPhotos(Set<Photo> photos) {
+		this.photos = photos;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;

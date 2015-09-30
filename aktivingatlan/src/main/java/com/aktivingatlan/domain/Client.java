@@ -51,17 +51,14 @@ public class Client implements Serializable {
     private String note;
 
     @OneToMany(mappedBy = "client")
-    @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Ownership> ownerships = new HashSet<>();
 
     @ManyToMany(mappedBy = "clients")
-    @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Statement> statements = new HashSet<>();
 
     @ManyToMany(mappedBy = "clients")
-    @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Contract> contracts = new HashSet<>();
 

@@ -13,6 +13,8 @@ public interface OwnershipMapper {
 
     @Mapping(source = "property.id", target = "propertyId")
     @Mapping(source = "property.code", target = "propertyCode")
+    @Mapping(source = "property.descriptionHu", target = "propertyDescriptionHu")
+    @Mapping(source = "property.photos", target = "propertyPhotos")
     @Mapping(source = "client.id", target = "clientId")
     @Mapping(source = "client.name", target = "clientName")
     OwnershipDTO ownershipToOwnershipDTO(Ownership ownership);
@@ -38,4 +40,5 @@ public interface OwnershipMapper {
         client.setId(id);
         return client;
     }
+    
 }

@@ -112,6 +112,7 @@ public class OwnershipResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @Transactional(readOnly = true)
     public ResponseEntity<OwnershipDTO> get(@PathVariable Long id) {
         log.debug("REST request to get Ownership : {}", id);
         return Optional.ofNullable(ownershipRepository.findOne(id))

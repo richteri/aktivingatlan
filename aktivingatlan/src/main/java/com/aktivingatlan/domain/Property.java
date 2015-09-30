@@ -129,13 +129,11 @@ public class Property implements Serializable {
     @ManyToOne
     private Category category;
 
-    @OneToMany(mappedBy = "property")
-    @JsonIgnore
+    @OneToMany(mappedBy = "property", fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Photo> photos = new HashSet<>();
 
     @ManyToMany(mappedBy = "propertys")
-    @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Statement> statements = new HashSet<>();
 
@@ -147,7 +145,6 @@ public class Property implements Serializable {
     private Set<Feature> features = new HashSet<>();
 
     @OneToMany(mappedBy = "property")
-    @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Ownership> ownerships = new HashSet<>();
 
@@ -155,15 +152,13 @@ public class Property implements Serializable {
     private City city;
 
     @OneToMany(mappedBy = "property")
-    @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Contract> contracts = new HashSet<>();
 
     @ManyToOne
     private User user;
 
-    @OneToMany(mappedBy = "property")
-    @JsonIgnore
+    @OneToMany(mappedBy = "property", fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Apartment> apartments = new HashSet<>();
 

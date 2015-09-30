@@ -3,20 +3,18 @@ package com.aktivingatlan.web.rest.mapper;
 import com.aktivingatlan.domain.*;
 import com.aktivingatlan.web.rest.dto.ContractDTO;
 
-import org.hibernate.hql.internal.ast.tree.BooleanLiteralNode;
 import org.mapstruct.*;
 
 /**
  * Mapper for the entity Contract and its DTO ContractDTO.
  */
 @Mapper(componentModel = "spring", uses = {ClientMapper.class, })
-public interface ContractMapper {
+public interface ContractDetailsMapper {
 
     @Mapping(source = "property.id", target = "propertyId")
     @Mapping(source = "property.code", target = "propertyCode")
     @Mapping(source = "property.descriptionHu", target = "propertyDescriptionHu")
     @Mapping(source = "property.photos", target = "propertyPhotos")
-    @Mapping(target = "clients", ignore = true)
     ContractDTO contractToContractDTO(Contract contract);
 
     @Mapping(source = "propertyId", target = "property")
@@ -39,5 +37,4 @@ public interface ContractMapper {
         client.setId(id);
         return client;
     }
-    
 }

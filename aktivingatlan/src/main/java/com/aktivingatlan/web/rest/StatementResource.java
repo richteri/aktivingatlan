@@ -112,6 +112,7 @@ public class StatementResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @Transactional(readOnly = true)
     public ResponseEntity<StatementDTO> get(@PathVariable Long id) {
         log.debug("REST request to get Statement : {}", id);
         return Optional.ofNullable(statementRepository.findOneWithEagerRelationships(id))

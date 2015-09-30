@@ -64,4 +64,5 @@ public interface PropertyMapper {
         user.setId(id);
         return user;
     }
+
 }

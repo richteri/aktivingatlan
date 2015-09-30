@@ -9,11 +9,8 @@ import org.mapstruct.*;
  * Mapper for the entity Client and its DTO ClientDTO.
  */
 @Mapper(componentModel = "spring", uses = {OwnershipMapper.class, StatementMapper.class, ContractMapper.class})
-public interface ClientMapper {
+public interface ClientDetailsMapper {
 
-    @Mapping(target = "ownerships", ignore = true)
-    @Mapping(target = "statements", ignore = true)
-    @Mapping(target = "contracts", ignore = true)
     ClientDTO clientToClientDTO(Client client);
 
     @Mapping(target = "ownerships", ignore = true)

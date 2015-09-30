@@ -112,6 +112,7 @@ public class PropertyResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @Transactional(readOnly = true)
     public ResponseEntity<PropertyDTO> get(@PathVariable Long id) {
         log.debug("REST request to get Property : {}", id);
         return Optional.ofNullable(propertyRepository.findOneWithEagerRelationships(id))

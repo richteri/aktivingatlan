@@ -3,6 +3,9 @@ package com.aktivingatlan.web.rest.dto;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+
+import com.aktivingatlan.domain.Photo;
+
 import java.util.Objects;
 
 
@@ -18,7 +21,11 @@ public class OwnershipDTO implements Serializable {
     private Long propertyId;
 
     private String propertyCode;
-
+    
+    private String propertyDescriptionHu;
+    
+    private Set<Photo> propertyPhotos = new HashSet<>();
+    
     private Long clientId;
 
     private String clientName;
@@ -55,7 +62,23 @@ public class OwnershipDTO implements Serializable {
         this.propertyCode = propertyCode;
     }
 
-    public Long getClientId() {
+    public String getPropertyDescriptionHu() {
+		return propertyDescriptionHu;
+	}
+
+	public void setPropertyDescriptionHu(String propertyDescriptionHu) {
+		this.propertyDescriptionHu = propertyDescriptionHu;
+	}
+
+	public Set<Photo> getPropertyPhotos() {
+		return propertyPhotos;
+	}
+
+	public void setPropertyPhotos(Set<Photo> propertyPhotos) {
+		this.propertyPhotos = propertyPhotos;
+	}
+
+	public Long getClientId() {
         return clientId;
     }
 

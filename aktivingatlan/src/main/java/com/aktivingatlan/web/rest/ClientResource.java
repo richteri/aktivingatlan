@@ -7,7 +7,7 @@ import com.aktivingatlan.repository.search.ClientSearchRepository;
 import com.aktivingatlan.web.rest.util.HeaderUtil;
 import com.aktivingatlan.web.rest.util.PaginationUtil;
 import com.aktivingatlan.web.rest.dto.ClientDTO;
-import com.aktivingatlan.web.rest.mapper.ClientMapper;
+import com.aktivingatlan.web.rest.mapper.ClientDetailsMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -43,7 +43,7 @@ public class ClientResource {
     private ClientRepository clientRepository;
 
     @Inject
-    private ClientMapper clientMapper;
+    private ClientDetailsMapper clientMapper;
 
     /**
      * POST  /clients -> Create a new client.
@@ -112,9 +112,10 @@ public class ClientResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @Transactional(readOnly = true)
     public ResponseEntity<ClientDTO> get(@PathVariable Long id) {
         log.debug("REST request to get Client : {}", id);
-        return Optional.ofNullable(clientRepository.findOne(id))
+        return Optional.ofNullable(clientRepository.findByIdWithEagerRelationships(id))
             .map(clientMapper::clientToClientDTO)
             .map(clientDTO -> new ResponseEntity<>(
                 clientDTO,
@@ -143,6 +144,7 @@ public class ClientResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @Transactional(readOnly = true)
     public ResponseEntity<List<ClientDTO>> search(
             @PathVariable String query,
             @RequestParam(value = "page", required = false) Integer offset,

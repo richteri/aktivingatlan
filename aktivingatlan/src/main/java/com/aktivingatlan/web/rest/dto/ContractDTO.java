@@ -1,6 +1,9 @@
 package com.aktivingatlan.web.rest.dto;
 
 import org.joda.time.LocalDate;
+
+import com.aktivingatlan.domain.Photo;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -27,6 +30,11 @@ public class ContractDTO implements Serializable {
     private Long propertyId;
 
     private String propertyCode;
+    
+    private String propertyDescriptionHu;
+    
+    private Set<Photo> propertyPhotos = new HashSet<>();
+    
     private Set<ClientDTO> clients = new HashSet<>();
 
     public Long getId() {
@@ -92,15 +100,31 @@ public class ContractDTO implements Serializable {
     public void setPropertyCode(String propertyCode) {
         this.propertyCode = propertyCode;
     }
+    
+    public String getPropertyDescriptionHu() {
+		return propertyDescriptionHu;
+	}
 
-    public Set<ClientDTO> getClients() {
+	public void setPropertyDescriptionHu(String propertyDescriptionHu) {
+		this.propertyDescriptionHu = propertyDescriptionHu;
+	}
+
+	public Set<Photo> getPropertyPhotos() {
+		return propertyPhotos;
+	}
+
+	public void setPropertyPhotos(Set<Photo> propertyPhotos) {
+		this.propertyPhotos = propertyPhotos;
+	}
+
+	public Set<ClientDTO> getClients() {
         return clients;
     }
 
     public void setClients(Set<ClientDTO> clients) {
         this.clients = clients;
     }
-
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) {

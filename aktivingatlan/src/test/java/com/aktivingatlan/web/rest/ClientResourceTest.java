@@ -5,7 +5,7 @@ import com.aktivingatlan.domain.Client;
 import com.aktivingatlan.repository.ClientRepository;
 import com.aktivingatlan.repository.search.ClientSearchRepository;
 import com.aktivingatlan.web.rest.dto.ClientDTO;
-import com.aktivingatlan.web.rest.mapper.ClientMapper;
+import com.aktivingatlan.web.rest.mapper.ClientDetailsMapper;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -64,7 +64,7 @@ public class ClientResourceTest {
     private ClientRepository clientRepository;
 
     @Inject
-    private ClientMapper clientMapper;
+    private ClientDetailsMapper clientMapper;
 
     @Inject
     private ClientSearchRepository clientSearchRepository;

@@ -112,6 +112,7 @@ public class ContractResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @Transactional(readOnly = true)
     public ResponseEntity<ContractDTO> get(@PathVariable Long id) {
         log.debug("REST request to get Contract : {}", id);
         return Optional.ofNullable(contractRepository.findOneWithEagerRelationships(id))
@@ -144,6 +145,7 @@ public class ContractResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @Transactional(readOnly = true)
     public List<Contract> search(@PathVariable String query) {
         return StreamSupport
             .stream(contractSearchRepository.search(queryString(query)).spliterator(), false)

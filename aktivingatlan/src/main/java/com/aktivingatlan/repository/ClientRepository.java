@@ -20,5 +20,5 @@ public interface ClientRepository extends JpaRepository<Client,Long> {
             + "left join fetch client.contracts "
             + "left join fetch cs.propertys "
             + "where client.id = :id")
-    Client findByIdWithDetails(@Param("id") Long id);
+    Client findByIdWithEagerRelationships(@Param("id") Long id);
 }

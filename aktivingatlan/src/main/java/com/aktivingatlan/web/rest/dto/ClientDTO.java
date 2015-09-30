@@ -2,6 +2,7 @@ package com.aktivingatlan.web.rest.dto;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.Objects;
 
@@ -28,6 +29,12 @@ public class ClientDTO implements Serializable {
     private String idNo;
 
     private String note;
+    
+    private Set<OwnershipDTO> ownerships;
+    
+    private Set<ContractDTO> contracts;
+    
+    private Set<StatementDTO> statements;
 
     public Long getId() {
         return id;
@@ -101,7 +108,31 @@ public class ClientDTO implements Serializable {
         this.note = note;
     }
 
-    @Override
+	public Set<OwnershipDTO> getOwnerships() {
+		return ownerships;
+	}
+
+	public void setOwnerships(Set<OwnershipDTO> ownerships) {
+		this.ownerships = ownerships;
+	}
+
+	public Set<ContractDTO> getContracts() {
+		return contracts;
+	}
+
+	public void setContracts(Set<ContractDTO> contracts) {
+		this.contracts = contracts;
+	}
+
+	public Set<StatementDTO> getStatements() {
+		return statements;
+	}
+
+	public void setStatements(Set<StatementDTO> statements) {
+		this.statements = statements;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
