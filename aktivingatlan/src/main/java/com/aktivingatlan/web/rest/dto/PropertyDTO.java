@@ -98,7 +98,7 @@ public class PropertyDTO implements Serializable {
 
     private String userLogin;
     
-    private Set<Photo> photos = new HashSet<>();
+    private Set<PhotoDTO> photos = new HashSet<>();
     
     public Long getId() {
         return id;
@@ -428,11 +428,11 @@ public class PropertyDTO implements Serializable {
         this.userLogin = userLogin;
     }
     
-	public Set<Photo> getPhotos() {
+	public Set<PhotoDTO> getPhotos() {
 		return photos;
 	}
 
-	public void setPhotos(Set<Photo> photos) {
+	public void setPhotos(Set<PhotoDTO> photos) {
 		this.photos = photos;
 	}
 

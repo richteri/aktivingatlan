@@ -8,7 +8,7 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity Property and its DTO PropertyDTO.
  */
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = { PhotoMapper.class })
 public interface PropertyMapper {
 
     @Mapping(source = "category.id", target = "categoryId")

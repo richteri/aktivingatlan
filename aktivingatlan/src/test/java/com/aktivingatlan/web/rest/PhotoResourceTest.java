@@ -4,6 +4,8 @@ import com.aktivingatlan.Application;
 import com.aktivingatlan.domain.Photo;
 import com.aktivingatlan.repository.PhotoRepository;
 import com.aktivingatlan.repository.search.PhotoSearchRepository;
+import com.aktivingatlan.web.rest.dto.PhotoDTO;
+import com.aktivingatlan.web.rest.mapper.PhotoMapper;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -57,6 +59,9 @@ public class PhotoResourceTest {
     private PhotoRepository photoRepository;
 
     @Inject
+    private PhotoMapper photoMapper;
+
+    @Inject
     private PhotoSearchRepository photoSearchRepository;
 
     @Inject
@@ -71,6 +76,7 @@ public class PhotoResourceTest {
         MockitoAnnotations.initMocks(this);
         PhotoResource photoResource = new PhotoResource();
         ReflectionTestUtils.setField(photoResource, "photoRepository", photoRepository);
+        ReflectionTestUtils.setField(photoResource, "photoMapper", photoMapper);
         ReflectionTestUtils.setField(photoResource, "photoSearchRepository", photoSearchRepository);
         this.restPhotoMockMvc = MockMvcBuilders.standaloneSetup(photoResource).setMessageConverters(jacksonMessageConverter).build();
     }
@@ -91,10 +97,11 @@ public class PhotoResourceTest {
         int databaseSizeBeforeCreate = photoRepository.findAll().size();
 
         // Create the Photo
+        PhotoDTO photoDTO = photoMapper.photoToPhotoDTO(photo);
 
         restPhotoMockMvc.perform(post("/api/photos")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(photo)))
+                .content(TestUtil.convertObjectToJsonBytes(photoDTO)))
                 .andExpect(status().isCreated());
 
         // Validate the Photo in the database
@@ -167,10 +174,11 @@ public class PhotoResourceTest {
         photo.setDescriptionDe(UPDATED_DESCRIPTION_DE);
         photo.setFilename(UPDATED_FILENAME);
         
+        PhotoDTO photoDTO = photoMapper.photoToPhotoDTO(photo);
 
         restPhotoMockMvc.perform(put("/api/photos")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(photo)))
+                .content(TestUtil.convertObjectToJsonBytes(photoDTO)))
                 .andExpect(status().isOk());
 
         // Validate the Photo in the database

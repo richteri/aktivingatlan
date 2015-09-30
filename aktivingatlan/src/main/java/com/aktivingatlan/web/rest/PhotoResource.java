@@ -6,6 +6,8 @@ import com.aktivingatlan.repository.PhotoRepository;
 import com.aktivingatlan.repository.search.PhotoSearchRepository;
 import com.aktivingatlan.web.rest.util.HeaderUtil;
 import com.aktivingatlan.web.rest.util.PaginationUtil;
+import com.aktivingatlan.web.rest.dto.PhotoDTO;
+import com.aktivingatlan.web.rest.mapper.PhotoMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -13,11 +15,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -38,6 +42,9 @@ public class PhotoResource {
     private PhotoRepository photoRepository;
 
     @Inject
+    private PhotoMapper photoMapper;
+
+    @Inject
     private PhotoSearchRepository photoSearchRepository;
 
     /**
@@ -47,16 +54,17 @@ public class PhotoResource {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Photo> create(@RequestBody Photo photo) throws URISyntaxException {
-        log.debug("REST request to save Photo : {}", photo);
-        if (photo.getId() != null) {
+    public ResponseEntity<PhotoDTO> create(@RequestBody PhotoDTO photoDTO) throws URISyntaxException {
+        log.debug("REST request to save Photo : {}", photoDTO);
+        if (photoDTO.getId() != null) {
             return ResponseEntity.badRequest().header("Failure", "A new photo cannot already have an ID").body(null);
         }
+        Photo photo = photoMapper.photoDTOToPhoto(photoDTO);
         Photo result = photoRepository.save(photo);
         photoSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/photos/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert("photo", result.getId().toString()))
-                .body(result);
+                .body(photoMapper.photoToPhotoDTO(result));
     }
 
     /**
@@ -66,16 +74,17 @@ public class PhotoResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Photo> update(@RequestBody Photo photo) throws URISyntaxException {
-        log.debug("REST request to update Photo : {}", photo);
-        if (photo.getId() == null) {
-            return create(photo);
+    public ResponseEntity<PhotoDTO> update(@RequestBody PhotoDTO photoDTO) throws URISyntaxException {
+        log.debug("REST request to update Photo : {}", photoDTO);
+        if (photoDTO.getId() == null) {
+            return create(photoDTO);
         }
+        Photo photo = photoMapper.photoDTOToPhoto(photoDTO);
         Photo result = photoRepository.save(photo);
         photoSearchRepository.save(photo);
         return ResponseEntity.ok()
-                .headers(HeaderUtil.createEntityUpdateAlert("photo", photo.getId().toString()))
-                .body(result);
+                .headers(HeaderUtil.createEntityUpdateAlert("photo", photoDTO.getId().toString()))
+                .body(photoMapper.photoToPhotoDTO(result));
     }
 
     /**
@@ -85,12 +94,15 @@ public class PhotoResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<List<Photo>> getAll(@RequestParam(value = "page" , required = false) Integer offset,
+    @Transactional(readOnly = true)
+    public ResponseEntity<List<PhotoDTO>> getAll(@RequestParam(value = "page" , required = false) Integer offset,
                                   @RequestParam(value = "per_page", required = false) Integer limit)
         throws URISyntaxException {
         Page<Photo> page = photoRepository.findAll(PaginationUtil.generatePageRequest(offset, limit));
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/photos", offset, limit);
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+        return new ResponseEntity<>(page.getContent().stream()
+            .map(photoMapper::photoToPhotoDTO)
+            .collect(Collectors.toCollection(LinkedList::new)), headers, HttpStatus.OK);
     }
 
     /**
@@ -100,11 +112,12 @@ public class PhotoResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Photo> get(@PathVariable Long id) {
+    public ResponseEntity<PhotoDTO> get(@PathVariable Long id) {
         log.debug("REST request to get Photo : {}", id);
         return Optional.ofNullable(photoRepository.findOne(id))
-            .map(photo -> new ResponseEntity<>(
-                photo,
+            .map(photoMapper::photoToPhotoDTO)
+            .map(photoDTO -> new ResponseEntity<>(
+                photoDTO,
                 HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }

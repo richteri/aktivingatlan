@@ -24,7 +24,11 @@ public class OwnershipDTO implements Serializable {
     
     private String propertyDescriptionHu;
     
-    private Set<Photo> propertyPhotos = new HashSet<>();
+    private Long propertyCityId;
+
+    private String propertyCityName;
+    
+    private Set<PhotoDTO> propertyPhotos = new HashSet<>();
     
     private Long clientId;
 
@@ -70,11 +74,27 @@ public class OwnershipDTO implements Serializable {
 		this.propertyDescriptionHu = propertyDescriptionHu;
 	}
 
-	public Set<Photo> getPropertyPhotos() {
+	public Long getPropertyCityId() {
+		return propertyCityId;
+	}
+
+	public void setPropertyCityId(Long propertyCityId) {
+		this.propertyCityId = propertyCityId;
+	}
+
+	public String getPropertyCityName() {
+		return propertyCityName;
+	}
+
+	public void setPropertyCityName(String propertyCityName) {
+		this.propertyCityName = propertyCityName;
+	}
+
+	public Set<PhotoDTO> getPropertyPhotos() {
 		return propertyPhotos;
 	}
 
-	public void setPropertyPhotos(Set<Photo> propertyPhotos) {
+	public void setPropertyPhotos(Set<PhotoDTO> propertyPhotos) {
 		this.propertyPhotos = propertyPhotos;
 	}
 

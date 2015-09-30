@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('aktivingatlanApp')
-    .controller('ClientController', function ($scope, Client, ClientSearch, ParseLinks, Pageable) {
+    .controller('ClientController', function ($scope, Client, ClientSearch, ParseLinks, Pageable, Ownership) {
         $scope.clients = [];
         $scope.pageable = new Pageable($scope, 'pageable');
 
@@ -54,7 +54,7 @@ angular.module('aktivingatlanApp')
         $scope.delete = function (id) {
             Client.get({id: id}, function(result) {
                 $scope.client = result;
-                $('#deleteCityConfirmation').modal('show');
+                $('#deleteClientConfirmation').modal('show');
             });
         };
 
@@ -63,14 +63,38 @@ angular.module('aktivingatlanApp')
             Client.delete({id: id},
                 function () {
                     $scope.load();
-                    $('#deleteCityConfirmation').modal('hide');
+                    $('#deleteClientConfirmation').modal('hide');
                     $scope.clear();
+                });
+        };
+        
+        // Show ownership delete confirmation window
+        $scope.deleteOwnership = function (id) {
+        	console.log('deleteOwnership called with id:', id);
+            Ownership.get({id: id}, function(result) {
+                $scope.ownership = result;
+                $('#deleteOwnershipConfirmation').modal('show');
+            });
+        };
+
+        // Confirm ownership delete
+        $scope.confirmDeleteOwnership = function (id) {
+            Ownership.delete({id: id},
+                function () {
+                    $scope.load();
+                    $('#deleteOwnershipConfirmation').modal('hide');
+                    $scope.clearOwnership();
                 });
         };
 
         $scope.clear = function () {
             $scope.client = {name: null, email: null, phone1: null, phone2: null, address1: null, address2: null, idNo: null, note: null, id: null};
         };
+        
+        $scope.clearOwnership = function () {
+        	$scope.ownership = {note: null, id: null, clientId: null};
+        }
 
         $scope.load();
+
     });

@@ -95,9 +95,31 @@ angular.module('aktivingatlanApp')
                         $state.go('^');
                     })
                 }]
-            }).state('client.detail.ownership', {
+            }).state('client.detail.ownershipNew', {
                 parent: 'client.detail',
-                url: '/client/{id}/ownership/{ownershipId}',
+                url: '/client/{id}/ownership/new',
+                data: {
+                    roles: ['ROLE_USER'],
+                },
+                onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal) {
+                    $modal.open({
+                        templateUrl: 'scripts/app/entities/ownership/ownership-dialog.html',
+                        controller: 'OwnershipDialogController',
+                        size: 'lg',
+                        resolve: {
+                            entity: function () {
+                                return {note: null, id: null, clientId: $stateParams.clientId};
+                            }
+                        }
+                    }).result.then(function(result) {
+                        $state.go('client.detail', null, { reload: true });
+                    }, function() {
+                        $state.go('^');
+                    })
+                }]
+            }).state('client.detail.ownershipEdit', {
+                parent: 'client.detail',
+                url: '/client/{id}/ownership/{ownershipId}/edit',
                 data: {
                     roles: ['ROLE_USER'],
                 },

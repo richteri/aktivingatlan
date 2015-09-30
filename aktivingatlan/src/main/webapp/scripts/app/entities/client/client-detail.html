@@ -80,7 +80,12 @@
     
     <div class="row">
         <div class="col-lg-4">
-        	<h3><span translate="aktivingatlanApp.ownership.home.title">Ownerships</span></h3>
+        	<h3>
+				<button class="btn btn-success btn-sm" ui-sref="client.detail.ownershipNew({clientId:client.id})">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+        		<span translate="aktivingatlanApp.ownership.home.title">Ownerships</span>
+        	</h3>
         	<hr>
             <div ng-repeat="ownership in client.ownerships">
                 <div class="row">
@@ -90,11 +95,19 @@
                     <div class="col-lg-8">
                         <div><a ng-href="#/property/{{ownership.propertyId}}" popover="{{ownership.propertyDescriptionHu}}" popover-trigger="mouseenter">{{ownership.propertyCode}}</a> {{ownership.propertyCityName}}</div>
                         <div>{{ownership.note}}</div>
-                        <button type="submit"
-                                ui-sref="client.detail.ownership({id:client.id, ownershipId:ownership.id})"
-                                class="btn btn-primary btn-sm">
-                            <span class="glyphicon glyphicon-pencil"></span>&nbsp;<span translate="entity.action.edit"> Edit</span>
-                        </button>
+                        <br>
+                        <div  class="btn-group" role="group" aria-label="Edit">
+	                        <button type="submit"
+	                                ui-sref="client.detail.ownershipEdit({id:client.id, ownershipId:ownership.id})"
+	                                class="btn btn-primary btn-sm">
+	                            <span class="glyphicon glyphicon-pencil"></span>
+	                        </button>
+	                        <button type="submit"
+	                                ng-click="deleteOwnership(ownership.id)"
+	                                class="btn btn-danger btn-sm">
+	                            <span class="glyphicon glyphicon-remove-circle"></span>
+	                        </button>
+						</div>
                     </div>
                 </div>
                 <hr>
@@ -141,7 +154,32 @@
     </div>
     
 
-    <a href back-button class="btn btn-info">
+    <a ui-sref="client" class="btn btn-info">
         <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
     </a>
+    
+    <div class="modal fade" id="deleteOwnershipConfirmation">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form name="deleteOwnershipForm" ng-submit="confirmDeleteOwnership(ownership.id)">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                                ng-click="clearOwnership()">&times;</button>
+                        <h4 class="modal-title" translate="entity.delete.title">Confirm delete operation</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p translate="aktivingatlanApp.ownership.delete.question" translate-values="{id: '[{{ownership.note}}]'}">Are you sure you want to delete this Ownership?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clearOwnership()">
+                            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+                        </button>
+                        <button type="submit" ng-disabled="deleteForm.$invalid" class="btn btn-danger">
+                            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span translate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>

@@ -33,7 +33,11 @@ public class ContractDTO implements Serializable {
     
     private String propertyDescriptionHu;
     
-    private Set<Photo> propertyPhotos = new HashSet<>();
+    private Long propertyCityId;
+
+    private String propertyCityName;
+    
+    private Set<PhotoDTO> propertyPhotos = new HashSet<>();
     
     private Set<ClientDTO> clients = new HashSet<>();
 
@@ -109,12 +113,28 @@ public class ContractDTO implements Serializable {
 		this.propertyDescriptionHu = propertyDescriptionHu;
 	}
 
-	public Set<Photo> getPropertyPhotos() {
+	public Set<PhotoDTO> getPropertyPhotos() {
 		return propertyPhotos;
 	}
 
-	public void setPropertyPhotos(Set<Photo> propertyPhotos) {
+	public void setPropertyPhotos(Set<PhotoDTO> propertyPhotos) {
 		this.propertyPhotos = propertyPhotos;
+	}
+
+	public Long getPropertyCityId() {
+		return propertyCityId;
+	}
+
+	public void setPropertyCityId(Long propertyCityId) {
+		this.propertyCityId = propertyCityId;
+	}
+
+	public String getPropertyCityName() {
+		return propertyCityName;
+	}
+
+	public void setPropertyCityName(String propertyCityName) {
+		this.propertyCityName = propertyCityName;
 	}
 
 	public Set<ClientDTO> getClients() {
