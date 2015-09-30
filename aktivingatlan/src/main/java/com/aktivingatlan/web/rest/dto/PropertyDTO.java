@@ -1,171 +1,100 @@
-package com.aktivingatlan.domain;
+package com.aktivingatlan.web.rest.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.springframework.data.elasticsearch.annotations.Document;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
+
+import com.aktivingatlan.domain.Feature;
+
 import java.util.Objects;
 
 
 /**
- * A Property.
+ * A DTO for the Property entity.
  */
-@Entity
-@Table(name = "PROPERTY")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName="property")
-public class Property implements Serializable {
+public class PropertyDTO implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
-    
-    @Column(name = "code")
+
     private String code;
-    
-    @Column(name = "description_hu")
+
     private String descriptionHu;
-    
-    @Column(name = "description_en")
+
     private String descriptionEn;
-    
-    @Column(name = "description_de")
+
     private String descriptionDe;
-    
-    @Column(name = "room")
+
     private Integer room;
-    
-    @Column(name = "half_room")
+
     private Integer halfRoom;
-    
-    @Column(name = "floor_area")
+
     private Integer floorArea;
-    
-    @Column(name = "parcel_area")
+
     private Integer parcelArea;
-    
-    @Column(name = "pracel_number")
+
     private String pracelNumber;
-    
-    @Column(name = "address1")
+
     private String address1;
-    
-    @Column(name = "address2")
+
     private String address2;
-    
-    @Column(name = "active")
+
     private Boolean active;
-    
-    @Column(name = "kitchen")
+
     private Integer kitchen;
-    
-    @Column(name = "livingroom")
+
     private Integer livingroom;
-    
-    @Column(name = "floor")
+
     private Integer floor;
-    
-    @Column(name = "bathroom")
+
     private Integer bathroom;
-    
-    @Column(name = "toilet")
+
     private Integer toilet;
-    
-    @Column(name = "furnished")
+
     private Boolean furnished;
-    
-    @Column(name = "for_sale")
+
     private Boolean forSale;
-    
-    @Column(name = "sale_huf", precision=10, scale=2)
+
     private BigDecimal saleHuf;
-    
-    @Column(name = "sale_eur", precision=10, scale=2)
+
     private BigDecimal saleEur;
-    
-    @Column(name = "for_rent")
+
     private Boolean forRent;
-    
-    @Column(name = "rent_huf", precision=10, scale=2)
+
     private BigDecimal rentHuf;
-    
-    @Column(name = "rent_eur", precision=10, scale=2)
+
     private BigDecimal rentEur;
-    
-    @Column(name = "rent_peak_huf", precision=10, scale=2)
+
     private BigDecimal rentPeakHuf;
-    
-    @Column(name = "rent_peak_eur", precision=10, scale=2)
+
     private BigDecimal rentPeakEur;
-    
-    @Column(name = "for_medium_term")
+
     private Boolean forMediumTerm;
-    
-    @Column(name = "medium_term_huf", precision=10, scale=2)
+
     private BigDecimal mediumTermHuf;
-    
-    @Column(name = "medium_term_eur", precision=10, scale=2)
+
     private BigDecimal mediumTermEur;
-    
-    @Column(name = "for_long_term")
+
     private Boolean forLongTerm;
-    
-    @Column(name = "long_term_huf", precision=10, scale=2)
+
     private BigDecimal longTermHuf;
-    
-    @Column(name = "long_term_eur", precision=10, scale=2)
+
     private BigDecimal longTermEur;
-    
-    @Column(name = "featured")
+
     private Boolean featured;
 
-    @ManyToOne
-    private Category category;
+    private Long categoryId;
 
-    @OneToMany(mappedBy = "property")
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Photo> photos = new HashSet<>();
-
-    @ManyToMany(mappedBy = "propertys")
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Statement> statements = new HashSet<>();
-
-    @ManyToMany
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "PROPERTY_FEATURE",
-               joinColumns = @JoinColumn(name="propertys_id", referencedColumnName="ID"),
-               inverseJoinColumns = @JoinColumn(name="features_id", referencedColumnName="ID"))
+    private String categoryNameHu;
     private Set<Feature> features = new HashSet<>();
 
-    @OneToMany(mappedBy = "property")
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Ownership> ownerships = new HashSet<>();
+    private Long cityId;
 
-    @ManyToOne
-    private City city;
+    private String cityName;
 
-    @OneToMany(mappedBy = "property")
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Contract> contracts = new HashSet<>();
+    private Long userId;
 
-    @ManyToOne
-    private User user;
-
-    @OneToMany(mappedBy = "property")
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Apartment> apartments = new HashSet<>();
+    private String userLogin;
 
     public Long getId() {
         return id;
@@ -439,28 +368,20 @@ public class Property implements Serializable {
         this.featured = featured;
     }
 
-    public Category getCategory() {
-        return category;
+    public Long getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 
-    public Set<Photo> getPhotos() {
-        return photos;
+    public String getCategoryNameHu() {
+        return categoryNameHu;
     }
 
-    public void setPhotos(Set<Photo> photos) {
-        this.photos = photos;
-    }
-
-    public Set<Statement> getStatements() {
-        return statements;
-    }
-
-    public void setStatements(Set<Statement> statements) {
-        this.statements = statements;
+    public void setCategoryNameHu(String categoryNameHu) {
+        this.categoryNameHu = categoryNameHu;
     }
 
     public Set<Feature> getFeatures() {
@@ -471,44 +392,36 @@ public class Property implements Serializable {
         this.features = features;
     }
 
-    public Set<Ownership> getOwnerships() {
-        return ownerships;
+    public Long getCityId() {
+        return cityId;
     }
 
-    public void setOwnerships(Set<Ownership> ownerships) {
-        this.ownerships = ownerships;
+    public void setCityId(Long cityId) {
+        this.cityId = cityId;
     }
 
-    public City getCity() {
-        return city;
+    public String getCityName() {
+        return cityName;
     }
 
-    public void setCity(City city) {
-        this.city = city;
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
     }
 
-    public Set<Contract> getContracts() {
-        return contracts;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setContracts(Set<Contract> contracts) {
-        this.contracts = contracts;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    public User getUser() {
-        return user;
+    public String getUserLogin() {
+        return userLogin;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Set<Apartment> getApartments() {
-        return apartments;
-    }
-
-    public void setApartments(Set<Apartment> apartments) {
-        this.apartments = apartments;
+    public void setUserLogin(String userLogin) {
+        this.userLogin = userLogin;
     }
 
     @Override
@@ -520,9 +433,9 @@ public class Property implements Serializable {
             return false;
         }
 
-        Property property = (Property) o;
+        PropertyDTO propertyDTO = (PropertyDTO) o;
 
-        if ( ! Objects.equals(id, property.id)) return false;
+        if ( ! Objects.equals(id, propertyDTO.id)) return false;
 
         return true;
     }
@@ -534,7 +447,7 @@ public class Property implements Serializable {
 
     @Override
     public String toString() {
-        return "Property{" +
+        return "PropertyDTO{" +
                 "id=" + id +
                 ", code='" + code + "'" +
                 ", descriptionHu='" + descriptionHu + "'" +

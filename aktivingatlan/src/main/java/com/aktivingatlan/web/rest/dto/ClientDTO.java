@@ -1,11 +1,5 @@
-package com.aktivingatlan.domain;
+package com.aktivingatlan.web.rest.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.springframework.data.elasticsearch.annotations.Document;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,57 +7,27 @@ import java.util.Objects;
 
 
 /**
- * A Client.
+ * A DTO for the Client entity.
  */
-@Entity
-@Table(name = "CLIENT")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName="client")
-public class Client implements Serializable {
+public class ClientDTO implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
-    
-    @Column(name = "name")
+
     private String name;
-    
-    @Column(name = "email")
+
     private String email;
-    
-    @Column(name = "phone1")
+
     private String phone1;
-    
-    @Column(name = "phone2")
+
     private String phone2;
-    
-    @Column(name = "address1")
+
     private String address1;
-    
-    @Column(name = "address2")
+
     private String address2;
-    
-    @Column(name = "id_no")
+
     private String idNo;
-    
-    @Column(name = "note")
+
     private String note;
-
-    @OneToMany(mappedBy = "client")
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Ownership> ownerships = new HashSet<>();
-
-    @ManyToMany(mappedBy = "clients")
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Statement> statements = new HashSet<>();
-
-    @ManyToMany(mappedBy = "clients")
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Contract> contracts = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -137,30 +101,6 @@ public class Client implements Serializable {
         this.note = note;
     }
 
-    public Set<Ownership> getOwnerships() {
-        return ownerships;
-    }
-
-    public void setOwnerships(Set<Ownership> ownerships) {
-        this.ownerships = ownerships;
-    }
-
-    public Set<Statement> getStatements() {
-        return statements;
-    }
-
-    public void setStatements(Set<Statement> statements) {
-        this.statements = statements;
-    }
-
-    public Set<Contract> getContracts() {
-        return contracts;
-    }
-
-    public void setContracts(Set<Contract> contracts) {
-        this.contracts = contracts;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -170,9 +110,9 @@ public class Client implements Serializable {
             return false;
         }
 
-        Client client = (Client) o;
+        ClientDTO clientDTO = (ClientDTO) o;
 
-        if ( ! Objects.equals(id, client.id)) return false;
+        if ( ! Objects.equals(id, clientDTO.id)) return false;
 
         return true;
     }
@@ -184,7 +124,7 @@ public class Client implements Serializable {
 
     @Override
     public String toString() {
-        return "Client{" +
+        return "ClientDTO{" +
                 "id=" + id +
                 ", name='" + name + "'" +
                 ", email='" + email + "'" +

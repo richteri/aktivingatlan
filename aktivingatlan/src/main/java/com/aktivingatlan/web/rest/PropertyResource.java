@@ -6,6 +6,8 @@ import com.aktivingatlan.repository.PropertyRepository;
 import com.aktivingatlan.repository.search.PropertySearchRepository;
 import com.aktivingatlan.web.rest.util.HeaderUtil;
 import com.aktivingatlan.web.rest.util.PaginationUtil;
+import com.aktivingatlan.web.rest.dto.PropertyDTO;
+import com.aktivingatlan.web.rest.mapper.PropertyMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -13,11 +15,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -38,6 +42,9 @@ public class PropertyResource {
     private PropertyRepository propertyRepository;
 
     @Inject
+    private PropertyMapper propertyMapper;
+
+    @Inject
     private PropertySearchRepository propertySearchRepository;
 
     /**
@@ -47,16 +54,17 @@ public class PropertyResource {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Property> create(@RequestBody Property property) throws URISyntaxException {
-        log.debug("REST request to save Property : {}", property);
-        if (property.getId() != null) {
+    public ResponseEntity<PropertyDTO> create(@RequestBody PropertyDTO propertyDTO) throws URISyntaxException {
+        log.debug("REST request to save Property : {}", propertyDTO);
+        if (propertyDTO.getId() != null) {
             return ResponseEntity.badRequest().header("Failure", "A new property cannot already have an ID").body(null);
         }
+        Property property = propertyMapper.propertyDTOToProperty(propertyDTO);
         Property result = propertyRepository.save(property);
         propertySearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/propertys/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert("property", result.getId().toString()))
-                .body(result);
+                .body(propertyMapper.propertyToPropertyDTO(result));
     }
 
     /**
@@ -66,16 +74,17 @@ public class PropertyResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Property> update(@RequestBody Property property) throws URISyntaxException {
-        log.debug("REST request to update Property : {}", property);
-        if (property.getId() == null) {
-            return create(property);
+    public ResponseEntity<PropertyDTO> update(@RequestBody PropertyDTO propertyDTO) throws URISyntaxException {
+        log.debug("REST request to update Property : {}", propertyDTO);
+        if (propertyDTO.getId() == null) {
+            return create(propertyDTO);
         }
+        Property property = propertyMapper.propertyDTOToProperty(propertyDTO);
         Property result = propertyRepository.save(property);
         propertySearchRepository.save(property);
         return ResponseEntity.ok()
-                .headers(HeaderUtil.createEntityUpdateAlert("property", property.getId().toString()))
-                .body(result);
+                .headers(HeaderUtil.createEntityUpdateAlert("property", propertyDTO.getId().toString()))
+                .body(propertyMapper.propertyToPropertyDTO(result));
     }
 
     /**
@@ -85,12 +94,15 @@ public class PropertyResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<List<Property>> getAll(@RequestParam(value = "page" , required = false) Integer offset,
+    @Transactional(readOnly = true)
+    public ResponseEntity<List<PropertyDTO>> getAll(@RequestParam(value = "page" , required = false) Integer offset,
                                   @RequestParam(value = "per_page", required = false) Integer limit)
         throws URISyntaxException {
         Page<Property> page = propertyRepository.findAll(PaginationUtil.generatePageRequest(offset, limit));
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/propertys", offset, limit);
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+        return new ResponseEntity<>(page.getContent().stream()
+            .map(propertyMapper::propertyToPropertyDTO)
+            .collect(Collectors.toCollection(LinkedList::new)), headers, HttpStatus.OK);
     }
 
     /**
@@ -100,11 +112,12 @@ public class PropertyResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Property> get(@PathVariable Long id) {
+    public ResponseEntity<PropertyDTO> get(@PathVariable Long id) {
         log.debug("REST request to get Property : {}", id);
         return Optional.ofNullable(propertyRepository.findOneWithEagerRelationships(id))
-            .map(property -> new ResponseEntity<>(
-                property,
+            .map(propertyMapper::propertyToPropertyDTO)
+            .map(propertyDTO -> new ResponseEntity<>(
+                propertyDTO,
                 HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }

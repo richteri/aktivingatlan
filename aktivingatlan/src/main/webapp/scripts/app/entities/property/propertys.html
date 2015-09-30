@@ -127,13 +127,13 @@
                     <td>{{property.longTermEur}}</td>
                     <td>{{property.featured}}</td>
                     <td>
-                        <a ui-sref="category.detail({id:property.category.id})">{{property.category.nameHu}}</a>
+                        <a ui-sref="category.detail({id:property.categoryId})">{{property.categoryNameHu}}</a>
                     </td>
                     <td>
-                        <a ui-sref="city.detail({id:property.city.id})">{{property.city.name}}</a>
+                        <a ui-sref="city.detail({id:property.cityId})">{{property.cityName}}</a>
                     </td>
                     <td>
-                        {{property.user.login}}
+                        {{property.userLogin}}
                     </td>
                     <td>
                         <button type="submit"

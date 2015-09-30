@@ -44,6 +44,6 @@
         }
     ],
     "changelogDate": "20150917135259",
-    "dto": "no",
+    "dto": "mapstruct",
     "pagination": "pagination"
 }

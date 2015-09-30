@@ -235,6 +235,6 @@
         }
     ],
     "changelogDate": "20150917133415",
-    "dto": "no",
+    "dto": "mapstruct",
     "pagination": "pagination"
 }

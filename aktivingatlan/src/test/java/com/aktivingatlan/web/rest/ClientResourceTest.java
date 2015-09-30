@@ -4,6 +4,8 @@ import com.aktivingatlan.Application;
 import com.aktivingatlan.domain.Client;
 import com.aktivingatlan.repository.ClientRepository;
 import com.aktivingatlan.repository.search.ClientSearchRepository;
+import com.aktivingatlan.web.rest.dto.ClientDTO;
+import com.aktivingatlan.web.rest.mapper.ClientMapper;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -62,6 +64,9 @@ public class ClientResourceTest {
     private ClientRepository clientRepository;
 
     @Inject
+    private ClientMapper clientMapper;
+
+    @Inject
     private ClientSearchRepository clientSearchRepository;
 
     @Inject
@@ -76,6 +81,7 @@ public class ClientResourceTest {
         MockitoAnnotations.initMocks(this);
         ClientResource clientResource = new ClientResource();
         ReflectionTestUtils.setField(clientResource, "clientRepository", clientRepository);
+        ReflectionTestUtils.setField(clientResource, "clientMapper", clientMapper);
         ReflectionTestUtils.setField(clientResource, "clientSearchRepository", clientSearchRepository);
         this.restClientMockMvc = MockMvcBuilders.standaloneSetup(clientResource).setMessageConverters(jacksonMessageConverter).build();
     }
@@ -99,10 +105,11 @@ public class ClientResourceTest {
         int databaseSizeBeforeCreate = clientRepository.findAll().size();
 
         // Create the Client
+        ClientDTO clientDTO = clientMapper.clientToClientDTO(client);
 
         restClientMockMvc.perform(post("/api/clients")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(client)))
+                .content(TestUtil.convertObjectToJsonBytes(clientDTO)))
                 .andExpect(status().isCreated());
 
         // Validate the Client in the database
@@ -187,10 +194,11 @@ public class ClientResourceTest {
         client.setIdNo(UPDATED_ID_NO);
         client.setNote(UPDATED_NOTE);
         
+        ClientDTO clientDTO = clientMapper.clientToClientDTO(client);
 
         restClientMockMvc.perform(put("/api/clients")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(client)))
+                .content(TestUtil.convertObjectToJsonBytes(clientDTO)))
                 .andExpect(status().isOk());
 
         // Validate the Client in the database

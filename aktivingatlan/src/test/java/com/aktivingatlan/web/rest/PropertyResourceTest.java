@@ -4,6 +4,8 @@ import com.aktivingatlan.Application;
 import com.aktivingatlan.domain.Property;
 import com.aktivingatlan.repository.PropertyRepository;
 import com.aktivingatlan.repository.search.PropertySearchRepository;
+import com.aktivingatlan.web.rest.dto.PropertyDTO;
+import com.aktivingatlan.web.rest.mapper.PropertyMapper;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -139,6 +141,9 @@ public class PropertyResourceTest {
     private PropertyRepository propertyRepository;
 
     @Inject
+    private PropertyMapper propertyMapper;
+
+    @Inject
     private PropertySearchRepository propertySearchRepository;
 
     @Inject
@@ -153,6 +158,7 @@ public class PropertyResourceTest {
         MockitoAnnotations.initMocks(this);
         PropertyResource propertyResource = new PropertyResource();
         ReflectionTestUtils.setField(propertyResource, "propertyRepository", propertyRepository);
+        ReflectionTestUtils.setField(propertyResource, "propertyMapper", propertyMapper);
         ReflectionTestUtils.setField(propertyResource, "propertySearchRepository", propertySearchRepository);
         this.restPropertyMockMvc = MockMvcBuilders.standaloneSetup(propertyResource).setMessageConverters(jacksonMessageConverter).build();
     }
@@ -201,10 +207,11 @@ public class PropertyResourceTest {
         int databaseSizeBeforeCreate = propertyRepository.findAll().size();
 
         // Create the Property
+        PropertyDTO propertyDTO = propertyMapper.propertyToPropertyDTO(property);
 
         restPropertyMockMvc.perform(post("/api/propertys")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(property)))
+                .content(TestUtil.convertObjectToJsonBytes(propertyDTO)))
                 .andExpect(status().isCreated());
 
         // Validate the Property in the database
@@ -389,10 +396,11 @@ public class PropertyResourceTest {
         property.setLongTermEur(UPDATED_LONG_TERM_EUR);
         property.setFeatured(UPDATED_FEATURED);
         
+        PropertyDTO propertyDTO = propertyMapper.propertyToPropertyDTO(property);
 
         restPropertyMockMvc.perform(put("/api/propertys")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(property)))
+                .content(TestUtil.convertObjectToJsonBytes(propertyDTO)))
                 .andExpect(status().isOk());
 
         // Validate the Property in the database

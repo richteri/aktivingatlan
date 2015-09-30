@@ -4,6 +4,8 @@ import com.aktivingatlan.Application;
 import com.aktivingatlan.domain.Ownership;
 import com.aktivingatlan.repository.OwnershipRepository;
 import com.aktivingatlan.repository.search.OwnershipSearchRepository;
+import com.aktivingatlan.web.rest.dto.OwnershipDTO;
+import com.aktivingatlan.web.rest.mapper.OwnershipMapper;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -48,6 +50,9 @@ public class OwnershipResourceTest {
     private OwnershipRepository ownershipRepository;
 
     @Inject
+    private OwnershipMapper ownershipMapper;
+
+    @Inject
     private OwnershipSearchRepository ownershipSearchRepository;
 
     @Inject
@@ -62,6 +67,7 @@ public class OwnershipResourceTest {
         MockitoAnnotations.initMocks(this);
         OwnershipResource ownershipResource = new OwnershipResource();
         ReflectionTestUtils.setField(ownershipResource, "ownershipRepository", ownershipRepository);
+        ReflectionTestUtils.setField(ownershipResource, "ownershipMapper", ownershipMapper);
         ReflectionTestUtils.setField(ownershipResource, "ownershipSearchRepository", ownershipSearchRepository);
         this.restOwnershipMockMvc = MockMvcBuilders.standaloneSetup(ownershipResource).setMessageConverters(jacksonMessageConverter).build();
     }
@@ -78,10 +84,11 @@ public class OwnershipResourceTest {
         int databaseSizeBeforeCreate = ownershipRepository.findAll().size();
 
         // Create the Ownership
+        OwnershipDTO ownershipDTO = ownershipMapper.ownershipToOwnershipDTO(ownership);
 
         restOwnershipMockMvc.perform(post("/api/ownerships")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(ownership)))
+                .content(TestUtil.convertObjectToJsonBytes(ownershipDTO)))
                 .andExpect(status().isCreated());
 
         // Validate the Ownership in the database
@@ -138,10 +145,11 @@ public class OwnershipResourceTest {
         // Update the ownership
         ownership.setNote(UPDATED_NOTE);
         
+        OwnershipDTO ownershipDTO = ownershipMapper.ownershipToOwnershipDTO(ownership);
 
         restOwnershipMockMvc.perform(put("/api/ownerships")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(ownership)))
+                .content(TestUtil.convertObjectToJsonBytes(ownershipDTO)))
                 .andExpect(status().isOk());
 
         // Validate the Ownership in the database

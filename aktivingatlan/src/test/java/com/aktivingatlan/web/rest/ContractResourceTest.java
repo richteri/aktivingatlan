@@ -4,6 +4,8 @@ import com.aktivingatlan.Application;
 import com.aktivingatlan.domain.Contract;
 import com.aktivingatlan.repository.ContractRepository;
 import com.aktivingatlan.repository.search.ContractSearchRepository;
+import com.aktivingatlan.web.rest.dto.ContractDTO;
+import com.aktivingatlan.web.rest.mapper.ContractMapper;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -60,6 +62,9 @@ public class ContractResourceTest {
     private ContractRepository contractRepository;
 
     @Inject
+    private ContractMapper contractMapper;
+
+    @Inject
     private ContractSearchRepository contractSearchRepository;
 
     @Inject
@@ -74,6 +79,7 @@ public class ContractResourceTest {
         MockitoAnnotations.initMocks(this);
         ContractResource contractResource = new ContractResource();
         ReflectionTestUtils.setField(contractResource, "contractRepository", contractRepository);
+        ReflectionTestUtils.setField(contractResource, "contractMapper", contractMapper);
         ReflectionTestUtils.setField(contractResource, "contractSearchRepository", contractSearchRepository);
         this.restContractMockMvc = MockMvcBuilders.standaloneSetup(contractResource).setMessageConverters(jacksonMessageConverter).build();
     }
@@ -94,10 +100,11 @@ public class ContractResourceTest {
         int databaseSizeBeforeCreate = contractRepository.findAll().size();
 
         // Create the Contract
+        ContractDTO contractDTO = contractMapper.contractToContractDTO(contract);
 
         restContractMockMvc.perform(post("/api/contracts")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(contract)))
+                .content(TestUtil.convertObjectToJsonBytes(contractDTO)))
                 .andExpect(status().isCreated());
 
         // Validate the Contract in the database
@@ -170,10 +177,11 @@ public class ContractResourceTest {
         contract.setEndDate(UPDATED_END_DATE);
         contract.setNote(UPDATED_NOTE);
         
+        ContractDTO contractDTO = contractMapper.contractToContractDTO(contract);
 
         restContractMockMvc.perform(put("/api/contracts")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(contract)))
+                .content(TestUtil.convertObjectToJsonBytes(contractDTO)))
                 .andExpect(status().isOk());
 
         // Validate the Contract in the database

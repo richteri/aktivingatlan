@@ -279,7 +279,7 @@
                     <span translate="aktivingatlanApp.property.category">category</span>
                 </td>
                 <td>
-                    <a class="form-control-static" ui-sref="category.detail({id:property.category.id})">{{property.category.nameHu}}</a>
+                    <a class="form-control-static" ui-sref="category.detail({id:property.categoryId})">{{property.categoryNameHu}}</a>
                 </td>
             </tr>
             <tr>
@@ -297,7 +297,7 @@
                     <span translate="aktivingatlanApp.property.city">city</span>
                 </td>
                 <td>
-                    <a class="form-control-static" ui-sref="city.detail({id:property.city.id})">{{property.city.name}}</a>
+                    <a class="form-control-static" ui-sref="city.detail({id:property.cityId})">{{property.cityName}}</a>
                 </td>
             </tr>
             <tr>
@@ -305,7 +305,7 @@
                     <span translate="aktivingatlanApp.property.user">user</span>
                 </td>
                 <td>
-                    {{property.user.login}}
+                    {{property.userLogin}}
                 </td>
             </tr>
             </tbody>

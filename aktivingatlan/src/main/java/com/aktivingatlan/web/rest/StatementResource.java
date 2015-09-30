@@ -6,6 +6,8 @@ import com.aktivingatlan.repository.StatementRepository;
 import com.aktivingatlan.repository.search.StatementSearchRepository;
 import com.aktivingatlan.web.rest.util.HeaderUtil;
 import com.aktivingatlan.web.rest.util.PaginationUtil;
+import com.aktivingatlan.web.rest.dto.StatementDTO;
+import com.aktivingatlan.web.rest.mapper.StatementMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -13,11 +15,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -38,6 +42,9 @@ public class StatementResource {
     private StatementRepository statementRepository;
 
     @Inject
+    private StatementMapper statementMapper;
+
+    @Inject
     private StatementSearchRepository statementSearchRepository;
 
     /**
@@ -47,16 +54,17 @@ public class StatementResource {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Statement> create(@RequestBody Statement statement) throws URISyntaxException {
-        log.debug("REST request to save Statement : {}", statement);
-        if (statement.getId() != null) {
+    public ResponseEntity<StatementDTO> create(@RequestBody StatementDTO statementDTO) throws URISyntaxException {
+        log.debug("REST request to save Statement : {}", statementDTO);
+        if (statementDTO.getId() != null) {
             return ResponseEntity.badRequest().header("Failure", "A new statement cannot already have an ID").body(null);
         }
+        Statement statement = statementMapper.statementDTOToStatement(statementDTO);
         Statement result = statementRepository.save(statement);
         statementSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/statements/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert("statement", result.getId().toString()))
-                .body(result);
+                .body(statementMapper.statementToStatementDTO(result));
     }
 
     /**
@@ -66,16 +74,17 @@ public class StatementResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Statement> update(@RequestBody Statement statement) throws URISyntaxException {
-        log.debug("REST request to update Statement : {}", statement);
-        if (statement.getId() == null) {
-            return create(statement);
+    public ResponseEntity<StatementDTO> update(@RequestBody StatementDTO statementDTO) throws URISyntaxException {
+        log.debug("REST request to update Statement : {}", statementDTO);
+        if (statementDTO.getId() == null) {
+            return create(statementDTO);
         }
+        Statement statement = statementMapper.statementDTOToStatement(statementDTO);
         Statement result = statementRepository.save(statement);
         statementSearchRepository.save(statement);
         return ResponseEntity.ok()
-                .headers(HeaderUtil.createEntityUpdateAlert("statement", statement.getId().toString()))
-                .body(result);
+                .headers(HeaderUtil.createEntityUpdateAlert("statement", statementDTO.getId().toString()))
+                .body(statementMapper.statementToStatementDTO(result));
     }
 
     /**
@@ -85,12 +94,15 @@ public class StatementResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<List<Statement>> getAll(@RequestParam(value = "page" , required = false) Integer offset,
+    @Transactional(readOnly = true)
+    public ResponseEntity<List<StatementDTO>> getAll(@RequestParam(value = "page" , required = false) Integer offset,
                                   @RequestParam(value = "per_page", required = false) Integer limit)
         throws URISyntaxException {
         Page<Statement> page = statementRepository.findAll(PaginationUtil.generatePageRequest(offset, limit));
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/statements", offset, limit);
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+        return new ResponseEntity<>(page.getContent().stream()
+            .map(statementMapper::statementToStatementDTO)
+            .collect(Collectors.toCollection(LinkedList::new)), headers, HttpStatus.OK);
     }
 
     /**
@@ -100,11 +112,12 @@ public class StatementResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Statement> get(@PathVariable Long id) {
+    public ResponseEntity<StatementDTO> get(@PathVariable Long id) {
         log.debug("REST request to get Statement : {}", id);
         return Optional.ofNullable(statementRepository.findOneWithEagerRelationships(id))
-            .map(statement -> new ResponseEntity<>(
-                statement,
+            .map(statementMapper::statementToStatementDTO)
+            .map(statementDTO -> new ResponseEntity<>(
+                statementDTO,
                 HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }

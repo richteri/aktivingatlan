@@ -4,6 +4,8 @@ import com.aktivingatlan.Application;
 import com.aktivingatlan.domain.Statement;
 import com.aktivingatlan.repository.StatementRepository;
 import com.aktivingatlan.repository.search.StatementSearchRepository;
+import com.aktivingatlan.web.rest.dto.StatementDTO;
+import com.aktivingatlan.web.rest.mapper.StatementMapper;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -52,6 +54,9 @@ public class StatementResourceTest {
     private StatementRepository statementRepository;
 
     @Inject
+    private StatementMapper statementMapper;
+
+    @Inject
     private StatementSearchRepository statementSearchRepository;
 
     @Inject
@@ -66,6 +71,7 @@ public class StatementResourceTest {
         MockitoAnnotations.initMocks(this);
         StatementResource statementResource = new StatementResource();
         ReflectionTestUtils.setField(statementResource, "statementRepository", statementRepository);
+        ReflectionTestUtils.setField(statementResource, "statementMapper", statementMapper);
         ReflectionTestUtils.setField(statementResource, "statementSearchRepository", statementSearchRepository);
         this.restStatementMockMvc = MockMvcBuilders.standaloneSetup(statementResource).setMessageConverters(jacksonMessageConverter).build();
     }
@@ -83,10 +89,11 @@ public class StatementResourceTest {
         int databaseSizeBeforeCreate = statementRepository.findAll().size();
 
         // Create the Statement
+        StatementDTO statementDTO = statementMapper.statementToStatementDTO(statement);
 
         restStatementMockMvc.perform(post("/api/statements")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(statement)))
+                .content(TestUtil.convertObjectToJsonBytes(statementDTO)))
                 .andExpect(status().isCreated());
 
         // Validate the Statement in the database
@@ -147,10 +154,11 @@ public class StatementResourceTest {
         statement.setDate(UPDATED_DATE);
         statement.setNote(UPDATED_NOTE);
         
+        StatementDTO statementDTO = statementMapper.statementToStatementDTO(statement);
 
         restStatementMockMvc.perform(put("/api/statements")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(statement)))
+                .content(TestUtil.convertObjectToJsonBytes(statementDTO)))
                 .andExpect(status().isOk());
 
         // Validate the Statement in the database

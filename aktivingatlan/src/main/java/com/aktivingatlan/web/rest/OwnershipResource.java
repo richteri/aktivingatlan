@@ -6,6 +6,8 @@ import com.aktivingatlan.repository.OwnershipRepository;
 import com.aktivingatlan.repository.search.OwnershipSearchRepository;
 import com.aktivingatlan.web.rest.util.HeaderUtil;
 import com.aktivingatlan.web.rest.util.PaginationUtil;
+import com.aktivingatlan.web.rest.dto.OwnershipDTO;
+import com.aktivingatlan.web.rest.mapper.OwnershipMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -13,11 +15,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -38,6 +42,9 @@ public class OwnershipResource {
     private OwnershipRepository ownershipRepository;
 
     @Inject
+    private OwnershipMapper ownershipMapper;
+
+    @Inject
     private OwnershipSearchRepository ownershipSearchRepository;
 
     /**
@@ -47,16 +54,17 @@ public class OwnershipResource {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Ownership> create(@RequestBody Ownership ownership) throws URISyntaxException {
-        log.debug("REST request to save Ownership : {}", ownership);
-        if (ownership.getId() != null) {
+    public ResponseEntity<OwnershipDTO> create(@RequestBody OwnershipDTO ownershipDTO) throws URISyntaxException {
+        log.debug("REST request to save Ownership : {}", ownershipDTO);
+        if (ownershipDTO.getId() != null) {
             return ResponseEntity.badRequest().header("Failure", "A new ownership cannot already have an ID").body(null);
         }
+        Ownership ownership = ownershipMapper.ownershipDTOToOwnership(ownershipDTO);
         Ownership result = ownershipRepository.save(ownership);
         ownershipSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/ownerships/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert("ownership", result.getId().toString()))
-                .body(result);
+                .body(ownershipMapper.ownershipToOwnershipDTO(result));
     }
 
     /**
@@ -66,16 +74,17 @@ public class OwnershipResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Ownership> update(@RequestBody Ownership ownership) throws URISyntaxException {
-        log.debug("REST request to update Ownership : {}", ownership);
-        if (ownership.getId() == null) {
-            return create(ownership);
+    public ResponseEntity<OwnershipDTO> update(@RequestBody OwnershipDTO ownershipDTO) throws URISyntaxException {
+        log.debug("REST request to update Ownership : {}", ownershipDTO);
+        if (ownershipDTO.getId() == null) {
+            return create(ownershipDTO);
         }
+        Ownership ownership = ownershipMapper.ownershipDTOToOwnership(ownershipDTO);
         Ownership result = ownershipRepository.save(ownership);
         ownershipSearchRepository.save(ownership);
         return ResponseEntity.ok()
-                .headers(HeaderUtil.createEntityUpdateAlert("ownership", ownership.getId().toString()))
-                .body(result);
+                .headers(HeaderUtil.createEntityUpdateAlert("ownership", ownershipDTO.getId().toString()))
+                .body(ownershipMapper.ownershipToOwnershipDTO(result));
     }
 
     /**
@@ -85,12 +94,15 @@ public class OwnershipResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<List<Ownership>> getAll(@RequestParam(value = "page" , required = false) Integer offset,
+    @Transactional(readOnly = true)
+    public ResponseEntity<List<OwnershipDTO>> getAll(@RequestParam(value = "page" , required = false) Integer offset,
                                   @RequestParam(value = "per_page", required = false) Integer limit)
         throws URISyntaxException {
         Page<Ownership> page = ownershipRepository.findAll(PaginationUtil.generatePageRequest(offset, limit));
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/ownerships", offset, limit);
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+        return new ResponseEntity<>(page.getContent().stream()
+            .map(ownershipMapper::ownershipToOwnershipDTO)
+            .collect(Collectors.toCollection(LinkedList::new)), headers, HttpStatus.OK);
     }
 
     /**
@@ -100,11 +112,12 @@ public class OwnershipResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Ownership> get(@PathVariable Long id) {
+    public ResponseEntity<OwnershipDTO> get(@PathVariable Long id) {
         log.debug("REST request to get Ownership : {}", id);
         return Optional.ofNullable(ownershipRepository.findOne(id))
-            .map(ownership -> new ResponseEntity<>(
-                ownership,
+            .map(ownershipMapper::ownershipToOwnershipDTO)
+            .map(ownershipDTO -> new ResponseEntity<>(
+                ownershipDTO,
                 HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }

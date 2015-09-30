@@ -62,10 +62,10 @@
                     <td><a ui-sref="ownership.detail({id:ownership.id})">{{ownership.id}}</a></td>
                     <td>{{ownership.note}}</td>
                     <td>
-                        <a ui-sref="property.detail({id:ownership.property.id})">{{ownership.property.code}}</a>
+                        <a ui-sref="property.detail({id:ownership.propertyId})">{{ownership.propertyCode}}</a>
                     </td>
                     <td>
-                        <a ui-sref="client.detail({id:ownership.client.id})">{{ownership.client.name}}</a>
+                        <a ui-sref="client.detail({id:ownership.clientId})">{{ownership.clientName}}</a>
                     </td>
                     <td>
                         <button type="submit"

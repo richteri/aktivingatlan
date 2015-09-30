@@ -6,6 +6,8 @@ import com.aktivingatlan.repository.ContractRepository;
 import com.aktivingatlan.repository.search.ContractSearchRepository;
 import com.aktivingatlan.web.rest.util.HeaderUtil;
 import com.aktivingatlan.web.rest.util.PaginationUtil;
+import com.aktivingatlan.web.rest.dto.ContractDTO;
+import com.aktivingatlan.web.rest.mapper.ContractMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -13,11 +15,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -38,6 +42,9 @@ public class ContractResource {
     private ContractRepository contractRepository;
 
     @Inject
+    private ContractMapper contractMapper;
+
+    @Inject
     private ContractSearchRepository contractSearchRepository;
 
     /**
@@ -47,16 +54,17 @@ public class ContractResource {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Contract> create(@RequestBody Contract contract) throws URISyntaxException {
-        log.debug("REST request to save Contract : {}", contract);
-        if (contract.getId() != null) {
+    public ResponseEntity<ContractDTO> create(@RequestBody ContractDTO contractDTO) throws URISyntaxException {
+        log.debug("REST request to save Contract : {}", contractDTO);
+        if (contractDTO.getId() != null) {
             return ResponseEntity.badRequest().header("Failure", "A new contract cannot already have an ID").body(null);
         }
+        Contract contract = contractMapper.contractDTOToContract(contractDTO);
         Contract result = contractRepository.save(contract);
         contractSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/contracts/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert("contract", result.getId().toString()))
-                .body(result);
+                .body(contractMapper.contractToContractDTO(result));
     }
 
     /**
@@ -66,16 +74,17 @@ public class ContractResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Contract> update(@RequestBody Contract contract) throws URISyntaxException {
-        log.debug("REST request to update Contract : {}", contract);
-        if (contract.getId() == null) {
-            return create(contract);
+    public ResponseEntity<ContractDTO> update(@RequestBody ContractDTO contractDTO) throws URISyntaxException {
+        log.debug("REST request to update Contract : {}", contractDTO);
+        if (contractDTO.getId() == null) {
+            return create(contractDTO);
         }
+        Contract contract = contractMapper.contractDTOToContract(contractDTO);
         Contract result = contractRepository.save(contract);
         contractSearchRepository.save(contract);
         return ResponseEntity.ok()
-                .headers(HeaderUtil.createEntityUpdateAlert("contract", contract.getId().toString()))
-                .body(result);
+                .headers(HeaderUtil.createEntityUpdateAlert("contract", contractDTO.getId().toString()))
+                .body(contractMapper.contractToContractDTO(result));
     }
 
     /**
@@ -85,12 +94,15 @@ public class ContractResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<List<Contract>> getAll(@RequestParam(value = "page" , required = false) Integer offset,
+    @Transactional(readOnly = true)
+    public ResponseEntity<List<ContractDTO>> getAll(@RequestParam(value = "page" , required = false) Integer offset,
                                   @RequestParam(value = "per_page", required = false) Integer limit)
         throws URISyntaxException {
         Page<Contract> page = contractRepository.findAll(PaginationUtil.generatePageRequest(offset, limit));
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/contracts", offset, limit);
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+        return new ResponseEntity<>(page.getContent().stream()
+            .map(contractMapper::contractToContractDTO)
+            .collect(Collectors.toCollection(LinkedList::new)), headers, HttpStatus.OK);
     }
 
     /**
@@ -100,11 +112,12 @@ public class ContractResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Contract> get(@PathVariable Long id) {
+    public ResponseEntity<ContractDTO> get(@PathVariable Long id) {
         log.debug("REST request to get Contract : {}", id);
         return Optional.ofNullable(contractRepository.findOneWithEagerRelationships(id))
-            .map(contract -> new ResponseEntity<>(
-                contract,
+            .map(contractMapper::contractToContractDTO)
+            .map(contractDTO -> new ResponseEntity<>(
+                contractDTO,
                 HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }

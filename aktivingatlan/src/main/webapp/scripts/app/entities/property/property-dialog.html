@@ -248,7 +248,7 @@
         <div class="form-group">
             <label translate="aktivingatlanApp.property.category" for="field_category">category</label>
             
-            <select class="form-control" id="field_category" name="category" ng-model="property.category" ng-options="category as category.nameHu for category in categorys track by category.id">
+            <select class="form-control" id="field_category" name="category" ng-model="property.categoryId" ng-options="category.id as category.nameHu for category in categorys">
                 <option value=""></option>
             </select>
             
@@ -260,7 +260,7 @@
         <div class="form-group">
             <label translate="aktivingatlanApp.property.city" for="field_city">city</label>
             
-            <select class="form-control" id="field_city" name="city" ng-model="property.city" ng-options="city as city.name for city in citys track by city.id">
+            <select class="form-control" id="field_city" name="city" ng-model="property.cityId" ng-options="city.id as city.name for city in citys">
                 <option value=""></option>
             </select>
             
@@ -268,7 +268,7 @@
         <div class="form-group">
             <label translate="aktivingatlanApp.property.user" for="field_user">user</label>
             
-            <select class="form-control" id="field_user" name="user" ng-model="property.user" ng-options="user as user.login for user in users track by user.id">
+            <select class="form-control" id="field_user" name="user" ng-model="property.userId" ng-options="user.id as user.login for user in users">
                 <option value=""></option>
             </select>
             

@@ -24,7 +24,7 @@
         <div class="form-group">
             <label translate="aktivingatlanApp.ownership.property" for="field_property">property</label>
             
-            <select class="form-control" id="field_property" name="property" ng-model="ownership.property" ng-options="property as property.code for property in propertys track by property.id">
+            <select class="form-control" id="field_property" name="property" ng-model="ownership.propertyId" ng-options="property.id as property.code for property in propertys">
                 <option value=""></option>
             </select>
             
@@ -32,7 +32,7 @@
         <div class="form-group">
             <label translate="aktivingatlanApp.ownership.client" for="field_client">client</label>
             
-            <select class="form-control" id="field_client" name="client" ng-model="ownership.client" ng-options="client as client.name for client in clients track by client.id">
+            <select class="form-control" id="field_client" name="client" ng-model="ownership.clientId" ng-options="client.id as client.name for client in clients">
                 <option value=""></option>
             </select>
             
