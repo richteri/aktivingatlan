@@ -19,5 +19,7 @@ public interface PropertyRepository extends JpaRepository<Property,Long> {
 
     @Query("select property from Property property left join fetch property.features where property.id =:id")
     Property findOneWithEagerRelationships(@Param("id") Long id);
+    
+    List<Property> findByCodeContainingIgnoreCase(String code);
 
 }

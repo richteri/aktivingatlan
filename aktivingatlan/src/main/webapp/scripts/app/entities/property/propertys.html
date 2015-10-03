@@ -50,91 +50,45 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th translate="global.field.id">ID</th>
                     <th translate="aktivingatlanApp.property.code">Code</th>
-                    <th translate="aktivingatlanApp.property.descriptionHu">DescriptionHu</th>
-                    <th translate="aktivingatlanApp.property.descriptionEn">DescriptionEn</th>
-                    <th translate="aktivingatlanApp.property.descriptionDe">DescriptionDe</th>
-                    <th translate="aktivingatlanApp.property.room">Room</th>
-                    <th translate="aktivingatlanApp.property.halfRoom">HalfRoom</th>
-                    <th translate="aktivingatlanApp.property.floorArea">FloorArea</th>
-                    <th translate="aktivingatlanApp.property.parcelArea">ParcelArea</th>
-                    <th translate="aktivingatlanApp.property.pracelNumber">PracelNumber</th>
-                    <th translate="aktivingatlanApp.property.address1">Address1</th>
-                    <th translate="aktivingatlanApp.property.address2">Address2</th>
+                    <th translate="aktivingatlanApp.property.user">user</th>
                     <th translate="aktivingatlanApp.property.active">Active</th>
-                    <th translate="aktivingatlanApp.property.kitchen">Kitchen</th>
-                    <th translate="aktivingatlanApp.property.livingroom">Livingroom</th>
-                    <th translate="aktivingatlanApp.property.floor">Floor</th>
-                    <th translate="aktivingatlanApp.property.bathroom">Bathroom</th>
-                    <th translate="aktivingatlanApp.property.toilet">Toilet</th>
-                    <th translate="aktivingatlanApp.property.furnished">Furnished</th>
-                    <th translate="aktivingatlanApp.property.forSale">ForSale</th>
-                    <th translate="aktivingatlanApp.property.saleHuf">SaleHuf</th>
-                    <th translate="aktivingatlanApp.property.saleEur">SaleEur</th>
-                    <th translate="aktivingatlanApp.property.forRent">ForRent</th>
-                    <th translate="aktivingatlanApp.property.rentHuf">RentHuf</th>
-                    <th translate="aktivingatlanApp.property.rentEur">RentEur</th>
-                    <th translate="aktivingatlanApp.property.rentPeakHuf">RentPeakHuf</th>
-                    <th translate="aktivingatlanApp.property.rentPeakEur">RentPeakEur</th>
-                    <th translate="aktivingatlanApp.property.forMediumTerm">ForMediumTerm</th>
-                    <th translate="aktivingatlanApp.property.mediumTermHuf">MediumTermHuf</th>
-                    <th translate="aktivingatlanApp.property.mediumTermEur">MediumTermEur</th>
-                    <th translate="aktivingatlanApp.property.forLongTerm">ForLongTerm</th>
-                    <th translate="aktivingatlanApp.property.longTermHuf">LongTermHuf</th>
-                    <th translate="aktivingatlanApp.property.longTermEur">LongTermEur</th>
                     <th translate="aktivingatlanApp.property.featured">Featured</th>
                     <th translate="aktivingatlanApp.property.category">category</th>
                     <th translate="aktivingatlanApp.property.city">city</th>
-                    <th translate="aktivingatlanApp.property.user">user</th>
+                    <th translate="aktivingatlanApp.property.descriptionHu">DescriptionHu</th>
+                    <th translate="aktivingatlanApp.property.address1">Address1</th>
+                    <th translate="aktivingatlanApp.property.forSale">ForSale</th>
+                    <th translate="aktivingatlanApp.property.saleHuf">SaleHuf</th>
+                    <th translate="aktivingatlanApp.property.forRent">ForRent</th>
+                    <th translate="aktivingatlanApp.property.rentHuf">RentHuf</th>
+                    <th translate="aktivingatlanApp.property.rentPeakHuf">RentPeakHuf</th>
+                    <th translate="aktivingatlanApp.property.forMediumTerm">ForMediumTerm</th>
+                    <th translate="aktivingatlanApp.property.mediumTermHuf">MediumTermHuf</th>
+                    <th translate="aktivingatlanApp.property.forLongTerm">ForLongTerm</th>
+                    <th translate="aktivingatlanApp.property.longTermHuf">LongTermHuf</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="property in propertys">
-                    <td><a ui-sref="property.detail({id:property.id})">{{property.id}}</a></td>
-                    <td>{{property.code}}</td>
-                    <td>{{property.descriptionHu}}</td>
-                    <td>{{property.descriptionEn}}</td>
-                    <td>{{property.descriptionDe}}</td>
-                    <td>{{property.room}}</td>
-                    <td>{{property.halfRoom}}</td>
-                    <td>{{property.floorArea}}</td>
-                    <td>{{property.parcelArea}}</td>
-                    <td>{{property.pracelNumber}}</td>
-                    <td>{{property.address1}}</td>
-                    <td>{{property.address2}}</td>
+                    <td><a ui-sref="property.detail({id:property.id})">{{property.code}}</a></td>
+                    <td>{{property.userLogin}}</td>
                     <td>{{property.active}}</td>
-                    <td>{{property.kitchen}}</td>
-                    <td>{{property.livingroom}}</td>
-                    <td>{{property.floor}}</td>
-                    <td>{{property.bathroom}}</td>
-                    <td>{{property.toilet}}</td>
-                    <td>{{property.furnished}}</td>
+                    <td>{{property.featured}}</td>
+                    <td>{{property.categoryNameHu}}</td>
+                    <td>{{property.cityName}}</td>
+                    <td>{{property.descriptionHu}}</td>
+                    <td>{{property.address1}}</td>
                     <td>{{property.forSale}}</td>
                     <td>{{property.saleHuf}}</td>
-                    <td>{{property.saleEur}}</td>
                     <td>{{property.forRent}}</td>
                     <td>{{property.rentHuf}}</td>
-                    <td>{{property.rentEur}}</td>
                     <td>{{property.rentPeakHuf}}</td>
-                    <td>{{property.rentPeakEur}}</td>
                     <td>{{property.forMediumTerm}}</td>
                     <td>{{property.mediumTermHuf}}</td>
-                    <td>{{property.mediumTermEur}}</td>
                     <td>{{property.forLongTerm}}</td>
                     <td>{{property.longTermHuf}}</td>
-                    <td>{{property.longTermEur}}</td>
-                    <td>{{property.featured}}</td>
-                    <td>
-                        <a ui-sref="category.detail({id:property.categoryId})">{{property.categoryNameHu}}</a>
-                    </td>
-                    <td>
-                        <a ui-sref="city.detail({id:property.cityId})">{{property.cityName}}</a>
-                    </td>
-                    <td>
-                        {{property.userLogin}}
-                    </td>
                     <td>
                         <button type="submit"
                                 ui-sref="property.detail({id:property.id})"

@@ -3,7 +3,6 @@ package com.aktivingatlan.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.aktivingatlan.domain.Property;
 import com.aktivingatlan.repository.PropertyRepository;
-import com.aktivingatlan.repository.search.PropertySearchRepository;
 import com.aktivingatlan.web.rest.util.HeaderUtil;
 import com.aktivingatlan.web.rest.util.PaginationUtil;
 import com.aktivingatlan.web.rest.dto.PropertyDTO;
@@ -44,9 +43,6 @@ public class PropertyResource {
     @Inject
     private PropertyMapper propertyMapper;
 
-    @Inject
-    private PropertySearchRepository propertySearchRepository;
-
     /**
      * POST  /propertys -> Create a new property.
      */
@@ -61,7 +57,6 @@ public class PropertyResource {
         }
         Property property = propertyMapper.propertyDTOToProperty(propertyDTO);
         Property result = propertyRepository.save(property);
-        propertySearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/propertys/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert("property", result.getId().toString()))
                 .body(propertyMapper.propertyToPropertyDTO(result));
@@ -81,7 +76,6 @@ public class PropertyResource {
         }
         Property property = propertyMapper.propertyDTOToProperty(propertyDTO);
         Property result = propertyRepository.save(property);
-        propertySearchRepository.save(property);
         return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityUpdateAlert("property", propertyDTO.getId().toString()))
                 .body(propertyMapper.propertyToPropertyDTO(result));
@@ -133,7 +127,6 @@ public class PropertyResource {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete Property : {}", id);
         propertyRepository.delete(id);
-        propertySearchRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("property", id.toString())).build();
     }
 
@@ -141,13 +134,17 @@ public class PropertyResource {
      * SEARCH  /_search/propertys/:query -> search for the property corresponding
      * to the query.
      */
-    @RequestMapping(value = "/_search/propertys/{query}",
-        method = RequestMethod.GET,
+    @RequestMapping(value = "/_search/propertys",
+        method = {RequestMethod.GET, RequestMethod.GET},
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public List<Property> search(@PathVariable String query) {
-        return StreamSupport
-            .stream(propertySearchRepository.search(queryString(query)).spliterator(), false)
-            .collect(Collectors.toList());
+    @Transactional(readOnly = true)
+    public ResponseEntity<List<PropertyDTO>> search(
+    		@RequestParam(value = "query", required = false) String query,
+    		@RequestParam(value = "param", required = false) String param) {
+        return 
+        		new ResponseEntity<>(propertyRepository.findByCodeContainingIgnoreCase(param)
+        				.stream().map(propertyMapper::propertyToPropertyDTO)
+        	            .collect(Collectors.toCollection(LinkedList::new)), HttpStatus.OK);
     }
 }

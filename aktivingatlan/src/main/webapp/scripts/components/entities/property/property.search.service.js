@@ -2,7 +2,14 @@
 
 angular.module('aktivingatlanApp')
     .factory('PropertySearch', function ($resource) {
-        return $resource('api/_search/propertys/:query', {}, {
-            'query': { method: 'GET', isArray: true}
+        return $resource('api/_search/propertys', {}, {
+            'query': {
+            	method: 'GET', 
+            	isArray: true,
+            	params: {
+            		query: 'byCode',
+            		param: ''
+            	}
+            }
         });
     });

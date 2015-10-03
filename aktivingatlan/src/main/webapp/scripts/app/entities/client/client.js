@@ -97,7 +97,7 @@ angular.module('aktivingatlanApp')
                 }]
             }).state('client.detail.ownershipNew', {
                 parent: 'client.detail',
-                url: '/client/{id}/ownership/new',
+                url: '/client/{clientId}/ownership/new',
                 data: {
                     roles: ['ROLE_USER'],
                 },
@@ -119,7 +119,7 @@ angular.module('aktivingatlanApp')
                 }]
             }).state('client.detail.ownershipEdit', {
                 parent: 'client.detail',
-                url: '/client/{id}/ownership/{ownershipId}/edit',
+                url: '/client/{clientId}/ownership/{ownershipId}/edit',
                 data: {
                     roles: ['ROLE_USER'],
                 },
