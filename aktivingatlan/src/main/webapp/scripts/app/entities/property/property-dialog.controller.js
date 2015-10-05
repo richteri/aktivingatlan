@@ -56,7 +56,11 @@ angular.module('aktivingatlanApp').controller('PropertyDialogController',
         };
         
         $scope.filterAlreadyAddedFeatures = function (value, index, array) {
-        	return !$filter('filter')($scope.property.features, {id: value.id})[0];
+        	var found = $filter('filter')($scope.property.features, {id: value.id});
+        	if (angular.isArray(found) && found.length > 0) {
+        		return false;
+        	}
+        	return true;
         };
 
 }]);
