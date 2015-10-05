@@ -255,15 +255,25 @@
         </div>
         <div class="form-group">
             <label translate="aktivingatlanApp.property.feature" for="field_feature">feature</label>
-            <select class="form-control" id="field_feature" multiple name="feature" ng-model="property.features" ng-options="feature as feature.nameHu for feature in features track by feature.id"></select>
+            <!-- select class="form-control" id="field_feature" multiple name="feature" ng-model="property.features" ng-options="feature as feature.nameHu for feature in features track by feature.id"></select -->
+            <ui-select multiple ng-model="property.features" theme="bootstrap" class="form-control" id="field_feature">
+            	<ui-select-match placeholder="Select feature...">{{$item.nameHu}}</ui-select-match>
+            	<ui-select-choices repeat="feature in features | filter:{nameHu: $select.search} | filter:filterAlreadyAddedFeatures ">
+			      <div ng-bind-html="feature.nameHu | highlight: $select.search"></div>
+			    </ui-select-choices>
+            </ui-select>
         </div>
         <div class="form-group">
             <label translate="aktivingatlanApp.property.city" for="field_city">city</label>
             
-            <select class="form-control" id="field_city" name="city" ng-model="property.cityId" ng-options="city.id as city.name for city in citys">
-                <option value=""></option>
-            </select>
-            
+            <input type="text" class="form-control" id="field_city" name="city" ng-model="property.cityName"
+            	typeahead="city as formatCityName(city) for city in findCity($viewValue)"
+            	typeahead-on-select="onCitySelect($item, $model, $label)"
+            	typeahead-editable="false"
+            	typeahead-select-on-exact="true"
+            	typeahead-select-on-blur="true"
+            	typeahead-min-length="3"
+            	typeahead-wait-ms="100">
         </div>
         <div class="form-group">
             <label translate="aktivingatlanApp.property.user" for="field_user">user</label>

@@ -3,7 +3,6 @@ package com.aktivingatlan.web.rest;
 import com.aktivingatlan.Application;
 import com.aktivingatlan.domain.Property;
 import com.aktivingatlan.repository.PropertyRepository;
-import com.aktivingatlan.repository.search.PropertySearchRepository;
 import com.aktivingatlan.web.rest.dto.PropertyDTO;
 import com.aktivingatlan.web.rest.mapper.PropertyMapper;
 
@@ -144,9 +143,6 @@ public class PropertyResourceTest {
     private PropertyMapper propertyMapper;
 
     @Inject
-    private PropertySearchRepository propertySearchRepository;
-
-    @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     private MockMvc restPropertyMockMvc;
@@ -159,7 +155,6 @@ public class PropertyResourceTest {
         PropertyResource propertyResource = new PropertyResource();
         ReflectionTestUtils.setField(propertyResource, "propertyRepository", propertyRepository);
         ReflectionTestUtils.setField(propertyResource, "propertyMapper", propertyMapper);
-        ReflectionTestUtils.setField(propertyResource, "propertySearchRepository", propertySearchRepository);
         this.restPropertyMockMvc = MockMvcBuilders.standaloneSetup(propertyResource).setMessageConverters(jacksonMessageConverter).build();
     }
 

@@ -8,6 +8,8 @@ import com.aktivingatlan.web.rest.util.HeaderUtil;
 import com.aktivingatlan.web.rest.util.PaginationUtil;
 import com.aktivingatlan.web.rest.dto.ClientDTO;
 import com.aktivingatlan.web.rest.mapper.ClientDetailsMapper;
+import com.aktivingatlan.web.rest.mapper.ClientMapper;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -43,7 +45,10 @@ public class ClientResource {
     private ClientRepository clientRepository;
 
     @Inject
-    private ClientDetailsMapper clientMapper;
+    private ClientDetailsMapper clientDetailsMapper;
+
+    @Inject
+    private ClientMapper clientMapper;
 
     /**
      * POST  /clients -> Create a new client.
@@ -116,7 +121,7 @@ public class ClientResource {
     public ResponseEntity<ClientDTO> get(@PathVariable Long id) {
         log.debug("REST request to get Client : {}", id);
         return Optional.ofNullable(clientRepository.findByIdWithEagerRelationships(id))
-            .map(clientMapper::clientToClientDTO)
+            .map(clientDetailsMapper::clientToClientDTO)
             .map(clientDTO -> new ResponseEntity<>(
                 clientDTO,
                 HttpStatus.OK))

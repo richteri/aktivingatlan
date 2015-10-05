@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('aktivingatlanApp').controller('OwnershipDialogController',
-    ['$scope', '$stateParams', '$modalInstance', 'entity', 'Ownership', 'Property', 'Client', 'PropertySearch', 'ClientSearch', 
-        function($scope, $stateParams, $modalInstance, entity, Ownership, Property, Client, PropertySearch, ClientSearch) {
+    ['$scope', '$stateParams', '$modalInstance', '$sanitize', 'entity', 'Ownership', 'Property', 'Client', 'PropertySearch', 'ClientSearch', 
+        function($scope, $stateParams, $modalInstance, $sanitize, entity, Ownership, Property, Client, PropertySearch, ClientSearch) {
 
         $scope.ownership = entity;
         
