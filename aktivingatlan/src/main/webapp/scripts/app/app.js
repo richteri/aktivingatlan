@@ -3,6 +3,7 @@
 angular.module('aktivingatlanApp', ['LocalStorageModule', 'tmh.dynamicLocale', 'pascalprecht.translate', 
                'ui.bootstrap', // for modal dialogs
                'ui.select', // for tag-like multi-select
+               'ui.grid',
     'ngResource', 'ui.router', 'ngCookies', 'ngCacheBuster', 'ngFileUpload', 'infinite-scroll', 'ngSanitize'])
 
     .run(function ($rootScope, $location, $window, $http, $state, $translate, Language, Auth, Principal, ENV, VERSION) {
