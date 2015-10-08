@@ -3,7 +3,7 @@
 angular.module('aktivingatlanApp', ['LocalStorageModule', 'tmh.dynamicLocale', 'pascalprecht.translate', 
                'ui.bootstrap', // for modal dialogs
                'ui.select', // for tag-like multi-select
-               'ui.grid',
+               'ui.grid', 'ui.grid.pinning',
     'ngResource', 'ui.router', 'ngCookies', 'ngCacheBuster', 'ngFileUpload', 'infinite-scroll', 'ngSanitize'])
 
     .run(function ($rootScope, $location, $window, $http, $state, $translate, Language, Auth, Principal, ENV, VERSION) {
@@ -87,7 +87,7 @@ angular.module('aktivingatlanApp', ['LocalStorageModule', 'tmh.dynamicLocale', '
             urlTemplate: 'i18n/{lang}/{part}.json'
         });
 
-        $translateProvider.preferredLanguage('en');
+        $translateProvider.preferredLanguage('hu');
         $translateProvider.useCookieStorage();
         $translateProvider.useSanitizeValueStrategy('escaped');
         $translateProvider.addInterpolation('$translateMessageFormatInterpolation');

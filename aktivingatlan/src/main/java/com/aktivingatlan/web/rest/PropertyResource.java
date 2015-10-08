@@ -89,14 +89,11 @@ public class PropertyResource {
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional(readOnly = true)
-    public ResponseEntity<List<PropertyDTO>> getAll(@RequestParam(value = "page" , required = false) Integer offset,
-                                  @RequestParam(value = "per_page", required = false) Integer limit)
-        throws URISyntaxException {
-        Page<Property> page = propertyRepository.findAll(PaginationUtil.generatePageRequest(offset, limit));
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/propertys", offset, limit);
-        return new ResponseEntity<>(page.getContent().stream()
+    public ResponseEntity<List<PropertyDTO>> getAll() throws URISyntaxException {
+        List<Property> properties = propertyRepository.findAll();
+        return new ResponseEntity<>(properties.stream()
             .map(propertyMapper::propertyToPropertyDTO)
-            .collect(Collectors.toCollection(LinkedList::new)), headers, HttpStatus.OK);
+            .collect(Collectors.toCollection(LinkedList::new)), HttpStatus.OK);
     }
 
     /**
