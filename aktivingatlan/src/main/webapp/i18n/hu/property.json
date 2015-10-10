@@ -16,7 +16,7 @@
                 "title": "Ingatlan"
             },
             "code": "Kód",
-            "descriptionHu": "Magyar leírás",
+            "descriptionHu": "Leírás",
             "descriptionEn": "Angol leírás",
             "descriptionDe": "Német leírás",
             "room": "Szobák száma",
@@ -39,15 +39,15 @@
             "forRent": "Kiadó",
             "rentHuf": "Bérleti díj",
             "rentEur": "Bérleti díj EUR",
-            "rentPeakHuf": "Bérleti díj a főszezonban",
-            "rentPeakEur": "Bérleti díj a főszezonban EUR",
+            "rentPeakHuf": "Főszezon",
+            "rentPeakEur": "Főszezon EUR",
             "forMediumTerm": "Középtávra kiadó",
             "mediumTermHuf": "Bérleti díj középtávra",
             "mediumTermEur": "Bérleti díj középtávra EUR",
             "forLongTerm": "Hosszú távra kiadó",
             "longTermHuf": "Bérleti díj hosszútávra",
             "longTermEur": "Bérleti díj hosszútávra EUR",
-            "featured": "Kiemelt hirdetés",
+            "featured": "Kiemelt",
             "category": "Kategória",
             "photo": "Fényképek",
             "statement": "Megtekintési nyilatkozatok",
@@ -56,7 +56,8 @@
             "city": "Város",
             "contract": "Szerződések",
             "user": "Referens",
-            "apartment": "Apartmanok"
+            "apartment": "Apartmanok",
+            "createdDate": "Létrehozva"
         }
     }
 }
