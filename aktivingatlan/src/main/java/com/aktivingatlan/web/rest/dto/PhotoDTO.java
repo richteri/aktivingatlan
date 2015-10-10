@@ -3,13 +3,16 @@ package com.aktivingatlan.web.rest.dto;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+
+import com.aktivingatlan.domain.AbstractAuditingEntity;
+
 import java.util.Objects;
 
 
 /**
  * A DTO for the Photo entity.
  */
-public class PhotoDTO implements Serializable {
+public class PhotoDTO extends AbstractAuditingEntity implements Serializable {
 
     private Long id;
 

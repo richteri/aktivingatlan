@@ -18,7 +18,7 @@ import java.util.Objects;
 @Table(name = "PHOTO")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Document(indexName="photo")
-public class Photo implements Serializable {
+public class Photo extends AbstractAuditingEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

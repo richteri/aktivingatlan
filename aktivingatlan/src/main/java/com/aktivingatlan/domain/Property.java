@@ -20,7 +20,7 @@ import java.util.Objects;
 @Table(name = "PROPERTY")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Document(indexName="property")
-public class Property implements Serializable {
+public class Property extends AbstractAuditingEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

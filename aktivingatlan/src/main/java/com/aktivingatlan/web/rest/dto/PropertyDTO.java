@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.aktivingatlan.domain.AbstractAuditingEntity;
 import com.aktivingatlan.domain.Feature;
 import com.aktivingatlan.domain.Photo;
 
@@ -14,7 +15,7 @@ import java.util.Objects;
 /**
  * A DTO for the Property entity.
  */
-public class PropertyDTO implements Serializable {
+public class PropertyDTO extends AbstractAuditingEntity implements Serializable {
 
     private Long id;
 

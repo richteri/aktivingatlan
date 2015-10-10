@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.aktivingatlan.domain.AbstractAuditingEntity;
 import com.aktivingatlan.domain.Photo;
 
 import java.util.Objects;
@@ -12,7 +13,7 @@ import java.util.Objects;
 /**
  * A DTO for the Ownership entity.
  */
-public class OwnershipDTO implements Serializable {
+public class OwnershipDTO extends AbstractAuditingEntity implements Serializable {
 
     private Long id;
 

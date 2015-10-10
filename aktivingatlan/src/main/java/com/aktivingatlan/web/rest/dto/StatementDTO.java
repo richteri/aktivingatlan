@@ -1,6 +1,9 @@
 package com.aktivingatlan.web.rest.dto;
 
 import org.joda.time.LocalDate;
+
+import com.aktivingatlan.domain.AbstractAuditingEntity;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -10,7 +13,7 @@ import java.util.Objects;
 /**
  * A DTO for the Statement entity.
  */
-public class StatementDTO implements Serializable {
+public class StatementDTO extends AbstractAuditingEntity implements Serializable {
 
     private Long id;
 

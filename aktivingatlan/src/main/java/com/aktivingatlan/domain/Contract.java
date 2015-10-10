@@ -24,7 +24,7 @@ import java.util.Objects;
 @Table(name = "CONTRACT")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Document(indexName="contract")
-public class Contract implements Serializable {
+public class Contract extends AbstractAuditingEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -2,6 +2,7 @@ package com.aktivingatlan.web.rest.dto;
 
 import org.joda.time.LocalDate;
 
+import com.aktivingatlan.domain.AbstractAuditingEntity;
 import com.aktivingatlan.domain.Photo;
 
 import java.io.Serializable;
@@ -13,7 +14,7 @@ import java.util.Objects;
 /**
  * A DTO for the Contract entity.
  */
-public class ContractDTO implements Serializable {
+public class ContractDTO extends AbstractAuditingEntity implements Serializable {
 
     private Long id;
 

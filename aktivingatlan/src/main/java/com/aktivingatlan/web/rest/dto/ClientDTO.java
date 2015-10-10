@@ -4,13 +4,16 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import com.aktivingatlan.domain.AbstractAuditingEntity;
+
 import java.util.Objects;
 
 
 /**
  * A DTO for the Client entity.
  */
-public class ClientDTO implements Serializable {
+public class ClientDTO extends AbstractAuditingEntity implements Serializable {
 
     private Long id;
 
