@@ -1,19 +1,5 @@
 package com.aktivingatlan.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
-import com.aktivingatlan.domain.Feature;
-import com.aktivingatlan.repository.FeatureRepository;
-import com.aktivingatlan.repository.search.FeatureSearchRepository;
-import com.aktivingatlan.web.rest.util.HeaderUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -21,7 +7,23 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import javax.inject.Inject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.aktivingatlan.domain.Feature;
+import com.aktivingatlan.repository.FeatureRepository;
+import com.aktivingatlan.web.rest.util.HeaderUtil;
+import com.codahale.metrics.annotation.Timed;
 
 /**
  * REST controller for managing Feature.
@@ -34,9 +36,6 @@ public class FeatureResource {
 
     @Inject
     private FeatureRepository featureRepository;
-
-    @Inject
-    private FeatureSearchRepository featureSearchRepository;
 
     /**
      * POST  /features -> Create a new feature.
@@ -51,7 +50,6 @@ public class FeatureResource {
             return ResponseEntity.badRequest().header("Failure", "A new feature cannot already have an ID").body(null);
         }
         Feature result = featureRepository.save(feature);
-        featureSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/features/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert("feature", result.getId().toString()))
                 .body(result);
@@ -70,7 +68,6 @@ public class FeatureResource {
             return create(feature);
         }
         Feature result = featureRepository.save(feature);
-        featureSearchRepository.save(feature);
         return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityUpdateAlert("feature", feature.getId().toString()))
                 .body(result);
@@ -114,7 +111,6 @@ public class FeatureResource {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete Feature : {}", id);
         featureRepository.delete(id);
-        featureSearchRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("feature", id.toString())).build();
     }
 
@@ -128,7 +124,7 @@ public class FeatureResource {
     @Timed
     public List<Feature> search(@PathVariable String query) {
         return StreamSupport
-            .stream(featureSearchRepository.search(queryString(query)).spliterator(), false)
+            .stream(featureRepository.findAll().spliterator(), false)
             .collect(Collectors.toList());
     }
 }

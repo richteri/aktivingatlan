@@ -1,24 +1,5 @@
 package com.aktivingatlan.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
-import com.aktivingatlan.domain.Statement;
-import com.aktivingatlan.repository.StatementRepository;
-import com.aktivingatlan.repository.search.StatementSearchRepository;
-import com.aktivingatlan.web.rest.util.HeaderUtil;
-import com.aktivingatlan.web.rest.util.PaginationUtil;
-import com.aktivingatlan.web.rest.dto.StatementDTO;
-import com.aktivingatlan.web.rest.mapper.StatementMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
-
-import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.LinkedList;
@@ -27,7 +8,30 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import javax.inject.Inject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.aktivingatlan.domain.Statement;
+import com.aktivingatlan.repository.StatementRepository;
+import com.aktivingatlan.web.rest.dto.StatementDTO;
+import com.aktivingatlan.web.rest.mapper.StatementMapper;
+import com.aktivingatlan.web.rest.util.HeaderUtil;
+import com.aktivingatlan.web.rest.util.PaginationUtil;
+import com.codahale.metrics.annotation.Timed;
 
 /**
  * REST controller for managing Statement.
@@ -44,9 +48,6 @@ public class StatementResource {
     @Inject
     private StatementMapper statementMapper;
 
-    @Inject
-    private StatementSearchRepository statementSearchRepository;
-
     /**
      * POST  /statements -> Create a new statement.
      */
@@ -61,7 +62,6 @@ public class StatementResource {
         }
         Statement statement = statementMapper.statementDTOToStatement(statementDTO);
         Statement result = statementRepository.save(statement);
-        statementSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/statements/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert("statement", result.getId().toString()))
                 .body(statementMapper.statementToStatementDTO(result));
@@ -81,7 +81,6 @@ public class StatementResource {
         }
         Statement statement = statementMapper.statementDTOToStatement(statementDTO);
         Statement result = statementRepository.save(statement);
-        statementSearchRepository.save(statement);
         return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityUpdateAlert("statement", statementDTO.getId().toString()))
                 .body(statementMapper.statementToStatementDTO(result));
@@ -133,7 +132,6 @@ public class StatementResource {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete Statement : {}", id);
         statementRepository.delete(id);
-        statementSearchRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("statement", id.toString())).build();
     }
 
@@ -147,7 +145,7 @@ public class StatementResource {
     @Timed
     public List<Statement> search(@PathVariable String query) {
         return StreamSupport
-            .stream(statementSearchRepository.search(queryString(query)).spliterator(), false)
+            .stream(statementRepository.findAll().spliterator(), false)
             .collect(Collectors.toList());
     }
 }

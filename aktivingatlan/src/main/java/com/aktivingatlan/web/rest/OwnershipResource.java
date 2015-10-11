@@ -1,24 +1,5 @@
 package com.aktivingatlan.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
-import com.aktivingatlan.domain.Ownership;
-import com.aktivingatlan.repository.OwnershipRepository;
-import com.aktivingatlan.repository.search.OwnershipSearchRepository;
-import com.aktivingatlan.web.rest.util.HeaderUtil;
-import com.aktivingatlan.web.rest.util.PaginationUtil;
-import com.aktivingatlan.web.rest.dto.OwnershipDTO;
-import com.aktivingatlan.web.rest.mapper.OwnershipMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
-
-import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.LinkedList;
@@ -27,7 +8,30 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import javax.inject.Inject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.aktivingatlan.domain.Ownership;
+import com.aktivingatlan.repository.OwnershipRepository;
+import com.aktivingatlan.web.rest.dto.OwnershipDTO;
+import com.aktivingatlan.web.rest.mapper.OwnershipMapper;
+import com.aktivingatlan.web.rest.util.HeaderUtil;
+import com.aktivingatlan.web.rest.util.PaginationUtil;
+import com.codahale.metrics.annotation.Timed;
 
 /**
  * REST controller for managing Ownership.
@@ -44,9 +48,6 @@ public class OwnershipResource {
     @Inject
     private OwnershipMapper ownershipMapper;
 
-    @Inject
-    private OwnershipSearchRepository ownershipSearchRepository;
-
     /**
      * POST  /ownerships -> Create a new ownership.
      */
@@ -61,7 +62,6 @@ public class OwnershipResource {
         }
         Ownership ownership = ownershipMapper.ownershipDTOToOwnership(ownershipDTO);
         Ownership result = ownershipRepository.save(ownership);
-        ownershipSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/ownerships/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert("ownership", result.getId().toString()))
                 .body(ownershipMapper.ownershipToOwnershipDTO(result));
@@ -81,7 +81,6 @@ public class OwnershipResource {
         }
         Ownership ownership = ownershipMapper.ownershipDTOToOwnership(ownershipDTO);
         Ownership result = ownershipRepository.save(ownership);
-        ownershipSearchRepository.save(ownership);
         return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityUpdateAlert("ownership", ownershipDTO.getId().toString()))
                 .body(ownershipMapper.ownershipToOwnershipDTO(result));
@@ -133,7 +132,6 @@ public class OwnershipResource {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete Ownership : {}", id);
         ownershipRepository.delete(id);
-        ownershipSearchRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("ownership", id.toString())).build();
     }
 
@@ -147,7 +145,7 @@ public class OwnershipResource {
     @Timed
     public List<Ownership> search(@PathVariable String query) {
         return StreamSupport
-            .stream(ownershipSearchRepository.search(queryString(query)).spliterator(), false)
+            .stream(ownershipRepository.findAll().spliterator(), false)
             .collect(Collectors.toList());
     }
 }

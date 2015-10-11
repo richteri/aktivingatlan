@@ -1,24 +1,5 @@
 package com.aktivingatlan.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
-import com.aktivingatlan.domain.Photo;
-import com.aktivingatlan.repository.PhotoRepository;
-import com.aktivingatlan.repository.search.PhotoSearchRepository;
-import com.aktivingatlan.web.rest.util.HeaderUtil;
-import com.aktivingatlan.web.rest.util.PaginationUtil;
-import com.aktivingatlan.web.rest.dto.PhotoDTO;
-import com.aktivingatlan.web.rest.mapper.PhotoMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
-
-import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.LinkedList;
@@ -27,7 +8,30 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import javax.inject.Inject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.aktivingatlan.domain.Photo;
+import com.aktivingatlan.repository.PhotoRepository;
+import com.aktivingatlan.web.rest.dto.PhotoDTO;
+import com.aktivingatlan.web.rest.mapper.PhotoMapper;
+import com.aktivingatlan.web.rest.util.HeaderUtil;
+import com.aktivingatlan.web.rest.util.PaginationUtil;
+import com.codahale.metrics.annotation.Timed;
 
 /**
  * REST controller for managing Photo.
@@ -44,9 +48,6 @@ public class PhotoResource {
     @Inject
     private PhotoMapper photoMapper;
 
-    @Inject
-    private PhotoSearchRepository photoSearchRepository;
-
     /**
      * POST  /photos -> Create a new photo.
      */
@@ -61,7 +62,6 @@ public class PhotoResource {
         }
         Photo photo = photoMapper.photoDTOToPhoto(photoDTO);
         Photo result = photoRepository.save(photo);
-        photoSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/photos/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert("photo", result.getId().toString()))
                 .body(photoMapper.photoToPhotoDTO(result));
@@ -81,7 +81,6 @@ public class PhotoResource {
         }
         Photo photo = photoMapper.photoDTOToPhoto(photoDTO);
         Photo result = photoRepository.save(photo);
-        photoSearchRepository.save(photo);
         return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityUpdateAlert("photo", photoDTO.getId().toString()))
                 .body(photoMapper.photoToPhotoDTO(result));
@@ -132,7 +131,6 @@ public class PhotoResource {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete Photo : {}", id);
         photoRepository.delete(id);
-        photoSearchRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("photo", id.toString())).build();
     }
 
@@ -146,7 +144,7 @@ public class PhotoResource {
     @Timed
     public List<Photo> search(@PathVariable String query) {
         return StreamSupport
-            .stream(photoSearchRepository.search(queryString(query)).spliterator(), false)
+            .stream(photoRepository.findAll().spliterator(), false)
             .collect(Collectors.toList());
     }
 }

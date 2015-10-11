@@ -1,21 +1,5 @@
 package com.aktivingatlan.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
-import com.aktivingatlan.domain.Apartment;
-import com.aktivingatlan.repository.ApartmentRepository;
-import com.aktivingatlan.repository.search.ApartmentSearchRepository;
-import com.aktivingatlan.web.rest.util.HeaderUtil;
-import com.aktivingatlan.web.rest.util.PaginationUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -23,7 +7,27 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import javax.inject.Inject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.aktivingatlan.domain.Apartment;
+import com.aktivingatlan.repository.ApartmentRepository;
+import com.aktivingatlan.web.rest.util.HeaderUtil;
+import com.aktivingatlan.web.rest.util.PaginationUtil;
+import com.codahale.metrics.annotation.Timed;
 
 /**
  * REST controller for managing Apartment.
@@ -36,9 +40,6 @@ public class ApartmentResource {
 
     @Inject
     private ApartmentRepository apartmentRepository;
-
-    @Inject
-    private ApartmentSearchRepository apartmentSearchRepository;
 
     /**
      * POST  /apartments -> Create a new apartment.
@@ -53,7 +54,6 @@ public class ApartmentResource {
             return ResponseEntity.badRequest().header("Failure", "A new apartment cannot already have an ID").body(null);
         }
         Apartment result = apartmentRepository.save(apartment);
-        apartmentSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/apartments/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert("apartment", result.getId().toString()))
                 .body(result);
@@ -72,7 +72,6 @@ public class ApartmentResource {
             return create(apartment);
         }
         Apartment result = apartmentRepository.save(apartment);
-        apartmentSearchRepository.save(apartment);
         return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityUpdateAlert("apartment", apartment.getId().toString()))
                 .body(result);
@@ -119,7 +118,6 @@ public class ApartmentResource {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete Apartment : {}", id);
         apartmentRepository.delete(id);
-        apartmentSearchRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("apartment", id.toString())).build();
     }
 
@@ -133,7 +131,7 @@ public class ApartmentResource {
     @Timed
     public List<Apartment> search(@PathVariable String query) {
         return StreamSupport
-            .stream(apartmentSearchRepository.search(queryString(query)).spliterator(), false)
+            .stream(apartmentRepository.findAll().spliterator(), false)
             .collect(Collectors.toList());
     }
 }

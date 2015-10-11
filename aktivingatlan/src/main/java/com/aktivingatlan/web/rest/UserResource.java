@@ -1,26 +1,24 @@
 package com.aktivingatlan.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
-import com.aktivingatlan.domain.User;
-import com.aktivingatlan.repository.UserRepository;
-import com.aktivingatlan.repository.search.UserSearchRepository;
-import com.aktivingatlan.security.AuthoritiesConstants;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import javax.inject.Inject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.inject.Inject;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import com.aktivingatlan.domain.User;
+import com.aktivingatlan.repository.UserRepository;
+import com.codahale.metrics.annotation.Timed;
 
 /**
  * REST controller for managing users.
@@ -33,9 +31,6 @@ public class UserResource {
 
     @Inject
     private UserRepository userRepository;
-
-    @Inject
-    private UserSearchRepository userSearchRepository;
 
     /**
      * GET  /users -> get all users.
@@ -73,7 +68,7 @@ public class UserResource {
     @Timed
     public List<User> search(@PathVariable String query) {
         return StreamSupport
-            .stream(userSearchRepository.search(queryString(query)).spliterator(), false)
+            .stream(userRepository.findAll().spliterator(), false)
             .collect(Collectors.toList());
     }
 }

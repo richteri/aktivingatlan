@@ -1,14 +1,13 @@
 package com.aktivingatlan.service;
 
-import com.aktivingatlan.domain.Authority;
-import com.aktivingatlan.domain.User;
-import com.aktivingatlan.repository.AuthorityRepository;
-import com.aktivingatlan.repository.UserRepository;
-import com.aktivingatlan.repository.search.UserSearchRepository;
-import com.aktivingatlan.security.SecurityUtils;
-import com.aktivingatlan.service.util.RandomUtil;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
+import javax.inject.Inject;
+
 import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -16,11 +15,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.inject.Inject;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import com.aktivingatlan.domain.Authority;
+import com.aktivingatlan.domain.User;
+import com.aktivingatlan.repository.AuthorityRepository;
+import com.aktivingatlan.repository.UserRepository;
+import com.aktivingatlan.security.SecurityUtils;
+import com.aktivingatlan.service.util.RandomUtil;
 
 /**
  * Service class for managing users.
@@ -38,9 +38,6 @@ public class UserService {
     private UserRepository userRepository;
 
     @Inject
-    private UserSearchRepository userSearchRepository;
-
-    @Inject
     private AuthorityRepository authorityRepository;
 
     public Optional<User> activateRegistration(String key) {
@@ -51,7 +48,6 @@ public class UserService {
                 user.setActivated(true);
                 user.setActivationKey(null);
                 userRepository.save(user);
-                userSearchRepository.save(user);
                 log.debug("Activated user: {}", user);
                 return user;
             });
@@ -107,7 +103,6 @@ public class UserService {
         authorities.add(authority);
         newUser.setAuthorities(authorities);
         userRepository.save(newUser);
-        userSearchRepository.save(newUser);
         log.debug("Created Information for User: {}", newUser);
         return newUser;
     }
@@ -119,7 +114,6 @@ public class UserService {
             u.setEmail(email);
             u.setLangKey(langKey);
             userRepository.save(u);
-            userSearchRepository.save(u);
             log.debug("Changed Information for User: {}", u);
         });
     }
@@ -154,7 +148,6 @@ public class UserService {
         for (User user : users) {
             log.debug("Deleting not activated user {}", user.getLogin());
             userRepository.delete(user);
-            userSearchRepository.delete(user);
         }
     }
 }
