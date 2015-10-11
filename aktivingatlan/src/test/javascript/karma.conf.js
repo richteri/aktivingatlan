@@ -39,7 +39,10 @@ module.exports = function (config) {
             'main/webapp/scripts/app/app.js',
             'main/webapp/scripts/app/**/*.js',
             'main/webapp/scripts/components/**/*.{js,html}',
-            'test/javascript/**/!(karma.conf).js'
+            'test/javascript/**/!(karma.conf).js',
+            'main/webapp/bower_components/messageformat/locale/hu.js',
+            'main/webapp/bower_components/messageformat/locale/en.js',
+            'main/webapp/bower_components/messageformat/locale/de.js',
         ],
 
 
