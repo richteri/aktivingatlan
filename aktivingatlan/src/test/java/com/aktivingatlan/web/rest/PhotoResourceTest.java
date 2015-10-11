@@ -1,16 +1,24 @@
 package com.aktivingatlan.web.rest;
 
-import com.aktivingatlan.Application;
-import com.aktivingatlan.domain.Photo;
-import com.aktivingatlan.repository.PhotoRepository;
-import com.aktivingatlan.repository.search.PhotoSearchRepository;
-import com.aktivingatlan.web.rest.dto.PhotoDTO;
-import com.aktivingatlan.web.rest.mapper.PhotoMapper;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.StrictAssertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -23,13 +31,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.aktivingatlan.Application;
+import com.aktivingatlan.domain.Photo;
+import com.aktivingatlan.repository.PhotoRepository;
+import com.aktivingatlan.web.rest.dto.PhotoDTO;
+import com.aktivingatlan.web.rest.mapper.PhotoMapper;
 
 
 /**
@@ -62,9 +68,6 @@ public class PhotoResourceTest {
     private PhotoMapper photoMapper;
 
     @Inject
-    private PhotoSearchRepository photoSearchRepository;
-
-    @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     private MockMvc restPhotoMockMvc;
@@ -77,7 +80,6 @@ public class PhotoResourceTest {
         PhotoResource photoResource = new PhotoResource();
         ReflectionTestUtils.setField(photoResource, "photoRepository", photoRepository);
         ReflectionTestUtils.setField(photoResource, "photoMapper", photoMapper);
-        ReflectionTestUtils.setField(photoResource, "photoSearchRepository", photoSearchRepository);
         this.restPhotoMockMvc = MockMvcBuilders.standaloneSetup(photoResource).setMessageConverters(jacksonMessageConverter).build();
     }
 

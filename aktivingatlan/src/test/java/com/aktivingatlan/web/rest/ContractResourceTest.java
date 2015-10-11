@@ -1,19 +1,29 @@
 package com.aktivingatlan.web.rest;
 
-import com.aktivingatlan.Application;
-import com.aktivingatlan.domain.Contract;
-import com.aktivingatlan.repository.ContractRepository;
-import com.aktivingatlan.repository.search.ContractSearchRepository;
-import com.aktivingatlan.web.rest.dto.ContractDTO;
-import com.aktivingatlan.web.rest.mapper.ContractMapper;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.StrictAssertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+
+import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -23,14 +33,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-import org.joda.time.LocalDate;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.aktivingatlan.Application;
+import com.aktivingatlan.domain.Contract;
+import com.aktivingatlan.repository.ContractRepository;
+import com.aktivingatlan.repository.UserRepository;
+import com.aktivingatlan.web.rest.dto.ContractDTO;
+import com.aktivingatlan.web.rest.mapper.ContractMapper;
 
 
 /**
@@ -42,6 +50,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
 @IntegrationTest
+@EnableJpaAuditing(auditorAwareRef = "mockAuditorAware")
 public class ContractResourceTest {
 
     private static final String DEFAULT_ID_NO = "SAMPLE_TEXT";
@@ -57,15 +66,15 @@ public class ContractResourceTest {
     private static final LocalDate UPDATED_END_DATE = new LocalDate();
     private static final String DEFAULT_NOTE = "SAMPLE_TEXT";
     private static final String UPDATED_NOTE = "UPDATED_TEXT";
-
+    
+    @Inject
+    private UserRepository userRepository;
+    
     @Inject
     private ContractRepository contractRepository;
 
     @Inject
     private ContractMapper contractMapper;
-
-    @Inject
-    private ContractSearchRepository contractSearchRepository;
 
     @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -80,7 +89,6 @@ public class ContractResourceTest {
         ContractResource contractResource = new ContractResource();
         ReflectionTestUtils.setField(contractResource, "contractRepository", contractRepository);
         ReflectionTestUtils.setField(contractResource, "contractMapper", contractMapper);
-        ReflectionTestUtils.setField(contractResource, "contractSearchRepository", contractSearchRepository);
         this.restContractMockMvc = MockMvcBuilders.standaloneSetup(contractResource).setMessageConverters(jacksonMessageConverter).build();
     }
 

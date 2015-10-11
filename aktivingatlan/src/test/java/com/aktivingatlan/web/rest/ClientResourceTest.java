@@ -1,16 +1,24 @@
 package com.aktivingatlan.web.rest;
 
-import com.aktivingatlan.Application;
-import com.aktivingatlan.domain.Client;
-import com.aktivingatlan.repository.ClientRepository;
-import com.aktivingatlan.repository.search.ClientSearchRepository;
-import com.aktivingatlan.web.rest.dto.ClientDTO;
-import com.aktivingatlan.web.rest.mapper.ClientDetailsMapper;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.StrictAssertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -23,13 +31,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.aktivingatlan.Application;
+import com.aktivingatlan.domain.Client;
+import com.aktivingatlan.repository.ClientRepository;
+import com.aktivingatlan.web.rest.dto.ClientDTO;
+import com.aktivingatlan.web.rest.mapper.ClientDetailsMapper;
+import com.aktivingatlan.web.rest.mapper.ClientMapper;
 
 
 /**
@@ -64,10 +71,10 @@ public class ClientResourceTest {
     private ClientRepository clientRepository;
 
     @Inject
-    private ClientDetailsMapper clientMapper;
+    private ClientMapper clientMapper;
 
     @Inject
-    private ClientSearchRepository clientSearchRepository;
+    private ClientDetailsMapper clientDetailsMapper;
 
     @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -82,7 +89,7 @@ public class ClientResourceTest {
         ClientResource clientResource = new ClientResource();
         ReflectionTestUtils.setField(clientResource, "clientRepository", clientRepository);
         ReflectionTestUtils.setField(clientResource, "clientMapper", clientMapper);
-        ReflectionTestUtils.setField(clientResource, "clientSearchRepository", clientSearchRepository);
+        ReflectionTestUtils.setField(clientResource, "clientDetailsMapper", clientDetailsMapper);
         this.restClientMockMvc = MockMvcBuilders.standaloneSetup(clientResource).setMessageConverters(jacksonMessageConverter).build();
     }
 
@@ -105,7 +112,7 @@ public class ClientResourceTest {
         int databaseSizeBeforeCreate = clientRepository.findAll().size();
 
         // Create the Client
-        ClientDTO clientDTO = clientMapper.clientToClientDTO(client);
+        ClientDTO clientDTO = clientDetailsMapper.clientToClientDTO(client);
 
         restClientMockMvc.perform(post("/api/clients")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -194,7 +201,7 @@ public class ClientResourceTest {
         client.setIdNo(UPDATED_ID_NO);
         client.setNote(UPDATED_NOTE);
         
-        ClientDTO clientDTO = clientMapper.clientToClientDTO(client);
+        ClientDTO clientDTO = clientDetailsMapper.clientToClientDTO(client);
 
         restClientMockMvc.perform(put("/api/clients")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)

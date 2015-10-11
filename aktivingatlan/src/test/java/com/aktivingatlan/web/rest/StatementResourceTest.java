@@ -1,16 +1,25 @@
 package com.aktivingatlan.web.rest;
 
-import com.aktivingatlan.Application;
-import com.aktivingatlan.domain.Statement;
-import com.aktivingatlan.repository.StatementRepository;
-import com.aktivingatlan.repository.search.StatementSearchRepository;
-import com.aktivingatlan.web.rest.dto.StatementDTO;
-import com.aktivingatlan.web.rest.mapper.StatementMapper;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.StrictAssertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+
+import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -23,14 +32,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-import org.joda.time.LocalDate;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.aktivingatlan.Application;
+import com.aktivingatlan.domain.Statement;
+import com.aktivingatlan.repository.StatementRepository;
+import com.aktivingatlan.web.rest.dto.StatementDTO;
+import com.aktivingatlan.web.rest.mapper.StatementMapper;
 
 
 /**
@@ -57,9 +63,6 @@ public class StatementResourceTest {
     private StatementMapper statementMapper;
 
     @Inject
-    private StatementSearchRepository statementSearchRepository;
-
-    @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     private MockMvc restStatementMockMvc;
@@ -72,7 +75,6 @@ public class StatementResourceTest {
         StatementResource statementResource = new StatementResource();
         ReflectionTestUtils.setField(statementResource, "statementRepository", statementRepository);
         ReflectionTestUtils.setField(statementResource, "statementMapper", statementMapper);
-        ReflectionTestUtils.setField(statementResource, "statementSearchRepository", statementSearchRepository);
         this.restStatementMockMvc = MockMvcBuilders.standaloneSetup(statementResource).setMessageConverters(jacksonMessageConverter).build();
     }
 
