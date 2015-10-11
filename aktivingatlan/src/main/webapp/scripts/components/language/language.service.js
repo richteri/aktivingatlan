@@ -27,7 +27,8 @@ angular.module('aktivingatlanApp')
  They are written in English to avoid character encoding issues (not a perfect solution)
  */
     .constant('LANGUAGES', [
-        'hu', 'en', 'de'
+    	'hu'
+        ,'en'
         ,'de'
         //JHipster will add new languages here
     ]

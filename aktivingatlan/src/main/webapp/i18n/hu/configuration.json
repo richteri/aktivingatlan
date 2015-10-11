@@ -1,10 +1,10 @@
 {
     "configuration": {
-        "title": "Konfiguráció",
-        "filter": "Szűrő",
+        "title": "Beállítások",
+        "filter": "Szűrés (prefix alapján)",
         "table": {
-            "prefix": "Előtag",
-            "properties": "Tulajdonságok"
+            "prefix": "Prefix",
+            "properties": "Beállítások"
         }
     }
 }

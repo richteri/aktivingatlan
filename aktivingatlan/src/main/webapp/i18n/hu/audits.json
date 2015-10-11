@@ -1,26 +1,26 @@
 {
     "audits": {
-        "title": "Audits",
+        "title": "Biztonsági ellenörzés",
         "filter": {
-            "title": "Filter per date",
-            "from": "from",
-            "to": "to",
+            "title": "Dátum szerinti szűrés",
+            "from": "Kezdet",
+            "to": "Vég",
             "button": {
-                "weeks": "Weeks",
-                "today": "today",
-                "clear": "clear",
-                "close": "close"
+                "weeks": "hetek",
+                "today": "ma",
+                "clear": "törlés",
+                "close": "bezárás"
             }
         },
         "table": {
             "header": {
-                "principal": "User",
-                "date": "Date",
-                "status": "State",
-                "data": "Extra data"
+                "principal": "Felhasználó",
+                "date": "Dátum",
+                "status": "Állapot",
+                "data": "Extra információ"
             },
             "data": {
-                "remoteAddress": "Remote Address:"
+                "remoteAddress": "IP cím:"
             }
         }
     }

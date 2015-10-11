@@ -1,27 +1,20 @@
 {
     "health": {
-        "title": "Health checks",
-        "refresh.button": "Refresh",
-        "stacktrace": "Stacktrace",        
-        "details": {
-            "details": "Details",
-            "properties": "Properties",
-            "name": "Name",
-            "value": "Value",
-            "error": "Error"
-        },
+        "title": "Rendszer ellenőrzések",
+        "refresh.button": "Frissítés",
+        "stacktrace": "Stacktrace",
         "indicator": {
-            "diskSpace": "Disk space",
+            "diskSpace": "Szabad hely a diszken",
             "mail": "Email",
-            "db": "Database"
+            "db": "Adatbázis"
         },
         "table": {
-            "service": "Service name",
-            "status": "Status"
+            "service": "Szervíz neve",
+            "status": "Státusz"
         },
         "status": {
-            "UP": "UP",
-            "DOWN": "DOWN"
+            "UP": "MŰKÖDIK",
+            "DOWN": "NEM MŰKÖDIK"
         }
     }
 }

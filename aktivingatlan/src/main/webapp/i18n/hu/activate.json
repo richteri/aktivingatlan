@@ -1,9 +1,9 @@
 {
     "activate": {
-        "title": "Activation",
+        "title": "Aktiválás",
         "messages": {
-            "success": "<strong>Your user has been activated.</strong> Please <a href=\"#/login\">authenticate</a>.",
-            "error": "<strong>Your user could not be activated.</strong> Please use the registration form to sign up."
+            "success": "<strong>A hozzáférése aktiválásra került.</strong> Kérjük <a href=\"#/login\">lépjen be</a>.",
+            "error": "<strong>A hozzáférését nem sikerült aktiválni.</strong> Kérjük használja a regisztrációs oldalt, hogy hozzáférést igényeljen."
         }
     }
 }
