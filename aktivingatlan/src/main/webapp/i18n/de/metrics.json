@@ -1,68 +1,68 @@
 {
     "metrics": {
-        "title": "Application Metrics",
-        "refresh.button": "Refresh",
-        "updating": "Updating...",
+        "title": "Anwendungs-Metriken",
+        "refresh.button": "Aktualisieren",
+        "updating": "Aktualisierung...",
         "jvm": {
-            "title": "JVM Metrics",
+            "title": "JVM Metriken",
             "memory": {
-                "title": "Memory",
-                "total": "Total Memory",
-                "heap": "Heap Memory",
-                "nonheap": "Non-Heap Memory"
+                "title": "Hauptspeicher",
+                "total": "Gesamter Hauptspeicher",
+                "heap": "Heap Speicher",
+                "nonheap": "Non-Heap Speicher"
             },
             "threads": {
                 "title": "Threads",
-                "all": "All",
+                "all": "Alle",
                 "runnable": "Runnable",
-                "timedwaiting": "Timed waiting",
-                "waiting": "Waiting",
-                "blocked": "Blocked",
+                "timedwaiting": "Wartezeit",
+                "waiting": "Wartend",
+                "blocked": "Geblockt",
                 "dump": {
                     "title": "Threads dump",
                     "id": "Id: ",
-                    "blockedtime": "Blocked Time",
-                    "blockedcount": "Blocked Count",
-                    "waitedtime": "Waited Time",
-                    "waitedcount": "Waited Count",
-                    "lockname": "Lock name",
+                    "blockedtime": "Geblockte Zeit",
+                    "blockedcount": "Geblockte Zahl",
+                    "waitedtime": "Gewartete Zeit",
+                    "waitedcount": "Gewartete Anzahl",
+                    "lockname": "Lock-Name",
                     "stacktrace": "Stacktrace",
-                    "show": "Show Stacktrace",
-                    "hide": "Hide Stacktrace"
+                    "show": "Zeigen",
+                    "hide": "Verstecken"
                 }
             },
             "gc": {
-                "title": "Garbage collections",
-                "marksweepcount": "Mark Sweep count",
-                "marksweeptime": "Mark Sweep time",
-                "scavengecount": "Scavenge count",
-                "scavengetime": "Scavenge time"
+                "title": "Speicherbereinigung (GC)",
+                "marksweepcount": "Durchlaufmarkierungs (Mark Sweep) Anzahl",
+                "marksweeptime": "Durchlaufmarkierungs (Mark Sweep) Zeit",
+                "scavengecount": "Bereinigungslauf (Scavenge) Anzahl",
+                "scavengetime": "Bereinigungslauf (Scavenge) Zeit"
             },
             "http": {
-                "title": "HTTP requests (events per second)",
-                "active": "Active requests:",
-                "total": "Total requests:",
+                "title": "HTTP Anfragen (Ereignisse pro Sekunde)",
+                "active": "Aktive Anfragen:",
+                "total": "Alle Anfragen:",
                 "table": {
-                    "code": "Code",
-                    "count": "Count",
-                    "mean": "Mean",
-                    "average": "Average"
+                    "code": "Codierung",
+                    "count": "Anzahl",
+                    "mean": "Durchschnittswert",
+                    "average": "Mittelwert"
                 },
                 "code": {
                     "ok": "Ok",
-                    "notfound": "Not found",
-                    "servererror": "Server Error"
+                    "notfound": "Nicht gefunden",
+                    "servererror": "Server Fehler"
                 }
             }
         },
         "servicesstats": {
-            "title": "Services statistics (time in millisecond)",
+            "title": "Service Statistiken (Zeit in Millisekunden)",
             "table": {
-                "name": "Service name",
-                "count": "Count",
-                "mean": "Mean",
-                "min": "Min",
-                "max": "Max",
+                "name": "Service Name",
+                "count": "Anzahl",
+                "mean": "Durchschnitt",
+                "min": "Minimum",
+                "max": "Maximum",
                 "p50": "p50",
                 "p75": "p75",
                 "p95": "p95",
@@ -70,20 +70,20 @@
             }
         },
         "ehcache": {
-            "title": "Ehcache statistics",
-            "cachename": "Cache name",
-            "objects": "Objects",
-            "hits": "Hits",
-            "misses": "Misses",
-            "evictioncount": "Eviction count",
-            "mean": "Mean get time (ms)"
+            "title": "Ehcache Statistiken",
+            "cachename": "Cache Name",
+            "objects": "Objekte",
+            "hits": "Treffer",
+            "misses": "Keine Treffer",
+            "evictioncount": "Anzahl entfernter Objekte",
+            "mean": "Durchschnittliche Zugriffszeit (ms)"
         },
         "datasource": {
         	"usage": "Usage",
-            "title": "DataSource statistics (time in millisecond)",
-            "name": "Pool usage",
-            "count": "Count",
-            "mean": "Mean",
+            "title": "Datenquelle (Zeit in millisekunden)",
+            "name": "Pool-Auslastung",
+            "count": "Anzahl",
+            "mean": "Mittel",
             "min": "Min",
             "max": "Max",
             "p50": "p50",

@@ -2,25 +2,25 @@
     "audits": {
         "title": "Audits",
         "filter": {
-            "title": "Filter per date",
-            "from": "from",
-            "to": "to",
+            "title": "Nach Datum filtern",
+            "from": "von",
+            "to": "bis",
             "button": {
-                "weeks": "Weeks",
-                "today": "today",
-                "clear": "clear",
-                "close": "close"
+                "weeks": "Wochen",
+                "today": "heute",
+                "clear": "leeren",
+                "close": "abschließen"
             }
         },
         "table": {
             "header": {
-                "principal": "User",
-                "date": "Date",
-                "status": "State",
-                "data": "Extra data"
+                "principal": "Benutzer",
+                "date": "Datum",
+                "status": "Stand",
+                "data": "Extrainformationen"
             },
             "data": {
-                "remoteAddress": "Remote Address:"
+                "remoteAddress": "Remote-Adresse:"
             }
         }
     }

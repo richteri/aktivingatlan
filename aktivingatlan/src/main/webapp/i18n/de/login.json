@@ -1,19 +1,19 @@
 {
     "login": {
-        "title": "Authentication",
+        "title": "Anmeldung",
         "form": {
-            "password": "Password",
-            "password.placeholder": "Your password",
-            "rememberme": "Automatic Login",
-            "button": "Authenticate"
+            "password": "Passwort",
+            "password.placeholder": "Ihr Passwort",
+            "rememberme": "Automatische Anmeldung",
+            "button": "Anmelden"
         },
         "messages": {
             "error": {
-                "authentication": "<strong>Authentication failed!</strong> Please check your credentials and try again."
+                "authentication": "<strong>Anmeldung fehlgeschlagen!</strong> Überprüfen Sie bitte Ihre Angaben und versuchen Sie es erneut."
             }
         },
         "password" : {
-            "forgot": "Did you forget your password?"
+            "forgot": "Sie haben ihr Passwort vergessen?"
         }
     }
 }

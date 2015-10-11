@@ -28,6 +28,7 @@ angular.module('aktivingatlanApp')
  */
     .constant('LANGUAGES', [
         'hu', 'en', 'de'
+        ,'de'
         //JHipster will add new languages here
     ]
 );
