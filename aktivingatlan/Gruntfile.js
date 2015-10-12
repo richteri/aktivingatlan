@@ -252,7 +252,16 @@ module.exports = function (grunt) {
                     src: [
                         'generated/*'
                     ]
-                }]
+                },  {
+                    expand: true,
+                    flatten: true,
+                    dest: 'assets/styles/',
+                    src: ['bower_components/angular-ui-grid/ui-grid.ttf',
+                          'bower_components/angular-ui-grid/ui-grid.woff',
+                          'bower_components/angular-ui-grid/ui-grid.eot',
+                          'bower_components/angular-ui-grid/ui-grid.svg'
+                          ]
+                  }]
             },
             generateOpenshiftDirectory: {
                     expand: true,
