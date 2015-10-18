@@ -36,7 +36,7 @@ public class Property extends AbstractAuditingEntity implements Serializable {
     private Long id;
     
     
-    @Column(name = "code")
+    @Column(name = "code", unique = true)
     private String code;
     
     @Column(name = "description_hu")

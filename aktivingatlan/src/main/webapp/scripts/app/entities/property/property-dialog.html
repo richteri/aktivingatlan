@@ -8,275 +8,284 @@
     </div>
     <div class="modal-body">
         <jh-alert-error></jh-alert-error>
+		<div class="panel panel-default">
+			<div class="panel-body">
+		        <div class="row">
+			        <div class="form-group has-feedback col-md-2" ng-class="{ 'has-error': editForm.code.$invalid && editForm.code.$touched, 'has-success': editForm.code.$valid && editForm.code.$touched}">
+			            <label for="field_code" class="control-label">
+			            	<span translate="aktivingatlanApp.property.code">Code</span>
+				            <span class="danger" ng-show="editForm.code.$dirty && editForm.code.$error.unique">
+				    			 - foglalt
+							</span>
+			            </label>
+			            <input type="text" class="form-control" name="code" id="field_code"
+			                    ng-model="property.code" unique-property-code required>
+			            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-show="editForm.code.$valid && editForm.code.$touched"></span>
+			            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="editForm.code.$invalid && editForm.code.$touched"></span>
+			        </div>
+			        <div class="form-group col-md-2">
+			            <label translate="aktivingatlanApp.property.active" for="field_active">Active</label>
+			            <input type="checkbox" class="form-control" name="active" id="field_active"
+			                    ng-model="property.active"
+			                    >
+			
+			        </div>
+			        <div class="form-group col-md-2">
+			            <label translate="aktivingatlanApp.property.featured" for="field_featured">Featured</label>
+			            <input type="checkbox" class="form-control" name="featured" id="field_featured"
+			                    ng-model="property.featured"
+			                    >
+			
+			        </div>   
+			        <div class="form-group col-md-3">
+			            <label translate="aktivingatlanApp.property.category" for="field_category">category</label>
+			            
+			            <select class="form-control" id="field_category" name="category" ng-model="property.categoryId" ng-options="category.id as category.nameHu for category in categorys">
+			                <option value=""></option>
+			            </select>
+			            
+			        </div>
+			        <div class="form-group col-md-3">
+			            <label translate="aktivingatlanApp.property.user" for="field_user">user</label>
+			            
+			            <select class="form-control" id="field_user" name="user" ng-model="property.userId" ng-options="user.id as user.login for user in users">
+			                <option value=""></option>
+			            </select>
+			            
+			        </div>
+		     
+		        </div>
+		        <div class="row">
+			        <div class="form-group col-md-10">
+			            <label translate="aktivingatlanApp.property.feature" for="field_feature">feature</label>
+			            <ui-select multiple ng-model="property.features" theme="bootstrap" class="form-control" id="field_feature">
+			            	<ui-select-match>{{$item.nameHu}}</ui-select-match>
+			            	<ui-select-choices repeat="feature in features | filter:{nameHu: $select.search} | filter:filterAlreadyAddedFeatures ">
+						      <div ng-bind-html="feature.nameHu | highlight: $select.search"></div>
+						    </ui-select-choices>
+			            </ui-select>
+			        </div>
+			        <div class="form-group col-md-2">
+			            <label translate="aktivingatlanApp.property.furnished" for="field_furnished">Furnished</label>
+			            <input type="checkbox" class="form-control" name="furnished" id="field_furnished"
+			                    ng-model="property.furnished"
+			                    >
+			
+			        </div>
+		        </div>
+        	</div>
+        </div>
+        <div class="well">
+	        <div class="row">
+		        <div class="form-group col-md-4">
+		            <label translate="aktivingatlanApp.property.city" for="field_city">city</label>
+		            <input type="text" class="form-control" id="field_city" name="city" ng-model="property.cityName"
+		            	typeahead="city as formatCityName(city) for city in findCity($viewValue)"
+		            	typeahead-on-select="onCitySelect($item, $model, $label)"
+		            	typeahead-editable="false"
+		            	typeahead-select-on-exact="true"
+		            	typeahead-select-on-blur="true"
+		            	typeahead-min-length="3"
+		            	typeahead-wait-ms="100">
+		        </div>
+		        <div class="form-group col-md-8">
+		            <label translate="aktivingatlanApp.property.address1" for="field_address1">Address1</label>
+		            <input type="text" class="form-control" name="address1" id="field_address1"
+		                    ng-model="property.address1">
+		        </div>
+			</div>
+			<div class="row">
+				<div class="form-group col-md-4">
+		            <label translate="aktivingatlanApp.property.pracelNumber" for="field_pracelNumber">PracelNumber</label>
+		            <input type="text" class="form-control" name="pracelNumber" id="field_pracelNumber"
+		                    ng-model="property.pracelNumber">
+	        	</div>
+		        <div class="form-group col-md-8">
+		            <label translate="aktivingatlanApp.property.address2" for="field_address2">Address2</label>
+		            <input type="text" class="form-control" name="address2" id="field_address2"
+		                    ng-model="property.address2">
+				</div>
+	        </div>
+        </div>
+		<div class="panel panel-default">
+			<div class="panel-body">
 
-        <div class="form-group">
-            <label translate="aktivingatlanApp.property.code" for="field_code">Code</label>
-            <input type="text" class="form-control" name="code" id="field_code"
-                    ng-model="property.code"
-                    >
-
+		        <div class="row">
+			        <div class="form-group col-md-4">
+			            <label translate="aktivingatlanApp.property.descriptionHu" for="field_descriptionHu">DescriptionHu</label>
+			            <textarea rows="4" class="form-control" name="descriptionHu" id="field_descriptionHu"
+			                    ng-model="property.descriptionHu"></textarea>
+			        </div>
+			        <div class="form-group col-md-4">
+			            <label translate="aktivingatlanApp.property.descriptionEn" for="field_descriptionEn">DescriptionEn</label>
+			            <textarea rows="4" class="form-control" name="descriptionEn" id="field_descriptionEn"
+			                    ng-model="property.descriptionEn"></textarea>
+			        </div>
+			        <div class="form-group col-md-4">
+			            <label translate="aktivingatlanApp.property.descriptionDe" for="field_descriptionDe">DescriptionDe</label>
+			            <textarea rows="4" class="form-control" name="descriptionDe" id="field_descriptionDe"
+			                    ng-model="property.descriptionDe"></textarea>
+			        </div>
+		        </div>
+	        </div>
         </div>
-        <div class="form-group">
-            <label translate="aktivingatlanApp.property.descriptionHu" for="field_descriptionHu">DescriptionHu</label>
-            <input type="text" class="form-control" name="descriptionHu" id="field_descriptionHu"
-                    ng-model="property.descriptionHu"
-                    >
-
-        </div>
-        <div class="form-group">
-            <label translate="aktivingatlanApp.property.descriptionEn" for="field_descriptionEn">DescriptionEn</label>
-            <input type="text" class="form-control" name="descriptionEn" id="field_descriptionEn"
-                    ng-model="property.descriptionEn"
-                    >
-
-        </div>
-        <div class="form-group">
-            <label translate="aktivingatlanApp.property.descriptionDe" for="field_descriptionDe">DescriptionDe</label>
-            <input type="text" class="form-control" name="descriptionDe" id="field_descriptionDe"
-                    ng-model="property.descriptionDe"
-                    >
-
-        </div>
-        <div class="form-group">
-            <label translate="aktivingatlanApp.property.room" for="field_room">Room</label>
-            <input type="number" class="form-control" name="room" id="field_room"
-                    ng-model="property.room"
-                    >
-
-        </div>
-        <div class="form-group">
-            <label translate="aktivingatlanApp.property.halfRoom" for="field_halfRoom">HalfRoom</label>
-            <input type="number" class="form-control" name="halfRoom" id="field_halfRoom"
-                    ng-model="property.halfRoom"
-                    >
-
-        </div>
-        <div class="form-group">
-            <label translate="aktivingatlanApp.property.floorArea" for="field_floorArea">FloorArea</label>
-            <input type="number" class="form-control" name="floorArea" id="field_floorArea"
-                    ng-model="property.floorArea"
-                    >
-
-        </div>
-        <div class="form-group">
-            <label translate="aktivingatlanApp.property.parcelArea" for="field_parcelArea">ParcelArea</label>
-            <input type="number" class="form-control" name="parcelArea" id="field_parcelArea"
-                    ng-model="property.parcelArea"
-                    >
-
-        </div>
-        <div class="form-group">
-            <label translate="aktivingatlanApp.property.pracelNumber" for="field_pracelNumber">PracelNumber</label>
-            <input type="text" class="form-control" name="pracelNumber" id="field_pracelNumber"
-                    ng-model="property.pracelNumber"
-                    >
-
-        </div>
-        <div class="form-group">
-            <label translate="aktivingatlanApp.property.address1" for="field_address1">Address1</label>
-            <input type="text" class="form-control" name="address1" id="field_address1"
-                    ng-model="property.address1"
-                    >
-
-        </div>
-        <div class="form-group">
-            <label translate="aktivingatlanApp.property.address2" for="field_address2">Address2</label>
-            <input type="text" class="form-control" name="address2" id="field_address2"
-                    ng-model="property.address2"
-                    >
-
-        </div>
-        <div class="form-group">
-            <label translate="aktivingatlanApp.property.active" for="field_active">Active</label>
-            <input type="checkbox" class="form-control" name="active" id="field_active"
-                    ng-model="property.active"
-                    >
-
-        </div>
-        <div class="form-group">
-            <label translate="aktivingatlanApp.property.kitchen" for="field_kitchen">Kitchen</label>
-            <input type="number" class="form-control" name="kitchen" id="field_kitchen"
-                    ng-model="property.kitchen"
-                    >
-
-        </div>
-        <div class="form-group">
-            <label translate="aktivingatlanApp.property.livingroom" for="field_livingroom">Livingroom</label>
-            <input type="number" class="form-control" name="livingroom" id="field_livingroom"
-                    ng-model="property.livingroom"
-                    >
-
-        </div>
-        <div class="form-group">
-            <label translate="aktivingatlanApp.property.floor" for="field_floor">Floor</label>
-            <input type="number" class="form-control" name="floor" id="field_floor"
-                    ng-model="property.floor"
-                    >
-
-        </div>
-        <div class="form-group">
-            <label translate="aktivingatlanApp.property.bathroom" for="field_bathroom">Bathroom</label>
-            <input type="number" class="form-control" name="bathroom" id="field_bathroom"
-                    ng-model="property.bathroom"
-                    >
-
-        </div>
-        <div class="form-group">
-            <label translate="aktivingatlanApp.property.toilet" for="field_toilet">Toilet</label>
-            <input type="number" class="form-control" name="toilet" id="field_toilet"
-                    ng-model="property.toilet"
-                    >
-
-        </div>
-        <div class="form-group">
-            <label translate="aktivingatlanApp.property.furnished" for="field_furnished">Furnished</label>
-            <input type="checkbox" class="form-control" name="furnished" id="field_furnished"
-                    ng-model="property.furnished"
-                    >
-
-        </div>
-        <div class="form-group">
-            <label translate="aktivingatlanApp.property.forSale" for="field_forSale">ForSale</label>
-            <input type="checkbox" class="form-control" name="forSale" id="field_forSale"
-                    ng-model="property.forSale"
-                    >
-
-        </div>
-        <div class="form-group">
-            <label translate="aktivingatlanApp.property.saleHuf" for="field_saleHuf">SaleHuf</label>
-            <input type="number" class="form-control" name="saleHuf" id="field_saleHuf"
-                    ng-model="property.saleHuf"
-                    >
-
-        </div>
-        <div class="form-group">
-            <label translate="aktivingatlanApp.property.saleEur" for="field_saleEur">SaleEur</label>
-            <input type="number" class="form-control" name="saleEur" id="field_saleEur"
-                    ng-model="property.saleEur"
-                    >
-
-        </div>
-        <div class="form-group">
-            <label translate="aktivingatlanApp.property.forRent" for="field_forRent">ForRent</label>
-            <input type="checkbox" class="form-control" name="forRent" id="field_forRent"
-                    ng-model="property.forRent"
-                    >
-
-        </div>
-        <div class="form-group">
-            <label translate="aktivingatlanApp.property.rentHuf" for="field_rentHuf">RentHuf</label>
-            <input type="number" class="form-control" name="rentHuf" id="field_rentHuf"
-                    ng-model="property.rentHuf"
-                    >
-
-        </div>
-        <div class="form-group">
-            <label translate="aktivingatlanApp.property.rentEur" for="field_rentEur">RentEur</label>
-            <input type="number" class="form-control" name="rentEur" id="field_rentEur"
-                    ng-model="property.rentEur"
-                    >
-
-        </div>
-        <div class="form-group">
-            <label translate="aktivingatlanApp.property.rentPeakHuf" for="field_rentPeakHuf">RentPeakHuf</label>
-            <input type="number" class="form-control" name="rentPeakHuf" id="field_rentPeakHuf"
-                    ng-model="property.rentPeakHuf"
-                    >
-
-        </div>
-        <div class="form-group">
-            <label translate="aktivingatlanApp.property.rentPeakEur" for="field_rentPeakEur">RentPeakEur</label>
-            <input type="number" class="form-control" name="rentPeakEur" id="field_rentPeakEur"
-                    ng-model="property.rentPeakEur"
-                    >
-
-        </div>
-        <div class="form-group">
-            <label translate="aktivingatlanApp.property.forMediumTerm" for="field_forMediumTerm">ForMediumTerm</label>
-            <input type="checkbox" class="form-control" name="forMediumTerm" id="field_forMediumTerm"
-                    ng-model="property.forMediumTerm"
-                    >
-
-        </div>
-        <div class="form-group">
-            <label translate="aktivingatlanApp.property.mediumTermHuf" for="field_mediumTermHuf">MediumTermHuf</label>
-            <input type="number" class="form-control" name="mediumTermHuf" id="field_mediumTermHuf"
-                    ng-model="property.mediumTermHuf"
-                    >
-
-        </div>
-        <div class="form-group">
-            <label translate="aktivingatlanApp.property.mediumTermEur" for="field_mediumTermEur">MediumTermEur</label>
-            <input type="number" class="form-control" name="mediumTermEur" id="field_mediumTermEur"
-                    ng-model="property.mediumTermEur"
-                    >
-
-        </div>
-        <div class="form-group">
-            <label translate="aktivingatlanApp.property.forLongTerm" for="field_forLongTerm">ForLongTerm</label>
-            <input type="checkbox" class="form-control" name="forLongTerm" id="field_forLongTerm"
-                    ng-model="property.forLongTerm"
-                    >
-
-        </div>
-        <div class="form-group">
-            <label translate="aktivingatlanApp.property.longTermHuf" for="field_longTermHuf">LongTermHuf</label>
-            <input type="number" class="form-control" name="longTermHuf" id="field_longTermHuf"
-                    ng-model="property.longTermHuf"
-                    >
-
-        </div>
-        <div class="form-group">
-            <label translate="aktivingatlanApp.property.longTermEur" for="field_longTermEur">LongTermEur</label>
-            <input type="number" class="form-control" name="longTermEur" id="field_longTermEur"
-                    ng-model="property.longTermEur"
-                    >
-
-        </div>
-        <div class="form-group">
-            <label translate="aktivingatlanApp.property.featured" for="field_featured">Featured</label>
-            <input type="checkbox" class="form-control" name="featured" id="field_featured"
-                    ng-model="property.featured"
-                    >
-
-        </div>
-        <div class="form-group">
-            <label translate="aktivingatlanApp.property.category" for="field_category">category</label>
-            
-            <select class="form-control" id="field_category" name="category" ng-model="property.categoryId" ng-options="category.id as category.nameHu for category in categorys">
-                <option value=""></option>
-            </select>
-            
-        </div>
-        <div class="form-group">
-            <label translate="aktivingatlanApp.property.feature" for="field_feature">feature</label>
-            <!-- select class="form-control" id="field_feature" multiple name="feature" ng-model="property.features" ng-options="feature as feature.nameHu for feature in features track by feature.id"></select -->
-            <ui-select multiple ng-model="property.features" theme="bootstrap" class="form-control" id="field_feature">
-            	<ui-select-match placeholder="Select feature...">{{$item.nameHu}}</ui-select-match>
-            	<ui-select-choices repeat="feature in features | filter:{nameHu: $select.search} | filter:filterAlreadyAddedFeatures ">
-			      <div ng-bind-html="feature.nameHu | highlight: $select.search"></div>
-			    </ui-select-choices>
-            </ui-select>
-        </div>
-        <div class="form-group">
-            <label translate="aktivingatlanApp.property.city" for="field_city">city</label>
-            
-            <input type="text" class="form-control" id="field_city" name="city" ng-model="property.cityName"
-            	typeahead="city as formatCityName(city) for city in findCity($viewValue)"
-            	typeahead-on-select="onCitySelect($item, $model, $label)"
-            	typeahead-editable="false"
-            	typeahead-select-on-exact="true"
-            	typeahead-select-on-blur="true"
-            	typeahead-min-length="3"
-            	typeahead-wait-ms="100">
-        </div>
-        <div class="form-group">
-            <label translate="aktivingatlanApp.property.user" for="field_user">user</label>
-            
-            <select class="form-control" id="field_user" name="user" ng-model="property.userId" ng-options="user.id as user.login for user in users">
-                <option value=""></option>
-            </select>
-            
+        <div class="well">
+	        <div class="row">
+		        <div class="form-group col-md-4">
+		            <label translate="aktivingatlanApp.property.parcelArea" for="field_parcelArea">ParcelArea</label>
+		            <input type="number" class="form-control" name="parcelArea" id="field_parcelArea"
+		                    ng-model="property.parcelArea"
+		                    >
+		
+		        </div>
+		        <div class="form-group col-md-4">
+		            <label translate="aktivingatlanApp.property.floorArea" for="field_floorArea">FloorArea</label>
+		            <input type="number" class="form-control" name="floorArea" id="field_floorArea"
+		                    ng-model="property.floorArea"
+		                    >
+		
+		        </div>
+		        <div class="form-group col-md-4">
+		            <label translate="aktivingatlanApp.property.floor" for="field_floor">Floor</label>
+		            <input type="number" class="form-control" name="floor" id="field_floor"
+		                    ng-model="property.floor"
+		                    >
+		
+	        	</div>
+	        </div>
+			<div class="row">
+		        <div class="form-group col-md-2">
+		            <label translate="aktivingatlanApp.property.room" for="field_room">Room</label>
+		            <input type="number" class="form-control" name="room" id="field_room"
+		                    ng-model="property.room"
+		                    >
+		
+		        </div>
+		        <div class="form-group col-md-2">
+		            <label translate="aktivingatlanApp.property.halfRoom" for="field_halfRoom">HalfRoom</label>
+		            <input type="number" class="form-control" name="halfRoom" id="field_halfRoom"
+		                    ng-model="property.halfRoom"
+		                    >
+		
+		        </div>
+		        <div class="form-group col-md-2">
+		            <label translate="aktivingatlanApp.property.kitchen" for="field_kitchen">Kitchen</label>
+		            <input type="number" class="form-control" name="kitchen" id="field_kitchen"
+		                    ng-model="property.kitchen"
+		                    >
+		
+		        </div>
+		        <div class="form-group col-md-2">
+		            <label translate="aktivingatlanApp.property.livingroom" for="field_livingroom">Livingroom</label>
+		            <input type="number" class="form-control" name="livingroom" id="field_livingroom"
+		                    ng-model="property.livingroom"
+		                    >
+		
+		        </div>
+		        <div class="form-group col-md-2">
+		            <label translate="aktivingatlanApp.property.bathroom" for="field_bathroom">Bathroom</label>
+		            <input type="number" class="form-control" name="bathroom" id="field_bathroom"
+		                    ng-model="property.bathroom"
+		                    >
+		
+		        </div>
+		        <div class="form-group col-md-2">
+		            <label translate="aktivingatlanApp.property.toilet" for="field_toilet">Toilet</label>
+		            <input type="number" class="form-control" name="toilet" id="field_toilet"
+		                    ng-model="property.toilet"
+		                    >
+		
+		        </div>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-body">
+			<div class="row">		
+				<div class="col-md-3">
+			        <div class="form-group">
+			            <label translate="aktivingatlanApp.property.forSale" for="field_forSale">ForSale</label>
+			            <input type="checkbox" class="form-control" name="forSale" id="field_forSale"
+			                    ng-model="property.forSale">
+			        </div>
+			        <div class="form-group">
+			            <label translate="aktivingatlanApp.property.saleHuf" for="field_saleHuf">SaleHuf</label>
+			            <input type="number" class="form-control" name="saleHuf" id="field_saleHuf"
+			                    ng-model="property.saleHuf" ng-disabled="!property.forSale">
+			        </div>
+			        <div class="form-group">
+			            <label translate="aktivingatlanApp.property.saleEur" for="field_saleEur">SaleEur</label>
+			            <input type="number" class="form-control" name="saleEur" id="field_saleEur"
+			                    ng-model="property.saleEur" ng-disabled="!property.forSale">
+			        </div>
+			    </div>
+		    	<div class="col-md-3">
+			        <div class="form-group">
+			            <label translate="aktivingatlanApp.property.forRent" for="field_forRent">ForRent</label>
+			            <input type="checkbox" class="form-control" name="forRent" id="field_forRent"
+			                    ng-model="property.forRent">
+			        </div>
+			        <div class="form-group">
+			            <label translate="aktivingatlanApp.property.rentHuf" for="field_rentHuf">RentHuf</label>
+			            <input type="number" class="form-control" name="rentHuf" id="field_rentHuf"
+			                    ng-model="property.rentHuf" ng-disabled="!property.forRent">
+			        </div>
+			        <div class="form-group">
+			            <label translate="aktivingatlanApp.property.rentEur" for="field_rentEur">RentEur</label>
+			            <input type="number" class="form-control" name="rentEur" id="field_rentEur"
+			                    ng-model="property.rentEur" ng-disabled="!property.forRent">
+			        </div>
+			        <div class="form-group">
+			            <label translate="aktivingatlanApp.property.rentPeakHuf" for="field_rentPeakHuf">RentPeakHuf</label>
+			            <input type="number" class="form-control" name="rentPeakHuf" id="field_rentPeakHuf"
+			                    ng-model="property.rentPeakHuf" ng-disabled="!property.forRent">
+			        </div>
+			        <div class="form-group">
+			            <label translate="aktivingatlanApp.property.rentPeakEur" for="field_rentPeakEur">RentPeakEur</label>
+			            <input type="number" class="form-control" name="rentPeakEur" id="field_rentPeakEur"
+			                    ng-model="property.rentPeakEur" ng-disabled="!property.forRent">
+			        </div>
+		    	</div>
+				<div class="col-md-3">
+			        <div class="form-group">
+			            <label translate="aktivingatlanApp.property.forMediumTerm" for="field_forMediumTerm">ForMediumTerm</label>
+			            <input type="checkbox" class="form-control" name="forMediumTerm" id="field_forMediumTerm"
+			                    ng-model="property.forMediumTerm">
+			
+			        </div>
+			        <div class="form-group">
+			            <label translate="aktivingatlanApp.property.mediumTermHuf" for="field_mediumTermHuf">MediumTermHuf</label>
+			            <input type="number" class="form-control" name="mediumTermHuf" id="field_mediumTermHuf"
+			                    ng-model="property.mediumTermHuf" ng-disabled="!property.forMediumTerm">
+			
+			        </div>
+			        <div class="form-group">
+			            <label translate="aktivingatlanApp.property.mediumTermEur" for="field_mediumTermEur">MediumTermEur</label>
+			            <input type="number" class="form-control" name="mediumTermEur" id="field_mediumTermEur"
+			                    ng-model="property.mediumTermEur" ng-disabled="!property.forMediumTerm">
+			
+			        </div>
+		        </div>
+				<div class="col-md-3">
+			        <div class="form-group">
+			            <label translate="aktivingatlanApp.property.forLongTerm" for="field_forLongTerm">ForLongTerm</label>
+			            <input type="checkbox" class="form-control" name="forLongTerm" id="field_forLongTerm"
+			                    ng-model="property.forLongTerm">
+			
+			        </div>
+			        <div class="form-group">
+			            <label translate="aktivingatlanApp.property.longTermHuf" for="field_longTermHuf">LongTermHuf</label>
+			            <input type="number" class="form-control" name="longTermHuf" id="field_longTermHuf"
+			                    ng-model="property.longTermHuf" ng-disabled="!property.forLongTerm">
+			
+			        </div>
+			        <div class="form-group">
+			            <label translate="aktivingatlanApp.property.longTermEur" for="field_longTermEur">LongTermEur</label>
+			            <input type="number" class="form-control" name="longTermEur" id="field_longTermEur"
+			                    ng-model="property.longTermEur" ng-disabled="!property.forLongTerm">
+			        </div>
+		        </div>
+		        </div>
+		    </div>
         </div>
     </div>
     <div class="modal-footer">

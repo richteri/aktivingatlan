@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('aktivingatlanApp').controller('PropertyDialogController',
-    ['$scope', '$stateParams', '$modalInstance', '$filter', 'entity', 'Property', 'Category', 'Photo', 'Statement', 'Feature', 'Ownership', 'City', 'Contract', 'User', 'Apartment', 'CitySearch',
-        function($scope, $stateParams, $modalInstance, $filter, entity, Property, Category, Photo, Statement, Feature, Ownership, City, Contract, User, Apartment, CitySearch) {
+    ['$scope', '$stateParams', '$modalInstance', '$filter', 'entity', 'Property', 'PropertySearch', 'Category', 'Photo', 'Statement', 'Feature', 'Ownership', 'City', 'Contract', 'User', 'Apartment', 'CitySearch', 'Upload',
+        function($scope, $stateParams, $modalInstance, $filter, entity, Property, PropertySearch, Category, Photo, Statement, Feature, Ownership, City, Contract, User, Apartment, CitySearch, Upload) {
 
         $scope.property = entity;
         $scope.categorys = Category.query();

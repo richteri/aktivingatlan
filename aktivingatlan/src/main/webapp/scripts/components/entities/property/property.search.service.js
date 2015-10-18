@@ -5,11 +5,7 @@ angular.module('aktivingatlanApp')
         return $resource('api/_search/propertys', {}, {
             'query': {
             	method: 'GET', 
-            	isArray: true,
-            	params: {
-            		query: 'byCode',
-            		param: ''
-            	}
+            	isArray: true
             }
         });
     });

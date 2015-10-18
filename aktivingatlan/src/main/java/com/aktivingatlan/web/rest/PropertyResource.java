@@ -2,6 +2,7 @@ package com.aktivingatlan.web.rest;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -138,11 +139,17 @@ public class PropertyResource {
     @Timed
     @Transactional(readOnly = true)
     public ResponseEntity<List<PropertyDTO>> search(
-    		@RequestParam(value = "query", required = false) String query,
+    		@RequestParam(value = "query", required = false) PropertyRepository.SearchQuery query,
     		@RequestParam(value = "param", required = false) String param) {
-        return 
-        		new ResponseEntity<>(propertyRepository.findByCodeContainingIgnoreCase(param)
-        				.stream().map(propertyMapper::propertyToPropertyDTO)
-        	            .collect(Collectors.toCollection(LinkedList::new)), HttpStatus.OK);
+    	switch (query) {
+    	case FIND_BY_CODE:
+    		return 
+    				new ResponseEntity<>(propertyRepository.findByCode(param).stream()
+    			            .map(propertyMapper::propertyToPropertyDTO)
+    			            .collect(Collectors.toCollection(LinkedList::new)), HttpStatus.OK);
+    	default:
+    		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    	}
+
     }
 }

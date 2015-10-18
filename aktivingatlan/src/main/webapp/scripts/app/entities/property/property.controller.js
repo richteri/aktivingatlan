@@ -178,7 +178,7 @@ angular.module('aktivingatlanApp')
 				 			field : 'features',
 				 			headerCellFilter : 'translate',
 				 			displayName : 'aktivingatlanApp.property.feature',
-				 			cellTemplate : '<div class="ui-grid-cell-contents"><span ng-repeat="feature in row.entity.features">{{feature.nameHu}} </span></div>',
+				 			cellTemplate : '<div class="ui-grid-cell-contents"><span ng-repeat="feature in row.entity.features">{{feature.nameHu}}<span ng-hide="$last">,</span> </span></div>',
 				 			width : 240,
 				 			filter: {
 				 		          condition: function(searchTerm, features) {
