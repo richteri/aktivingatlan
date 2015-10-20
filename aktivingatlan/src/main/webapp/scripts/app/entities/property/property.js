@@ -112,6 +112,7 @@ angular.module('aktivingatlanApp')
                     authorities: ['ROLE_USER'],
                     pageTitle: 'aktivingatlanApp.property.detail.title'
                 },
+                
                 views: {
                     'content@': {
                         templateUrl: 'scripts/app/entities/property/property-dialog.html',
