@@ -2,8 +2,6 @@
 <form name="editForm" role="form" novalidate ng-submit="save()">
 
     <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
-                ng-click="clear()">&times;</button>
         <h4 class="modal-title" id="myPropertyLabel" translate="aktivingatlanApp.property.home.createOrEditLabel">Create or edit a Property</h4>
     </div>
     <div class="modal-body">
@@ -19,7 +17,7 @@
 							</span>
 			            </label>
 			            <input type="text" class="form-control" name="code" id="field_code"
-			                    ng-model="property.code" unique-property-code required>
+			                    ng-model="property.code" ng-model-options="{ updateOn: 'default blur'}" unique-property-code required>
 			            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" ng-show="editForm.code.$valid && editForm.code.$touched"></span>
 			            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="editForm.code.$invalid && editForm.code.$touched"></span>
 			        </div>
@@ -289,7 +287,7 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+        <button type="button" class="btn btn-default" ng-click="clear()">
             <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
         </button>
         <button type="submit" ng-disabled="editForm.$invalid || editForm.$submitted" class="btn btn-primary">

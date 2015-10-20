@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('aktivingatlanApp').controller('PropertyDialogController',
-    ['$scope', '$stateParams', '$modalInstance', '$filter', 'entity', 'Property', 'PropertySearch', 'Category', 'Photo', 'Statement', 'Feature', 'Ownership', 'City', 'Contract', 'User', 'Apartment', 'CitySearch', 'Upload',
-        function($scope, $stateParams, $modalInstance, $filter, entity, Property, PropertySearch, Category, Photo, Statement, Feature, Ownership, City, Contract, User, Apartment, CitySearch, Upload) {
+    ['$scope', '$stateParams', '$filter', 'entity', 'Property', 'PropertySearch', 'Category', 'Photo', 'Statement', 'Feature', 'Ownership', 'City', 'Contract', 'User', 'Apartment', 'CitySearch', 'Upload',
+        function($scope, $stateParams, $filter, entity, Property, PropertySearch, Category, Photo, Statement, Feature, Ownership, City, Contract, User, Apartment, CitySearch, Upload) {
 
         $scope.property = entity;
         $scope.categorys = Category.query();
@@ -21,7 +21,7 @@ angular.module('aktivingatlanApp').controller('PropertyDialogController',
 
         var onSaveFinished = function (result) {
             $scope.$emit('aktivingatlanApp:propertyUpdate', result);
-            $modalInstance.close(result);
+            // TODO: $modalInstance.close(result);
         };
 
         $scope.save = function () {
@@ -33,7 +33,7 @@ angular.module('aktivingatlanApp').controller('PropertyDialogController',
         };
 
         $scope.clear = function() {
-            $modalInstance.dismiss('cancel');
+        	// TODO: $modalInstance.dismiss('cancel');
         };
         
         $scope.formatCityName = function (city) {

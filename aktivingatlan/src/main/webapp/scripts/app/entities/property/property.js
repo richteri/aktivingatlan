@@ -106,26 +106,26 @@ angular.module('aktivingatlanApp')
                 }]
             })
             .state('property.edit', {
-                parent: 'property',
-                url: '/{id}/edit',
+                parent: 'entity',
+                url: '/property/{id}/edit',
                 data: {
                     authorities: ['ROLE_USER'],
+                    pageTitle: 'aktivingatlanApp.property.detail.title'
                 },
-                onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal) {
-                    $modal.open({
+                views: {
+                    'content@': {
                         templateUrl: 'scripts/app/entities/property/property-dialog.html',
-                        controller: 'PropertyDialogController',
-                        size: 'lg',
-                        resolve: {
-                            entity: ['Property', function(Property) {
-                                return Property.get({id : $stateParams.id});
-                            }]
-                        }
-                    }).result.then(function(result) {
-                        $state.go('property', null, { reload: true });
-                    }, function() {
-                        $state.go('^');
-                    })
-                }]
+                        controller: 'PropertyDialogController'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('property');
+                        return $translate.refresh();
+                    }],
+                    entity: ['$stateParams', 'Property', function($stateParams, Property) {
+                        return Property.get({id : $stateParams.id});
+                    }]
+                }
             });
     });
