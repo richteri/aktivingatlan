@@ -25,19 +25,18 @@ import com.aktivingatlan.domain.util.ISO8601LocalDateDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-
 /**
  * A Statement.
  */
 @Entity
-@Table(name = "STATEMENT")
+@Table(name = "statement")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Statement extends AbstractAuditingEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+
     
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
     @JsonSerialize(using = CustomLocalDateSerializer.class)
@@ -50,14 +49,14 @@ public class Statement extends AbstractAuditingEntity implements Serializable {
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "STATEMENT_CLIENT",
+    @JoinTable(name = "statement_client",
                joinColumns = @JoinColumn(name="statements_id", referencedColumnName="ID"),
                inverseJoinColumns = @JoinColumn(name="clients_id", referencedColumnName="ID"))
     private Set<Client> clients = new HashSet<>();
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "STATEMENT_PROPERTY",
+    @JoinTable(name = "statement_property",
                joinColumns = @JoinColumn(name="statements_id", referencedColumnName="ID"),
                inverseJoinColumns = @JoinColumn(name="propertys_id", referencedColumnName="ID"))
     private Set<Property> propertys = new HashSet<>();

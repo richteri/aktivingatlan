@@ -1,6 +1,11 @@
 package com.aktivingatlan.service;
 
-import com.aktivingatlan.domain.User;
+import java.util.Locale;
+
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+import javax.mail.internet.MimeMessage;
+
 import org.apache.commons.lang.CharEncoding;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,10 +18,7 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-import javax.mail.internet.MimeMessage;
-import java.util.Locale;
+import com.aktivingatlan.domain.User;
 
 /**
  * Service for sending e-mails.

@@ -2,7 +2,7 @@
 <databaseChangeLog
     xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
     <property name="now" value="now()" dbms="mysql,h2"/>
     <property name="now" value="current_timestamp" dbms="postgresql"/>
@@ -11,14 +11,14 @@
     <property name="autoIncrement" value="true" dbms="mysql,h2,postgresql"/>
     <property name="autoIncrement" value="false" dbms="oracle"/>
 
-    <property name="floatType" value="real" dbms="postgresql, h2"/>
+    <property name="floatType" value="float4" dbms="postgresql, h2"/>
     <property name="floatType" value="float" dbms="mysql, oracle"/>
 
     <!--
         Added the entity Property.
     -->
     <changeSet id="20150917133415" author="jhipster">
-        <createTable tableName="PROPERTY">
+        <createTable tableName="property">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}" >
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -61,12 +61,12 @@
         </createTable>
         
         <addForeignKeyConstraint baseColumnNames="category_id"
-                                 baseTableName="PROPERTY"
+                                 baseTableName="property"
                                  constraintName="fk_property_category_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="CATEGORY"/>
+                                 referencedTableName="category"/>
 
-        <createTable tableName="PROPERTY_FEATURE">
+        <createTable tableName="property_feature">
             <column name="features_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
@@ -75,31 +75,31 @@
             </column>
         </createTable>
 
-        <addPrimaryKey columnNames="propertys_id, features_id" tableName="PROPERTY_FEATURE"/>
+        <addPrimaryKey columnNames="propertys_id, features_id" tableName="property_feature"/>
 
         <addForeignKeyConstraint baseColumnNames="propertys_id"
-                                 baseTableName="PROPERTY_FEATURE"
+                                 baseTableName="property_feature"
                                  constraintName="fk_property_feature_feature_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="PROPERTY"/>
+                                 referencedTableName="property"/>
 
         <addForeignKeyConstraint baseColumnNames="features_id"
-                                 baseTableName="PROPERTY_FEATURE"
+                                 baseTableName="property_feature"
                                  constraintName="fk_feature_feature_property_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="FEATURE"/>
+                                 referencedTableName="feature"/>
         
         <addForeignKeyConstraint baseColumnNames="city_id"
-                                 baseTableName="PROPERTY"
+                                 baseTableName="property"
                                  constraintName="fk_property_city_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="CITY"/>
+                                 referencedTableName="city"/>
 
         <addForeignKeyConstraint baseColumnNames="user_id"
-                                 baseTableName="PROPERTY"
+                                 baseTableName="property"
                                  constraintName="fk_property_user_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="JHI_USER"/>
+                                 referencedTableName="jhi_user"/>
 
     </changeSet>
 </databaseChangeLog>

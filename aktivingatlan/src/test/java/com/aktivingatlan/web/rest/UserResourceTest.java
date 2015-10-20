@@ -1,7 +1,12 @@
 package com.aktivingatlan.web.rest;
 
-import com.aktivingatlan.Application;
-import com.aktivingatlan.repository.UserRepository;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import javax.inject.Inject;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,10 +19,9 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import javax.inject.Inject;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.aktivingatlan.Application;
+import com.aktivingatlan.repository.UserRepository;
+import com.aktivingatlan.service.UserService;
 
 /**
  * Test class for the UserResource REST controller.
@@ -33,12 +37,16 @@ public class UserResourceTest {
     @Inject
     private UserRepository userRepository;
 
+    @Inject
+    private UserService userService;
+
     private MockMvc restUserMockMvc;
 
     @Before
     public void setup() {
         UserResource userResource = new UserResource();
         ReflectionTestUtils.setField(userResource, "userRepository", userRepository);
+        ReflectionTestUtils.setField(userResource, "userService", userService);
         this.restUserMockMvc = MockMvcBuilders.standaloneSetup(userResource).build();
     }
 

@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('aktivingatlanApp')
-    .controller('ContractController', function ($scope, Contract, ContractSearch, ParseLinks) {
+    .controller('ContractController', function ($scope, Contract, ParseLinks) {
         $scope.contracts = [];
-        $scope.page = 1;
+        $scope.page = 0;
         $scope.loadAll = function() {
-            Contract.query({page: $scope.page, per_page: 20}, function(result, headers) {
+            Contract.query({page: $scope.page, size: 20}, function(result, headers) {
                 $scope.links = ParseLinks.parse(headers('link'));
                 $scope.contracts = result;
             });
@@ -32,22 +32,19 @@ angular.module('aktivingatlanApp')
                 });
         };
 
-        $scope.search = function () {
-            ContractSearch.query({query: $scope.searchQuery}, function(result) {
-                $scope.contracts = result;
-            }, function(response) {
-                if(response.status === 404) {
-                    $scope.loadAll();
-                }
-            });
-        };
-
         $scope.refresh = function () {
             $scope.loadAll();
             $scope.clear();
         };
 
         $scope.clear = function () {
-            $scope.contract = {idNo: null, exclusive: null, startDate: null, endDate: null, note: null, id: null};
+            $scope.contract = {
+                idNo: null,
+                exclusive: null,
+                startDate: null,
+                endDate: null,
+                note: null,
+                id: null
+            };
         };
     });

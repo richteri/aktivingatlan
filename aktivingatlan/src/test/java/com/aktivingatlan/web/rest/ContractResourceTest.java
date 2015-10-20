@@ -23,7 +23,7 @@ import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -36,7 +36,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.aktivingatlan.Application;
 import com.aktivingatlan.domain.Contract;
 import com.aktivingatlan.repository.ContractRepository;
-import com.aktivingatlan.repository.UserRepository;
 import com.aktivingatlan.web.rest.dto.ContractDTO;
 import com.aktivingatlan.web.rest.mapper.ContractMapper;
 
@@ -50,11 +49,10 @@ import com.aktivingatlan.web.rest.mapper.ContractMapper;
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
 @IntegrationTest
-@EnableJpaAuditing(auditorAwareRef = "mockAuditorAware")
 public class ContractResourceTest {
 
-    private static final String DEFAULT_ID_NO = "SAMPLE_TEXT";
-    private static final String UPDATED_ID_NO = "UPDATED_TEXT";
+    private static final String DEFAULT_ID_NO = "AAAAA";
+    private static final String UPDATED_ID_NO = "BBBBB";
 
     private static final Boolean DEFAULT_EXCLUSIVE = false;
     private static final Boolean UPDATED_EXCLUSIVE = true;
@@ -64,12 +62,9 @@ public class ContractResourceTest {
 
     private static final LocalDate DEFAULT_END_DATE = new LocalDate(0L);
     private static final LocalDate UPDATED_END_DATE = new LocalDate();
-    private static final String DEFAULT_NOTE = "SAMPLE_TEXT";
-    private static final String UPDATED_NOTE = "UPDATED_TEXT";
-    
-    @Inject
-    private UserRepository userRepository;
-    
+    private static final String DEFAULT_NOTE = "AAAAA";
+    private static final String UPDATED_NOTE = "BBBBB";
+
     @Inject
     private ContractRepository contractRepository;
 
@@ -78,6 +73,9 @@ public class ContractResourceTest {
 
     @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
+
+    @Inject
+    private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
     private MockMvc restContractMockMvc;
 
@@ -89,7 +87,9 @@ public class ContractResourceTest {
         ContractResource contractResource = new ContractResource();
         ReflectionTestUtils.setField(contractResource, "contractRepository", contractRepository);
         ReflectionTestUtils.setField(contractResource, "contractMapper", contractMapper);
-        this.restContractMockMvc = MockMvcBuilders.standaloneSetup(contractResource).setMessageConverters(jacksonMessageConverter).build();
+        this.restContractMockMvc = MockMvcBuilders.standaloneSetup(contractResource)
+            .setCustomArgumentResolvers(pageableArgumentResolver)
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     @Before
@@ -184,7 +184,6 @@ public class ContractResourceTest {
         contract.setStartDate(UPDATED_START_DATE);
         contract.setEndDate(UPDATED_END_DATE);
         contract.setNote(UPDATED_NOTE);
-        
         ContractDTO contractDTO = contractMapper.contractToContractDTO(contract);
 
         restContractMockMvc.perform(put("/api/contracts")

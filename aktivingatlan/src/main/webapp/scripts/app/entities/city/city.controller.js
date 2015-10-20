@@ -1,56 +1,21 @@
 'use strict';
 
 angular.module('aktivingatlanApp')
-    .controller('CityController', function ($scope, City, CitySearch, ParseLinks, Pageable) {
+    .controller('CityController', function ($scope, City, ParseLinks) {
         $scope.citys = [];
-        $scope.pageable = new Pageable($scope, 'pageable');
-
-        $scope.load = function() {
-            if ($scope.pageable.filtered) {
-                // Search
-                CitySearch.query($scope.pageable, function(result, headers) {
-                    $scope.citys = result;
-                    $scope.links = ParseLinks.parse(headers('link'));
-                    if ($scope.links['last'] < $scope.pageable.page) {
-                        $scope.loadPage($scope.links['last']);
-                    }
-                });
-            } else {
-                // Load
-                City.query($scope.pageable, function(result, headers) {
-                    $scope.links = ParseLinks.parse(headers('link'));
-                    $scope.citys = result;
-                });
-            }
-        }
-
-        // Load one page
+        $scope.page = 0;
+        $scope.loadAll = function() {
+            City.query({page: $scope.page, size: 20}, function(result, headers) {
+                $scope.links = ParseLinks.parse(headers('link'));
+                $scope.citys = result;
+            });
+        };
         $scope.loadPage = function(page) {
-            $scope.pageable.page = page;
-            $scope.load();
+            $scope.page = page;
+            $scope.loadAll();
         };
+        $scope.loadAll();
 
-        // Search
-        $scope.search = function() {
-            $scope.pageable.filtered = ($scope.pageable.query != "");
-            $scope.load();
-        }
-
-        // Clear search
-        $scope.clearSearch = function () {
-        	$scope.pageable.query = "";
-            $scope.pageable.filtered = false;
-        	$scope.loadPage(1);
-        };
-
-        // Modify sort criteria
-        $scope.sortBy = function (property) {
-            $scope.pageable.sortBy(property);
-            $scope.load();
-        }
-
-
-        // Show delete confirmation window
         $scope.delete = function (id) {
             City.get({id: id}, function(result) {
                 $scope.city = result;
@@ -58,20 +23,25 @@ angular.module('aktivingatlanApp')
             });
         };
 
-        // Confirm delete
         $scope.confirmDelete = function (id) {
             City.delete({id: id},
                 function () {
-                    $scope.load();
+                    $scope.loadAll();
                     $('#deleteCityConfirmation').modal('hide');
                     $scope.clear();
                 });
         };
 
-        $scope.clear = function () {
-            $scope.city = {zip: null, name: null, id: null};
+        $scope.refresh = function () {
+            $scope.loadAll();
+            $scope.clear();
         };
 
-        $scope.load();
-
+        $scope.clear = function () {
+            $scope.city = {
+                zip: null,
+                name: null,
+                id: null
+            };
+        };
     });

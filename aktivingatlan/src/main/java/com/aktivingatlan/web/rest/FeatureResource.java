@@ -44,7 +44,7 @@ public class FeatureResource {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Feature> create(@RequestBody Feature feature) throws URISyntaxException {
+    public ResponseEntity<Feature> createFeature(@RequestBody Feature feature) throws URISyntaxException {
         log.debug("REST request to save Feature : {}", feature);
         if (feature.getId() != null) {
             return ResponseEntity.badRequest().header("Failure", "A new feature cannot already have an ID").body(null);
@@ -62,10 +62,10 @@ public class FeatureResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Feature> update(@RequestBody Feature feature) throws URISyntaxException {
+    public ResponseEntity<Feature> updateFeature(@RequestBody Feature feature) throws URISyntaxException {
         log.debug("REST request to update Feature : {}", feature);
         if (feature.getId() == null) {
-            return create(feature);
+            return createFeature(feature);
         }
         Feature result = featureRepository.save(feature);
         return ResponseEntity.ok()
@@ -80,7 +80,7 @@ public class FeatureResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public List<Feature> getAll() {
+    public List<Feature> getAllFeatures() {
         log.debug("REST request to get all Features");
         return featureRepository.findAll();
     }
@@ -92,7 +92,7 @@ public class FeatureResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Feature> get(@PathVariable Long id) {
+    public ResponseEntity<Feature> getFeature(@PathVariable Long id) {
         log.debug("REST request to get Feature : {}", id);
         return Optional.ofNullable(featureRepository.findOne(id))
             .map(feature -> new ResponseEntity<>(
@@ -108,7 +108,7 @@ public class FeatureResource {
             method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteFeature(@PathVariable Long id) {
         log.debug("REST request to delete Feature : {}", id);
         featureRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("feature", id.toString())).build();

@@ -2,7 +2,7 @@
 <databaseChangeLog
     xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
     <property name="now" value="now()" dbms="mysql,h2"/>
     <property name="now" value="current_timestamp" dbms="postgresql"/>
@@ -11,14 +11,14 @@
     <property name="autoIncrement" value="true" dbms="mysql,h2,postgresql"/>
     <property name="autoIncrement" value="false" dbms="oracle"/>
 
-    <property name="floatType" value="real" dbms="postgresql, h2"/>
+    <property name="floatType" value="float4" dbms="postgresql, h2"/>
     <property name="floatType" value="float" dbms="mysql, oracle"/>
 
     <!--
         Added the entity Statement.
     -->
     <changeSet id="20150917135023" author="jhipster">
-        <createTable tableName="STATEMENT">
+        <createTable tableName="statement">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}" >
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -26,7 +26,7 @@
             <column name="note" type="varchar(255)"/>
         </createTable>
         
-        <createTable tableName="STATEMENT_CLIENT">
+        <createTable tableName="statement_client">
             <column name="clients_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
@@ -35,21 +35,21 @@
             </column>
         </createTable>
 
-        <addPrimaryKey columnNames="statements_id, clients_id" tableName="STATEMENT_CLIENT"/>
+        <addPrimaryKey columnNames="statements_id, clients_id" tableName="statement_client"/>
 
         <addForeignKeyConstraint baseColumnNames="statements_id"
-                                 baseTableName="STATEMENT_CLIENT"
+                                 baseTableName="statement_client"
                                  constraintName="fk_statement_client_client_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="STATEMENT"/>
+                                 referencedTableName="statement"/>
 
         <addForeignKeyConstraint baseColumnNames="clients_id"
-                                 baseTableName="STATEMENT_CLIENT"
+                                 baseTableName="statement_client"
                                  constraintName="fk_client_client_statement_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="CLIENT"/>
+                                 referencedTableName="client"/>
         
-        <createTable tableName="STATEMENT_PROPERTY">
+        <createTable tableName="statement_property">
             <column name="propertys_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
@@ -58,19 +58,19 @@
             </column>
         </createTable>
 
-        <addPrimaryKey columnNames="statements_id, propertys_id" tableName="STATEMENT_PROPERTY"/>
+        <addPrimaryKey columnNames="statements_id, propertys_id" tableName="statement_property"/>
 
         <addForeignKeyConstraint baseColumnNames="statements_id"
-                                 baseTableName="STATEMENT_PROPERTY"
+                                 baseTableName="statement_property"
                                  constraintName="fk_statement_property_property_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="STATEMENT"/>
+                                 referencedTableName="statement"/>
 
         <addForeignKeyConstraint baseColumnNames="propertys_id"
-                                 baseTableName="STATEMENT_PROPERTY"
+                                 baseTableName="statement_property"
                                  constraintName="fk_property_property_statement_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="PROPERTY"/>
+                                 referencedTableName="property"/>
         
     </changeSet>
 </databaseChangeLog>

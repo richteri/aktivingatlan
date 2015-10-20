@@ -7,7 +7,7 @@ angular.module('aktivingatlanApp')
                 parent: 'entity',
                 url: '/categorys',
                 data: {
-                    roles: ['ROLE_USER'],
+                    authorities: ['ROLE_USER'],
                     pageTitle: 'aktivingatlanApp.category.home.title'
                 },
                 views: {
@@ -28,7 +28,7 @@ angular.module('aktivingatlanApp')
                 parent: 'entity',
                 url: '/category/{id}',
                 data: {
-                    roles: ['ROLE_USER'],
+                    authorities: ['ROLE_USER'],
                     pageTitle: 'aktivingatlanApp.category.detail.title'
                 },
                 views: {
@@ -51,7 +51,7 @@ angular.module('aktivingatlanApp')
                 parent: 'category',
                 url: '/new',
                 data: {
-                    roles: ['ROLE_USER'],
+                    authorities: ['ROLE_USER'],
                 },
                 onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal) {
                     $modal.open({
@@ -60,7 +60,12 @@ angular.module('aktivingatlanApp')
                         size: 'lg',
                         resolve: {
                             entity: function () {
-                                return {nameHu: null, nameEn: null, nameDe: null, id: null};
+                                return {
+                                    nameHu: null,
+                                    nameEn: null,
+                                    nameDe: null,
+                                    id: null
+                                };
                             }
                         }
                     }).result.then(function(result) {
@@ -74,7 +79,7 @@ angular.module('aktivingatlanApp')
                 parent: 'category',
                 url: '/{id}/edit',
                 data: {
-                    roles: ['ROLE_USER'],
+                    authorities: ['ROLE_USER'],
                 },
                 onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal) {
                     $modal.open({

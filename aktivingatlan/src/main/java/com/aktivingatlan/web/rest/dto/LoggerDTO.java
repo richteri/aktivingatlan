@@ -1,7 +1,8 @@
 package com.aktivingatlan.web.rest.dto;
 
-import ch.qos.logback.classic.Logger;
 import com.fasterxml.jackson.annotation.JsonCreator;
+
+import ch.qos.logback.classic.Logger;
 
 public class LoggerDTO {
 

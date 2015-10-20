@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('aktivingatlanApp')
-    .controller('CategoryController', function ($scope, Category, CategorySearch) {
+    .controller('CategoryController', function ($scope, Category) {
         $scope.categorys = [];
         $scope.loadAll = function() {
             Category.query(function(result) {
@@ -26,22 +26,17 @@ angular.module('aktivingatlanApp')
                 });
         };
 
-        $scope.search = function () {
-            CategorySearch.query({query: $scope.searchQuery}, function(result) {
-                $scope.categorys = result;
-            }, function(response) {
-                if(response.status === 404) {
-                    $scope.loadAll();
-                }
-            });
-        };
-
         $scope.refresh = function () {
             $scope.loadAll();
             $scope.clear();
         };
 
         $scope.clear = function () {
-            $scope.category = {nameHu: null, nameEn: null, nameDe: null, id: null};
+            $scope.category = {
+                nameHu: null,
+                nameEn: null,
+                nameDe: null,
+                id: null
+            };
         };
     });

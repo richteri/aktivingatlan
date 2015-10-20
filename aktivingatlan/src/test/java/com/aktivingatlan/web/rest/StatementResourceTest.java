@@ -23,6 +23,7 @@ import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -53,8 +54,8 @@ public class StatementResourceTest {
 
     private static final LocalDate DEFAULT_DATE = new LocalDate(0L);
     private static final LocalDate UPDATED_DATE = new LocalDate();
-    private static final String DEFAULT_NOTE = "SAMPLE_TEXT";
-    private static final String UPDATED_NOTE = "UPDATED_TEXT";
+    private static final String DEFAULT_NOTE = "AAAAA";
+    private static final String UPDATED_NOTE = "BBBBB";
 
     @Inject
     private StatementRepository statementRepository;
@@ -64,6 +65,9 @@ public class StatementResourceTest {
 
     @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
+
+    @Inject
+    private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
     private MockMvc restStatementMockMvc;
 
@@ -75,7 +79,9 @@ public class StatementResourceTest {
         StatementResource statementResource = new StatementResource();
         ReflectionTestUtils.setField(statementResource, "statementRepository", statementRepository);
         ReflectionTestUtils.setField(statementResource, "statementMapper", statementMapper);
-        this.restStatementMockMvc = MockMvcBuilders.standaloneSetup(statementResource).setMessageConverters(jacksonMessageConverter).build();
+        this.restStatementMockMvc = MockMvcBuilders.standaloneSetup(statementResource)
+            .setCustomArgumentResolvers(pageableArgumentResolver)
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     @Before
@@ -155,7 +161,6 @@ public class StatementResourceTest {
         // Update the statement
         statement.setDate(UPDATED_DATE);
         statement.setNote(UPDATED_NOTE);
-        
         StatementDTO statementDTO = statementMapper.statementToStatementDTO(statement);
 
         restStatementMockMvc.perform(put("/api/statements")

@@ -13,49 +13,42 @@
             <input type="text" class="form-control" id="id" name="id"
                     ng-model="contract.id" readonly>
         </div>
-
         <div class="form-group">
             <label translate="aktivingatlanApp.contract.idNo" for="field_idNo">IdNo</label>
             <input type="text" class="form-control" name="idNo" id="field_idNo"
                     ng-model="contract.idNo"
                     >
-
         </div>
         <div class="form-group">
             <label translate="aktivingatlanApp.contract.exclusive" for="field_exclusive">Exclusive</label>
             <input type="checkbox" class="form-control" name="exclusive" id="field_exclusive"
                     ng-model="contract.exclusive"
                     >
-
         </div>
         <div class="form-group">
             <label translate="aktivingatlanApp.contract.startDate" for="field_startDate">StartDate</label>
             <input type="date" class="form-control" name="startDate" id="field_startDate"
                     ng-model="contract.startDate"
                     >
-
         </div>
         <div class="form-group">
             <label translate="aktivingatlanApp.contract.endDate" for="field_endDate">EndDate</label>
             <input type="date" class="form-control" name="endDate" id="field_endDate"
                     ng-model="contract.endDate"
                     >
-
         </div>
         <div class="form-group">
             <label translate="aktivingatlanApp.contract.note" for="field_note">Note</label>
             <input type="text" class="form-control" name="note" id="field_note"
                     ng-model="contract.note"
                     >
-
         </div>
+
         <div class="form-group">
             <label translate="aktivingatlanApp.contract.property" for="field_property">property</label>
-            
             <select class="form-control" id="field_property" name="property" ng-model="contract.propertyId" ng-options="property.id as property.code for property in propertys">
                 <option value=""></option>
             </select>
-            
         </div>
         <div class="form-group">
             <label translate="aktivingatlanApp.contract.client" for="field_client">client</label>

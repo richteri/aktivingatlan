@@ -1,9 +1,11 @@
 package com.aktivingatlan.web.rest.mapper;
 
-import com.aktivingatlan.domain.*;
-import com.aktivingatlan.web.rest.dto.PhotoDTO;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
-import org.mapstruct.*;
+import com.aktivingatlan.domain.Photo;
+import com.aktivingatlan.domain.Property;
+import com.aktivingatlan.web.rest.dto.PhotoDTO;
 
 /**
  * Mapper for the entity Photo and its DTO PhotoDTO.

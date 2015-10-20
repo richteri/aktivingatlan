@@ -22,19 +22,18 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-
 /**
  * A Property.
  */
 @Entity
-@Table(name = "PROPERTY")
+@Table(name = "property")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Property extends AbstractAuditingEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+
     
     @Column(name = "code", unique = true)
     private String code;
@@ -148,7 +147,7 @@ public class Property extends AbstractAuditingEntity implements Serializable {
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "PROPERTY_FEATURE",
+    @JoinTable(name = "property_feature",
                joinColumns = @JoinColumn(name="propertys_id", referencedColumnName="ID"),
                inverseJoinColumns = @JoinColumn(name="features_id", referencedColumnName="ID"))
     private Set<Feature> features = new HashSet<>();

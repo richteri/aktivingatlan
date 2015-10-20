@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,7 +23,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.aktivingatlan.domain.Contract;
@@ -55,7 +55,7 @@ public class ContractResource {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<ContractDTO> create(@RequestBody ContractDTO contractDTO) throws URISyntaxException {
+    public ResponseEntity<ContractDTO> createContract(@RequestBody ContractDTO contractDTO) throws URISyntaxException {
         log.debug("REST request to save Contract : {}", contractDTO);
         if (contractDTO.getId() != null) {
             return ResponseEntity.badRequest().header("Failure", "A new contract cannot already have an ID").body(null);
@@ -74,10 +74,10 @@ public class ContractResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<ContractDTO> update(@RequestBody ContractDTO contractDTO) throws URISyntaxException {
+    public ResponseEntity<ContractDTO> updateContract(@RequestBody ContractDTO contractDTO) throws URISyntaxException {
         log.debug("REST request to update Contract : {}", contractDTO);
         if (contractDTO.getId() == null) {
-            return create(contractDTO);
+            return createContract(contractDTO);
         }
         Contract contract = contractMapper.contractDTOToContract(contractDTO);
         Contract result = contractRepository.save(contract);
@@ -94,11 +94,10 @@ public class ContractResource {
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional(readOnly = true)
-    public ResponseEntity<List<ContractDTO>> getAll(@RequestParam(value = "page" , required = false) Integer offset,
-                                  @RequestParam(value = "per_page", required = false) Integer limit)
+    public ResponseEntity<List<ContractDTO>> getAllContracts(Pageable pageable)
         throws URISyntaxException {
-        Page<Contract> page = contractRepository.findAll(PaginationUtil.generatePageRequest(offset, limit));
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/contracts", offset, limit);
+        Page<Contract> page = contractRepository.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/contracts");
         return new ResponseEntity<>(page.getContent().stream()
             .map(contractMapper::contractToContractDTO)
             .collect(Collectors.toCollection(LinkedList::new)), headers, HttpStatus.OK);
@@ -111,8 +110,7 @@ public class ContractResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    @Transactional(readOnly = true)
-    public ResponseEntity<ContractDTO> get(@PathVariable Long id) {
+    public ResponseEntity<ContractDTO> getContract(@PathVariable Long id) {
         log.debug("REST request to get Contract : {}", id);
         return Optional.ofNullable(contractRepository.findOneWithEagerRelationships(id))
             .map(contractMapper::contractToContractDTO)
@@ -129,7 +127,7 @@ public class ContractResource {
             method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteContract(@PathVariable Long id) {
         log.debug("REST request to delete Contract : {}", id);
         contractRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("contract", id.toString())).build();

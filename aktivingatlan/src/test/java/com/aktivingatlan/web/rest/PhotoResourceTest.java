@@ -22,6 +22,7 @@ import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -52,14 +53,14 @@ public class PhotoResourceTest {
 
     private static final Boolean DEFAULT_HEADER = false;
     private static final Boolean UPDATED_HEADER = true;
-    private static final String DEFAULT_DESCRIPTION_HU = "SAMPLE_TEXT";
-    private static final String UPDATED_DESCRIPTION_HU = "UPDATED_TEXT";
-    private static final String DEFAULT_DESCRIPTION_EN = "SAMPLE_TEXT";
-    private static final String UPDATED_DESCRIPTION_EN = "UPDATED_TEXT";
-    private static final String DEFAULT_DESCRIPTION_DE = "SAMPLE_TEXT";
-    private static final String UPDATED_DESCRIPTION_DE = "UPDATED_TEXT";
-    private static final String DEFAULT_FILENAME = "SAMPLE_TEXT";
-    private static final String UPDATED_FILENAME = "UPDATED_TEXT";
+    private static final String DEFAULT_DESCRIPTION_HU = "AAAAA";
+    private static final String UPDATED_DESCRIPTION_HU = "BBBBB";
+    private static final String DEFAULT_DESCRIPTION_EN = "AAAAA";
+    private static final String UPDATED_DESCRIPTION_EN = "BBBBB";
+    private static final String DEFAULT_DESCRIPTION_DE = "AAAAA";
+    private static final String UPDATED_DESCRIPTION_DE = "BBBBB";
+    private static final String DEFAULT_FILENAME = "AAAAA";
+    private static final String UPDATED_FILENAME = "BBBBB";
 
     @Inject
     private PhotoRepository photoRepository;
@@ -69,6 +70,9 @@ public class PhotoResourceTest {
 
     @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
+
+    @Inject
+    private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
     private MockMvc restPhotoMockMvc;
 
@@ -80,7 +84,9 @@ public class PhotoResourceTest {
         PhotoResource photoResource = new PhotoResource();
         ReflectionTestUtils.setField(photoResource, "photoRepository", photoRepository);
         ReflectionTestUtils.setField(photoResource, "photoMapper", photoMapper);
-        this.restPhotoMockMvc = MockMvcBuilders.standaloneSetup(photoResource).setMessageConverters(jacksonMessageConverter).build();
+        this.restPhotoMockMvc = MockMvcBuilders.standaloneSetup(photoResource)
+            .setCustomArgumentResolvers(pageableArgumentResolver)
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     @Before
@@ -175,7 +181,6 @@ public class PhotoResourceTest {
         photo.setDescriptionEn(UPDATED_DESCRIPTION_EN);
         photo.setDescriptionDe(UPDATED_DESCRIPTION_DE);
         photo.setFilename(UPDATED_FILENAME);
-        
         PhotoDTO photoDTO = photoMapper.photoToPhotoDTO(photo);
 
         restPhotoMockMvc.perform(put("/api/photos")

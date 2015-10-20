@@ -1,5 +1,4 @@
 <div>
-
     <h2 translate="aktivingatlanApp.client.home.title">Clients</h2>
     <jh-alert></jh-alert>
     <div class="container">
@@ -13,7 +12,7 @@
                 <form name="searchForm" class="form-inline">
                     <div class="form-group">
                         <input type="text" class="form-control" ng-model="pageable.query" id="pageable.query" placeholder="query">
-                    </div>
+        </div>
                     <button class="btn btn-info" ng-click="search()"><span class="glyphicon glyphicon-search"></span> <span>Search a Client</span>
                     </button>
                     <button class="btn btn-danger" ng-click="clearSearch()" ng-show="pageable.filtered"><span class="glyphicon glyphicon-search"></span> <span>Show all</span>
@@ -103,15 +102,15 @@
         </table>
         <nav>
             <ul class="pagination">
-                <li ng-show="links['first']" ng-click="loadPage(links['first'])"><a>&lt;&lt;</a></li>
-                <li ng-show="links['prev']" ng-click="loadPage(links['prev'])"><a>&lt;</a></li>
-                <li ng-show="pageable.page > 2" ng-click="loadPage(pageable.page - 2)"><a>{{pageable.page - 2}}</a></li>
-                <li ng-show="pageable.page > 1" ng-click="loadPage(pageable.page - 1)"><a>{{pageable.page - 1}}</a></li>
-                <li class="active"><a>{{pageable.page}}</a></li>
-                <li ng-show="pageable.page < links['last']" ng-click="loadPage(pageable.page + 1)"><a>{{pageable.page + 1}}</a></li>
-                <li ng-show="pageable.page < links['last'] - 1" ng-click="loadPage(pageable.page + 2)"><a>{{pageable.page + 2}}</a></li>
+                <li ng-show="links['first'] >= 0" ng-click="loadPage(links['first'])"><a>&lt;&lt;</a></li>
+                <li ng-show="page > 0" ng-click="loadPage(links['prev'] || 0)"><a>&lt;</a></li>
+                <li ng-show="page > 1" ng-click="loadPage(page - 2)"><a>{{page - 1}}</a></li>
+                <li ng-show="page > 0" ng-click="loadPage(page - 1)"><a>{{page}}</a></li>
+                <li class="active"><a>{{page + 1}}</a></li>
+                <li ng-show="page < links['last']" ng-click="loadPage(page + 1)"><a>{{page + 2}}</a></li>
+                <li ng-show="page < links['last'] - 1" ng-click="loadPage(page + 2)"><a>{{page + 3}}</a></li>
                 <li ng-show="links['next']" ng-click="loadPage(links['next'])"><a>&gt;</a></li>
-                <li ng-show="links['last']" ng-click="loadPage(links['last'])"><a>&gt;&gt;</a></li>
+                <li ng-show="links['last'] > 0" ng-click="loadPage(links['last'])"><a>&gt;&gt;</a></li>
             </ul>
         </nav>
     </div>

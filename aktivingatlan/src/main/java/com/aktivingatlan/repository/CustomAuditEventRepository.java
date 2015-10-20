@@ -1,7 +1,10 @@
 package com.aktivingatlan.repository;
 
-import com.aktivingatlan.config.audit.AuditEventConverter;
-import com.aktivingatlan.domain.PersistentAuditEvent;
+import java.util.Date;
+import java.util.List;
+
+import javax.inject.Inject;
+
 import org.joda.time.LocalDateTime;
 import org.springframework.boot.actuate.audit.AuditEvent;
 import org.springframework.boot.actuate.audit.AuditEventRepository;
@@ -10,9 +13,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.inject.Inject;
-import java.util.Date;
-import java.util.List;
+import com.aktivingatlan.config.audit.AuditEventConverter;
+import com.aktivingatlan.domain.PersistentAuditEvent;
 
 /**
  * Wraps an implementation of Spring Boot's AuditEventRepository.
@@ -26,6 +28,10 @@ public class CustomAuditEventRepository {
     @Bean
     public AuditEventRepository auditEventRepository() {
         return new AuditEventRepository() {
+
+            private static final String AUTHORIZATION_FAILURE = "AUTHORIZATION_FAILURE";
+
+            private static final String ANONYMOUS_USER = "anonymousUser";
 
             @Inject
             private AuditEventConverter auditEventConverter;
@@ -47,13 +53,16 @@ public class CustomAuditEventRepository {
             @Override
             @Transactional(propagation = Propagation.REQUIRES_NEW)
             public void add(AuditEvent event) {
-                PersistentAuditEvent persistentAuditEvent = new PersistentAuditEvent();
-                persistentAuditEvent.setPrincipal(event.getPrincipal());
-                persistentAuditEvent.setAuditEventType(event.getType());
-                persistentAuditEvent.setAuditEventDate(new LocalDateTime(event.getTimestamp()));
-                persistentAuditEvent.setData(auditEventConverter.convertDataToStrings(event.getData()));
+                if(!AUTHORIZATION_FAILURE.equals(event.getType()) &&
+                    !ANONYMOUS_USER.equals(event.getPrincipal().toString())){
 
-                persistenceAuditEventRepository.save(persistentAuditEvent);
+                    PersistentAuditEvent persistentAuditEvent = new PersistentAuditEvent();
+                    persistentAuditEvent.setPrincipal(event.getPrincipal());
+                    persistentAuditEvent.setAuditEventType(event.getType());
+                    persistentAuditEvent.setAuditEventDate(new LocalDateTime(event.getTimestamp()));
+                    persistentAuditEvent.setData(auditEventConverter.convertDataToStrings(event.getData()));
+                    persistenceAuditEventRepository.save(persistentAuditEvent);
+                }
             }
         };
     }

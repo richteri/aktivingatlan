@@ -7,7 +7,7 @@ angular.module('aktivingatlanApp')
                 parent: 'entity',
                 url: '/photos',
                 data: {
-                    roles: ['ROLE_USER'],
+                    authorities: ['ROLE_USER'],
                     pageTitle: 'aktivingatlanApp.photo.home.title'
                 },
                 views: {
@@ -28,7 +28,7 @@ angular.module('aktivingatlanApp')
                 parent: 'entity',
                 url: '/photo/{id}',
                 data: {
-                    roles: ['ROLE_USER'],
+                    authorities: ['ROLE_USER'],
                     pageTitle: 'aktivingatlanApp.photo.detail.title'
                 },
                 views: {
@@ -51,7 +51,7 @@ angular.module('aktivingatlanApp')
                 parent: 'photo',
                 url: '/new',
                 data: {
-                    roles: ['ROLE_USER'],
+                    authorities: ['ROLE_USER'],
                 },
                 onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal) {
                     $modal.open({
@@ -60,7 +60,14 @@ angular.module('aktivingatlanApp')
                         size: 'lg',
                         resolve: {
                             entity: function () {
-                                return {header: null, descriptionHu: null, descriptionEn: null, descriptionDe: null, filename: null, id: null};
+                                return {
+                                    header: null,
+                                    descriptionHu: null,
+                                    descriptionEn: null,
+                                    descriptionDe: null,
+                                    filename: null,
+                                    id: null
+                                };
                             }
                         }
                     }).result.then(function(result) {
@@ -74,7 +81,7 @@ angular.module('aktivingatlanApp')
                 parent: 'photo',
                 url: '/{id}/edit',
                 data: {
-                    roles: ['ROLE_USER'],
+                    authorities: ['ROLE_USER'],
                 },
                 onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal) {
                     $modal.open({

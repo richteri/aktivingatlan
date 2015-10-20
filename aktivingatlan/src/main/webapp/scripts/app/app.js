@@ -4,7 +4,7 @@ angular.module('aktivingatlanApp', ['LocalStorageModule', 'tmh.dynamicLocale', '
                'ui.bootstrap', // for modal dialogs
                'ui.select', // for tag-like multi-select
                'ui.grid', 'ui.grid.pinning', 'ui.grid.saveState', 'ui.grid.resizeColumns',
-    'ngResource', 'ui.router', 'ngCookies', 'ngCacheBuster', 'ngFileUpload', 'infinite-scroll', 'ngSanitize'])
+    'ngResource', 'ui.router', 'ngCookies', 'ngAria', 'ngCacheBuster', 'ngFileUpload', 'infinite-scroll', 'ngSanitize'])
 
     .run(function ($rootScope, $location, $window, $http, $state, $translate, Language, Auth, Principal, ENV, VERSION) {
         $rootScope.ENV = ENV;
@@ -27,8 +27,14 @@ angular.module('aktivingatlanApp', ['LocalStorageModule', 'tmh.dynamicLocale', '
         $rootScope.$on('$stateChangeSuccess',  function(event, toState, toParams, fromState, fromParams) {
             var titleKey = 'global.title' ;
 
-            $rootScope.previousStateName = fromState.name;
-            $rootScope.previousStateParams = fromParams;
+            // Remember previous state unless we've been redirected to login or we've just
+            // reset the state memory after logout. If we're redirected to login, our
+            // previousState is already set in the authExpiredInterceptor. If we're going
+            // to login directly, we don't want to be sent to some previous state anyway
+            if (toState.name != 'login' && $rootScope.previousStateName) {
+              $rootScope.previousStateName = fromState.name;
+              $rootScope.previousStateParams = fromParams;
+            }
 
             // Set the page title key to the one configured in state or use default one
             if (toState.data.pageTitle) {
@@ -95,7 +101,5 @@ angular.module('aktivingatlanApp', ['LocalStorageModule', 'tmh.dynamicLocale', '
         tmhDynamicLocaleProvider.localeLocationPattern('bower_components/angular-i18n/angular-locale_{{locale}}.js');
         tmhDynamicLocaleProvider.useCookieStorage();
         tmhDynamicLocaleProvider.storageKey('NG_TRANSLATE_LANG_KEY');
-        
-        //$locationProvider.html5Mode(true);
         
     });

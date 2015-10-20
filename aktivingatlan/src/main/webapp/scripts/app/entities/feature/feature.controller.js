@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('aktivingatlanApp')
-    .controller('FeatureController', function ($scope, Feature, FeatureSearch) {
+    .controller('FeatureController', function ($scope, Feature) {
         $scope.features = [];
         $scope.loadAll = function() {
             Feature.query(function(result) {
@@ -26,22 +26,17 @@ angular.module('aktivingatlanApp')
                 });
         };
 
-        $scope.search = function () {
-            FeatureSearch.query({query: $scope.searchQuery}, function(result) {
-                $scope.features = result;
-            }, function(response) {
-                if(response.status === 404) {
-                    $scope.loadAll();
-                }
-            });
-        };
-
         $scope.refresh = function () {
             $scope.loadAll();
             $scope.clear();
         };
 
         $scope.clear = function () {
-            $scope.feature = {nameHu: null, nameEn: null, nameDe: null, id: null};
+            $scope.feature = {
+                nameHu: null,
+                nameEn: null,
+                nameDe: null,
+                id: null
+            };
         };
     });

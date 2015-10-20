@@ -6,16 +6,16 @@
             "home": "Home",
             "entities": {
                 "main": "Entities",
-                "city": "City",
-                "category": "Category",
-                "feature": "Feature",
                 "property": "Property",
                 "client": "Client",
-                "ownership": "Ownership",
-                "statement": "Statement",
-                "contract": "Contract",
-                "photo": "Photo",
                 "apartment": "Apartment",
+                "category": "Category",
+                "city": "City",
+                "contract": "Contract",
+                "feature": "Feature",
+                "ownership": "Ownership",
+                "photo": "Photo",
+                "statement": "Statement",
                 "additionalEntity": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
@@ -23,12 +23,13 @@
                 "settings": "Settings",
                 "password": "Password",
                 "sessions": "Sessions",
-                "login": "Authenticate",
-                "logout": "Log out",
+                "login": "Sign in",
+                "logout": "Sign out",
                 "register": "Register"
             },
             "admin": {
                 "main": "Administration",
+                "user-management": "User management",
                 "tracker": "User tracker",
                 "metrics": "Metrics",
                 "health": "Health",
@@ -41,8 +42,8 @@
             "language": "Language"
         },
         "form": {
-            "username": "Login",
-            "username.placeholder": "Your login",
+            "username": "Username",
+            "username.placeholder": "Your username",
             "newpassword": "New password",
             "newpassword.placeholder": "New password",
             "confirmpassword": "New password confirmation",
@@ -52,11 +53,11 @@
         },
         "messages": {
             "info": {
-                "authenticated": "If you want to <a href=\"#/login\">authenticate</a>, you can try the default accounts:<br/>- Administrator (login=\"admin\" and password=\"admin\") <br/>- User (login=\"user\" and password=\"user\").",
-                "register": "You don't have an account yet? <a href=\"#/register\">Register a new account</a>"
+                "authenticated": "If you want to <a class=\"alert-link\" href=\"#/login\">sign in</a>, you can try the default accounts:<br/>- Administrator (login=\"admin\" and password=\"admin\") <br/>- User (login=\"user\" and password=\"user\").",
+                "register": "You don't have an account yet? <a class=\"alert-link\" href=\"#/register\">Register a new account</a>"
             },
             "error": {
-                "dontmatch" : "The password and its confirmation do not match!"
+                "dontmatch": "The password and its confirmation do not match!"
             },
             "validate": {
                 "newpassword": {
@@ -79,7 +80,7 @@
             }
         },
         "field": {
-            "id" : "ID"
+            "id": "ID"
         }
     },
     "entity": {
@@ -113,9 +114,9 @@
             "datetimelocal": "This field should be a date and time."
         }
     },
-    "error" : {
-        "serverNotReachable" : "Server not reachable",
-        "NotNull" : "Field {{fieldName}} cannot be empty!"
+    "error": {
+        "serverNotReachable": "Server not reachable",
+        "NotNull": "Field {{fieldName}} cannot be empty!"
     },
     "footer": "This is your footer"
 }

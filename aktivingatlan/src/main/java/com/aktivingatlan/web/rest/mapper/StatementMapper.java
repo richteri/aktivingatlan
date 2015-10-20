@@ -1,9 +1,11 @@
 package com.aktivingatlan.web.rest.mapper;
 
-import com.aktivingatlan.domain.*;
-import com.aktivingatlan.web.rest.dto.StatementDTO;
+import org.mapstruct.Mapper;
 
-import org.mapstruct.*;
+import com.aktivingatlan.domain.Client;
+import com.aktivingatlan.domain.Property;
+import com.aktivingatlan.domain.Statement;
+import com.aktivingatlan.web.rest.dto.StatementDTO;
 
 /**
  * Mapper for the entity Statement and its DTO StatementDTO.

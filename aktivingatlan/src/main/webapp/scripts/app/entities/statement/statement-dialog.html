@@ -13,21 +13,19 @@
             <input type="text" class="form-control" id="id" name="id"
                     ng-model="statement.id" readonly>
         </div>
-
         <div class="form-group">
             <label translate="aktivingatlanApp.statement.date" for="field_date">Date</label>
             <input type="date" class="form-control" name="date" id="field_date"
                     ng-model="statement.date"
                     >
-
         </div>
         <div class="form-group">
             <label translate="aktivingatlanApp.statement.note" for="field_note">Note</label>
             <input type="text" class="form-control" name="note" id="field_note"
                     ng-model="statement.note"
                     >
-
         </div>
+
         <div class="form-group">
             <label translate="aktivingatlanApp.statement.client" for="field_client">client</label>
             <select class="form-control" id="field_client" multiple name="client" ng-model="statement.clients" ng-options="client as client.name for client in clients track by client.id"></select>

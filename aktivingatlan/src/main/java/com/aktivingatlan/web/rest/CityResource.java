@@ -10,7 +10,7 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.aktivingatlan.domain.City;
@@ -47,7 +46,7 @@ public class CityResource {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<City> create(@RequestBody City city) throws URISyntaxException {
+    public ResponseEntity<City> createCity(@RequestBody City city) throws URISyntaxException {
         log.debug("REST request to save City : {}", city);
         if (city.getId() != null) {
             return ResponseEntity.badRequest().header("Failure", "A new city cannot already have an ID").body(null);
@@ -65,10 +64,10 @@ public class CityResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<City> update(@RequestBody City city) throws URISyntaxException {
+    public ResponseEntity<City> updateCity(@RequestBody City city) throws URISyntaxException {
         log.debug("REST request to update City : {}", city);
         if (city.getId() == null) {
-            return create(city);
+            return createCity(city);
         }
         City result = cityRepository.save(city);
         return ResponseEntity.ok()
@@ -83,15 +82,10 @@ public class CityResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<List<City>> getAll(
-            @RequestParam(value = "page" , required = false) Integer offset,
-            @RequestParam(value = "per_page", required = false) Integer limit,
-            @RequestParam(value = "direction", required = false, defaultValue = "ASC") String direction,
-            @RequestParam(value = "property", required = false, defaultValue = "id") String property)
+    public ResponseEntity<List<City>> getAllCitys(Pageable pageable)
         throws URISyntaxException {
-        Page<City> page = cityRepository.findAll(
-                PaginationUtil.generatePageRequest(offset, limit, Direction.fromString(direction), property));
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/citys", offset, limit);
+        Page<City> page = cityRepository.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/citys");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
@@ -102,7 +96,7 @@ public class CityResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<City> get(@PathVariable Long id) {
+    public ResponseEntity<City> getCity(@PathVariable Long id) {
         log.debug("REST request to get City : {}", id);
         return Optional.ofNullable(cityRepository.findOne(id))
             .map(city -> new ResponseEntity<>(
@@ -118,7 +112,7 @@ public class CityResource {
             method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteCity(@PathVariable Long id) {
         log.debug("REST request to delete City : {}", id);
         cityRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("city", id.toString())).build();
@@ -133,15 +127,10 @@ public class CityResource {
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<List<City>> search(
-            @PathVariable String query,
-            @RequestParam(value = "page", required = false) Integer offset,
-            @RequestParam(value = "per_page", required = false) Integer limit,
-            @RequestParam(value = "direction", required = false, defaultValue = "ASC") String direction,
-            @RequestParam(value = "property", required = false, defaultValue = "id") String property)
+            @PathVariable String query, Pageable pageable)
         throws URISyntaxException {
-        Page<City> page = cityRepository.findByNameContainingOrZipContainingAllIgnoreCase(query, query,
-                PaginationUtil.generatePageRequest(offset, limit, Direction.fromString(direction), property));
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/_search/citys", offset, limit);
+        Page<City> page = cityRepository.findByNameContainingOrZipContainingAllIgnoreCase(query, query, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/_search/citys");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 }

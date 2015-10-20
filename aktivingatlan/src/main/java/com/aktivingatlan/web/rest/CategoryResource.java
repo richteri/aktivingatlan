@@ -1,24 +1,27 @@
 package com.aktivingatlan.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
-import com.aktivingatlan.domain.Category;
-import com.aktivingatlan.repository.CategoryRepository;
-import com.aktivingatlan.web.rest.util.HeaderUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
+
+import javax.inject.Inject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.aktivingatlan.domain.Category;
+import com.aktivingatlan.repository.CategoryRepository;
+import com.aktivingatlan.web.rest.util.HeaderUtil;
+import com.codahale.metrics.annotation.Timed;
 
 /**
  * REST controller for managing Category.
@@ -39,7 +42,7 @@ public class CategoryResource {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Category> create(@RequestBody Category category) throws URISyntaxException {
+    public ResponseEntity<Category> createCategory(@RequestBody Category category) throws URISyntaxException {
         log.debug("REST request to save Category : {}", category);
         if (category.getId() != null) {
             return ResponseEntity.badRequest().header("Failure", "A new category cannot already have an ID").body(null);
@@ -57,10 +60,10 @@ public class CategoryResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Category> update(@RequestBody Category category) throws URISyntaxException {
+    public ResponseEntity<Category> updateCategory(@RequestBody Category category) throws URISyntaxException {
         log.debug("REST request to update Category : {}", category);
         if (category.getId() == null) {
-            return create(category);
+            return createCategory(category);
         }
         Category result = categoryRepository.save(category);
         return ResponseEntity.ok()
@@ -75,7 +78,7 @@ public class CategoryResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public List<Category> getAll() {
+    public List<Category> getAllCategorys() {
         log.debug("REST request to get all Categorys");
         return categoryRepository.findAll();
     }
@@ -87,7 +90,7 @@ public class CategoryResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Category> get(@PathVariable Long id) {
+    public ResponseEntity<Category> getCategory(@PathVariable Long id) {
         log.debug("REST request to get Category : {}", id);
         return Optional.ofNullable(categoryRepository.findOne(id))
             .map(category -> new ResponseEntity<>(
@@ -103,23 +106,9 @@ public class CategoryResource {
             method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
         log.debug("REST request to delete Category : {}", id);
         categoryRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("category", id.toString())).build();
-    }
-
-    /**
-     * SEARCH  /_search/categorys/:query -> search for the category corresponding
-     * to the query.
-     */
-    @RequestMapping(value = "/_search/categorys/{query}",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public List<Category> search(@PathVariable String query) {
-        return StreamSupport
-            .stream(categoryRepository.findAll().spliterator(), false)
-            .collect(Collectors.toList());
     }
 }

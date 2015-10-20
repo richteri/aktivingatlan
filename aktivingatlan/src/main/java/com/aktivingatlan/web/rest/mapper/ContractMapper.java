@@ -1,10 +1,11 @@
 package com.aktivingatlan.web.rest.mapper;
 
-import com.aktivingatlan.domain.*;
-import com.aktivingatlan.web.rest.dto.ContractDTO;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
-import org.hibernate.hql.internal.ast.tree.BooleanLiteralNode;
-import org.mapstruct.*;
+import com.aktivingatlan.domain.Client;
+import com.aktivingatlan.domain.Contract;
+import com.aktivingatlan.web.rest.dto.ContractDTO;
 
 /**
  * Mapper for the entity Contract and its DTO ContractDTO.

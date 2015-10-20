@@ -12,7 +12,7 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.aktivingatlan.domain.Client;
@@ -59,7 +58,7 @@ public class ClientResource {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<ClientDTO> create(@RequestBody ClientDTO clientDTO) throws URISyntaxException {
+    public ResponseEntity<ClientDTO> createClient(@RequestBody ClientDTO clientDTO) throws URISyntaxException {
         log.debug("REST request to save Client : {}", clientDTO);
         if (clientDTO.getId() != null) {
             return ResponseEntity.badRequest().header("Failure", "A new client cannot already have an ID").body(null);
@@ -81,7 +80,7 @@ public class ClientResource {
     public ResponseEntity<ClientDTO> update(@RequestBody ClientDTO clientDTO) throws URISyntaxException {
         log.debug("REST request to update Client : {}", clientDTO);
         if (clientDTO.getId() == null) {
-            return create(clientDTO);
+            return createClient(clientDTO);
         }
         Client client = clientMapper.clientDTOToClient(clientDTO);
         Client result = clientRepository.save(client);
@@ -98,15 +97,10 @@ public class ClientResource {
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional(readOnly = true)
-    public ResponseEntity<List<ClientDTO>> getAll(
-            @RequestParam(value = "page" , required = false) Integer offset,
-            @RequestParam(value = "per_page", required = false) Integer limit,
-            @RequestParam(value = "direction", required = false, defaultValue = "ASC") String direction,
-            @RequestParam(value = "property", required = false, defaultValue = "id") String property)
+    public ResponseEntity<List<ClientDTO>> getAllClients(Pageable pageable)
         throws URISyntaxException {
-    	Page<Client> page = clientRepository.findAll(
-                PaginationUtil.generatePageRequest(offset, limit, Direction.fromString(direction), property));
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/clients", offset, limit);
+        Page<Client> page = clientRepository.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/clients");
         return new ResponseEntity<>(page.getContent().stream()
             .map(clientMapper::clientToClientDTO)
             .collect(Collectors.toCollection(LinkedList::new)), headers, HttpStatus.OK);
@@ -120,9 +114,9 @@ public class ClientResource {
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional(readOnly = true)
-    public ResponseEntity<ClientDTO> get(@PathVariable Long id) {
+    public ResponseEntity<ClientDTO> getClient(@PathVariable Long id) {
         log.debug("REST request to get Client : {}", id);
-        return Optional.ofNullable(clientRepository.findByIdWithEagerRelationships(id))
+        return Optional.ofNullable(clientRepository.findOne(id))
             .map(clientDetailsMapper::clientToClientDTO)
             .map(clientDTO -> new ResponseEntity<>(
                 clientDTO,
@@ -137,7 +131,7 @@ public class ClientResource {
             method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteClient(@PathVariable Long id) {
         log.debug("REST request to delete Client : {}", id);
         clientRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("client", id.toString())).build();
@@ -153,15 +147,11 @@ public class ClientResource {
     @Timed
     @Transactional(readOnly = true)
     public ResponseEntity<List<ClientDTO>> search(
-            @PathVariable String query,
-            @RequestParam(value = "page", required = false) Integer offset,
-            @RequestParam(value = "per_page", required = false) Integer limit,
-            @RequestParam(value = "direction", required = false, defaultValue = "ASC") String direction,
-            @RequestParam(value = "property", required = false, defaultValue = "id") String property)
+            @PathVariable String query, Pageable pageable)
         throws URISyntaxException {
     	Page<Client> page = clientRepository.findByNameContainingOrPhone1ContainingOrAddress1ContainingOrIdNoContainingAllIgnoreCase(query, query, query, query,
-                PaginationUtil.generatePageRequest(offset, limit, Direction.fromString(direction), property));
-    	HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/_search/clients", offset, limit);
+                pageable);
+    	HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/_search/clients");
     	return new ResponseEntity<>(page.getContent().stream()
                 .map(clientMapper::clientToClientDTO)
                 .collect(Collectors.toCollection(LinkedList::new)), headers, HttpStatus.OK);

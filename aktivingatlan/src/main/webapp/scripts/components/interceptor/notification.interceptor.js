@@ -9,6 +9,6 @@ angular.module('aktivingatlanApp')
                     AlertService.success(alertKey, { param : response.headers('X-aktivingatlanApp-params')});
                 }
                 return response;
-            },
+            }
         };
     });

@@ -22,6 +22,7 @@ import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -35,7 +36,6 @@ import com.aktivingatlan.Application;
 import com.aktivingatlan.domain.Client;
 import com.aktivingatlan.repository.ClientRepository;
 import com.aktivingatlan.web.rest.dto.ClientDTO;
-import com.aktivingatlan.web.rest.mapper.ClientDetailsMapper;
 import com.aktivingatlan.web.rest.mapper.ClientMapper;
 
 
@@ -50,22 +50,22 @@ import com.aktivingatlan.web.rest.mapper.ClientMapper;
 @IntegrationTest
 public class ClientResourceTest {
 
-    private static final String DEFAULT_NAME = "SAMPLE_TEXT";
-    private static final String UPDATED_NAME = "UPDATED_TEXT";
-    private static final String DEFAULT_EMAIL = "SAMPLE_TEXT";
-    private static final String UPDATED_EMAIL = "UPDATED_TEXT";
-    private static final String DEFAULT_PHONE1 = "SAMPLE_TEXT";
-    private static final String UPDATED_PHONE1 = "UPDATED_TEXT";
-    private static final String DEFAULT_PHONE2 = "SAMPLE_TEXT";
-    private static final String UPDATED_PHONE2 = "UPDATED_TEXT";
-    private static final String DEFAULT_ADDRESS1 = "SAMPLE_TEXT";
-    private static final String UPDATED_ADDRESS1 = "UPDATED_TEXT";
-    private static final String DEFAULT_ADDRESS2 = "SAMPLE_TEXT";
-    private static final String UPDATED_ADDRESS2 = "UPDATED_TEXT";
-    private static final String DEFAULT_ID_NO = "SAMPLE_TEXT";
-    private static final String UPDATED_ID_NO = "UPDATED_TEXT";
-    private static final String DEFAULT_NOTE = "SAMPLE_TEXT";
-    private static final String UPDATED_NOTE = "UPDATED_TEXT";
+    private static final String DEFAULT_NAME = "AAAAA";
+    private static final String UPDATED_NAME = "BBBBB";
+    private static final String DEFAULT_EMAIL = "AAAAA";
+    private static final String UPDATED_EMAIL = "BBBBB";
+    private static final String DEFAULT_PHONE1 = "AAAAA";
+    private static final String UPDATED_PHONE1 = "BBBBB";
+    private static final String DEFAULT_PHONE2 = "AAAAA";
+    private static final String UPDATED_PHONE2 = "BBBBB";
+    private static final String DEFAULT_ADDRESS1 = "AAAAA";
+    private static final String UPDATED_ADDRESS1 = "BBBBB";
+    private static final String DEFAULT_ADDRESS2 = "AAAAA";
+    private static final String UPDATED_ADDRESS2 = "BBBBB";
+    private static final String DEFAULT_ID_NO = "AAAAA";
+    private static final String UPDATED_ID_NO = "BBBBB";
+    private static final String DEFAULT_NOTE = "AAAAA";
+    private static final String UPDATED_NOTE = "BBBBB";
 
     @Inject
     private ClientRepository clientRepository;
@@ -74,10 +74,10 @@ public class ClientResourceTest {
     private ClientMapper clientMapper;
 
     @Inject
-    private ClientDetailsMapper clientDetailsMapper;
+    private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Inject
-    private MappingJackson2HttpMessageConverter jacksonMessageConverter;
+    private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
     private MockMvc restClientMockMvc;
 
@@ -89,8 +89,9 @@ public class ClientResourceTest {
         ClientResource clientResource = new ClientResource();
         ReflectionTestUtils.setField(clientResource, "clientRepository", clientRepository);
         ReflectionTestUtils.setField(clientResource, "clientMapper", clientMapper);
-        ReflectionTestUtils.setField(clientResource, "clientDetailsMapper", clientDetailsMapper);
-        this.restClientMockMvc = MockMvcBuilders.standaloneSetup(clientResource).setMessageConverters(jacksonMessageConverter).build();
+        this.restClientMockMvc = MockMvcBuilders.standaloneSetup(clientResource)
+            .setCustomArgumentResolvers(pageableArgumentResolver)
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     @Before
@@ -112,7 +113,7 @@ public class ClientResourceTest {
         int databaseSizeBeforeCreate = clientRepository.findAll().size();
 
         // Create the Client
-        ClientDTO clientDTO = clientDetailsMapper.clientToClientDTO(client);
+        ClientDTO clientDTO = clientMapper.clientToClientDTO(client);
 
         restClientMockMvc.perform(post("/api/clients")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -200,8 +201,7 @@ public class ClientResourceTest {
         client.setAddress2(UPDATED_ADDRESS2);
         client.setIdNo(UPDATED_ID_NO);
         client.setNote(UPDATED_NOTE);
-        
-        ClientDTO clientDTO = clientDetailsMapper.clientToClientDTO(client);
+        ClientDTO clientDTO = clientMapper.clientToClientDTO(client);
 
         restClientMockMvc.perform(put("/api/clients")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)

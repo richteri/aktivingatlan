@@ -1,10 +1,10 @@
 package com.aktivingatlan.web.filter.gzip;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class GZipResponseUtil {
 

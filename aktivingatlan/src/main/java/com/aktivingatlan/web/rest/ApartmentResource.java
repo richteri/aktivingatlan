@@ -4,14 +4,13 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.aktivingatlan.domain.Apartment;
@@ -48,7 +46,7 @@ public class ApartmentResource {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Apartment> create(@RequestBody Apartment apartment) throws URISyntaxException {
+    public ResponseEntity<Apartment> createApartment(@RequestBody Apartment apartment) throws URISyntaxException {
         log.debug("REST request to save Apartment : {}", apartment);
         if (apartment.getId() != null) {
             return ResponseEntity.badRequest().header("Failure", "A new apartment cannot already have an ID").body(null);
@@ -66,10 +64,10 @@ public class ApartmentResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Apartment> update(@RequestBody Apartment apartment) throws URISyntaxException {
+    public ResponseEntity<Apartment> updateApartment(@RequestBody Apartment apartment) throws URISyntaxException {
         log.debug("REST request to update Apartment : {}", apartment);
         if (apartment.getId() == null) {
-            return create(apartment);
+            return createApartment(apartment);
         }
         Apartment result = apartmentRepository.save(apartment);
         return ResponseEntity.ok()
@@ -84,11 +82,10 @@ public class ApartmentResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<List<Apartment>> getAll(@RequestParam(value = "page" , required = false) Integer offset,
-                                  @RequestParam(value = "per_page", required = false) Integer limit)
+    public ResponseEntity<List<Apartment>> getAllApartments(Pageable pageable)
         throws URISyntaxException {
-        Page<Apartment> page = apartmentRepository.findAll(PaginationUtil.generatePageRequest(offset, limit));
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/apartments", offset, limit);
+        Page<Apartment> page = apartmentRepository.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/apartments");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
@@ -99,7 +96,7 @@ public class ApartmentResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Apartment> get(@PathVariable Long id) {
+    public ResponseEntity<Apartment> getApartment(@PathVariable Long id) {
         log.debug("REST request to get Apartment : {}", id);
         return Optional.ofNullable(apartmentRepository.findOne(id))
             .map(apartment -> new ResponseEntity<>(
@@ -115,23 +112,9 @@ public class ApartmentResource {
             method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteApartment(@PathVariable Long id) {
         log.debug("REST request to delete Apartment : {}", id);
         apartmentRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("apartment", id.toString())).build();
-    }
-
-    /**
-     * SEARCH  /_search/apartments/:query -> search for the apartment corresponding
-     * to the query.
-     */
-    @RequestMapping(value = "/_search/apartments/{query}",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public List<Apartment> search(@PathVariable String query) {
-        return StreamSupport
-            .stream(apartmentRepository.findAll().spliterator(), false)
-            .collect(Collectors.toList());
     }
 }

@@ -2,7 +2,7 @@
 <databaseChangeLog
     xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
     <property name="now" value="now()" dbms="mysql,h2"/>
     <property name="now" value="current_timestamp" dbms="postgresql"/>
@@ -11,14 +11,14 @@
     <property name="autoIncrement" value="true" dbms="mysql,h2,postgresql"/>
     <property name="autoIncrement" value="false" dbms="oracle"/>
 
-    <property name="floatType" value="real" dbms="postgresql, h2"/>
+    <property name="floatType" value="float4" dbms="postgresql, h2"/>
     <property name="floatType" value="float" dbms="mysql, oracle"/>
 
     <!--
         Added the entity Contract.
     -->
     <changeSet id="20150917135259" author="jhipster">
-        <createTable tableName="CONTRACT">
+        <createTable tableName="contract">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}" >
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -31,12 +31,12 @@
         </createTable>
         
         <addForeignKeyConstraint baseColumnNames="property_id"
-                                 baseTableName="CONTRACT"
+                                 baseTableName="contract"
                                  constraintName="fk_contract_property_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="PROPERTY"/>
+                                 referencedTableName="property"/>
 
-        <createTable tableName="CONTRACT_CLIENT">
+        <createTable tableName="contract_client">
             <column name="clients_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
@@ -45,19 +45,19 @@
             </column>
         </createTable>
 
-        <addPrimaryKey columnNames="contracts_id, clients_id" tableName="CONTRACT_CLIENT"/>
+        <addPrimaryKey columnNames="contracts_id, clients_id" tableName="contract_client"/>
 
         <addForeignKeyConstraint baseColumnNames="contracts_id"
-                                 baseTableName="CONTRACT_CLIENT"
+                                 baseTableName="contract_client"
                                  constraintName="fk_contract_client_client_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="CONTRACT"/>
+                                 referencedTableName="contract"/>
 
         <addForeignKeyConstraint baseColumnNames="clients_id"
-                                 baseTableName="CONTRACT_CLIENT"
+                                 baseTableName="contract_client"
                                  constraintName="fk_client_client_contract_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="CLIENT"/>
+                                 referencedTableName="client"/>
         
     </changeSet>
 </databaseChangeLog>

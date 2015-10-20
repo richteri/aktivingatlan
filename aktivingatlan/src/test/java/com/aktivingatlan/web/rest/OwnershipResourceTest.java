@@ -22,6 +22,7 @@ import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -49,8 +50,8 @@ import com.aktivingatlan.web.rest.mapper.OwnershipMapper;
 @IntegrationTest
 public class OwnershipResourceTest {
 
-    private static final String DEFAULT_NOTE = "SAMPLE_TEXT";
-    private static final String UPDATED_NOTE = "UPDATED_TEXT";
+    private static final String DEFAULT_NOTE = "AAAAA";
+    private static final String UPDATED_NOTE = "BBBBB";
 
     @Inject
     private OwnershipRepository ownershipRepository;
@@ -60,6 +61,9 @@ public class OwnershipResourceTest {
 
     @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
+
+    @Inject
+    private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
     private MockMvc restOwnershipMockMvc;
 
@@ -71,7 +75,9 @@ public class OwnershipResourceTest {
         OwnershipResource ownershipResource = new OwnershipResource();
         ReflectionTestUtils.setField(ownershipResource, "ownershipRepository", ownershipRepository);
         ReflectionTestUtils.setField(ownershipResource, "ownershipMapper", ownershipMapper);
-        this.restOwnershipMockMvc = MockMvcBuilders.standaloneSetup(ownershipResource).setMessageConverters(jacksonMessageConverter).build();
+        this.restOwnershipMockMvc = MockMvcBuilders.standaloneSetup(ownershipResource)
+            .setCustomArgumentResolvers(pageableArgumentResolver)
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     @Before
@@ -146,7 +152,6 @@ public class OwnershipResourceTest {
 
         // Update the ownership
         ownership.setNote(UPDATED_NOTE);
-        
         OwnershipDTO ownershipDTO = ownershipMapper.ownershipToOwnershipDTO(ownership);
 
         restOwnershipMockMvc.perform(put("/api/ownerships")

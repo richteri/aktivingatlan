@@ -26,19 +26,18 @@ import com.aktivingatlan.domain.util.ISO8601LocalDateDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-
 /**
  * A Contract.
  */
 @Entity
-@Table(name = "CONTRACT")
+@Table(name = "contract")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Contract extends AbstractAuditingEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+
     
     @Column(name = "id_no")
     private String idNo;
@@ -66,7 +65,7 @@ public class Contract extends AbstractAuditingEntity implements Serializable {
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "CONTRACT_CLIENT",
+    @JoinTable(name = "contract_client",
                joinColumns = @JoinColumn(name="contracts_id", referencedColumnName="ID"),
                inverseJoinColumns = @JoinColumn(name="clients_id", referencedColumnName="ID"))
     private Set<Client> clients = new HashSet<>();

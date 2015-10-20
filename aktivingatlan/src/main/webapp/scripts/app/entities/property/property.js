@@ -7,7 +7,7 @@ angular.module('aktivingatlanApp')
                 parent: 'entity',
                 url: '/propertys',
                 data: {
-                    roles: ['ROLE_USER'],
+                    authorities: ['ROLE_USER'],
                     pageTitle: 'aktivingatlanApp.property.home.title'
                 },
                 views: {
@@ -28,7 +28,7 @@ angular.module('aktivingatlanApp')
                 parent: 'entity',
                 url: '/property/{id}',
                 data: {
-                    roles: ['ROLE_USER'],
+                    authorities: ['ROLE_USER'],
                     pageTitle: 'aktivingatlanApp.property.detail.title'
                 },
                 views: {
@@ -51,7 +51,7 @@ angular.module('aktivingatlanApp')
                 parent: 'property',
                 url: '/new',
                 data: {
-                    roles: ['ROLE_USER'],
+                    authorities: ['ROLE_USER'],
                 },
                 onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal) {
                     $modal.open({
@@ -60,7 +60,42 @@ angular.module('aktivingatlanApp')
                         size: 'lg',
                         resolve: {
                             entity: function () {
-                                return {code: null, descriptionHu: null, descriptionEn: null, descriptionDe: null, room: null, halfRoom: null, floorArea: null, parcelArea: null, pracelNumber: null, address1: null, address2: null, active: null, kitchen: null, livingroom: null, floor: null, bathroom: null, toilet: null, furnished: null, forSale: null, saleHuf: null, saleEur: null, forRent: null, rentHuf: null, rentEur: null, rentPeakHuf: null, rentPeakEur: null, forMediumTerm: null, mediumTermHuf: null, mediumTermEur: null, forLongTerm: null, longTermHuf: null, longTermEur: null, featured: null, id: null};
+                                return {
+                                    code: null,
+                                    descriptionHu: null,
+                                    descriptionEn: null,
+                                    descriptionDe: null,
+                                    room: null,
+                                    halfRoom: null,
+                                    floorArea: null,
+                                    parcelArea: null,
+                                    pracelNumber: null,
+                                    address1: null,
+                                    address2: null,
+                                    active: null,
+                                    kitchen: null,
+                                    livingroom: null,
+                                    floor: null,
+                                    bathroom: null,
+                                    toilet: null,
+                                    furnished: null,
+                                    forSale: null,
+                                    saleHuf: null,
+                                    saleEur: null,
+                                    forRent: null,
+                                    rentHuf: null,
+                                    rentEur: null,
+                                    rentPeakHuf: null,
+                                    rentPeakEur: null,
+                                    forMediumTerm: null,
+                                    mediumTermHuf: null,
+                                    mediumTermEur: null,
+                                    forLongTerm: null,
+                                    longTermHuf: null,
+                                    longTermEur: null,
+                                    featured: null,
+                                    id: null
+                                };
                             }
                         }
                     }).result.then(function(result) {
@@ -74,7 +109,7 @@ angular.module('aktivingatlanApp')
                 parent: 'property',
                 url: '/{id}/edit',
                 data: {
-                    roles: ['ROLE_USER'],
+                    authorities: ['ROLE_USER'],
                 },
                 onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal) {
                     $modal.open({

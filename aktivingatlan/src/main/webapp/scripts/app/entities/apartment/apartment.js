@@ -7,7 +7,7 @@ angular.module('aktivingatlanApp')
                 parent: 'entity',
                 url: '/apartments',
                 data: {
-                    roles: ['ROLE_USER'],
+                    authorities: ['ROLE_USER'],
                     pageTitle: 'aktivingatlanApp.apartment.home.title'
                 },
                 views: {
@@ -28,7 +28,7 @@ angular.module('aktivingatlanApp')
                 parent: 'entity',
                 url: '/apartment/{id}',
                 data: {
-                    roles: ['ROLE_USER'],
+                    authorities: ['ROLE_USER'],
                     pageTitle: 'aktivingatlanApp.apartment.detail.title'
                 },
                 views: {
@@ -51,7 +51,7 @@ angular.module('aktivingatlanApp')
                 parent: 'apartment',
                 url: '/new',
                 data: {
-                    roles: ['ROLE_USER'],
+                    authorities: ['ROLE_USER'],
                 },
                 onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal) {
                     $modal.open({
@@ -60,7 +60,19 @@ angular.module('aktivingatlanApp')
                         size: 'lg',
                         resolve: {
                             entity: function () {
-                                return {bed: null, bathroom: null, toilet: null, rentHuf: null, rentEur: null, rentPeakHuf: null, rentPeakEur: null, descriptionHu: null, descriptionEn: null, descriptionDe: null, id: null};
+                                return {
+                                    bed: null,
+                                    bathroom: null,
+                                    toilet: null,
+                                    rentHuf: null,
+                                    rentEur: null,
+                                    rentPeakHuf: null,
+                                    rentPeakEur: null,
+                                    descriptionHu: null,
+                                    descriptionEn: null,
+                                    descriptionDe: null,
+                                    id: null
+                                };
                             }
                         }
                     }).result.then(function(result) {
@@ -74,7 +86,7 @@ angular.module('aktivingatlanApp')
                 parent: 'apartment',
                 url: '/{id}/edit',
                 data: {
-                    roles: ['ROLE_USER'],
+                    authorities: ['ROLE_USER'],
                 },
                 onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal) {
                     $modal.open({

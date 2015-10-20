@@ -6,6 +6,16 @@
             "home": "Startseite",
             "entities": {
                 "main": "Entitäten",
+                "property": "Property",
+                "client": "Client",
+                "apartment": "Apartment",
+                "category": "Category",
+                "city": "City",
+                "contract": "Contract",
+                "feature": "Feature",
+                "ownership": "Ownership",
+                "photo": "Photo",
+                "statement": "Statement",
                 "additionalEntity": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

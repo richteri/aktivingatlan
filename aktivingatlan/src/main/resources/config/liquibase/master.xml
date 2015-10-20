@@ -2,19 +2,19 @@
 <databaseChangeLog
     xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
     <include file="classpath:config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20150913164718_added_entity_City.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20150913165245_added_entity_Category.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20150917132701_added_entity_Feature.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20150917133415_added_entity_Property.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20150917134402_added_entity_Client.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20150917134704_added_entity_Ownership.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20150917135023_added_entity_Statement.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20150917135259_added_entity_Contract.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20150917135818_added_entity_Photo.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20150918134158_added_entity_Apartment.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150913165245_added_entity_Category.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150913164718_added_entity_City.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150917135259_added_entity_Contract.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150917132701_added_entity_Feature.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150917134704_added_entity_Ownership.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150917135818_added_entity_Photo.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20150917135023_added_entity_Statement.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20151010122300_added_auditing.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20151018120200_added_property_code_unique_contraint.xml" relativeToChangelogFile="false"/>
     <!-- JHipster will add liquibase changelogs here -->

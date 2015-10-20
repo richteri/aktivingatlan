@@ -1,5 +1,4 @@
 <div>
-
     <h2 translate="aktivingatlanApp.category.home.title">Categorys</h2>
     <jh-alert></jh-alert>
     <div class="container">
@@ -8,15 +7,6 @@
                 <button class="btn btn-primary" ui-sref="category.new">
                     <span class="glyphicon glyphicon-flash"></span> <span translate="aktivingatlanApp.category.home.createLabel">Create a new Category</span>
                 </button>
-            </div>
-            <div class="col-md-8">
-                <form name="searchForm" class="form-inline">
-                    <div class="form-group">
-                        <input type="text" class="form-control" ng-model="searchQuery" id="searchQuery" placeholder="query">
-                    </div>
-                    <button class="btn btn-info" ng-click="search()"><span class="glyphicon glyphicon-search"></span> <span>Search a Category</span>
-                    </button>
-                </form>
             </div>
         </div>
     </div>
@@ -58,7 +48,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="category in categorys">
+                <tr ng-repeat="category in categorys track by category.id">
                     <td><a ui-sref="category.detail({id:category.id})">{{category.id}}</a></td>
                     <td>{{category.nameHu}}</td>
                     <td>{{category.nameEn}}</td>

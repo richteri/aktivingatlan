@@ -1,16 +1,29 @@
 package com.aktivingatlan.web.rest;
 
-import com.aktivingatlan.Application;
-import com.aktivingatlan.domain.Apartment;
-import com.aktivingatlan.repository.ApartmentRepository;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.StrictAssertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -20,14 +33,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-import java.math.BigDecimal;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.aktivingatlan.Application;
+import com.aktivingatlan.domain.Apartment;
+import com.aktivingatlan.repository.ApartmentRepository;
 
 
 /**
@@ -62,18 +70,21 @@ public class ApartmentResourceTest {
 
     private static final BigDecimal DEFAULT_RENT_PEAK_EUR = new BigDecimal(1);
     private static final BigDecimal UPDATED_RENT_PEAK_EUR = new BigDecimal(2);
-    private static final String DEFAULT_DESCRIPTION_HU = "SAMPLE_TEXT";
-    private static final String UPDATED_DESCRIPTION_HU = "UPDATED_TEXT";
-    private static final String DEFAULT_DESCRIPTION_EN = "SAMPLE_TEXT";
-    private static final String UPDATED_DESCRIPTION_EN = "UPDATED_TEXT";
-    private static final String DEFAULT_DESCRIPTION_DE = "SAMPLE_TEXT";
-    private static final String UPDATED_DESCRIPTION_DE = "UPDATED_TEXT";
+    private static final String DEFAULT_DESCRIPTION_HU = "AAAAA";
+    private static final String UPDATED_DESCRIPTION_HU = "BBBBB";
+    private static final String DEFAULT_DESCRIPTION_EN = "AAAAA";
+    private static final String UPDATED_DESCRIPTION_EN = "BBBBB";
+    private static final String DEFAULT_DESCRIPTION_DE = "AAAAA";
+    private static final String UPDATED_DESCRIPTION_DE = "BBBBB";
 
     @Inject
     private ApartmentRepository apartmentRepository;
 
     @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
+
+    @Inject
+    private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
     private MockMvc restApartmentMockMvc;
 
@@ -84,7 +95,9 @@ public class ApartmentResourceTest {
         MockitoAnnotations.initMocks(this);
         ApartmentResource apartmentResource = new ApartmentResource();
         ReflectionTestUtils.setField(apartmentResource, "apartmentRepository", apartmentRepository);
-        this.restApartmentMockMvc = MockMvcBuilders.standaloneSetup(apartmentResource).setMessageConverters(jacksonMessageConverter).build();
+        this.restApartmentMockMvc = MockMvcBuilders.standaloneSetup(apartmentResource)
+            .setCustomArgumentResolvers(pageableArgumentResolver)
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     @Before
@@ -203,7 +216,6 @@ public class ApartmentResourceTest {
         apartment.setDescriptionHu(UPDATED_DESCRIPTION_HU);
         apartment.setDescriptionEn(UPDATED_DESCRIPTION_EN);
         apartment.setDescriptionDe(UPDATED_DESCRIPTION_DE);
-        
 
         restApartmentMockMvc.perform(put("/api/apartments")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)

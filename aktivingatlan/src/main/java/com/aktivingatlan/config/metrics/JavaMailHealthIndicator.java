@@ -1,13 +1,13 @@
 package com.aktivingatlan.config.metrics;
 
+import javax.mail.MessagingException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.actuate.health.AbstractHealthIndicator;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.util.Assert;
-
-import javax.mail.MessagingException;
 
 /**
  * SpringBoot Actuator HealthIndicator check for JavaMail.

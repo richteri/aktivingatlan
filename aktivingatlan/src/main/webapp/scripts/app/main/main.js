@@ -7,7 +7,7 @@ angular.module('aktivingatlanApp')
                 parent: 'site',
                 url: '/',
                 data: {
-                    roles: []
+                    authorities: []
                 },
                 views: {
                     'content@': {

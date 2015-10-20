@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,7 +23,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.aktivingatlan.domain.Statement;
@@ -55,7 +55,7 @@ public class StatementResource {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<StatementDTO> create(@RequestBody StatementDTO statementDTO) throws URISyntaxException {
+    public ResponseEntity<StatementDTO> createStatement(@RequestBody StatementDTO statementDTO) throws URISyntaxException {
         log.debug("REST request to save Statement : {}", statementDTO);
         if (statementDTO.getId() != null) {
             return ResponseEntity.badRequest().header("Failure", "A new statement cannot already have an ID").body(null);
@@ -74,10 +74,10 @@ public class StatementResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<StatementDTO> update(@RequestBody StatementDTO statementDTO) throws URISyntaxException {
+    public ResponseEntity<StatementDTO> updateStatement(@RequestBody StatementDTO statementDTO) throws URISyntaxException {
         log.debug("REST request to update Statement : {}", statementDTO);
         if (statementDTO.getId() == null) {
-            return create(statementDTO);
+            return createStatement(statementDTO);
         }
         Statement statement = statementMapper.statementDTOToStatement(statementDTO);
         Statement result = statementRepository.save(statement);
@@ -94,11 +94,10 @@ public class StatementResource {
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional(readOnly = true)
-    public ResponseEntity<List<StatementDTO>> getAll(@RequestParam(value = "page" , required = false) Integer offset,
-                                  @RequestParam(value = "per_page", required = false) Integer limit)
+    public ResponseEntity<List<StatementDTO>> getAllStatements(Pageable pageable)
         throws URISyntaxException {
-        Page<Statement> page = statementRepository.findAll(PaginationUtil.generatePageRequest(offset, limit));
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/statements", offset, limit);
+        Page<Statement> page = statementRepository.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/statements");
         return new ResponseEntity<>(page.getContent().stream()
             .map(statementMapper::statementToStatementDTO)
             .collect(Collectors.toCollection(LinkedList::new)), headers, HttpStatus.OK);
@@ -112,7 +111,7 @@ public class StatementResource {
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional(readOnly = true)
-    public ResponseEntity<StatementDTO> get(@PathVariable Long id) {
+    public ResponseEntity<StatementDTO> getStatement(@PathVariable Long id) {
         log.debug("REST request to get Statement : {}", id);
         return Optional.ofNullable(statementRepository.findOneWithEagerRelationships(id))
             .map(statementMapper::statementToStatementDTO)
@@ -129,7 +128,7 @@ public class StatementResource {
             method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteStatement(@PathVariable Long id) {
         log.debug("REST request to delete Statement : {}", id);
         statementRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("statement", id.toString())).build();

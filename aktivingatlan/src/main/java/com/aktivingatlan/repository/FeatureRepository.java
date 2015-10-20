@@ -1,9 +1,8 @@
 package com.aktivingatlan.repository;
 
-import com.aktivingatlan.domain.Feature;
-import org.springframework.data.jpa.repository.*;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+import com.aktivingatlan.domain.Feature;
 
 /**
  * Spring Data JPA repository for the Feature entity.

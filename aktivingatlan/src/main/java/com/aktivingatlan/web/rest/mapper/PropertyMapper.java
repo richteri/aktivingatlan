@@ -1,9 +1,14 @@
 package com.aktivingatlan.web.rest.mapper;
 
-import com.aktivingatlan.domain.*;
-import com.aktivingatlan.web.rest.dto.PropertyDTO;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
-import org.mapstruct.*;
+import com.aktivingatlan.domain.Category;
+import com.aktivingatlan.domain.City;
+import com.aktivingatlan.domain.Feature;
+import com.aktivingatlan.domain.Property;
+import com.aktivingatlan.domain.User;
+import com.aktivingatlan.web.rest.dto.PropertyDTO;
 
 /**
  * Mapper for the entity Property and its DTO PropertyDTO.

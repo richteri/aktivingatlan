@@ -1,10 +1,12 @@
 package com.aktivingatlan.repository;
 
-import com.aktivingatlan.domain.Statement;
-import org.springframework.data.jpa.repository.*;
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.List;
+import com.aktivingatlan.domain.Statement;
 
 /**
  * Spring Data JPA repository for the Statement entity.

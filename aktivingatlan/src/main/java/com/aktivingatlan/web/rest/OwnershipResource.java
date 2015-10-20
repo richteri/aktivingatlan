@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,7 +23,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.aktivingatlan.domain.Ownership;
@@ -55,7 +55,7 @@ public class OwnershipResource {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<OwnershipDTO> create(@RequestBody OwnershipDTO ownershipDTO) throws URISyntaxException {
+    public ResponseEntity<OwnershipDTO> createOwnership(@RequestBody OwnershipDTO ownershipDTO) throws URISyntaxException {
         log.debug("REST request to save Ownership : {}", ownershipDTO);
         if (ownershipDTO.getId() != null) {
             return ResponseEntity.badRequest().header("Failure", "A new ownership cannot already have an ID").body(null);
@@ -74,10 +74,10 @@ public class OwnershipResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<OwnershipDTO> update(@RequestBody OwnershipDTO ownershipDTO) throws URISyntaxException {
+    public ResponseEntity<OwnershipDTO> updateOwnership(@RequestBody OwnershipDTO ownershipDTO) throws URISyntaxException {
         log.debug("REST request to update Ownership : {}", ownershipDTO);
         if (ownershipDTO.getId() == null) {
-            return create(ownershipDTO);
+            return createOwnership(ownershipDTO);
         }
         Ownership ownership = ownershipMapper.ownershipDTOToOwnership(ownershipDTO);
         Ownership result = ownershipRepository.save(ownership);
@@ -94,11 +94,10 @@ public class OwnershipResource {
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional(readOnly = true)
-    public ResponseEntity<List<OwnershipDTO>> getAll(@RequestParam(value = "page" , required = false) Integer offset,
-                                  @RequestParam(value = "per_page", required = false) Integer limit)
+    public ResponseEntity<List<OwnershipDTO>> getAllOwnerships(Pageable pageable)
         throws URISyntaxException {
-        Page<Ownership> page = ownershipRepository.findAll(PaginationUtil.generatePageRequest(offset, limit));
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/ownerships", offset, limit);
+        Page<Ownership> page = ownershipRepository.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/ownerships");
         return new ResponseEntity<>(page.getContent().stream()
             .map(ownershipMapper::ownershipToOwnershipDTO)
             .collect(Collectors.toCollection(LinkedList::new)), headers, HttpStatus.OK);
@@ -111,8 +110,7 @@ public class OwnershipResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    @Transactional(readOnly = true)
-    public ResponseEntity<OwnershipDTO> get(@PathVariable Long id) {
+    public ResponseEntity<OwnershipDTO> getOwnership(@PathVariable Long id) {
         log.debug("REST request to get Ownership : {}", id);
         return Optional.ofNullable(ownershipRepository.findOne(id))
             .map(ownershipMapper::ownershipToOwnershipDTO)
@@ -129,7 +127,7 @@ public class OwnershipResource {
             method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteOwnership(@PathVariable Long id) {
         log.debug("REST request to delete Ownership : {}", id);
         ownershipRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("ownership", id.toString())).build();

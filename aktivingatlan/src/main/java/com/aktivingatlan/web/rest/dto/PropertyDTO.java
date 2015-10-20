@@ -3,13 +3,11 @@ package com.aktivingatlan.web.rest.dto;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import com.aktivingatlan.domain.AbstractAuditingEntity;
 import com.aktivingatlan.domain.Feature;
-import com.aktivingatlan.domain.Photo;
-
-import java.util.Objects;
 
 
 /**

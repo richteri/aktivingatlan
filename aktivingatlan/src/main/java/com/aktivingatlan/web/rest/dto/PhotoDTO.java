@@ -1,12 +1,9 @@
 package com.aktivingatlan.web.rest.dto;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Objects;
 
 import com.aktivingatlan.domain.AbstractAuditingEntity;
-
-import java.util.Objects;
 
 
 /**

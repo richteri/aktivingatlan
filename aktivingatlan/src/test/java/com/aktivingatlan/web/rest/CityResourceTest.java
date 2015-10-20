@@ -1,16 +1,28 @@
 package com.aktivingatlan.web.rest;
 
-import com.aktivingatlan.Application;
-import com.aktivingatlan.domain.City;
-import com.aktivingatlan.repository.CityRepository;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.StrictAssertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -20,13 +32,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.aktivingatlan.Application;
+import com.aktivingatlan.domain.City;
+import com.aktivingatlan.repository.CityRepository;
 
 
 /**
@@ -40,16 +48,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @IntegrationTest
 public class CityResourceTest {
 
-    private static final String DEFAULT_ZIP = "SAMPLE_TEXT";
-    private static final String UPDATED_ZIP = "UPDATED_TEXT";
-    private static final String DEFAULT_NAME = "SAMPLE_TEXT";
-    private static final String UPDATED_NAME = "UPDATED_TEXT";
+    private static final String DEFAULT_ZIP = "AAAAA";
+    private static final String UPDATED_ZIP = "BBBBB";
+    private static final String DEFAULT_NAME = "AAAAA";
+    private static final String UPDATED_NAME = "BBBBB";
 
     @Inject
     private CityRepository cityRepository;
 
     @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
+
+    @Inject
+    private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
     private MockMvc restCityMockMvc;
 
@@ -60,7 +71,9 @@ public class CityResourceTest {
         MockitoAnnotations.initMocks(this);
         CityResource cityResource = new CityResource();
         ReflectionTestUtils.setField(cityResource, "cityRepository", cityRepository);
-        this.restCityMockMvc = MockMvcBuilders.standaloneSetup(cityResource).setMessageConverters(jacksonMessageConverter).build();
+        this.restCityMockMvc = MockMvcBuilders.standaloneSetup(cityResource)
+            .setCustomArgumentResolvers(pageableArgumentResolver)
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     @Before
@@ -139,7 +152,6 @@ public class CityResourceTest {
         // Update the city
         city.setZip(UPDATED_ZIP);
         city.setName(UPDATED_NAME);
-        
 
         restCityMockMvc.perform(put("/api/citys")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)

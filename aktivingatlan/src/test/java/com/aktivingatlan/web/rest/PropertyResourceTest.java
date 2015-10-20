@@ -1,18 +1,29 @@
 package com.aktivingatlan.web.rest;
 
-import com.aktivingatlan.Application;
-import com.aktivingatlan.domain.Property;
-import com.aktivingatlan.repository.PropertyRepository;
-import com.aktivingatlan.web.rest.dto.PropertyDTO;
-import com.aktivingatlan.web.rest.mapper.PropertyMapper;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.StrictAssertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -22,14 +33,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-import java.math.BigDecimal;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.aktivingatlan.Application;
+import com.aktivingatlan.domain.Property;
+import com.aktivingatlan.repository.PropertyRepository;
+import com.aktivingatlan.web.rest.dto.PropertyDTO;
+import com.aktivingatlan.web.rest.mapper.PropertyMapper;
 
 
 /**
@@ -43,14 +51,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @IntegrationTest
 public class PropertyResourceTest {
 
-    private static final String DEFAULT_CODE = "SAMPLE_TEXT";
-    private static final String UPDATED_CODE = "UPDATED_TEXT";
-    private static final String DEFAULT_DESCRIPTION_HU = "SAMPLE_TEXT";
-    private static final String UPDATED_DESCRIPTION_HU = "UPDATED_TEXT";
-    private static final String DEFAULT_DESCRIPTION_EN = "SAMPLE_TEXT";
-    private static final String UPDATED_DESCRIPTION_EN = "UPDATED_TEXT";
-    private static final String DEFAULT_DESCRIPTION_DE = "SAMPLE_TEXT";
-    private static final String UPDATED_DESCRIPTION_DE = "UPDATED_TEXT";
+    private static final String DEFAULT_CODE = "AAAAA";
+    private static final String UPDATED_CODE = "BBBBB";
+    private static final String DEFAULT_DESCRIPTION_HU = "AAAAA";
+    private static final String UPDATED_DESCRIPTION_HU = "BBBBB";
+    private static final String DEFAULT_DESCRIPTION_EN = "AAAAA";
+    private static final String UPDATED_DESCRIPTION_EN = "BBBBB";
+    private static final String DEFAULT_DESCRIPTION_DE = "AAAAA";
+    private static final String UPDATED_DESCRIPTION_DE = "BBBBB";
 
     private static final Integer DEFAULT_ROOM = 1;
     private static final Integer UPDATED_ROOM = 2;
@@ -63,12 +71,12 @@ public class PropertyResourceTest {
 
     private static final Integer DEFAULT_PARCEL_AREA = 1;
     private static final Integer UPDATED_PARCEL_AREA = 2;
-    private static final String DEFAULT_PRACEL_NUMBER = "SAMPLE_TEXT";
-    private static final String UPDATED_PRACEL_NUMBER = "UPDATED_TEXT";
-    private static final String DEFAULT_ADDRESS1 = "SAMPLE_TEXT";
-    private static final String UPDATED_ADDRESS1 = "UPDATED_TEXT";
-    private static final String DEFAULT_ADDRESS2 = "SAMPLE_TEXT";
-    private static final String UPDATED_ADDRESS2 = "UPDATED_TEXT";
+    private static final String DEFAULT_PRACEL_NUMBER = "AAAAA";
+    private static final String UPDATED_PRACEL_NUMBER = "BBBBB";
+    private static final String DEFAULT_ADDRESS1 = "AAAAA";
+    private static final String UPDATED_ADDRESS1 = "BBBBB";
+    private static final String DEFAULT_ADDRESS2 = "AAAAA";
+    private static final String UPDATED_ADDRESS2 = "BBBBB";
 
     private static final Boolean DEFAULT_ACTIVE = false;
     private static final Boolean UPDATED_ACTIVE = true;
@@ -145,6 +153,9 @@ public class PropertyResourceTest {
     @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
+    @Inject
+    private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
+
     private MockMvc restPropertyMockMvc;
 
     private Property property;
@@ -155,7 +166,9 @@ public class PropertyResourceTest {
         PropertyResource propertyResource = new PropertyResource();
         ReflectionTestUtils.setField(propertyResource, "propertyRepository", propertyRepository);
         ReflectionTestUtils.setField(propertyResource, "propertyMapper", propertyMapper);
-        this.restPropertyMockMvc = MockMvcBuilders.standaloneSetup(propertyResource).setMessageConverters(jacksonMessageConverter).build();
+        this.restPropertyMockMvc = MockMvcBuilders.standaloneSetup(propertyResource)
+            .setCustomArgumentResolvers(pageableArgumentResolver)
+            .setMessageConverters(jacksonMessageConverter).build();
     }
 
     @Before
@@ -390,7 +403,6 @@ public class PropertyResourceTest {
         property.setLongTermHuf(UPDATED_LONG_TERM_HUF);
         property.setLongTermEur(UPDATED_LONG_TERM_EUR);
         property.setFeatured(UPDATED_FEATURED);
-        
         PropertyDTO propertyDTO = propertyMapper.propertyToPropertyDTO(property);
 
         restPropertyMockMvc.perform(put("/api/propertys")

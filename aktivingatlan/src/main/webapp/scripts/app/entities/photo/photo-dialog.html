@@ -13,49 +13,42 @@
             <input type="text" class="form-control" id="id" name="id"
                     ng-model="photo.id" readonly>
         </div>
-
         <div class="form-group">
             <label translate="aktivingatlanApp.photo.header" for="field_header">Header</label>
             <input type="checkbox" class="form-control" name="header" id="field_header"
                     ng-model="photo.header"
                     >
-
         </div>
         <div class="form-group">
             <label translate="aktivingatlanApp.photo.descriptionHu" for="field_descriptionHu">DescriptionHu</label>
             <input type="text" class="form-control" name="descriptionHu" id="field_descriptionHu"
                     ng-model="photo.descriptionHu"
                     >
-
         </div>
         <div class="form-group">
             <label translate="aktivingatlanApp.photo.descriptionEn" for="field_descriptionEn">DescriptionEn</label>
             <input type="text" class="form-control" name="descriptionEn" id="field_descriptionEn"
                     ng-model="photo.descriptionEn"
                     >
-
         </div>
         <div class="form-group">
             <label translate="aktivingatlanApp.photo.descriptionDe" for="field_descriptionDe">DescriptionDe</label>
             <input type="text" class="form-control" name="descriptionDe" id="field_descriptionDe"
                     ng-model="photo.descriptionDe"
                     >
-
         </div>
         <div class="form-group">
             <label translate="aktivingatlanApp.photo.filename" for="field_filename">Filename</label>
             <input type="text" class="form-control" name="filename" id="field_filename"
                     ng-model="photo.filename"
                     >
-
         </div>
+
         <div class="form-group">
             <label translate="aktivingatlanApp.photo.property" for="field_property">property</label>
-            
             <select class="form-control" id="field_property" name="property" ng-model="photo.propertyId" ng-options="property.id as property.code for property in propertys">
                 <option value=""></option>
             </select>
-            
         </div>
     </div>
     <div class="modal-footer">

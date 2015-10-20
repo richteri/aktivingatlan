@@ -1,9 +1,11 @@
 package com.aktivingatlan.web.rest.mapper;
 
-import com.aktivingatlan.domain.*;
-import com.aktivingatlan.web.rest.dto.OwnershipDTO;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
-import org.mapstruct.*;
+import com.aktivingatlan.domain.Client;
+import com.aktivingatlan.domain.Ownership;
+import com.aktivingatlan.web.rest.dto.OwnershipDTO;
 
 /**
  * Mapper for the entity Ownership and its DTO OwnershipDTO.

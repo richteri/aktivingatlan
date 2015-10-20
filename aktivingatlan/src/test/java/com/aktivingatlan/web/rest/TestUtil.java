@@ -7,11 +7,11 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.springframework.http.MediaType;
 
+import com.aktivingatlan.domain.util.CustomDateTimeSerializer;
+import com.aktivingatlan.domain.util.CustomLocalDateSerializer;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
-import com.aktivingatlan.domain.util.CustomDateTimeSerializer;
-import com.aktivingatlan.domain.util.CustomLocalDateSerializer;
 
 /**
  * Utility class for testing REST controllers.
@@ -26,8 +26,7 @@ public class TestUtil {
     /**
      * Convert an object to JSON byte array.
      *
-     * @param object
-     *            the object to convert
+     * @param object the object to convert
      * @return the JSON byte array
      * @throws IOException
      */
@@ -43,11 +42,10 @@ public class TestUtil {
     }
 
     /**
-     * Create a byte array with a specific size filled with specified data
+     * Create a byte array with a specific size filled with specified data.
      *
-     * @param size
-     * @param data
-     * @return
+     * @param size the size of the byte array
+     * @param data the data to put in the byte array
      */
     public static byte[] createByteArray(int size, String data) {
         byte[] byteArray = new byte[size];

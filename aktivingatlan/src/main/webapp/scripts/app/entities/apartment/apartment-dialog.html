@@ -13,84 +13,72 @@
             <input type="text" class="form-control" id="id" name="id"
                     ng-model="apartment.id" readonly>
         </div>
-
         <div class="form-group">
             <label translate="aktivingatlanApp.apartment.bed" for="field_bed">Bed</label>
             <input type="number" class="form-control" name="bed" id="field_bed"
                     ng-model="apartment.bed"
                     >
-
         </div>
         <div class="form-group">
             <label translate="aktivingatlanApp.apartment.bathroom" for="field_bathroom">Bathroom</label>
             <input type="checkbox" class="form-control" name="bathroom" id="field_bathroom"
                     ng-model="apartment.bathroom"
                     >
-
         </div>
         <div class="form-group">
             <label translate="aktivingatlanApp.apartment.toilet" for="field_toilet">Toilet</label>
             <input type="checkbox" class="form-control" name="toilet" id="field_toilet"
                     ng-model="apartment.toilet"
                     >
-
         </div>
         <div class="form-group">
             <label translate="aktivingatlanApp.apartment.rentHuf" for="field_rentHuf">RentHuf</label>
             <input type="number" class="form-control" name="rentHuf" id="field_rentHuf"
                     ng-model="apartment.rentHuf"
                     >
-
         </div>
         <div class="form-group">
             <label translate="aktivingatlanApp.apartment.rentEur" for="field_rentEur">RentEur</label>
             <input type="number" class="form-control" name="rentEur" id="field_rentEur"
                     ng-model="apartment.rentEur"
                     >
-
         </div>
         <div class="form-group">
             <label translate="aktivingatlanApp.apartment.rentPeakHuf" for="field_rentPeakHuf">RentPeakHuf</label>
             <input type="number" class="form-control" name="rentPeakHuf" id="field_rentPeakHuf"
                     ng-model="apartment.rentPeakHuf"
                     >
-
         </div>
         <div class="form-group">
             <label translate="aktivingatlanApp.apartment.rentPeakEur" for="field_rentPeakEur">RentPeakEur</label>
             <input type="number" class="form-control" name="rentPeakEur" id="field_rentPeakEur"
                     ng-model="apartment.rentPeakEur"
                     >
-
         </div>
         <div class="form-group">
             <label translate="aktivingatlanApp.apartment.descriptionHu" for="field_descriptionHu">DescriptionHu</label>
             <input type="text" class="form-control" name="descriptionHu" id="field_descriptionHu"
                     ng-model="apartment.descriptionHu"
                     >
-
         </div>
         <div class="form-group">
             <label translate="aktivingatlanApp.apartment.descriptionEn" for="field_descriptionEn">DescriptionEn</label>
             <input type="text" class="form-control" name="descriptionEn" id="field_descriptionEn"
                     ng-model="apartment.descriptionEn"
                     >
-
         </div>
         <div class="form-group">
             <label translate="aktivingatlanApp.apartment.descriptionDe" for="field_descriptionDe">DescriptionDe</label>
             <input type="text" class="form-control" name="descriptionDe" id="field_descriptionDe"
                     ng-model="apartment.descriptionDe"
                     >
-
         </div>
+
         <div class="form-group">
             <label translate="aktivingatlanApp.apartment.property" for="field_property">property</label>
-            
             <select class="form-control" id="field_property" name="property" ng-model="apartment.property" ng-options="property as property.code for property in propertys track by property.id">
                 <option value=""></option>
             </select>
-            
         </div>
     </div>
     <div class="modal-footer">

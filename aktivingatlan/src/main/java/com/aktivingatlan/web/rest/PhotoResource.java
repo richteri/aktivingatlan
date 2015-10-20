@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,7 +23,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.aktivingatlan.domain.Photo;
@@ -55,7 +55,7 @@ public class PhotoResource {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<PhotoDTO> create(@RequestBody PhotoDTO photoDTO) throws URISyntaxException {
+    public ResponseEntity<PhotoDTO> createPhoto(@RequestBody PhotoDTO photoDTO) throws URISyntaxException {
         log.debug("REST request to save Photo : {}", photoDTO);
         if (photoDTO.getId() != null) {
             return ResponseEntity.badRequest().header("Failure", "A new photo cannot already have an ID").body(null);
@@ -74,10 +74,10 @@ public class PhotoResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<PhotoDTO> update(@RequestBody PhotoDTO photoDTO) throws URISyntaxException {
+    public ResponseEntity<PhotoDTO> updatePhoto(@RequestBody PhotoDTO photoDTO) throws URISyntaxException {
         log.debug("REST request to update Photo : {}", photoDTO);
         if (photoDTO.getId() == null) {
-            return create(photoDTO);
+            return createPhoto(photoDTO);
         }
         Photo photo = photoMapper.photoDTOToPhoto(photoDTO);
         Photo result = photoRepository.save(photo);
@@ -94,11 +94,10 @@ public class PhotoResource {
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional(readOnly = true)
-    public ResponseEntity<List<PhotoDTO>> getAll(@RequestParam(value = "page" , required = false) Integer offset,
-                                  @RequestParam(value = "per_page", required = false) Integer limit)
+    public ResponseEntity<List<PhotoDTO>> getAllPhotos(Pageable pageable)
         throws URISyntaxException {
-        Page<Photo> page = photoRepository.findAll(PaginationUtil.generatePageRequest(offset, limit));
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/photos", offset, limit);
+        Page<Photo> page = photoRepository.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/photos");
         return new ResponseEntity<>(page.getContent().stream()
             .map(photoMapper::photoToPhotoDTO)
             .collect(Collectors.toCollection(LinkedList::new)), headers, HttpStatus.OK);
@@ -111,7 +110,7 @@ public class PhotoResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<PhotoDTO> get(@PathVariable Long id) {
+    public ResponseEntity<PhotoDTO> getPhoto(@PathVariable Long id) {
         log.debug("REST request to get Photo : {}", id);
         return Optional.ofNullable(photoRepository.findOne(id))
             .map(photoMapper::photoToPhotoDTO)
@@ -128,7 +127,7 @@ public class PhotoResource {
             method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> deletePhoto(@PathVariable Long id) {
         log.debug("REST request to delete Photo : {}", id);
         photoRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("photo", id.toString())).build();

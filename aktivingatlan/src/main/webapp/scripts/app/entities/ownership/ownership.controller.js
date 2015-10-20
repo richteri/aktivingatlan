@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('aktivingatlanApp')
-    .controller('OwnershipController', function ($scope, Ownership, OwnershipSearch, ParseLinks) {
+    .controller('OwnershipController', function ($scope, Ownership, ParseLinks) {
         $scope.ownerships = [];
-        $scope.page = 1;
+        $scope.page = 0;
         $scope.loadAll = function() {
-            Ownership.query({page: $scope.page, per_page: 20}, function(result, headers) {
+            Ownership.query({page: $scope.page, size: 20}, function(result, headers) {
                 $scope.links = ParseLinks.parse(headers('link'));
                 $scope.ownerships = result;
             });
@@ -32,22 +32,15 @@ angular.module('aktivingatlanApp')
                 });
         };
 
-        $scope.search = function () {
-            OwnershipSearch.query({query: $scope.searchQuery}, function(result) {
-                $scope.ownerships = result;
-            }, function(response) {
-                if(response.status === 404) {
-                    $scope.loadAll();
-                }
-            });
-        };
-
         $scope.refresh = function () {
             $scope.loadAll();
             $scope.clear();
         };
 
         $scope.clear = function () {
-            $scope.ownership = {note: null, id: null};
+            $scope.ownership = {
+                note: null,
+                id: null
+            };
         };
     });

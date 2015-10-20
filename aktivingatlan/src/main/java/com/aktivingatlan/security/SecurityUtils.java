@@ -1,13 +1,13 @@
 package com.aktivingatlan.security;
 
+import java.util.Collection;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.Collection;
 
 /**
  * Utility class for Spring Security.
@@ -54,17 +54,18 @@ public final class SecurityUtils {
         return true;
     }
 
-
     /**
-     * If the current user has a specific security role.
+     * If the current user has a specific authority (security role).
+     *
+     * <p>The name of this method comes from the isUserInRole() method in the Servlet API</p>
      */
-    public static boolean isUserInRole(String role) {
+    public static boolean isUserInRole(String authority) {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
         if(authentication != null) {
             if (authentication.getPrincipal() instanceof UserDetails) {
                 UserDetails springSecurityUser = (UserDetails) authentication.getPrincipal();
-                return springSecurityUser.getAuthorities().contains(new SimpleGrantedAuthority(role));
+                return springSecurityUser.getAuthorities().contains(new SimpleGrantedAuthority(authority));
             }
         }
         return false;

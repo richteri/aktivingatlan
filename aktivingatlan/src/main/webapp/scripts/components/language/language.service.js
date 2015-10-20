@@ -8,7 +8,7 @@ angular.module('aktivingatlanApp')
                 var language = $translate.storage().get('NG_TRANSLATE_LANG_KEY');
 
                 if (angular.isUndefined(language)) {
-                    language = 'hu';
+                    language = 'en';
                 }
 
                 deferred.resolve(language);
@@ -27,9 +27,7 @@ angular.module('aktivingatlanApp')
  They are written in English to avoid character encoding issues (not a perfect solution)
  */
     .constant('LANGUAGES', [
-    	'hu'
-        ,'en'
-        ,'de'
+    	'hu','en','de'
         //JHipster will add new languages here
     ]
 );

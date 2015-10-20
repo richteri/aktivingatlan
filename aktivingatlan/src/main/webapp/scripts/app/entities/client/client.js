@@ -7,7 +7,7 @@ angular.module('aktivingatlanApp')
                 parent: 'entity',
                 url: '/clients',
                 data: {
-                    roles: ['ROLE_USER'],
+                    authorities: ['ROLE_USER'],
                     pageTitle: 'aktivingatlanApp.client.home.title'
                 },
                 views: {
@@ -28,7 +28,7 @@ angular.module('aktivingatlanApp')
                 parent: 'entity',
                 url: '/client/{id}',
                 data: {
-                    roles: ['ROLE_USER'],
+                    authorities: ['ROLE_USER'],
                     pageTitle: 'aktivingatlanApp.client.detail.title'
                 },
                 views: {
@@ -54,7 +54,7 @@ angular.module('aktivingatlanApp')
                 parent: 'client',
                 url: '/new',
                 data: {
-                    roles: ['ROLE_USER'],
+                    authorities: ['ROLE_USER'],
                 },
                 onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal) {
                     $modal.open({
@@ -63,7 +63,17 @@ angular.module('aktivingatlanApp')
                         size: 'lg',
                         resolve: {
                             entity: function () {
-                                return {name: null, email: null, phone1: null, phone2: null, address1: null, address2: null, idNo: null, note: null, id: null};
+                                return {
+                                    name: null,
+                                    email: null,
+                                    phone1: null,
+                                    phone2: null,
+                                    address1: null,
+                                    address2: null,
+                                    idNo: null,
+                                    note: null,
+                                    id: null
+                                };
                             }
                         }
                     }).result.then(function(result) {
@@ -77,7 +87,7 @@ angular.module('aktivingatlanApp')
                 parent: 'client',
                 url: '/{id}/edit',
                 data: {
-                    roles: ['ROLE_USER'],
+                    authorities: ['ROLE_USER'],
                 },
                 onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal) {
                     $modal.open({
@@ -99,7 +109,7 @@ angular.module('aktivingatlanApp')
                 parent: 'client.detail',
                 url: '/client/{clientId}/ownership/new',
                 data: {
-                    roles: ['ROLE_USER'],
+                    authorities: ['ROLE_USER'],
                 },
                 onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal) {
                     $modal.open({
@@ -121,7 +131,7 @@ angular.module('aktivingatlanApp')
                 parent: 'client.detail',
                 url: '/client/{clientId}/ownership/{ownershipId}/edit',
                 data: {
-                    roles: ['ROLE_USER'],
+                    authorities: ['ROLE_USER'],
                 },
                 onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal) {
                     $modal.open({

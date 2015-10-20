@@ -1,11 +1,17 @@
 package com.aktivingatlan.web.filter;
 
-import org.springframework.core.env.Environment;
-
-import javax.servlet.*;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.core.env.Environment;
 
 /**
  * This filter is used in production, to put HTTP cache headers with a long (1 month) expiration time.
@@ -26,7 +32,7 @@ public class CachingHttpHeadersFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        CACHE_TIME_TO_LIVE = TimeUnit.DAYS.toMillis(env.getProperty("http.cache.timeToLiveInDays", Long.class, 31L));
+        CACHE_TIME_TO_LIVE = TimeUnit.DAYS.toMillis(env.getProperty("jhipster.http.cache.timeToLiveInDays", Long.class, 31L));
     }
 
     @Override

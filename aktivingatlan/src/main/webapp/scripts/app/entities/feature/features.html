@@ -1,5 +1,4 @@
 <div>
-
     <h2 translate="aktivingatlanApp.feature.home.title">Features</h2>
     <jh-alert></jh-alert>
     <div class="container">
@@ -8,15 +7,6 @@
                 <button class="btn btn-primary" ui-sref="feature.new">
                     <span class="glyphicon glyphicon-flash"></span> <span translate="aktivingatlanApp.feature.home.createLabel">Create a new Feature</span>
                 </button>
-            </div>
-            <div class="col-md-8">
-                <form name="searchForm" class="form-inline">
-                    <div class="form-group">
-                        <input type="text" class="form-control" ng-model="searchQuery" id="searchQuery" placeholder="query">
-                    </div>
-                    <button class="btn btn-info" ng-click="search()"><span class="glyphicon glyphicon-search"></span> <span>Search a Feature</span>
-                    </button>
-                </form>
             </div>
         </div>
     </div>
@@ -58,7 +48,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="feature in features">
+                <tr ng-repeat="feature in features track by feature.id">
                     <td><a ui-sref="feature.detail({id:feature.id})">{{feature.id}}</a></td>
                     <td>{{feature.nameHu}}</td>
                     <td>{{feature.nameEn}}</td>
