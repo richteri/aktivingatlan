@@ -1,4 +1,4 @@
-// Generated on 2015-09-13 using generator-jhipster 2.20.0
+// Generated on 2015-10-20 using generator-jhipster 2.22.0
 'use strict';
 var fs = require('fs');
 
@@ -80,7 +80,7 @@ module.exports = function (grunt) {
                         'src/main/webapp/**/*.html',
                         'src/main/webapp/**/*.json',
                         'src/main/webapp/assets/styles/**/*.css',
-                        'src/main/webapp/scripts/**/*.js',
+                        'src/main/webapp/scripts/**/*.{js,html}',
                         'src/main/webapp/assets/images/**/*.{png,jpg,jpeg,gif,webp,svg}',
                         'tmp/**/*.{css,js}'
                     ]
@@ -252,16 +252,7 @@ module.exports = function (grunt) {
                     src: [
                         'generated/*'
                     ]
-                },  {
-                    expand: true,
-                    flatten: true,
-                    dest: 'assets/styles/',
-                    src: ['bower_components/angular-ui-grid/ui-grid.ttf',
-                          'bower_components/angular-ui-grid/ui-grid.woff',
-                          'bower_components/angular-ui-grid/ui-grid.eot',
-                          'bower_components/angular-ui-grid/ui-grid.svg'
-                          ]
-                  }]
+                }]
             },
             generateOpenshiftDirectory: {
                     expand: true,
@@ -400,8 +391,5 @@ module.exports = function (grunt) {
         'buildcontrol:openshift'
     ]);
 
-    grunt.registerTask('default', [
-        'test',
-        'build'
-    ]);
+    grunt.registerTask('default', ['serve']);
 };
