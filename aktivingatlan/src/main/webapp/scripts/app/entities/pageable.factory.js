@@ -12,9 +12,9 @@ angular.module('aktivingatlanApp')
         	// Set defaults
             this.property = DEF_PROPERTY;
             this.direction = DEF_DIRECTION;
-            this.page = 1;
+            this.page = 0;
             this.query = "";
-            this.per_page = DEF_PER_PAGE;
+            this.size = DEF_PER_PAGE;
             this.filtered = false;
 
             // Load persisted state and bind to provided scope

@@ -497,10 +497,10 @@ angular.module('aktivingatlanApp')
 				 				type : uiGridConstants.filter.SELECT,
 				 				selectOptions : [{
 				 						value : true,
-				 						label : 'kiadó'
+				 						label : 'bútorozott'
 				 					}, {
 				 						value : false,
-				 						label : 'nem kiadó'
+				 						label : 'nem bútorozott'
 				 					}
 				 				]
 				 			}

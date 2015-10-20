@@ -63,7 +63,7 @@ angular.module('aktivingatlanApp').controller('OwnershipDialogController',
         
         $scope.findPropertyByCode = function (code) {
         	return PropertySearch.query({
-        		query: 'byCode',
+        		query: 'FIND_BY_CODE_CONTAINING',
         		param: code
         	}).$promise;
         }

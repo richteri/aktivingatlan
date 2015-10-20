@@ -147,11 +147,16 @@ public class PropertyResource {
     		@RequestParam(value = "query", required = false) PropertyRepository.SearchQuery query,
     		@RequestParam(value = "param", required = false) String param) {
     	switch (query) {
-    	case FIND_BY_CODE:
-    		return 
-    				new ResponseEntity<>(propertyRepository.findByCode(param).stream()
-    			            .map(propertyMapper::propertyToPropertyDTO)
-    			            .collect(Collectors.toCollection(LinkedList::new)), HttpStatus.OK);
+        case FIND_BY_CODE:
+            return 
+                    new ResponseEntity<>(propertyRepository.findByCode(param).stream()
+                            .map(propertyMapper::propertyToPropertyDTO)
+                            .collect(Collectors.toCollection(LinkedList::new)), HttpStatus.OK);
+        case FIND_BY_CODE_CONTAINING:
+            return 
+                    new ResponseEntity<>(propertyRepository.findByCodeContainingIgnoreCase(param).stream()
+                            .map(propertyMapper::propertyToPropertyDTO)
+                            .collect(Collectors.toCollection(LinkedList::new)), HttpStatus.OK);
     	default:
     		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     	}
