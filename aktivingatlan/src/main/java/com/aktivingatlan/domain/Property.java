@@ -137,8 +137,8 @@ public class Property extends AbstractAuditingEntity implements Serializable {
     @ManyToOne
     private Category category;
 
-    @OneToMany(mappedBy = "property", fetch = FetchType.EAGER)
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @OneToMany(mappedBy = "property")
+    //@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Photo> photos = new HashSet<>();
 
     @ManyToMany(mappedBy = "propertys")

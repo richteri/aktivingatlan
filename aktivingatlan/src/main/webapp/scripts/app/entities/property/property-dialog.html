@@ -394,6 +394,20 @@
 				</div>
 			</div>
 		</div>
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				<h4 class="panel-title">Képek</h4>
+			</div>
+			<div class="panel-body">
+				<div ng-repeat="photo in property.photos">
+					<img src="{{photo.filename}}" alt="{{photo.id}}">
+				</div>
+				<div class="btn btn-primary" ngf-select="uploadFiles($files)" ng-model="files" ngf-multiple="true">Select</div>
+				<div ng-repeat="file in files">
+					{{file.name}} {{file.status}}
+				</div>
+			</div>
+		</div>		
 	</div>
 	<div class="modal-footer">
 		<button type="button" class="btn btn-default" ng-click="clear()">

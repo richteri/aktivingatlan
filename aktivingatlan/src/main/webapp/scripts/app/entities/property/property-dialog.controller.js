@@ -4,15 +4,12 @@ angular.module('aktivingatlanApp').controller('PropertyDialogController',
     ['$scope', '$stateParams', '$filter', 'entity', 'Property', 'PropertySearch', 'Category', 'Photo', 'Statement', 'Feature', 'Ownership', 'City', 'Contract', 'User', 'Apartment', 'CitySearch', 'Upload',
         function($scope, $stateParams, $filter, entity, Property, PropertySearch, Category, Photo, Statement, Feature, Ownership, City, Contract, User, Apartment, CitySearch, Upload) {
 
+        $scope.files = null;
         $scope.property = entity;
         $scope.categorys = Category.query();
-        $scope.photos = Photo.query();
-        $scope.statements = Statement.query();
         $scope.features = Feature.query();
-        $scope.ownerships = Ownership.query();
-        $scope.contracts = Contract.query();
         $scope.users = User.query();
-        $scope.apartments = Apartment.query();
+        
         $scope.load = function(id) {
             Property.get({id : id}, function(result) {
                 $scope.property = result;
@@ -62,5 +59,34 @@ angular.module('aktivingatlanApp').controller('PropertyDialogController',
         	}
         	return true;
         };
+        
+        $scope.uploadFiles = function (files) {
+            $scope.files = files;
+            if (!$scope.files) return;
+            angular.forEach(files, function(file){
+              if (file && !file.$error) {
+                file.upload = Upload.upload({
+                  url: 'https://api.cloudinary.com/v1_1/aktivingatlan/upload',
+                  fields: {
+                    upload_preset: 'n2VjU5fy',
+                    tags: $scope.property.code
+      			  	//public_id: i
+                  },
+                  file: file
+                }).progress(function (e) {
+                  file.progress = Math.round((e.loaded * 100.0) / e.total);
+                  file.status = "Uploading... " + file.progress + "%";
+                  console.log(file, file.name, file.path, file.filename);
+                }).success(function (data, status, headers, config) {
+                  file.result = data;
+                  console.log('Success', data);
+                  Photo.save({propertyId: $scope.property.id, filename: data.url}, $scope.load);
+                }).error(function (data, status, headers, config) {
+                  file.result = data;
+                  console.log('Error', data);
+                });
+              }
+            });
+          };
 
 }]);
