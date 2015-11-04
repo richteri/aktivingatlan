@@ -126,6 +126,8 @@ angular.module('aktivingatlanApp')
             	}
                 input = input.toLowerCase();
                 input = input.replace(/[^a-z0-9.-]/g, '-');
+                // remove extension
+                input = input.substr(0, input.lastIndexOf('.')) || input;
             }
             return input;
         };

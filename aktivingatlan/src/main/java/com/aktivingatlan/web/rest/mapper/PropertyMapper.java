@@ -25,7 +25,7 @@ public interface PropertyMapper {
     PropertyDTO propertyToPropertyDTO(Property property);
 
     @Mapping(source = "categoryId", target = "category")
-    @Mapping(target = "photos", ignore = true)
+    @Mapping(target = "photos", ignore = false)
     @Mapping(target = "statements", ignore = true)
     @Mapping(target = "ownerships", ignore = true)
     @Mapping(source = "cityId", target = "city")

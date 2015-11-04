@@ -63,27 +63,29 @@ angular.module('aktivingatlanApp').controller('PropertyDialogController',
         $scope.uploadFiles = function (files) {
             $scope.files = files;
             if (!$scope.files) return;
-            angular.forEach(files, function(file){
+            angular.forEach(files, function (file) {
               if (file && !file.$error) {
+            	file.public_id = $filter('urlify')(file.name);
                 file.upload = Upload.upload({
                   url: 'https://api.cloudinary.com/v1_1/aktivingatlan/upload',
                   fields: {
                     upload_preset: 'n2VjU5fy',
-                    tags: $scope.property.code
-      			  	//public_id: i
+                    tags: $scope.property.code,
+      			  	public_id: file.public_id
                   },
                   file: file
                 }).progress(function (e) {
                   file.progress = Math.round((e.loaded * 100.0) / e.total);
                   file.status = "Uploading... " + file.progress + "%";
-                  console.log(file, file.name, file.path, file.filename);
                 }).success(function (data, status, headers, config) {
                   file.result = data;
-                  console.log('Success', data);
-                  Photo.save({propertyId: $scope.property.id, filename: data.url}, $scope.load);
+                  Photo.save({propertyId: $scope.property.id, filename: file.public_id}, function(photo) {
+                	  $scope.property.photos.push(photo);
+                  });
                 }).error(function (data, status, headers, config) {
                   file.result = data;
-                  console.log('Error', data);
+                  //TODO error handling... message?
+                  console.log(data);
                 });
               }
             });

@@ -2,6 +2,7 @@
 
 angular.module('aktivingatlanApp', ['LocalStorageModule', 'tmh.dynamicLocale', 'pascalprecht.translate', 
                'ui.bootstrap', // for modal dialogs
+               'ui.bootstrap.tabs',
                'ui.select', // for tag-like multi-select
                'ui.grid', 'ui.grid.pinning', 'ui.grid.saveState', 'ui.grid.resizeColumns',
     'ngResource', 'ui.router', 'ngCookies', 'ngAria', 'ngCacheBuster', 'ngFileUpload', 'infinite-scroll', 'ngSanitize'])

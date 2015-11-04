@@ -74,6 +74,7 @@ public class PropertyResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @Transactional
     public ResponseEntity<PropertyDTO> updateProperty(@RequestBody PropertyDTO propertyDTO) throws URISyntaxException {
         log.debug("REST request to update Property : {}", propertyDTO);
         if (propertyDTO.getId() == null) {

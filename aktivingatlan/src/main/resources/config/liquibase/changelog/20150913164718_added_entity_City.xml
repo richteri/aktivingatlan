@@ -31,7 +31,7 @@
                   tableName="CITY">
         </loadData -->
         
-        <sqlFile dbms="mysql"
+        <sqlFile dbms="mysql,postgresql"
             encoding="utf8"
             path="config/liquibase/cities.sql"/>
         
