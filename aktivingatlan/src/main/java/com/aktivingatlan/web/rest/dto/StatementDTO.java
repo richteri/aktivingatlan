@@ -1,11 +1,11 @@
 package com.aktivingatlan.web.rest.dto;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import org.joda.time.LocalDate;
 
 import com.aktivingatlan.domain.AbstractAuditingEntity;
 
