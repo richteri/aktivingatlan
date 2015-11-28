@@ -99,5 +99,28 @@ angular.module('aktivingatlanApp')
                         $state.go('^');
                     })
                 }]
+            })
+            .state('contract.delete', {
+                parent: 'contract',
+                url: '/{id}/delete',
+                data: {
+                    authorities: ['ROLE_USER'],
+                },
+                onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal) {
+                    $modal.open({
+                        templateUrl: 'scripts/app/entities/contract/contract-delete-dialog.html',
+                        controller: 'ContractDeleteController',
+                        size: 'md',
+                        resolve: {
+                            entity: ['Contract', function(Contract) {
+                                return Contract.get({id : $stateParams.id});
+                            }]
+                        }
+                    }).result.then(function(result) {
+                        $state.go('contract', null, { reload: true });
+                    }, function() {
+                        $state.go('^');
+                    })
+                }]
             });
     });

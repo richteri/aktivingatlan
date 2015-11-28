@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('aktivingatlanApp')
-    .controller('CityController', function ($scope, City, ParseLinks) {
+    .controller('CityController', function ($scope, $state, $modal, City, ParseLinks) {
+      
         $scope.citys = [];
         $scope.page = 0;
         $scope.loadAll = function() {
@@ -16,21 +17,6 @@ angular.module('aktivingatlanApp')
         };
         $scope.loadAll();
 
-        $scope.delete = function (id) {
-            City.get({id: id}, function(result) {
-                $scope.city = result;
-                $('#deleteCityConfirmation').modal('show');
-            });
-        };
-
-        $scope.confirmDelete = function (id) {
-            City.delete({id: id},
-                function () {
-                    $scope.loadAll();
-                    $('#deleteCityConfirmation').modal('hide');
-                    $scope.clear();
-                });
-        };
 
         $scope.refresh = function () {
             $scope.loadAll();

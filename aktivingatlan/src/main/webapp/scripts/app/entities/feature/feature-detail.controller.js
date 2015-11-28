@@ -8,7 +8,9 @@ angular.module('aktivingatlanApp')
                 $scope.feature = result;
             });
         };
-        $rootScope.$on('aktivingatlanApp:featureUpdate', function(event, result) {
+        var unsubscribe = $rootScope.$on('aktivingatlanApp:featureUpdate', function(event, result) {
             $scope.feature = result;
         });
+        $scope.$on('$destroy', unsubscribe);
+
     });

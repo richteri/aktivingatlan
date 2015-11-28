@@ -31,7 +31,7 @@
                     <span translate="aktivingatlanApp.contract.startDate">StartDate</span>
                 </td>
                 <td>
-                    <span class="form-control-static">{{contract.startDate}}</span>
+                    <span class="form-control-static">{{contract.startDate | date:'mediumDate'}}</span>
                 </td>
             </tr>
             <tr>
@@ -39,7 +39,7 @@
                     <span translate="aktivingatlanApp.contract.endDate">EndDate</span>
                 </td>
                 <td>
-                    <span class="form-control-static">{{contract.endDate}}</span>
+                    <span class="form-control-static">{{contract.endDate | date:'mediumDate'}}</span>
                 </td>
             </tr>
             <tr>

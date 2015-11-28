@@ -8,7 +8,9 @@ angular.module('aktivingatlanApp')
                 $scope.city = result;
             });
         };
-        $rootScope.$on('aktivingatlanApp:cityUpdate', function(event, result) {
+        var unsubscribe = $rootScope.$on('aktivingatlanApp:cityUpdate', function(event, result) {
             $scope.city = result;
         });
+        $scope.$on('$destroy', unsubscribe);
+
     });

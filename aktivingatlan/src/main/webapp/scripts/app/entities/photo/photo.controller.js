@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('aktivingatlanApp')
-    .controller('PhotoController', function ($scope, Photo, ParseLinks) {
+    .controller('PhotoController', function ($scope, $state, $modal, Photo, ParseLinks) {
+      
         $scope.photos = [];
         $scope.page = 0;
         $scope.loadAll = function() {
@@ -16,21 +17,6 @@ angular.module('aktivingatlanApp')
         };
         $scope.loadAll();
 
-        $scope.delete = function (id) {
-            Photo.get({id: id}, function(result) {
-                $scope.photo = result;
-                $('#deletePhotoConfirmation').modal('show');
-            });
-        };
-
-        $scope.confirmDelete = function (id) {
-            Photo.delete({id: id},
-                function () {
-                    $scope.loadAll();
-                    $('#deletePhotoConfirmation').modal('hide');
-                    $scope.clear();
-                });
-        };
 
         $scope.refresh = function () {
             $scope.loadAll();

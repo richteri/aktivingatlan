@@ -8,7 +8,9 @@ angular.module('aktivingatlanApp')
                 $scope.photo = result;
             });
         };
-        $rootScope.$on('aktivingatlanApp:photoUpdate', function(event, result) {
+        var unsubscribe = $rootScope.$on('aktivingatlanApp:photoUpdate', function(event, result) {
             $scope.photo = result;
         });
+        $scope.$on('$destroy', unsubscribe);
+
     });

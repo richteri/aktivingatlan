@@ -1,17 +1,11 @@
 package com.aktivingatlan.domain;
 
-import java.io.Serializable;
-import java.util.Objects;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * A Category.
@@ -25,13 +19,12 @@ public class Category implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    
     @Column(name = "name_hu")
     private String nameHu;
-    
+
     @Column(name = "name_en")
     private String nameEn;
-    
+
     @Column(name = "name_de")
     private String nameDe;
 
@@ -75,12 +68,8 @@ public class Category implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-
         Category category = (Category) o;
-
-        if ( ! Objects.equals(id, category.id)) return false;
-
-        return true;
+        return Objects.equals(id, category.id);
     }
 
     @Override
@@ -91,10 +80,10 @@ public class Category implements Serializable {
     @Override
     public String toString() {
         return "Category{" +
-                "id=" + id +
-                ", nameHu='" + nameHu + "'" +
-                ", nameEn='" + nameEn + "'" +
-                ", nameDe='" + nameDe + "'" +
-                '}';
+            "id=" + id +
+            ", nameHu='" + nameHu + "'" +
+            ", nameEn='" + nameEn + "'" +
+            ", nameDe='" + nameDe + "'" +
+            '}';
     }
 }

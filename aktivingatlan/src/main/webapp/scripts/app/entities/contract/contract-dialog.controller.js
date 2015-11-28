@@ -13,16 +13,22 @@ angular.module('aktivingatlanApp').controller('ContractDialogController',
             });
         };
 
-        var onSaveFinished = function (result) {
+        var onSaveSuccess = function (result) {
             $scope.$emit('aktivingatlanApp:contractUpdate', result);
             $modalInstance.close(result);
+            $scope.isSaving = false;
+        };
+
+        var onSaveError = function (result) {
+            $scope.isSaving = false;
         };
 
         $scope.save = function () {
+            $scope.isSaving = true;
             if ($scope.contract.id != null) {
-                Contract.update($scope.contract, onSaveFinished);
+                Contract.update($scope.contract, onSaveSuccess, onSaveError);
             } else {
-                Contract.save($scope.contract, onSaveFinished);
+                Contract.save($scope.contract, onSaveSuccess, onSaveError);
             }
         };
 

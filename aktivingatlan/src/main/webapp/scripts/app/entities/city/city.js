@@ -96,5 +96,28 @@ angular.module('aktivingatlanApp')
                         $state.go('^');
                     })
                 }]
+            })
+            .state('city.delete', {
+                parent: 'city',
+                url: '/{id}/delete',
+                data: {
+                    authorities: ['ROLE_USER'],
+                },
+                onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal) {
+                    $modal.open({
+                        templateUrl: 'scripts/app/entities/city/city-delete-dialog.html',
+                        controller: 'CityDeleteController',
+                        size: 'md',
+                        resolve: {
+                            entity: ['City', function(City) {
+                                return City.get({id : $stateParams.id});
+                            }]
+                        }
+                    }).result.then(function(result) {
+                        $state.go('city', null, { reload: true });
+                    }, function() {
+                        $state.go('^');
+                    })
+                }]
             });
     });

@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('aktivingatlanApp')
-    .controller('ApartmentController', function ($scope, Apartment, ParseLinks) {
+    .controller('ApartmentController', function ($scope, $state, $modal, Apartment, ParseLinks) {
+      
         $scope.apartments = [];
         $scope.page = 0;
         $scope.loadAll = function() {
@@ -16,21 +17,6 @@ angular.module('aktivingatlanApp')
         };
         $scope.loadAll();
 
-        $scope.delete = function (id) {
-            Apartment.get({id: id}, function(result) {
-                $scope.apartment = result;
-                $('#deleteApartmentConfirmation').modal('show');
-            });
-        };
-
-        $scope.confirmDelete = function (id) {
-            Apartment.delete({id: id},
-                function () {
-                    $scope.loadAll();
-                    $('#deleteApartmentConfirmation').modal('hide');
-                    $scope.clear();
-                });
-        };
 
         $scope.refresh = function () {
             $scope.loadAll();

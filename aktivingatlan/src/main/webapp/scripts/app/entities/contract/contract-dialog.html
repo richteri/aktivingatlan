@@ -11,37 +11,37 @@
         <div class="form-group">
             <label for="id" translate="global.field.id">ID</label>
             <input type="text" class="form-control" id="id" name="id"
-                    ng-model="contract.id" readonly>
+                    ng-model="contract.id" readonly />
         </div>
         <div class="form-group">
-            <label translate="aktivingatlanApp.contract.idNo" for="field_idNo">IdNo</label>
+            <label class="control-label" translate="aktivingatlanApp.contract.idNo" for="field_idNo">IdNo</label>
             <input type="text" class="form-control" name="idNo" id="field_idNo"
                     ng-model="contract.idNo"
-                    >
+                     />
         </div>
         <div class="form-group">
-            <label translate="aktivingatlanApp.contract.exclusive" for="field_exclusive">Exclusive</label>
+            <label class="control-label" translate="aktivingatlanApp.contract.exclusive" for="field_exclusive">Exclusive</label>
             <input type="checkbox" class="form-control" name="exclusive" id="field_exclusive"
                     ng-model="contract.exclusive"
-                    >
+                     />
         </div>
         <div class="form-group">
-            <label translate="aktivingatlanApp.contract.startDate" for="field_startDate">StartDate</label>
+            <label class="control-label" translate="aktivingatlanApp.contract.startDate" for="field_startDate">StartDate</label>
             <input type="date" class="form-control" name="startDate" id="field_startDate"
                     ng-model="contract.startDate"
-                    >
+                     />
         </div>
         <div class="form-group">
-            <label translate="aktivingatlanApp.contract.endDate" for="field_endDate">EndDate</label>
+            <label class="control-label" translate="aktivingatlanApp.contract.endDate" for="field_endDate">EndDate</label>
             <input type="date" class="form-control" name="endDate" id="field_endDate"
                     ng-model="contract.endDate"
-                    >
+                     />
         </div>
         <div class="form-group">
-            <label translate="aktivingatlanApp.contract.note" for="field_note">Note</label>
+            <label class="control-label" translate="aktivingatlanApp.contract.note" for="field_note">Note</label>
             <input type="text" class="form-control" name="note" id="field_note"
                     ng-model="contract.note"
-                    >
+                     />
         </div>
 
         <div class="form-group">
@@ -59,7 +59,7 @@
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
             <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
         </button>
-        <button type="submit" ng-disabled="editForm.$invalid || editForm.$submitted" class="btn btn-primary">
+        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
             <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
         </button>
     </div>

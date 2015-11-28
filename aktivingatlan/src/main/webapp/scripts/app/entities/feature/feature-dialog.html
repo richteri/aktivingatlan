@@ -11,25 +11,25 @@
         <div class="form-group">
             <label for="id" translate="global.field.id">ID</label>
             <input type="text" class="form-control" id="id" name="id"
-                    ng-model="feature.id" readonly>
+                    ng-model="feature.id" readonly />
         </div>
         <div class="form-group">
-            <label translate="aktivingatlanApp.feature.nameHu" for="field_nameHu">NameHu</label>
+            <label class="control-label" translate="aktivingatlanApp.feature.nameHu" for="field_nameHu">NameHu</label>
             <input type="text" class="form-control" name="nameHu" id="field_nameHu"
                     ng-model="feature.nameHu"
-                    >
+                     />
         </div>
         <div class="form-group">
-            <label translate="aktivingatlanApp.feature.nameEn" for="field_nameEn">NameEn</label>
+            <label class="control-label" translate="aktivingatlanApp.feature.nameEn" for="field_nameEn">NameEn</label>
             <input type="text" class="form-control" name="nameEn" id="field_nameEn"
                     ng-model="feature.nameEn"
-                    >
+                     />
         </div>
         <div class="form-group">
-            <label translate="aktivingatlanApp.feature.nameDe" for="field_nameDe">NameDe</label>
+            <label class="control-label" translate="aktivingatlanApp.feature.nameDe" for="field_nameDe">NameDe</label>
             <input type="text" class="form-control" name="nameDe" id="field_nameDe"
                     ng-model="feature.nameDe"
-                    >
+                     />
         </div>
 
     </div>
@@ -37,7 +37,7 @@
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
             <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
         </button>
-        <button type="submit" ng-disabled="editForm.$invalid || editForm.$submitted" class="btn btn-primary">
+        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
             <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
         </button>
     </div>

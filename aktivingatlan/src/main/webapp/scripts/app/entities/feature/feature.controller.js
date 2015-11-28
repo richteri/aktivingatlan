@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('aktivingatlanApp')
-    .controller('FeatureController', function ($scope, Feature) {
+    .controller('FeatureController', function ($scope, $state, $modal, Feature) {
+      
         $scope.features = [];
         $scope.loadAll = function() {
             Feature.query(function(result) {
@@ -10,21 +11,6 @@ angular.module('aktivingatlanApp')
         };
         $scope.loadAll();
 
-        $scope.delete = function (id) {
-            Feature.get({id: id}, function(result) {
-                $scope.feature = result;
-                $('#deleteFeatureConfirmation').modal('show');
-            });
-        };
-
-        $scope.confirmDelete = function (id) {
-            Feature.delete({id: id},
-                function () {
-                    $scope.loadAll();
-                    $('#deleteFeatureConfirmation').modal('hide');
-                    $scope.clear();
-                });
-        };
 
         $scope.refresh = function () {
             $scope.loadAll();

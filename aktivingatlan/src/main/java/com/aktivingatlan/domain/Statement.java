@@ -1,29 +1,14 @@
 package com.aktivingatlan.domain;
 
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Type;
-import org.joda.time.LocalDate;
+import java.time.LocalDate;
 
-import com.aktivingatlan.domain.util.CustomLocalDateSerializer;
-import com.aktivingatlan.domain.util.ISO8601LocalDateDeserializer;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Objects;
 
 /**
  * A Statement.
@@ -37,13 +22,9 @@ public class Statement extends AbstractAuditingEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-    @JsonSerialize(using = CustomLocalDateSerializer.class)
-    @JsonDeserialize(using = ISO8601LocalDateDeserializer.class)
     @Column(name = "date")
     private LocalDate date;
-    
+
     @Column(name = "note")
     private String note;
 
@@ -109,12 +90,8 @@ public class Statement extends AbstractAuditingEntity implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-
         Statement statement = (Statement) o;
-
-        if ( ! Objects.equals(id, statement.id)) return false;
-
-        return true;
+        return Objects.equals(id, statement.id);
     }
 
     @Override
@@ -125,9 +102,9 @@ public class Statement extends AbstractAuditingEntity implements Serializable {
     @Override
     public String toString() {
         return "Statement{" +
-                "id=" + id +
-                ", date='" + date + "'" +
-                ", note='" + note + "'" +
-                '}';
+            "id=" + id +
+            ", date='" + date + "'" +
+            ", note='" + note + "'" +
+            '}';
     }
 }

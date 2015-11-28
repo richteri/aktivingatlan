@@ -1,19 +1,14 @@
 package com.aktivingatlan.domain;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Objects;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Objects;
 
 /**
  * A Apartment.
@@ -27,38 +22,38 @@ public class Apartment extends AbstractAuditingEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    
     @Column(name = "bed")
     private Integer bed;
-    
+
     @Column(name = "bathroom")
     private Boolean bathroom;
-    
+
     @Column(name = "toilet")
     private Boolean toilet;
-    
+
     @Column(name = "rent_huf", precision=10, scale=2)
     private BigDecimal rentHuf;
-    
+
     @Column(name = "rent_eur", precision=10, scale=2)
     private BigDecimal rentEur;
-    
+
     @Column(name = "rent_peak_huf", precision=10, scale=2)
     private BigDecimal rentPeakHuf;
-    
+
     @Column(name = "rent_peak_eur", precision=10, scale=2)
     private BigDecimal rentPeakEur;
-    
+
     @Column(name = "description_hu")
     private String descriptionHu;
-    
+
     @Column(name = "description_en")
     private String descriptionEn;
-    
+
     @Column(name = "description_de")
     private String descriptionDe;
 
     @ManyToOne
+    @JoinColumn(name = "property_id")
     private Property property;
 
     public Long getId() {
@@ -165,12 +160,8 @@ public class Apartment extends AbstractAuditingEntity implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-
         Apartment apartment = (Apartment) o;
-
-        if ( ! Objects.equals(id, apartment.id)) return false;
-
-        return true;
+        return Objects.equals(id, apartment.id);
     }
 
     @Override
@@ -181,17 +172,17 @@ public class Apartment extends AbstractAuditingEntity implements Serializable {
     @Override
     public String toString() {
         return "Apartment{" +
-                "id=" + id +
-                ", bed='" + bed + "'" +
-                ", bathroom='" + bathroom + "'" +
-                ", toilet='" + toilet + "'" +
-                ", rentHuf='" + rentHuf + "'" +
-                ", rentEur='" + rentEur + "'" +
-                ", rentPeakHuf='" + rentPeakHuf + "'" +
-                ", rentPeakEur='" + rentPeakEur + "'" +
-                ", descriptionHu='" + descriptionHu + "'" +
-                ", descriptionEn='" + descriptionEn + "'" +
-                ", descriptionDe='" + descriptionDe + "'" +
-                '}';
+            "id=" + id +
+            ", bed='" + bed + "'" +
+            ", bathroom='" + bathroom + "'" +
+            ", toilet='" + toilet + "'" +
+            ", rentHuf='" + rentHuf + "'" +
+            ", rentEur='" + rentEur + "'" +
+            ", rentPeakHuf='" + rentPeakHuf + "'" +
+            ", rentPeakEur='" + rentPeakEur + "'" +
+            ", descriptionHu='" + descriptionHu + "'" +
+            ", descriptionEn='" + descriptionEn + "'" +
+            ", descriptionDe='" + descriptionDe + "'" +
+            '}';
     }
 }

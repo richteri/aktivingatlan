@@ -1,17 +1,11 @@
 package com.aktivingatlan.domain;
 
-import java.io.Serializable;
-import java.util.Objects;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * A Feature.
@@ -25,13 +19,12 @@ public class Feature implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    
     @Column(name = "name_hu")
     private String nameHu;
-    
+
     @Column(name = "name_en")
     private String nameEn;
-    
+
     @Column(name = "name_de")
     private String nameDe;
 
@@ -75,12 +68,8 @@ public class Feature implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-
         Feature feature = (Feature) o;
-
-        if ( ! Objects.equals(id, feature.id)) return false;
-
-        return true;
+        return Objects.equals(id, feature.id);
     }
 
     @Override
@@ -91,10 +80,10 @@ public class Feature implements Serializable {
     @Override
     public String toString() {
         return "Feature{" +
-                "id=" + id +
-                ", nameHu='" + nameHu + "'" +
-                ", nameEn='" + nameEn + "'" +
-                ", nameDe='" + nameDe + "'" +
-                '}';
+            "id=" + id +
+            ", nameHu='" + nameHu + "'" +
+            ", nameEn='" + nameEn + "'" +
+            ", nameDe='" + nameDe + "'" +
+            '}';
     }
 }

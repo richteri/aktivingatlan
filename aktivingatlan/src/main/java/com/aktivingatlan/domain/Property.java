@@ -1,27 +1,15 @@
 package com.aktivingatlan.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
+import java.util.Objects;
 
 /**
  * A Property.
@@ -35,111 +23,111 @@ public class Property extends AbstractAuditingEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    
     @Column(name = "code", unique = true)
     private String code;
-    
+
     @Column(name = "description_hu")
     private String descriptionHu;
-    
+
     @Column(name = "description_en")
     private String descriptionEn;
-    
+
     @Column(name = "description_de")
     private String descriptionDe;
-    
+
     @Column(name = "room")
     private Integer room;
-    
+
     @Column(name = "half_room")
     private Integer halfRoom;
-    
+
     @Column(name = "floor_area")
     private Integer floorArea;
-    
+
     @Column(name = "parcel_area")
     private Integer parcelArea;
-    
+
     @Column(name = "pracel_number")
     private String pracelNumber;
-    
+
     @Column(name = "address1")
     private String address1;
-    
+
     @Column(name = "address2")
     private String address2;
-    
+
     @Column(name = "active")
     private Boolean active;
-    
+
     @Column(name = "kitchen")
     private Integer kitchen;
-    
+
     @Column(name = "livingroom")
     private Integer livingroom;
-    
+
     @Column(name = "floor")
     private Integer floor;
-    
+
     @Column(name = "bathroom")
     private Integer bathroom;
-    
+
     @Column(name = "toilet")
     private Integer toilet;
-    
+
     @Column(name = "furnished")
     private Boolean furnished;
-    
+
     @Column(name = "for_sale")
     private Boolean forSale;
-    
+
     @Column(name = "sale_huf", precision=10, scale=2)
     private BigDecimal saleHuf;
-    
+
     @Column(name = "sale_eur", precision=10, scale=2)
     private BigDecimal saleEur;
-    
+
     @Column(name = "for_rent")
     private Boolean forRent;
-    
+
     @Column(name = "rent_huf", precision=10, scale=2)
     private BigDecimal rentHuf;
-    
+
     @Column(name = "rent_eur", precision=10, scale=2)
     private BigDecimal rentEur;
-    
+
     @Column(name = "rent_peak_huf", precision=10, scale=2)
     private BigDecimal rentPeakHuf;
-    
+
     @Column(name = "rent_peak_eur", precision=10, scale=2)
     private BigDecimal rentPeakEur;
-    
+
     @Column(name = "for_medium_term")
     private Boolean forMediumTerm;
-    
+
     @Column(name = "medium_term_huf", precision=10, scale=2)
     private BigDecimal mediumTermHuf;
-    
+
     @Column(name = "medium_term_eur", precision=10, scale=2)
     private BigDecimal mediumTermEur;
-    
+
     @Column(name = "for_long_term")
     private Boolean forLongTerm;
-    
+
     @Column(name = "long_term_huf", precision=10, scale=2)
     private BigDecimal longTermHuf;
-    
+
     @Column(name = "long_term_eur", precision=10, scale=2)
     private BigDecimal longTermEur;
-    
+
     @Column(name = "featured")
     private Boolean featured;
 
     @ManyToOne
+    @JoinColumn(name = "category_id")
     private Category category;
 
-    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL)
-    //@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @OneToMany(mappedBy = "property")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Photo> photos = new HashSet<>();
 
     @ManyToMany(mappedBy = "propertys")
@@ -158,6 +146,7 @@ public class Property extends AbstractAuditingEntity implements Serializable {
     private Set<Ownership> ownerships = new HashSet<>();
 
     @ManyToOne
+    @JoinColumn(name = "city_id")
     private City city;
 
     @OneToMany(mappedBy = "property")
@@ -165,9 +154,10 @@ public class Property extends AbstractAuditingEntity implements Serializable {
     private Set<Contract> contracts = new HashSet<>();
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "property", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "property")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Apartment> apartments = new HashSet<>();
 
@@ -523,12 +513,8 @@ public class Property extends AbstractAuditingEntity implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-
         Property property = (Property) o;
-
-        if ( ! Objects.equals(id, property.id)) return false;
-
-        return true;
+        return Objects.equals(id, property.id);
     }
 
     @Override
@@ -539,40 +525,40 @@ public class Property extends AbstractAuditingEntity implements Serializable {
     @Override
     public String toString() {
         return "Property{" +
-                "id=" + id +
-                ", code='" + code + "'" +
-                ", descriptionHu='" + descriptionHu + "'" +
-                ", descriptionEn='" + descriptionEn + "'" +
-                ", descriptionDe='" + descriptionDe + "'" +
-                ", room='" + room + "'" +
-                ", halfRoom='" + halfRoom + "'" +
-                ", floorArea='" + floorArea + "'" +
-                ", parcelArea='" + parcelArea + "'" +
-                ", pracelNumber='" + pracelNumber + "'" +
-                ", address1='" + address1 + "'" +
-                ", address2='" + address2 + "'" +
-                ", active='" + active + "'" +
-                ", kitchen='" + kitchen + "'" +
-                ", livingroom='" + livingroom + "'" +
-                ", floor='" + floor + "'" +
-                ", bathroom='" + bathroom + "'" +
-                ", toilet='" + toilet + "'" +
-                ", furnished='" + furnished + "'" +
-                ", forSale='" + forSale + "'" +
-                ", saleHuf='" + saleHuf + "'" +
-                ", saleEur='" + saleEur + "'" +
-                ", forRent='" + forRent + "'" +
-                ", rentHuf='" + rentHuf + "'" +
-                ", rentEur='" + rentEur + "'" +
-                ", rentPeakHuf='" + rentPeakHuf + "'" +
-                ", rentPeakEur='" + rentPeakEur + "'" +
-                ", forMediumTerm='" + forMediumTerm + "'" +
-                ", mediumTermHuf='" + mediumTermHuf + "'" +
-                ", mediumTermEur='" + mediumTermEur + "'" +
-                ", forLongTerm='" + forLongTerm + "'" +
-                ", longTermHuf='" + longTermHuf + "'" +
-                ", longTermEur='" + longTermEur + "'" +
-                ", featured='" + featured + "'" +
-                '}';
+            "id=" + id +
+            ", code='" + code + "'" +
+            ", descriptionHu='" + descriptionHu + "'" +
+            ", descriptionEn='" + descriptionEn + "'" +
+            ", descriptionDe='" + descriptionDe + "'" +
+            ", room='" + room + "'" +
+            ", halfRoom='" + halfRoom + "'" +
+            ", floorArea='" + floorArea + "'" +
+            ", parcelArea='" + parcelArea + "'" +
+            ", pracelNumber='" + pracelNumber + "'" +
+            ", address1='" + address1 + "'" +
+            ", address2='" + address2 + "'" +
+            ", active='" + active + "'" +
+            ", kitchen='" + kitchen + "'" +
+            ", livingroom='" + livingroom + "'" +
+            ", floor='" + floor + "'" +
+            ", bathroom='" + bathroom + "'" +
+            ", toilet='" + toilet + "'" +
+            ", furnished='" + furnished + "'" +
+            ", forSale='" + forSale + "'" +
+            ", saleHuf='" + saleHuf + "'" +
+            ", saleEur='" + saleEur + "'" +
+            ", forRent='" + forRent + "'" +
+            ", rentHuf='" + rentHuf + "'" +
+            ", rentEur='" + rentEur + "'" +
+            ", rentPeakHuf='" + rentPeakHuf + "'" +
+            ", rentPeakEur='" + rentPeakEur + "'" +
+            ", forMediumTerm='" + forMediumTerm + "'" +
+            ", mediumTermHuf='" + mediumTermHuf + "'" +
+            ", mediumTermEur='" + mediumTermEur + "'" +
+            ", forLongTerm='" + forLongTerm + "'" +
+            ", longTermHuf='" + longTermHuf + "'" +
+            ", longTermEur='" + longTermEur + "'" +
+            ", featured='" + featured + "'" +
+            '}';
     }
 }

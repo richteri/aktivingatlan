@@ -12,16 +12,22 @@ angular.module('aktivingatlanApp').controller('PhotoDialogController',
             });
         };
 
-        var onSaveFinished = function (result) {
+        var onSaveSuccess = function (result) {
             $scope.$emit('aktivingatlanApp:photoUpdate', result);
             $modalInstance.close(result);
+            $scope.isSaving = false;
+        };
+
+        var onSaveError = function (result) {
+            $scope.isSaving = false;
         };
 
         $scope.save = function () {
+            $scope.isSaving = true;
             if ($scope.photo.id != null) {
-                Photo.update($scope.photo, onSaveFinished);
+                Photo.update($scope.photo, onSaveSuccess, onSaveError);
             } else {
-                Photo.save($scope.photo, onSaveFinished);
+                Photo.save($scope.photo, onSaveSuccess, onSaveError);
             }
         };
 

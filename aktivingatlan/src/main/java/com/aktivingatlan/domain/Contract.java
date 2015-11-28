@@ -1,30 +1,14 @@
 package com.aktivingatlan.domain;
 
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Type;
-import org.joda.time.LocalDate;
+import java.time.LocalDate;
 
-import com.aktivingatlan.domain.util.CustomLocalDateSerializer;
-import com.aktivingatlan.domain.util.ISO8601LocalDateDeserializer;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Objects;
 
 /**
  * A Contract.
@@ -38,29 +22,23 @@ public class Contract extends AbstractAuditingEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    
     @Column(name = "id_no")
     private String idNo;
-    
+
     @Column(name = "exclusive")
     private Boolean exclusive;
-    
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-    @JsonSerialize(using = CustomLocalDateSerializer.class)
-    @JsonDeserialize(using = ISO8601LocalDateDeserializer.class)
+
     @Column(name = "start_date")
     private LocalDate startDate;
-    
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-    @JsonSerialize(using = CustomLocalDateSerializer.class)
-    @JsonDeserialize(using = ISO8601LocalDateDeserializer.class)
+
     @Column(name = "end_date")
     private LocalDate endDate;
-    
+
     @Column(name = "note")
     private String note;
 
     @ManyToOne
+    @JoinColumn(name = "property_id")
     private Property property;
 
     @ManyToMany
@@ -142,12 +120,8 @@ public class Contract extends AbstractAuditingEntity implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-
         Contract contract = (Contract) o;
-
-        if ( ! Objects.equals(id, contract.id)) return false;
-
-        return true;
+        return Objects.equals(id, contract.id);
     }
 
     @Override
@@ -158,12 +132,12 @@ public class Contract extends AbstractAuditingEntity implements Serializable {
     @Override
     public String toString() {
         return "Contract{" +
-                "id=" + id +
-                ", idNo='" + idNo + "'" +
-                ", exclusive='" + exclusive + "'" +
-                ", startDate='" + startDate + "'" +
-                ", endDate='" + endDate + "'" +
-                ", note='" + note + "'" +
-                '}';
+            "id=" + id +
+            ", idNo='" + idNo + "'" +
+            ", exclusive='" + exclusive + "'" +
+            ", startDate='" + startDate + "'" +
+            ", endDate='" + endDate + "'" +
+            ", note='" + note + "'" +
+            '}';
     }
 }

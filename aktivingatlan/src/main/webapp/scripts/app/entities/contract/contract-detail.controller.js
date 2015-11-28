@@ -8,7 +8,9 @@ angular.module('aktivingatlanApp')
                 $scope.contract = result;
             });
         };
-        $rootScope.$on('aktivingatlanApp:contractUpdate', function(event, result) {
+        var unsubscribe = $rootScope.$on('aktivingatlanApp:contractUpdate', function(event, result) {
             $scope.contract = result;
         });
+        $scope.$on('$destroy', unsubscribe);
+
     });

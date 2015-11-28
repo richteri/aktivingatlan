@@ -11,16 +11,22 @@ angular.module('aktivingatlanApp').controller('CityDialogController',
             });
         };
 
-        var onSaveFinished = function (result) {
+        var onSaveSuccess = function (result) {
             $scope.$emit('aktivingatlanApp:cityUpdate', result);
             $modalInstance.close(result);
+            $scope.isSaving = false;
+        };
+
+        var onSaveError = function (result) {
+            $scope.isSaving = false;
         };
 
         $scope.save = function () {
+            $scope.isSaving = true;
             if ($scope.city.id != null) {
-                City.update($scope.city, onSaveFinished);
+                City.update($scope.city, onSaveSuccess, onSaveError);
             } else {
-                City.save($scope.city, onSaveFinished);
+                City.save($scope.city, onSaveSuccess, onSaveError);
             }
         };
 

@@ -1,18 +1,13 @@
 package com.aktivingatlan.domain;
 
-import java.io.Serializable;
-import java.util.Objects;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Objects;
 
 /**
  * A Ownership.
@@ -26,14 +21,15 @@ public class Ownership extends AbstractAuditingEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    
     @Column(name = "note")
     private String note;
 
     @ManyToOne
+    @JoinColumn(name = "property_id")
     private Property property;
 
     @ManyToOne
+    @JoinColumn(name = "client_id")
     private Client client;
 
     public Long getId() {
@@ -76,12 +72,8 @@ public class Ownership extends AbstractAuditingEntity implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-
         Ownership ownership = (Ownership) o;
-
-        if ( ! Objects.equals(id, ownership.id)) return false;
-
-        return true;
+        return Objects.equals(id, ownership.id);
     }
 
     @Override
@@ -92,8 +84,8 @@ public class Ownership extends AbstractAuditingEntity implements Serializable {
     @Override
     public String toString() {
         return "Ownership{" +
-                "id=" + id +
-                ", note='" + note + "'" +
-                '}';
+            "id=" + id +
+            ", note='" + note + "'" +
+            '}';
     }
 }

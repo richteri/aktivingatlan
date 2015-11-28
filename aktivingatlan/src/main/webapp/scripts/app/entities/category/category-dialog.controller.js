@@ -11,16 +11,22 @@ angular.module('aktivingatlanApp').controller('CategoryDialogController',
             });
         };
 
-        var onSaveFinished = function (result) {
+        var onSaveSuccess = function (result) {
             $scope.$emit('aktivingatlanApp:categoryUpdate', result);
             $modalInstance.close(result);
+            $scope.isSaving = false;
+        };
+
+        var onSaveError = function (result) {
+            $scope.isSaving = false;
         };
 
         $scope.save = function () {
+            $scope.isSaving = true;
             if ($scope.category.id != null) {
-                Category.update($scope.category, onSaveFinished);
+                Category.update($scope.category, onSaveSuccess, onSaveError);
             } else {
-                Category.save($scope.category, onSaveFinished);
+                Category.save($scope.category, onSaveSuccess, onSaveError);
             }
         };
 

@@ -1,21 +1,14 @@
 package com.aktivingatlan.domain;
 
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Objects;
 
 /**
  * A Client.
@@ -29,28 +22,27 @@ public class Client extends AbstractAuditingEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    
     @Column(name = "name")
     private String name;
-    
+
     @Column(name = "email")
     private String email;
-    
+
     @Column(name = "phone1")
     private String phone1;
-    
+
     @Column(name = "phone2")
     private String phone2;
-    
+
     @Column(name = "address1")
     private String address1;
-    
+
     @Column(name = "address2")
     private String address2;
-    
+
     @Column(name = "id_no")
     private String idNo;
-    
+
     @Column(name = "note")
     private String note;
 
@@ -170,12 +162,8 @@ public class Client extends AbstractAuditingEntity implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-
         Client client = (Client) o;
-
-        if ( ! Objects.equals(id, client.id)) return false;
-
-        return true;
+        return Objects.equals(id, client.id);
     }
 
     @Override
@@ -186,15 +174,15 @@ public class Client extends AbstractAuditingEntity implements Serializable {
     @Override
     public String toString() {
         return "Client{" +
-                "id=" + id +
-                ", name='" + name + "'" +
-                ", email='" + email + "'" +
-                ", phone1='" + phone1 + "'" +
-                ", phone2='" + phone2 + "'" +
-                ", address1='" + address1 + "'" +
-                ", address2='" + address2 + "'" +
-                ", idNo='" + idNo + "'" +
-                ", note='" + note + "'" +
-                '}';
+            "id=" + id +
+            ", name='" + name + "'" +
+            ", email='" + email + "'" +
+            ", phone1='" + phone1 + "'" +
+            ", phone2='" + phone2 + "'" +
+            ", address1='" + address1 + "'" +
+            ", address2='" + address2 + "'" +
+            ", idNo='" + idNo + "'" +
+            ", note='" + note + "'" +
+            '}';
     }
 }

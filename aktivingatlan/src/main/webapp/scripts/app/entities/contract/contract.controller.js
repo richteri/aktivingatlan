@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('aktivingatlanApp')
-    .controller('ContractController', function ($scope, Contract, ParseLinks) {
+    .controller('ContractController', function ($scope, $state, $modal, Contract, ParseLinks) {
+      
         $scope.contracts = [];
         $scope.page = 0;
         $scope.loadAll = function() {
@@ -16,21 +17,6 @@ angular.module('aktivingatlanApp')
         };
         $scope.loadAll();
 
-        $scope.delete = function (id) {
-            Contract.get({id: id}, function(result) {
-                $scope.contract = result;
-                $('#deleteContractConfirmation').modal('show');
-            });
-        };
-
-        $scope.confirmDelete = function (id) {
-            Contract.delete({id: id},
-                function () {
-                    $scope.loadAll();
-                    $('#deleteContractConfirmation').modal('hide');
-                    $scope.clear();
-                });
-        };
 
         $scope.refresh = function () {
             $scope.loadAll();

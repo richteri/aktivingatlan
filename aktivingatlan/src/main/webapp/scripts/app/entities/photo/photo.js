@@ -99,5 +99,28 @@ angular.module('aktivingatlanApp')
                         $state.go('^');
                     })
                 }]
+            })
+            .state('photo.delete', {
+                parent: 'photo',
+                url: '/{id}/delete',
+                data: {
+                    authorities: ['ROLE_USER'],
+                },
+                onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal) {
+                    $modal.open({
+                        templateUrl: 'scripts/app/entities/photo/photo-delete-dialog.html',
+                        controller: 'PhotoDeleteController',
+                        size: 'md',
+                        resolve: {
+                            entity: ['Photo', function(Photo) {
+                                return Photo.get({id : $stateParams.id});
+                            }]
+                        }
+                    }).result.then(function(result) {
+                        $state.go('photo', null, { reload: true });
+                    }, function() {
+                        $state.go('^');
+                    })
+                }]
             });
     });

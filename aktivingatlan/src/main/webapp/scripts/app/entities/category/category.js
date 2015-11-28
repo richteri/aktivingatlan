@@ -97,5 +97,28 @@ angular.module('aktivingatlanApp')
                         $state.go('^');
                     })
                 }]
+            })
+            .state('category.delete', {
+                parent: 'category',
+                url: '/{id}/delete',
+                data: {
+                    authorities: ['ROLE_USER'],
+                },
+                onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal) {
+                    $modal.open({
+                        templateUrl: 'scripts/app/entities/category/category-delete-dialog.html',
+                        controller: 'CategoryDeleteController',
+                        size: 'md',
+                        resolve: {
+                            entity: ['Category', function(Category) {
+                                return Category.get({id : $stateParams.id});
+                            }]
+                        }
+                    }).result.then(function(result) {
+                        $state.go('category', null, { reload: true });
+                    }, function() {
+                        $state.go('^');
+                    })
+                }]
             });
     });

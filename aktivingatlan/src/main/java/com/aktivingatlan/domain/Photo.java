@@ -1,18 +1,13 @@
 package com.aktivingatlan.domain;
 
-import java.io.Serializable;
-import java.util.Objects;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Objects;
 
 /**
  * A Photo.
@@ -26,23 +21,23 @@ public class Photo extends AbstractAuditingEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    
     @Column(name = "header")
     private Boolean header;
-    
+
     @Column(name = "description_hu")
     private String descriptionHu;
-    
+
     @Column(name = "description_en")
     private String descriptionEn;
-    
+
     @Column(name = "description_de")
     private String descriptionDe;
-    
+
     @Column(name = "filename")
     private String filename;
 
     @ManyToOne
+    @JoinColumn(name = "property_id")
     private Property property;
 
     public Long getId() {
@@ -109,12 +104,8 @@ public class Photo extends AbstractAuditingEntity implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-
         Photo photo = (Photo) o;
-
-        if ( ! Objects.equals(id, photo.id)) return false;
-
-        return true;
+        return Objects.equals(id, photo.id);
     }
 
     @Override
@@ -125,12 +116,12 @@ public class Photo extends AbstractAuditingEntity implements Serializable {
     @Override
     public String toString() {
         return "Photo{" +
-                "id=" + id +
-                ", header='" + header + "'" +
-                ", descriptionHu='" + descriptionHu + "'" +
-                ", descriptionEn='" + descriptionEn + "'" +
-                ", descriptionDe='" + descriptionDe + "'" +
-                ", filename='" + filename + "'" +
-                '}';
+            "id=" + id +
+            ", header='" + header + "'" +
+            ", descriptionHu='" + descriptionHu + "'" +
+            ", descriptionEn='" + descriptionEn + "'" +
+            ", descriptionDe='" + descriptionDe + "'" +
+            ", filename='" + filename + "'" +
+            '}';
     }
 }

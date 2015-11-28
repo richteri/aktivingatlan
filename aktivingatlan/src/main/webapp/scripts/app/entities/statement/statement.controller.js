@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('aktivingatlanApp')
-    .controller('StatementController', function ($scope, Statement, ParseLinks) {
+    .controller('StatementController', function ($scope, $state, $modal, Statement, ParseLinks) {
+      
         $scope.statements = [];
         $scope.page = 0;
         $scope.loadAll = function() {
@@ -16,21 +17,6 @@ angular.module('aktivingatlanApp')
         };
         $scope.loadAll();
 
-        $scope.delete = function (id) {
-            Statement.get({id: id}, function(result) {
-                $scope.statement = result;
-                $('#deleteStatementConfirmation').modal('show');
-            });
-        };
-
-        $scope.confirmDelete = function (id) {
-            Statement.delete({id: id},
-                function () {
-                    $scope.loadAll();
-                    $('#deleteStatementConfirmation').modal('hide');
-                    $scope.clear();
-                });
-        };
 
         $scope.refresh = function () {
             $scope.loadAll();

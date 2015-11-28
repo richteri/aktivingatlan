@@ -11,16 +11,22 @@ angular.module('aktivingatlanApp').controller('FeatureDialogController',
             });
         };
 
-        var onSaveFinished = function (result) {
+        var onSaveSuccess = function (result) {
             $scope.$emit('aktivingatlanApp:featureUpdate', result);
             $modalInstance.close(result);
+            $scope.isSaving = false;
+        };
+
+        var onSaveError = function (result) {
+            $scope.isSaving = false;
         };
 
         $scope.save = function () {
+            $scope.isSaving = true;
             if ($scope.feature.id != null) {
-                Feature.update($scope.feature, onSaveFinished);
+                Feature.update($scope.feature, onSaveSuccess, onSaveError);
             } else {
-                Feature.save($scope.feature, onSaveFinished);
+                Feature.save($scope.feature, onSaveSuccess, onSaveError);
             }
         };
 

@@ -12,16 +12,22 @@ angular.module('aktivingatlanApp').controller('ApartmentDialogController',
             });
         };
 
-        var onSaveFinished = function (result) {
+        var onSaveSuccess = function (result) {
             $scope.$emit('aktivingatlanApp:apartmentUpdate', result);
             $modalInstance.close(result);
+            $scope.isSaving = false;
+        };
+
+        var onSaveError = function (result) {
+            $scope.isSaving = false;
         };
 
         $scope.save = function () {
+            $scope.isSaving = true;
             if ($scope.apartment.id != null) {
-                Apartment.update($scope.apartment, onSaveFinished);
+                Apartment.update($scope.apartment, onSaveSuccess, onSaveError);
             } else {
-                Apartment.save($scope.apartment, onSaveFinished);
+                Apartment.save($scope.apartment, onSaveSuccess, onSaveError);
             }
         };
 
