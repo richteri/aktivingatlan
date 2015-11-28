@@ -5,7 +5,6 @@ import com.aktivingatlan.config.audit.AuditEventConverter;
 import com.aktivingatlan.domain.PersistentAuditEvent;
 import com.aktivingatlan.repository.PersistenceAuditEventRepository;
 import com.aktivingatlan.service.AuditEventService;
-import org.joda.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,6 +24,8 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import java.time.LocalDateTime;
 
 /**
  * Test class for the AuditResource REST controller.

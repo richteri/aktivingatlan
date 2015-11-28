@@ -11,12 +11,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
-import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -57,11 +57,11 @@ public class ContractResourceTest {
     private static final Boolean DEFAULT_EXCLUSIVE = false;
     private static final Boolean UPDATED_EXCLUSIVE = true;
 
-    private static final LocalDate DEFAULT_START_DATE = new LocalDate(0L);
-    private static final LocalDate UPDATED_START_DATE = new LocalDate();
+    private static final LocalDate DEFAULT_START_DATE = LocalDate.MIN;
+    private static final LocalDate UPDATED_START_DATE = LocalDate.now();
 
-    private static final LocalDate DEFAULT_END_DATE = new LocalDate(0L);
-    private static final LocalDate UPDATED_END_DATE = new LocalDate();
+    private static final LocalDate DEFAULT_END_DATE = LocalDate.MIN;
+    private static final LocalDate UPDATED_END_DATE = LocalDate.now();
     private static final String DEFAULT_NOTE = "AAAAA";
     private static final String UPDATED_NOTE = "BBBBB";
 

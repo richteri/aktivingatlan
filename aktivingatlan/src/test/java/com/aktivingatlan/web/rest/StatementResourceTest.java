@@ -11,12 +11,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
-import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -52,8 +52,8 @@ import com.aktivingatlan.web.rest.mapper.StatementMapper;
 public class StatementResourceTest {
 
 
-    private static final LocalDate DEFAULT_DATE = new LocalDate(0L);
-    private static final LocalDate UPDATED_DATE = new LocalDate();
+    private static final LocalDate DEFAULT_DATE = LocalDate.MIN;
+    private static final LocalDate UPDATED_DATE = LocalDate.now();
     private static final String DEFAULT_NOTE = "AAAAA";
     private static final String UPDATED_NOTE = "BBBBB";
 
