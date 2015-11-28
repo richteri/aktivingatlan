@@ -110,6 +110,7 @@ public class ContractResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @Transactional
     public ResponseEntity<ContractDTO> getContract(@PathVariable Long id) {
         log.debug("REST request to get Contract : {}", id);
         return Optional.ofNullable(contractRepository.findOneWithEagerRelationships(id))

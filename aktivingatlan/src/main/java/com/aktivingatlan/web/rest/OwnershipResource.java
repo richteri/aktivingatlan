@@ -110,6 +110,7 @@ public class OwnershipResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @Transactional
     public ResponseEntity<OwnershipDTO> getOwnership(@PathVariable Long id) {
         log.debug("REST request to get Ownership : {}", id);
         return Optional.ofNullable(ownershipRepository.findOne(id))
@@ -141,6 +142,7 @@ public class OwnershipResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @Transactional
     public List<Ownership> search(@PathVariable String query) {
         return StreamSupport
             .stream(ownershipRepository.findAll().spliterator(), false)
