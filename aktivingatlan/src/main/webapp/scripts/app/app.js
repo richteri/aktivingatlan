@@ -1,13 +1,27 @@
 'use strict';
 
 angular.module('aktivingatlanApp', ['LocalStorageModule', 'tmh.dynamicLocale', 'pascalprecht.translate', 
-               'ui.bootstrap', // for modal dialogs
+    'ngResource', 'ngCookies', 'ngAria', 'ngCacheBuster', 'ngFileUpload',
+    'ui.bootstrap', 'ui.router',  'infinite-scroll', 'angular-loading-bar',
                'ui.bootstrap.tabs',
                'ui.select', // for tag-like multi-select
-               'ui.grid', 'ui.grid.pinning', 'ui.grid.saveState', 'ui.grid.resizeColumns',
-    'ngResource', 'ui.router', 'ngCookies', 'ngAria', 'ngCacheBuster', 'ngFileUpload', 'infinite-scroll', 'ngSanitize'])
+               'ui.grid', 'ui.grid.pinning', 'ui.grid.saveState', 'ui.grid.resizeColumns'])
 
     .run(function ($rootScope, $location, $window, $http, $state, $translate, Language, Auth, Principal, ENV, VERSION) {
+        // update the window title using params in the following
+        // precendence
+        // 1. titleKey parameter
+        // 2. $state.$current.data.pageTitle (current state page title)
+        // 3. 'global.title'
+        var updateTitle = function(titleKey) {
+            if (!titleKey && $state.$current.data && $state.$current.data.pageTitle) {
+                titleKey = $state.$current.data.pageTitle;
+            }
+            $translate(titleKey || 'global.title').then(function (title) {
+                $window.document.title = title;
+            });
+        };
+        
         $rootScope.ENV = ENV;
         $rootScope.VERSION = VERSION;
         $rootScope.$on('$stateChangeStart', function (event, toState, toStateParams) {
@@ -41,14 +55,13 @@ angular.module('aktivingatlanApp', ['LocalStorageModule', 'tmh.dynamicLocale', '
             if (toState.data.pageTitle) {
                 titleKey = toState.data.pageTitle;
             }
-            
-            $translate(titleKey).then(function (title) {
-                // Change window title with translated one
-                $window.document.title = title;
-            });
-            
+            updateTitle(titleKey);
         });
+        
+        // if the current translation changes, update the window title
+        $rootScope.$on('$translateChangeSuccess', function() { updateTitle(); });
 
+        
         $rootScope.back = function() {
             // If previous state is 'activate' or do not exist go to 'home'
             if ($rootScope.previousStateName === 'activate' || $state.get($rootScope.previousStateName) === null) {
@@ -58,7 +71,9 @@ angular.module('aktivingatlanApp', ['LocalStorageModule', 'tmh.dynamicLocale', '
             }
         };
     })
-    .config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider, $translateProvider, tmhDynamicLocaleProvider, httpRequestInterceptorCacheBusterProvider) {
+    .config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider, $translateProvider, tmhDynamicLocaleProvider, httpRequestInterceptorCacheBusterProvider, AlertServiceProvider) {
+        // uncomment below to make alerts look like toast
+        //AlertServiceProvider.showAsToast(true);
 
         //Cache everything except rest api requests
         httpRequestInterceptorCacheBusterProvider.setMatchlist([/.*api.*/, /.*protected.*/], true);
@@ -103,4 +118,14 @@ angular.module('aktivingatlanApp', ['LocalStorageModule', 'tmh.dynamicLocale', '
         tmhDynamicLocaleProvider.useCookieStorage();
         tmhDynamicLocaleProvider.storageKey('NG_TRANSLATE_LANG_KEY');
         
-    });
+    })
+    .config(['$urlMatcherFactoryProvider', function($urlMatcherFactory) {
+        $urlMatcherFactory.type('boolean', {
+            name : 'boolean',
+            decode: function(val) { return val == true ? true : val == "true" ? true : false },
+            encode: function(val) { return val ? 1 : 0; },
+            equals: function(a, b) { return this.is(a) && a === b; },
+            is: function(val) { return [true,false,0,1].indexOf(val) >= 0 },
+            pattern: /bool|true|0|1/
+        });
+    }]);;

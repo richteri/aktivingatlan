@@ -1,11 +1,11 @@
 package com.aktivingatlan.repository;
 
-import java.util.List;
+import com.aktivingatlan.domain.PersistentAuditEvent;
 
-import org.joda.time.LocalDateTime;
+import java.time.LocalDateTime;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.aktivingatlan.domain.PersistentAuditEvent;
+import java.util.List;
 
 /**
  * Spring Data JPA repository for the PersistentAuditEvent entity.

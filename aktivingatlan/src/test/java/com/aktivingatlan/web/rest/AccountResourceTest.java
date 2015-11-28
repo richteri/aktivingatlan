@@ -1,25 +1,14 @@
 package com.aktivingatlan.web.rest;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.StrictAssertions.assertThat;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
-
-import javax.inject.Inject;
-import javax.transaction.Transactional;
-
+import com.aktivingatlan.Application;
+import com.aktivingatlan.domain.Authority;
+import com.aktivingatlan.domain.User;
+import com.aktivingatlan.repository.AuthorityRepository;
+import com.aktivingatlan.repository.UserRepository;
+import com.aktivingatlan.security.AuthoritiesConstants;
+import com.aktivingatlan.service.MailService;
+import com.aktivingatlan.service.UserService;
+import com.aktivingatlan.web.rest.dto.UserDTO;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,15 +23,21 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.aktivingatlan.Application;
-import com.aktivingatlan.domain.Authority;
-import com.aktivingatlan.domain.User;
-import com.aktivingatlan.repository.AuthorityRepository;
-import com.aktivingatlan.repository.UserRepository;
-import com.aktivingatlan.security.AuthoritiesConstants;
-import com.aktivingatlan.service.MailService;
-import com.aktivingatlan.service.UserService;
-import com.aktivingatlan.web.rest.dto.UserDTO;
+import javax.inject.Inject;
+import javax.transaction.Transactional;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Test class for the AccountResource REST controller.

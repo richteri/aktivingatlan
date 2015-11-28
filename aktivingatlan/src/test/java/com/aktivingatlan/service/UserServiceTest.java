@@ -1,26 +1,24 @@
 package com.aktivingatlan.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.StrictAssertions.assertThat;
-
-import java.util.List;
-import java.util.Optional;
-
-import javax.inject.Inject;
-
+import com.aktivingatlan.Application;
+import com.aktivingatlan.domain.User;
+import com.aktivingatlan.repository.UserRepository;
 import org.joda.time.DateTime;
+import com.aktivingatlan.service.util.RandomUtil;
+import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 
-import com.aktivingatlan.Application;
-import com.aktivingatlan.domain.User;
-import com.aktivingatlan.repository.UserRepository;
-import com.aktivingatlan.service.util.RandomUtil;
+import javax.inject.Inject;
+import java.util.Optional;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * Test class for the UserResource REST controller.

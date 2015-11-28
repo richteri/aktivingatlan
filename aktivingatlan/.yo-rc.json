@@ -10,12 +10,17 @@
     "databaseType": "sql",
     "devDatabaseType": "mysql",
     "prodDatabaseType": "mysql",
-    "useSass": false,
+    "useSass": true,
     "buildTool": "maven",
     "frontendBuilder": "grunt",
     "javaVersion": "8",
     "enableTranslation": true,
     "rememberMeKey": "bfd48e3149ed4f2bf4fe01ac92d4b4dd1609b91b",
-    "searchEngine": "no"
+    "searchEngine": "no",
+    "enableSocialSignIn": false,
+    "testFrameworks": [
+      "gatling",
+      "cucumber"
+    ]
   }
 }

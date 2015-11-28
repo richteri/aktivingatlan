@@ -1,12 +1,13 @@
 package com.aktivingatlan.repository;
 
+import com.aktivingatlan.domain.User;
+
+import java.time.ZonedDateTime;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
 import java.util.List;
 import java.util.Optional;
-
-import org.joda.time.DateTime;
-import org.springframework.data.jpa.repository.JpaRepository;
-
-import com.aktivingatlan.domain.User;
 
 /**
  * Spring Data JPA repository for the User entity.
@@ -15,13 +16,15 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findOneByActivationKey(String activationKey);
 
-    List<User> findAllByActivatedIsFalseAndCreatedDateBefore(DateTime dateTime);
+    List<User> findAllByActivatedIsFalseAndCreatedDateBefore(ZonedDateTime dateTime);
 
     Optional<User> findOneByResetKey(String resetKey);
 
     Optional<User> findOneByEmail(String email);
 
     Optional<User> findOneByLogin(String login);
+
+    Optional<User> findOneById(Long userId);
 
     @Override
     void delete(User t);

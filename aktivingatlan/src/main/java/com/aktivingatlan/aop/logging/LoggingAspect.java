@@ -1,8 +1,6 @@
 package com.aktivingatlan.aop.logging;
 
-import java.util.Arrays;
-
-import javax.inject.Inject;
+import com.aktivingatlan.config.Constants;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -14,7 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
 
-import com.aktivingatlan.config.Constants;
+import javax.inject.Inject;
+import java.util.Arrays;
 
 /**
  * Aspect for logging execution of service and repository Spring components.
@@ -28,16 +27,17 @@ public class LoggingAspect {
     private Environment env;
 
     @Pointcut("within(com.aktivingatlan.repository..*) || within(com.aktivingatlan.service..*) || within(com.aktivingatlan.web.rest..*)")
-    public void loggingPointcut() {}
+    public void loggingPointcut() {
+    }
 
     @AfterThrowing(pointcut = "loggingPointcut()", throwing = "e")
     public void logAfterThrowing(JoinPoint joinPoint, Throwable e) {
         if (env.acceptsProfiles(Constants.SPRING_PROFILE_DEVELOPMENT)) {
-            log.error("Exception in {}.{}() with cause = {}", joinPoint.getSignature().getDeclaringTypeName(),
-                    joinPoint.getSignature().getName(), e.getCause(), e);
+            log.error("Exception in {}.{}() with cause = {} and exception {}", joinPoint.getSignature().getDeclaringTypeName(),
+                joinPoint.getSignature().getName(), e.getCause(), e);
         } else {
             log.error("Exception in {}.{}() with cause = {}", joinPoint.getSignature().getDeclaringTypeName(),
-                    joinPoint.getSignature().getName(), e.getCause());
+                joinPoint.getSignature().getName(), e.getCause());
         }
     }
 
@@ -45,13 +45,13 @@ public class LoggingAspect {
     public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
         if (log.isDebugEnabled()) {
             log.debug("Enter: {}.{}() with argument[s] = {}", joinPoint.getSignature().getDeclaringTypeName(),
-                    joinPoint.getSignature().getName(), Arrays.toString(joinPoint.getArgs()));
+                joinPoint.getSignature().getName(), Arrays.toString(joinPoint.getArgs()));
         }
         try {
             Object result = joinPoint.proceed();
             if (log.isDebugEnabled()) {
                 log.debug("Exit: {}.{}() with result = {}", joinPoint.getSignature().getDeclaringTypeName(),
-                        joinPoint.getSignature().getName(), result);
+                    joinPoint.getSignature().getName(), result);
             }
             return result;
         } catch (IllegalArgumentException e) {

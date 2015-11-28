@@ -1,6 +1,6 @@
 jhipster-dev-mysql:
   container_name: aktivingatlan-dev-mysql
-  image: mysql
+  image: mysql:5.7.9
   # volumes:
   # - ~/volumes/jhipster/aktivingatlan/dev-mysql/:/var/lib/mysql/
   environment:
@@ -9,5 +9,5 @@ jhipster-dev-mysql:
   - MYSQL_DATABASE=aktivingatlan
   ports:
   - "3306:3306"
-  command: mysqld --lower_case_table_name=1
+  command: mysqld --lower_case_table_names=1
 

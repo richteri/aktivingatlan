@@ -1,8 +1,7 @@
 package com.aktivingatlan.web.rest.dto;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-
 import ch.qos.logback.classic.Logger;
+import com.fasterxml.jackson.annotation.JsonCreator;
 
 public class LoggerDTO {
 
@@ -38,8 +37,8 @@ public class LoggerDTO {
     @Override
     public String toString() {
         return "LoggerDTO{" +
-                "name='" + name + '\'' +
-                ", level='" + level + '\'' +
-                '}';
+            "name='" + name + '\'' +
+            ", level='" + level + '\'' +
+            '}';
     }
 }

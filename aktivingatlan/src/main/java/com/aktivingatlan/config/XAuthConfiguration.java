@@ -1,9 +1,8 @@
 package com.aktivingatlan.config;
 
+import com.aktivingatlan.security.xauth.TokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import com.aktivingatlan.security.xauth.TokenProvider;
 
 /**
 * Configures x-auth-token security.

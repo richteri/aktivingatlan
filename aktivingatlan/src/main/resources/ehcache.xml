@@ -36,4 +36,4 @@
     <cache name="com.aktivingatlan.domain.User.persistentTokens"
            timeToLiveSeconds="3600">
     </cache>
-</ehcache>
+    </ehcache>

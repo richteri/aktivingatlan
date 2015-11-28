@@ -1,10 +1,10 @@
 package com.aktivingatlan.web.rest.util;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
+
+import java.net.URI;
+import java.net.URISyntaxException;
 
 /**
  * Utility class for handling pagination.

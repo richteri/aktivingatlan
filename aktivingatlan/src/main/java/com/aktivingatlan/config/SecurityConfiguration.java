@@ -1,9 +1,10 @@
 package com.aktivingatlan.config;
 
-import javax.inject.Inject;
-
+import com.aktivingatlan.security.*;
+import com.aktivingatlan.security.xauth.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,14 +13,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
 
-import com.aktivingatlan.security.AuthoritiesConstants;
-import com.aktivingatlan.security.Http401UnauthorizedEntryPoint;
-import com.aktivingatlan.security.xauth.TokenProvider;
-import com.aktivingatlan.security.xauth.XAuthTokenConfigurer;
+
+import javax.inject.Inject;
 
 @Configuration
 @EnableWebSecurity
@@ -94,6 +93,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/env/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/trace/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/mappings/**").hasAuthority(AuthoritiesConstants.ADMIN)
+            .antMatchers("/liquibase/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/v2/api-docs/**").permitAll()
             .antMatchers("/configuration/security").permitAll()
             .antMatchers("/configuration/ui").permitAll()

@@ -1,13 +1,11 @@
 package com.aktivingatlan.config;
 
-import javax.sql.DataSource;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.config.java.AbstractCloudConfig;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.*;
+
+import javax.sql.DataSource;
 
 @Configuration
 @Profile(Constants.SPRING_PROFILE_CLOUD)

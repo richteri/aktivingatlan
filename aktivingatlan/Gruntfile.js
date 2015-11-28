@@ -1,4 +1,4 @@
-// Generated on 2015-10-20 using generator-jhipster 2.22.0
+// Generated on 2015-11-28 using generator-jhipster 2.24.0
 'use strict';
 var fs = require('fs');
 
@@ -43,6 +43,10 @@ module.exports = function (grunt) {
             ngconstant: {
                 files: ['Gruntfile.js', 'pom.xml'],
                 tasks: ['ngconstant:dev']
+            },
+            sass: {
+                files: ['src/main/scss/**/*.{scss,sass}'],
+                tasks: ['sass:server']
             }
         },
         autoprefixer: {
@@ -50,10 +54,12 @@ module.exports = function (grunt) {
         },
         wiredep: {
             app: {
-                src: ['src/main/webapp/index.html'],
+                src: ['src/main/webapp/index.html', 'src/main/scss/main.scss'],
                 exclude: [
-                    /angular-i18n/  // localizations are loaded dynamically
-                ]
+                    /angular-i18n/, // localizations are loaded dynamically
+                    'bower_components/bootstrap/' // Exclude Bootstrap LESS as we use bootstrap-sass
+                ],
+                ignorePath: /\.\.\/webapp\/bower_components\// // remove ../webapp/bower_components/ from paths of injected sass files 
             },
             test: {
                 src: 'src/test/javascript/karma.conf.js',
@@ -114,6 +120,22 @@ module.exports = function (grunt) {
                 'src/main/webapp/scripts/app/**/*.js',
                 'src/main/webapp/scripts/components/**/*.js'
             ]
+        },
+        sass: {
+            options: {
+                includePaths: [
+                    'src/main/webapp/bower_components'
+                ]
+            },
+            server: {
+                files: [{
+                    expand: true,
+                    cwd: 'src/main/scss',
+                    src: ['*.scss'],
+                    dest: 'src/main/webapp/assets/styles',
+                    ext: '.css'
+                }]
+            }
         },
         concat: {
             // src and dest is configured in a subtask called "generated" by usemin
@@ -269,6 +291,22 @@ module.exports = function (grunt) {
                 singleRun: true
             }
         },
+        protractor: {
+            options: {
+                configFile: 'src/test/javascript/protractor.conf.js'
+            },
+            e2e: {
+                options: {
+                    // Stops Grunt process if a test fails
+                    keepAlive: false
+                }
+            },
+            continuous: {
+                options: {
+                    keepAlive: true
+                }
+            }
+        },
         ngAnnotate: {
             dist: {
                 files: [{
@@ -325,6 +363,7 @@ module.exports = function (grunt) {
         'clean:server',
         'wiredep',
         'ngconstant:dev',
+        'sass:server',
         'browserSync',
         'watch'
     ]);
@@ -338,6 +377,7 @@ module.exports = function (grunt) {
         'clean:server',
         'wiredep:test',
         'ngconstant:dev',
+        'sass:server',
         'karma'
     ]);
 
@@ -347,6 +387,7 @@ module.exports = function (grunt) {
         'ngconstant:prod',
         'useminPrepare',
         'ngtemplates',
+        'sass:server',
         'imagemin',
         'svgmin',
         'concat',
@@ -361,23 +402,6 @@ module.exports = function (grunt) {
         'htmlmin'
     ]);
 
-	grunt.registerTask('appendSkipBower', 'Force skip of bower for Gradle', function () {
-
-		if (!grunt.file.exists(filepath)) {
-			// Assume this is a maven project
-			return true;
-		}
-
-		var fileContent = grunt.file.read(filepath);
-		var skipBowerIndex = fileContent.indexOf("skipBower=true");
-
-		if (skipBowerIndex != -1) {
-			return true;
-		}
-
-		grunt.file.write(filepath, fileContent + "\nskipBower=true\n");
-	});
-
     grunt.registerTask('buildOpenshift', [
         'test',
         'build',
@@ -391,5 +415,6 @@ module.exports = function (grunt) {
         'buildcontrol:openshift'
     ]);
 
+    grunt.registerTask('itest', ['protractor:continuous']);
     grunt.registerTask('default', ['serve']);
 };

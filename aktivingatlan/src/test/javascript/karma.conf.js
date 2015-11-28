@@ -21,6 +21,7 @@ module.exports = function (config) {
             'main/webapp/bower_components/angular-cookies/angular-cookies.js',
             'main/webapp/bower_components/angular-dynamic-locale/src/tmhDynamicLocale.js',
             'main/webapp/bower_components/angular-local-storage/dist/angular-local-storage.js',
+            'main/webapp/bower_components/angular-loading-bar/build/loading-bar.js',
             'main/webapp/bower_components/angular-resource/angular-resource.js',
             'main/webapp/bower_components/angular-sanitize/angular-sanitize.js',
             'main/webapp/bower_components/angular-translate/angular-translate.js',
@@ -29,18 +30,18 @@ module.exports = function (config) {
             'main/webapp/bower_components/angular-translate-loader-partial/angular-translate-loader-partial.js',
             'main/webapp/bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.js',
             'main/webapp/bower_components/angular-ui-router/release/angular-ui-router.js',
-            'main/webapp/bower_components/bootstrap/dist/js/bootstrap.js',
+            'main/webapp/bower_components/bootstrap-sass/assets/javascripts/bootstrap.js',
             'main/webapp/bower_components/json3/lib/json3.js',
             'main/webapp/bower_components/ng-file-upload/ng-file-upload.js',
             'main/webapp/bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js',
-            'main/webapp/bower_components/angular-ui-select/dist/select.js',
-            'main/webapp/bower_components/angular-ui-grid/ui-grid.js',
             'main/webapp/bower_components/angular-mocks/angular-mocks.js',
             // endbower
             'main/webapp/scripts/app/app.js',
             'main/webapp/scripts/app/**/*.js',
-            'main/webapp/scripts/components/**/*.{js,html}',
-            'test/javascript/**/!(karma.conf).js',
+            'main/webapp/scripts/components/**/*.+(js|html)',
+            'test/javascript/spec/helpers/module.js',
+            'test/javascript/spec/helpers/httpBackend.js',
+            'test/javascript/**/!(karma.conf|protractor.conf).js',
             'main/webapp/bower_components/messageformat/locale/hu.js',
             'main/webapp/bower_components/messageformat/locale/en.js',
             'main/webapp/bower_components/messageformat/locale/de.js',
@@ -48,7 +49,7 @@ module.exports = function (config) {
 
 
         // list of files / patterns to exclude
-        exclude: [],
+        exclude: ['test/javascript/e2e/**'],
 
         preprocessors: {
             './**/*.js': ['coverage']

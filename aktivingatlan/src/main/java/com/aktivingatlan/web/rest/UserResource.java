@@ -1,14 +1,16 @@
 package com.aktivingatlan.web.rest;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import javax.inject.Inject;
-
+import com.codahale.metrics.annotation.Timed;
+import com.aktivingatlan.domain.Authority;
+import com.aktivingatlan.domain.User;
+import com.aktivingatlan.repository.AuthorityRepository;
+import com.aktivingatlan.repository.UserRepository;
+import com.aktivingatlan.security.AuthoritiesConstants;
+import com.aktivingatlan.service.UserService;
+import com.aktivingatlan.web.rest.dto.ManagedUserDTO;
+import com.aktivingatlan.web.rest.dto.UserDTO;
+import com.aktivingatlan.web.rest.util.HeaderUtil;
+import com.aktivingatlan.web.rest.util.PaginationUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -19,22 +21,13 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.aktivingatlan.domain.Authority;
-import com.aktivingatlan.domain.User;
-import com.aktivingatlan.repository.AuthorityRepository;
-import com.aktivingatlan.repository.UserRepository;
-import com.aktivingatlan.security.AuthoritiesConstants;
-import com.aktivingatlan.service.UserService;
-import com.aktivingatlan.web.rest.dto.ManagedUserDTO;
-import com.aktivingatlan.web.rest.util.HeaderUtil;
-import com.aktivingatlan.web.rest.util.PaginationUtil;
-import com.codahale.metrics.annotation.Timed;
+import javax.inject.Inject;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * REST controller for managing users.
@@ -79,8 +72,8 @@ public class UserResource {
      * POST  /users -> Create a new user.
      */
     @RequestMapping(value = "/users",
-            method = RequestMethod.POST,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+        method = RequestMethod.POST,
+        produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<User> createUser(@RequestBody User user) throws URISyntaxException {
@@ -105,8 +98,8 @@ public class UserResource {
     @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<ManagedUserDTO> updateUser(@RequestBody ManagedUserDTO managedUserDTO) throws URISyntaxException {
         log.debug("REST request to update User : {}", managedUserDTO);
-        return Optional.of(userRepository
-            .findOne(managedUserDTO.getId()))
+        return userRepository
+            .findOneById(managedUserDTO.getId())
             .map(user -> {
                 user.setLogin(managedUserDTO.getLogin());
                 user.setFirstName(managedUserDTO.getFirstName());
@@ -149,13 +142,13 @@ public class UserResource {
      * GET  /users/:login -> get the "login" user.
      */
     @RequestMapping(value = "/users/{login}",
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<ManagedUserDTO> getUser(@PathVariable String login) {
         log.debug("REST request to get User : {}", login);
         return userService.getUserWithAuthoritiesByLogin(login)
-                .map(user -> new ManagedUserDTO(user))
+                .map(ManagedUserDTO::new)
                 .map(managedUserDTO -> new ResponseEntity<>(managedUserDTO, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }

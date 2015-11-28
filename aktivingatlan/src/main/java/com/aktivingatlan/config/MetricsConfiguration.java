@@ -1,33 +1,24 @@
 package com.aktivingatlan.config;
 
-import java.lang.management.ManagementFactory;
-import java.net.InetSocketAddress;
-import java.util.concurrent.TimeUnit;
-
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
-
 import com.codahale.metrics.JmxReporter;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.graphite.Graphite;
 import com.codahale.metrics.graphite.GraphiteReporter;
 import com.codahale.metrics.health.HealthCheckRegistry;
-import com.codahale.metrics.jvm.BufferPoolMetricSet;
-import com.codahale.metrics.jvm.FileDescriptorRatioGauge;
-import com.codahale.metrics.jvm.GarbageCollectorMetricSet;
-import com.codahale.metrics.jvm.MemoryUsageGaugeSet;
-import com.codahale.metrics.jvm.ThreadStatesGaugeSet;
+import com.codahale.metrics.jvm.*;
 import com.ryantenney.metrics.spring.config.annotation.EnableMetrics;
 import com.ryantenney.metrics.spring.config.annotation.MetricsConfigurerAdapter;
-
 import fr.ippon.spark.metrics.SparkReporter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.context.annotation.*;
+
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+import java.lang.management.ManagementFactory;
+import java.net.InetSocketAddress;
+import java.util.concurrent.TimeUnit;
 
 @Configuration
 @EnableMetrics(proxyTargetClass = true)
@@ -70,7 +61,7 @@ public class MetricsConfiguration extends MetricsConfigurerAdapter {
         metricRegistry.register(PROP_METRIC_REG_JVM_FILES, new FileDescriptorRatioGauge());
         metricRegistry.register(PROP_METRIC_REG_JVM_BUFFERS, new BufferPoolMetricSet(ManagementFactory.getPlatformMBeanServer()));
         if (jHipsterProperties.getMetrics().getJmx().isEnabled()) {
-            log.info("Initializing Metrics JMX reporting");
+            log.debug("Initializing Metrics JMX reporting");
             JmxReporter jmxReporter = JmxReporter.forRegistry(metricRegistry).build();
             jmxReporter.start();
         }
@@ -98,10 +89,10 @@ public class MetricsConfiguration extends MetricsConfigurerAdapter {
                 String graphitePrefix = jHipsterProperties.getMetrics().getGraphite().getPrefix();
                 Graphite graphite = new Graphite(new InetSocketAddress(graphiteHost, graphitePort));
                 GraphiteReporter graphiteReporter = GraphiteReporter.forRegistry(metricRegistry)
-                        .convertRatesTo(TimeUnit.SECONDS)
-                        .convertDurationsTo(TimeUnit.MILLISECONDS)
-                        .prefixedWith(graphitePrefix)
-                        .build(graphite);
+                    .convertRatesTo(TimeUnit.SECONDS)
+                    .convertDurationsTo(TimeUnit.MILLISECONDS)
+                    .prefixedWith(graphitePrefix)
+                    .build(graphite);
                 graphiteReporter.start(1, TimeUnit.MINUTES);
             }
         }
@@ -127,9 +118,9 @@ public class MetricsConfiguration extends MetricsConfigurerAdapter {
                 String sparkHost = jHipsterProperties.getMetrics().getSpark().getHost();
                 Integer sparkPort = jHipsterProperties.getMetrics().getSpark().getPort();
                 SparkReporter sparkReporter = SparkReporter.forRegistry(metricRegistry)
-                        .convertRatesTo(TimeUnit.SECONDS)
-                        .convertDurationsTo(TimeUnit.MILLISECONDS)
-                        .build(sparkHost, sparkPort);
+                    .convertRatesTo(TimeUnit.SECONDS)
+                    .convertDurationsTo(TimeUnit.MILLISECONDS)
+                    .build(sparkHost, sparkPort);
                 sparkReporter.start(1, TimeUnit.MINUTES);
             }
         }

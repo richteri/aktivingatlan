@@ -23,7 +23,6 @@ angular.module('aktivingatlanApp')
                 if (key.indexOf('web.rest') !== -1 || key.indexOf('service') !== -1) {
                     $scope.servicesStats[key] = value;
                 }
-
                 if (key.indexOf('net.sf.ehcache.Cache') !== -1) {
                     // remove gets or puts
                     var index = key.lastIndexOf('.');
@@ -50,13 +49,11 @@ angular.module('aktivingatlanApp')
                     size: 'lg',
                     resolve: {
                         threadDump: function() {
-                            return data;
+                            return data.content;
                         }
 
                     }
                 });
             });
         };
-
-
     });

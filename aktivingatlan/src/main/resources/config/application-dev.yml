@@ -13,6 +13,11 @@
 spring:
     profiles:
         active: dev
+    devtools:
+        restart:
+            enabled: true
+        livereload:
+            enabled: false # we use Grunt + BrowserSync for livereload
     datasource:
         driver-class-name: com.mysql.jdbc.jdbc2.optional.MysqlDataSource
         url: jdbc:mysql://localhost:3306/aktivingatlan3?useUnicode=true&characterEncoding=utf8
@@ -28,6 +33,8 @@ spring:
             hibernate.cache.use_query_cache: false
             hibernate.generate_statistics: true
             hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory
+    mail:
+        host: localhost
     messages:
         cache-seconds: 1
     thymeleaf:
@@ -45,7 +52,6 @@ server:
 
 jhipster:
     datasource: # JHipster-specific configuration, in addition to the standard spring.datasource properties
-        serverName: 
         cachePrepStmts: true
         prepStmtCacheSize: 250
         prepStmtCacheSqlLimit: 2048
@@ -54,6 +60,8 @@ jhipster:
         timeToLiveSeconds: 3600
         ehcache:
             maxBytesLocalHeap: 16M
+    mail: # specific JHipster mail property, for standard properties see MailProperties
+        from: aktivingatlan@localhost
     metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
         jmx.enabled: true
         spark:

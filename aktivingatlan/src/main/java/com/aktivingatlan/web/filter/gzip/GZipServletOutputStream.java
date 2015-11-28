@@ -1,10 +1,9 @@
 package com.aktivingatlan.web.filter.gzip;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
 import javax.servlet.ServletOutputStream;
 import javax.servlet.WriteListener;
+import java.io.IOException;
+import java.io.OutputStream;
 
 class GZipServletOutputStream extends ServletOutputStream {
     private OutputStream stream;

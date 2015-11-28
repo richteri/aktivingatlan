@@ -1,7 +1,8 @@
 package com.aktivingatlan.web.rest;
 
-import javax.inject.Inject;
-
+import com.codahale.metrics.annotation.Timed;
+import com.aktivingatlan.security.xauth.Token;
+import com.aktivingatlan.security.xauth.TokenProvider;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -13,9 +14,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.aktivingatlan.security.xauth.Token;
-import com.aktivingatlan.security.xauth.TokenProvider;
-import com.codahale.metrics.annotation.Timed;
+import javax.inject.Inject;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
 @RequestMapping("/api")
