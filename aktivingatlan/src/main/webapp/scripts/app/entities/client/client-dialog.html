@@ -9,67 +9,65 @@
     <div class="modal-body">
         <jh-alert-error></jh-alert-error>
         <div class="form-group">
-            <label translate="aktivingatlanApp.client.name" for="field_name">Name</label>
+            <label for="id" translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="client.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="aktivingatlanApp.client.name" for="field_name">Name</label>
             <input type="text" class="form-control" name="name" id="field_name"
                     ng-model="client.name"
-                    >
-
+                     />
         </div>
         <div class="form-group">
-            <label translate="aktivingatlanApp.client.email" for="field_email">Email</label>
+            <label class="control-label" translate="aktivingatlanApp.client.email" for="field_email">Email</label>
             <input type="text" class="form-control" name="email" id="field_email"
                     ng-model="client.email"
-                    >
-
+                     />
         </div>
         <div class="form-group">
-            <label translate="aktivingatlanApp.client.phone1" for="field_phone1">Phone1</label>
+            <label class="control-label" translate="aktivingatlanApp.client.phone1" for="field_phone1">Phone1</label>
             <input type="text" class="form-control" name="phone1" id="field_phone1"
                     ng-model="client.phone1"
-                    >
-
+                     />
         </div>
         <div class="form-group">
-            <label translate="aktivingatlanApp.client.phone2" for="field_phone2">Phone2</label>
+            <label class="control-label" translate="aktivingatlanApp.client.phone2" for="field_phone2">Phone2</label>
             <input type="text" class="form-control" name="phone2" id="field_phone2"
                     ng-model="client.phone2"
-                    >
-
+                     />
         </div>
         <div class="form-group">
-            <label translate="aktivingatlanApp.client.address1" for="field_address1">Address1</label>
+            <label class="control-label" translate="aktivingatlanApp.client.address1" for="field_address1">Address1</label>
             <input type="text" class="form-control" name="address1" id="field_address1"
                     ng-model="client.address1"
-                    >
-
+                     />
         </div>
         <div class="form-group">
-            <label translate="aktivingatlanApp.client.address2" for="field_address2">Address2</label>
+            <label class="control-label" translate="aktivingatlanApp.client.address2" for="field_address2">Address2</label>
             <input type="text" class="form-control" name="address2" id="field_address2"
                     ng-model="client.address2"
-                    >
-
+                     />
         </div>
         <div class="form-group">
-            <label translate="aktivingatlanApp.client.idNo" for="field_idNo">IdNo</label>
+            <label class="control-label" translate="aktivingatlanApp.client.idNo" for="field_idNo">IdNo</label>
             <input type="text" class="form-control" name="idNo" id="field_idNo"
                     ng-model="client.idNo"
-                    >
-
+                     />
         </div>
         <div class="form-group">
-            <label translate="aktivingatlanApp.client.note" for="field_note">Note</label>
+            <label class="control-label" translate="aktivingatlanApp.client.note" for="field_note">Note</label>
             <input type="text" class="form-control" name="note" id="field_note"
                     ng-model="client.note"
-                    >
-
+                     />
         </div>
+
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
             <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
         </button>
-        <button type="submit" ng-disabled="editForm.$invalid || editForm.$submitted" class="btn btn-primary">
+        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
             <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
         </button>
     </div>

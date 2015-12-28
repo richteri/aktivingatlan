@@ -8,11 +8,11 @@ angular.module('aktivingatlanApp')
                 $scope.client = result;
             });
         };
-        
-        $rootScope.$on('aktivingatlanApp:clientUpdate', function(event, result) {
+        var unsubscribe = $rootScope.$on('aktivingatlanApp:clientUpdate', function(event, result) {
             $scope.client = result;
         });
-        
+        $scope.$on('$destroy', unsubscribe);
+
         // Show ownership delete confirmation window
         $scope.deleteOwnership = function (id) {
         	console.log('deleteOwnership called with id:', id);

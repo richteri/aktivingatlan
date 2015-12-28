@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('aktivingatlanApp').controller('OwnershipDialogController',
-    ['$scope', '$stateParams', '$modalInstance', '$sanitize', 'entity', 'Ownership', 'Property', 'Client', 'PropertySearch', 'ClientSearch', 
-        function($scope, $stateParams, $modalInstance, $sanitize, entity, Ownership, Property, Client, PropertySearch, ClientSearch) {
+    ['$scope', '$stateParams', '$uibModalInstance', 'entity', 'Ownership', 'Property', 'Client',
+        function($scope, $stateParams, $uibModalInstance, $sanitize, entity, Ownership, Property, Client, PropertySearch, ClientSearch) {
 
         $scope.ownership = entity;
         
@@ -36,21 +36,27 @@ angular.module('aktivingatlanApp').controller('OwnershipDialogController',
             });
         };
 
-        var onSaveFinished = function (result) {
+        var onSaveSuccess = function (result) {
             $scope.$emit('aktivingatlanApp:ownershipUpdate', result);
-            $modalInstance.close(result);
+            $uibModalInstance.close(result);
+            $scope.isSaving = false;
+        };
+
+        var onSaveError = function (result) {
+            $scope.isSaving = false;
         };
 
         $scope.save = function () {
+            $scope.isSaving = true;
             if ($scope.ownership.id != null) {
-                Ownership.update($scope.ownership, onSaveFinished);
+                Ownership.update($scope.ownership, onSaveSuccess, onSaveError);
             } else {
-                Ownership.save($scope.ownership, onSaveFinished);
+                Ownership.save($scope.ownership, onSaveSuccess, onSaveError);
             }
         };
 
         $scope.clear = function() {
-            $modalInstance.dismiss('cancel');
+            $uibModalInstance.dismiss('cancel');
         };
         
         $scope.formatPropertyName = function (property) {

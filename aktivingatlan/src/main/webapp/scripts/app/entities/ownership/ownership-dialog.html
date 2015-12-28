@@ -10,12 +10,12 @@
         <jh-alert-error></jh-alert-error>
 
         <div class="form-group">
-            <label translate="aktivingatlanApp.ownership.note" for="field_note">Note</label>
+            <label class="control-label" translate="aktivingatlanApp.ownership.note" for="field_note">Note</label>
             <input type="text" class="form-control" name="note" id="field_note"
                     ng-model="ownership.note"
-                    >
-
+                     />
         </div>
+
         <div class="form-group">
             <label translate="aktivingatlanApp.ownership.property" for="field_property">property</label>
             <i ng-show="loadingProperties" class="glyphicon glyphicon-refresh"></i>
@@ -50,13 +50,13 @@
             	typeahead-wait-ms="100"
             	typeahead-loading="loadingClients" 
             	typeahead-no-results="noClientResults">
-        </div>            
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
             <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
         </button>
-        <button type="submit" ng-disabled="editForm.$invalid || editForm.$submitted" class="btn btn-primary">
+        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
             <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
         </button>
     </div>

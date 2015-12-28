@@ -1,10 +1,15 @@
 'use strict';
 
 angular.module('aktivingatlanApp')
-    .controller('PropertyController', ['$scope', '$state', '$filter', 'Property', 'User', 'Category', 'uiGridConstants', '$translate', 'localStorageService', '$timeout', function ($scope, $state, $filter, Property, User, Category, uiGridConstants, $translate, localStorageService, $timeout) {
+    .controller('PropertyController', ['$scope', '$state', '$filter', 'Property', 'User', 'Category', 'uiGridConstants', '$translate', 'localStorageService', '$timeout', 'ParseLinks', function ($scope, $state, $filter, Property, User, Category, uiGridConstants, $translate, localStorageService, $timeout, ParseLinks) {
+
         $scope.propertys = [];
         $scope.users = [];
         $scope.categories = [];
+
+        $scope.predicate = 'id';
+        $scope.reverse = true;
+        $scope.page = 1;
         
         User.query(function (result) {
         	angular.forEach(result, function(value) {
@@ -18,8 +23,6 @@ angular.module('aktivingatlanApp')
         	});
         });
         
-        $scope.page = 1;
-        
         $scope.loadAll = function() {
             Property.query(function(result, headers) {
                 $scope.propertys = result;
@@ -28,27 +31,52 @@ angular.module('aktivingatlanApp')
         };
         
         $scope.loadAll();
+        
 
-        $scope.delete = function (id) {
-            Property.get({id: id}, function(result) {
-                $scope.property = result;
-                $('#deletePropertyConfirmation').modal('show');
-            });
-        };
 
-        $scope.confirmDelete = function (id) {
-            Property.delete({id: id},
-                function () {
-                    $scope.loadAll();
-                    $('#deletePropertyConfirmation').modal('hide');
-                    $scope.clear();
-                });
+        $scope.refresh = function () {
+            $scope.loadAll();
+            $scope.clear();
         };
 
         $scope.clear = function () {
-            $scope.property = {code: null, descriptionHu: null, descriptionEn: null, descriptionDe: null, room: null, halfRoom: null, floorArea: null, parcelArea: null, pracelNumber: null, address1: null, address2: null, active: null, kitchen: null, livingroom: null, floor: null, bathroom: null, toilet: null, furnished: null, forSale: null, saleHuf: null, saleEur: null, forRent: null, rentHuf: null, rentEur: null, rentPeakHuf: null, rentPeakEur: null, forMediumTerm: null, mediumTermHuf: null, mediumTermEur: null, forLongTerm: null, longTermHuf: null, longTermEur: null, featured: null, id: null};
+            $scope.property = {
+                code: null,
+                descriptionHu: null,
+                descriptionEn: null,
+                descriptionDe: null,
+                room: null,
+                halfRoom: null,
+                floorArea: null,
+                parcelArea: null,
+                pracelNumber: null,
+                address1: null,
+                address2: null,
+                active: null,
+                kitchen: null,
+                livingroom: null,
+                floor: null,
+                bathroom: null,
+                toilet: null,
+                furnished: null,
+                forSale: null,
+                saleHuf: null,
+                saleEur: null,
+                forRent: null,
+                rentHuf: null,
+                rentEur: null,
+                rentPeakHuf: null,
+                rentPeakEur: null,
+                forMediumTerm: null,
+                mediumTermHuf: null,
+                mediumTermEur: null,
+                forLongTerm: null,
+                longTermHuf: null,
+                longTermEur: null,
+                featured: null,
+                id: null
+            };
         };
-        
         
 		function saveState() {
 			var state = $scope.gridApi.saveState.save();
@@ -537,5 +565,5 @@ angular.module('aktivingatlanApp')
 				return new Date(parts[0], parts[1]-1, parts[2]).getTime();
 			}
 		 }
-        
+		 
     }]);

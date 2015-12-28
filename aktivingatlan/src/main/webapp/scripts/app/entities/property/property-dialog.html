@@ -1,13 +1,13 @@
 
 <form name="editForm" role="form" novalidate ng-submit="save()">
 
-	<div class="modal-header">
+    <div class="modal-header">
 		<h4 class="modal-title" id="myPropertyLabel"
 			translate="aktivingatlanApp.property.home.createOrEditLabel">Create
 			or edit a Property</h4>
-	</div>
-	<div class="modal-body">
-		<jh-alert-error></jh-alert-error>
+    </div>
+    <div class="modal-body">
+        <jh-alert-error></jh-alert-error>
 		<tabset>
 			<tab heading="Általános">
 			<br>
@@ -445,17 +445,14 @@
 			<tab heading="Tulajdonosok és szerződések" disable="true"></tab>
 			<tab heading="Megtekintési nyiltkozatok" disable="true"></tab>	
 		</tabset>	
-	</div>
-	<div class="modal-footer">
-		<button type="button" class="btn btn-default" ng-click="clear()">
-			<span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
-				translate="entity.action.cancel">Cancel</span>
-		</button>
-		<button type="submit"
-			ng-disabled="editForm.$invalid"
-			class="btn btn-primary">
-			<span class="glyphicon glyphicon-save"></span>&nbsp;<span
-				translate="entity.action.save">Save</span>
-		</button>
-	</div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+        </button>
+    </div>
 </form>

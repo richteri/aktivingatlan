@@ -4,33 +4,39 @@ angular.module('aktivingatlanApp').controller('PropertyDialogController',
     ['$scope', '$stateParams', '$filter', 'entity', 'Property', 'PropertySearch', 'Category', 'Photo', 'Statement', 'Feature', 'Ownership', 'City', 'Contract', 'User', 'Apartment', 'CitySearch', 'Upload',
         function($scope, $stateParams, $filter, entity, Property, PropertySearch, Category, Photo, Statement, Feature, Ownership, City, Contract, User, Apartment, CitySearch, Upload) {
 
-        $scope.files = null;
         $scope.property = entity;
+        $scope.files = null;
         $scope.categorys = Category.query();
         $scope.features = Feature.query();
         $scope.users = User.query();
-        
+
         $scope.load = function(id) {
             Property.get({id : id}, function(result) {
                 $scope.property = result;
             });
         };
 
-        var onSaveFinished = function (result) {
+        var onSaveSuccess = function (result) {
             $scope.$emit('aktivingatlanApp:propertyUpdate', result);
-            // TODO: $modalInstance.close(result);
+            $uibModalInstance.close(result);
+            $scope.isSaving = false;
+        };
+
+        var onSaveError = function (result) {
+            $scope.isSaving = false;
         };
 
         $scope.save = function () {
+            $scope.isSaving = true;
             if ($scope.property.id != null) {
-                Property.update($scope.property, onSaveFinished);
+                Property.update($scope.property, onSaveSuccess, onSaveError);
             } else {
-                Property.save($scope.property, onSaveFinished);
+                Property.save($scope.property, onSaveSuccess, onSaveError);
             }
         };
 
         $scope.clear = function() {
-        	// TODO: $modalInstance.dismiss('cancel');
+            $uibModalInstance.dismiss('cancel');
         };
         
         $scope.formatCityName = function (city) {

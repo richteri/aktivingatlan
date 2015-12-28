@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('aktivingatlanApp').controller('ClientDialogController',
-    ['$scope', '$stateParams', '$modalInstance', 'entity', 'Client', 'Ownership', 'Statement', 'Contract',
-        function($scope, $stateParams, $modalInstance, entity, Client, Ownership, Statement, Contract) {
+    ['$scope', '$stateParams', '$uibModalInstance', 'entity', 'Client', 'Ownership', 'Statement', 'Contract',
+        function($scope, $stateParams, $uibModalInstance, entity, Client, Ownership, Statement, Contract) {
 
         $scope.client = entity;
         $scope.ownerships = Ownership.query();
@@ -14,20 +14,26 @@ angular.module('aktivingatlanApp').controller('ClientDialogController',
             });
         };
 
-        var onSaveFinished = function (result) {
+        var onSaveSuccess = function (result) {
             $scope.$emit('aktivingatlanApp:clientUpdate', result);
-            $modalInstance.close(result);
+            $uibModalInstance.close(result);
+            $scope.isSaving = false;
+        };
+
+        var onSaveError = function (result) {
+            $scope.isSaving = false;
         };
 
         $scope.save = function () {
+            $scope.isSaving = true;
             if ($scope.client.id != null) {
-                Client.update($scope.client, onSaveFinished);
+                Client.update($scope.client, onSaveSuccess, onSaveError);
             } else {
-                Client.save($scope.client, onSaveFinished);
+                Client.save($scope.client, onSaveSuccess, onSaveError);
             }
         };
 
         $scope.clear = function() {
-            $modalInstance.dismiss('cancel');
+            $uibModalInstance.dismiss('cancel');
         };
 }]);
