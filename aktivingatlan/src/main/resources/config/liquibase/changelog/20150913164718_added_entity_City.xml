@@ -25,15 +25,17 @@
             <column name="zip" type="varchar(255)"/>
             <column name="name" type="varchar(255)"/>
         </createTable>
-		<!-- loadData encoding="UTF-8"
-                  file="config/liquibase/cities.csv"
-                  separator=";"
-                  tableName="CITY">
-        </loadData -->
-        
-        <sqlFile dbms="mysql,postgresql"
-            encoding="utf8"
-            path="config/liquibase/cities.sql"/>
-        
     </changeSet>
+    
+    <changeSet id="20150913164719" author="jhipster">
+		<loadData
+			file="config/liquibase/cities.csv"
+			separator=";"
+			tableName="city">
+		</loadData>
+		<!--         <sqlFile dbms="mysql,postgresql" -->
+		<!--             encoding="utf8" -->
+		<!--             path="config/liquibase/cities.sql"/> -->
+    </changeSet>
+   
 </databaseChangeLog>
