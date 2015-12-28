@@ -41,15 +41,15 @@ module.exports = function (config) {
             'main/webapp/scripts/components/**/*.+(js|html)',
             'test/javascript/spec/helpers/module.js',
             'test/javascript/spec/helpers/httpBackend.js',
-            'test/javascript/**/!(karma.conf|protractor.conf).js',
+            'test/javascript/**/!(karma.conf).js',
             'main/webapp/bower_components/messageformat/locale/hu.js',
             'main/webapp/bower_components/messageformat/locale/en.js',
-            'main/webapp/bower_components/messageformat/locale/de.js',
+            'main/webapp/bower_components/messageformat/locale/de.js'
         ],
 
 
         // list of files / patterns to exclude
-        exclude: ['test/javascript/e2e/**'],
+        exclude: [],
 
         preprocessors: {
             './**/*.js': ['coverage']

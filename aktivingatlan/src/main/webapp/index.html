@@ -45,7 +45,6 @@
 
         <!-- build:js scripts/vendor.js -->
         <!-- bower:js -->
-        <script src="bower_components/modernizr/modernizr.js"></script>
         <script src="bower_components/jquery/dist/jquery.js"></script>
         <script src="bower_components/angular/angular.js"></script>
         <script src="bower_components/angular-aria/angular-aria.js"></script>
@@ -86,8 +85,8 @@
     <script src="scripts/components/form/form.directive.js"></script>
     <script src="scripts/components/form/maxbytes.directive.js"></script>
     <script src="scripts/components/form/minbytes.directive.js"></script>
-    <script src="scripts/components/form/pager.directive.js"></script>
-    <script src="scripts/components/form/pagination.directive.js"></script>
+    <script src="scripts/components/form/uib-pager.config.js"></script>
+    <script src="scripts/components/form/uib-pagination.config.js"></script>
     <script src="scripts/components/admin/audits.service.js"></script>
     <script src="scripts/components/admin/logs.service.js"></script>
     <script src="scripts/components/admin/configuration.service.js"></script>
@@ -104,8 +103,9 @@
     <script src="scripts/components/alert/alert.service.js"></script>
     <script src="scripts/components/alert/alert.directive.js"></script>
     <script src="scripts/components/util/parse-links.service.js"></script>
-    <script src="scripts/components/util/dateutil.service.js"></script>
+    <script src="scripts/components/util/date-util.service.js"></script>
     <script src="scripts/components/util/data-util.service.js"></script>
+    <script src="scripts/components/util/sort.directive.js"></script>
     <script src="scripts/app/account/account.js"></script>
     <script src="scripts/app/account/activate/activate.js"></script>
     <script src="scripts/app/account/activate/activate.controller.js"></script>
@@ -138,12 +138,16 @@
     <script src="scripts/app/admin/metrics/metrics.modal.controller.js"></script>
     <script src="scripts/app/admin/user-management/user-management-detail.controller.js"></script>
     <script src="scripts/app/admin/user-management/user-management-dialog.controller.js"></script>
+    <script src="scripts/app/admin/user-management/user-management-delete-dialog.controller.js"></script>
     <script src="scripts/app/admin/user-management/user-management.controller.js"></script>
     <script src="scripts/app/admin/user-management/user-management.js"></script>
     <script src="scripts/app/entities/entity.js"></script>
     <script src="scripts/app/error/error.js"></script>
     <script src="scripts/app/main/main.js"></script>
     <script src="scripts/app/main/main.controller.js"></script>
+    <script src="bower_components/messageformat/locale/hu.js"></script>
+    <script src="bower_components/messageformat/locale/en.js"></script>
+    <script src="bower_components/messageformat/locale/de.js"></script>
     <script src="scripts/components/language/language.service.js"></script>
     <script src="scripts/components/language/language.controller.js"></script>
     <script src="scripts/components/auth/provider/auth.xauth.service.js"></script>
@@ -204,10 +208,6 @@
     
     <script src="scripts/app/entities/pageable.factory.js"></script>
     <script src="scripts/app/entities/back-button.directive.js"></script>
-    
-    <script src="bower_components/messageformat/locale/hu.js"></script>
-    <script src="bower_components/messageformat/locale/en.js"></script>
-    <script src="bower_components/messageformat/locale/de.js"></script>
     
     <script src="scripts/components/util/urlify.filter.js"></script>
     <!-- endbuild -->

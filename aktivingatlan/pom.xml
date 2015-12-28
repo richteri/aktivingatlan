@@ -374,6 +374,7 @@
             <version>${cucumber.version}</version>
             <scope>test</scope>
         </dependency>
+        <!-- jhipster-needle-maven-add-dependency -->
     </dependencies>
     <build>
         <defaultGoal>spring-boot:run</defaultGoal>
@@ -601,6 +602,7 @@
                     </arguments>
                 </configuration>
             </plugin>
+            <!-- jhipster-needle-maven-add-plugin -->
         </plugins>
         <pluginManagement>
             <plugins>
