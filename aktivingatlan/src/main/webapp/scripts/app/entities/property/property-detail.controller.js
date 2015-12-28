@@ -8,7 +8,9 @@ angular.module('aktivingatlanApp')
                 $scope.property = result;
             });
         };
-        $rootScope.$on('aktivingatlanApp:propertyUpdate', function(event, result) {
+        var unsubscribe = $rootScope.$on('aktivingatlanApp:propertyUpdate', function(event, result) {
             $scope.property = result;
         });
+        $scope.$on('$destroy', unsubscribe);
+
     });

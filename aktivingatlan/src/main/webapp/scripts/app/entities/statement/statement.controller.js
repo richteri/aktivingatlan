@@ -1,13 +1,16 @@
 'use strict';
 
 angular.module('aktivingatlanApp')
-    .controller('StatementController', function ($scope, $state, $modal, Statement, ParseLinks) {
-      
+    .controller('StatementController', function ($scope, $state, Statement, ParseLinks) {
+
         $scope.statements = [];
-        $scope.page = 0;
+        $scope.predicate = 'id';
+        $scope.reverse = true;
+        $scope.page = 1;
         $scope.loadAll = function() {
-            Statement.query({page: $scope.page, size: 20}, function(result, headers) {
+            Statement.query({page: $scope.page - 1, size: 20, sort: [$scope.predicate + ',' + ($scope.reverse ? 'asc' : 'desc'), 'id']}, function(result, headers) {
                 $scope.links = ParseLinks.parse(headers('link'));
+                $scope.totalItems = headers('X-Total-Count');
                 $scope.statements = result;
             });
         };

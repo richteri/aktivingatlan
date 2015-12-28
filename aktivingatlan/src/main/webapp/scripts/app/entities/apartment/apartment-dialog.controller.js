@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('aktivingatlanApp').controller('ApartmentDialogController',
-    ['$scope', '$stateParams', '$modalInstance', 'entity', 'Apartment', 'Property',
-        function($scope, $stateParams, $modalInstance, entity, Apartment, Property) {
+    ['$scope', '$stateParams', '$uibModalInstance', 'entity', 'Apartment', 'Property',
+        function($scope, $stateParams, $uibModalInstance, entity, Apartment, Property) {
 
         $scope.apartment = entity;
         $scope.propertys = Property.query();
@@ -14,7 +14,7 @@ angular.module('aktivingatlanApp').controller('ApartmentDialogController',
 
         var onSaveSuccess = function (result) {
             $scope.$emit('aktivingatlanApp:apartmentUpdate', result);
-            $modalInstance.close(result);
+            $uibModalInstance.close(result);
             $scope.isSaving = false;
         };
 
@@ -32,6 +32,6 @@ angular.module('aktivingatlanApp').controller('ApartmentDialogController',
         };
 
         $scope.clear = function() {
-            $modalInstance.dismiss('cancel');
+            $uibModalInstance.dismiss('cancel');
         };
 }]);

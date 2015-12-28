@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('aktivingatlanApp').controller('CityDialogController',
-    ['$scope', '$stateParams', '$modalInstance', 'entity', 'City',
-        function($scope, $stateParams, $modalInstance, entity, City) {
+    ['$scope', '$stateParams', '$uibModalInstance', 'entity', 'City',
+        function($scope, $stateParams, $uibModalInstance, entity, City) {
 
         $scope.city = entity;
         $scope.load = function(id) {
@@ -13,7 +13,7 @@ angular.module('aktivingatlanApp').controller('CityDialogController',
 
         var onSaveSuccess = function (result) {
             $scope.$emit('aktivingatlanApp:cityUpdate', result);
-            $modalInstance.close(result);
+            $uibModalInstance.close(result);
             $scope.isSaving = false;
         };
 
@@ -31,6 +31,6 @@ angular.module('aktivingatlanApp').controller('CityDialogController',
         };
 
         $scope.clear = function() {
-            $modalInstance.dismiss('cancel');
+            $uibModalInstance.dismiss('cancel');
         };
 }]);

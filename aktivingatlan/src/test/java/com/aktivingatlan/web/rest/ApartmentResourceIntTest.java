@@ -143,7 +143,7 @@ public class ApartmentResourceIntTest {
         apartmentRepository.saveAndFlush(apartment);
 
         // Get all the apartments
-        restApartmentMockMvc.perform(get("/api/apartments"))
+        restApartmentMockMvc.perform(get("/api/apartments?sort=id,desc"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(apartment.getId().intValue())))

@@ -53,8 +53,8 @@ angular.module('aktivingatlanApp')
                 data: {
                     authorities: ['ROLE_USER'],
                 },
-                onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal) {
-                    $modal.open({
+                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                    $uibModal.open({
                         templateUrl: 'scripts/app/entities/photo/photo-dialog.html',
                         controller: 'PhotoDialogController',
                         size: 'lg',
@@ -83,8 +83,8 @@ angular.module('aktivingatlanApp')
                 data: {
                     authorities: ['ROLE_USER'],
                 },
-                onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal) {
-                    $modal.open({
+                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                    $uibModal.open({
                         templateUrl: 'scripts/app/entities/photo/photo-dialog.html',
                         controller: 'PhotoDialogController',
                         size: 'lg',
@@ -106,8 +106,8 @@ angular.module('aktivingatlanApp')
                 data: {
                     authorities: ['ROLE_USER'],
                 },
-                onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal) {
-                    $modal.open({
+                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                    $uibModal.open({
                         templateUrl: 'scripts/app/entities/photo/photo-delete-dialog.html',
                         controller: 'PhotoDeleteController',
                         size: 'md',

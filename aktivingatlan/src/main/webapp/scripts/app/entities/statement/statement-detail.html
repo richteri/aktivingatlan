@@ -33,7 +33,7 @@
                 <td>
                     <span ng-repeat="client in statement.clients">
                         <a class="form-control-static" ui-sref="client.detail({id: {{client.id}}})">{{client.name}}</a>{{$last ? '' : ', '}}
-                    <span>
+                    </span>
                 </td>
             </tr>
             <tr>
@@ -43,7 +43,7 @@
                 <td>
                     <span ng-repeat="property in statement.propertys">
                         <a class="form-control-static" ui-sref="property.detail({id: {{property.id}}})">{{property.code}}</a>{{$last ? '' : ', '}}
-                    <span>
+                    </span>
                 </td>
             </tr>
             </tbody>

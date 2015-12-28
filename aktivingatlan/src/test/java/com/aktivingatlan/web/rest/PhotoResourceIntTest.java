@@ -123,7 +123,7 @@ public class PhotoResourceIntTest {
         photoRepository.saveAndFlush(photo);
 
         // Get all the photos
-        restPhotoMockMvc.perform(get("/api/photos"))
+        restPhotoMockMvc.perform(get("/api/photos?sort=id,desc"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(photo.getId().intValue())))

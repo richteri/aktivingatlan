@@ -1,16 +1,16 @@
 'use strict';
 
 angular.module('aktivingatlanApp')
-	.controller('FeatureDeleteController', function($scope, $modalInstance, entity, Feature) {
+	.controller('FeatureDeleteController', function($scope, $uibModalInstance, entity, Feature) {
 
         $scope.feature = entity;
         $scope.clear = function() {
-            $modalInstance.dismiss('cancel');
+            $uibModalInstance.dismiss('cancel');
         };
         $scope.confirmDelete = function (id) {
             Feature.delete({id: id},
                 function () {
-                    $modalInstance.close(true);
+                    $uibModalInstance.close(true);
                 });
         };
 

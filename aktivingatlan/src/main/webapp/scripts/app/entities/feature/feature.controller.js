@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('aktivingatlanApp')
-    .controller('FeatureController', function ($scope, $state, $modal, Feature) {
-      
+    .controller('FeatureController', function ($scope, $state, Feature) {
+
         $scope.features = [];
         $scope.loadAll = function() {
             Feature.query(function(result) {

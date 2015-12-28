@@ -134,7 +134,7 @@ public class ClientResourceIntTest {
         clientRepository.saveAndFlush(client);
 
         // Get all the clients
-        restClientMockMvc.perform(get("/api/clients"))
+        restClientMockMvc.perform(get("/api/clients?sort=id,desc"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(client.getId().intValue())))

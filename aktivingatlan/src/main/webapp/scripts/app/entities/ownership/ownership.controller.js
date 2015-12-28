@@ -1,12 +1,16 @@
 'use strict';
 
 angular.module('aktivingatlanApp')
-    .controller('OwnershipController', function ($scope, Ownership, ParseLinks) {
+    .controller('OwnershipController', function ($scope, $state, Ownership, ParseLinks) {
+
         $scope.ownerships = [];
-        $scope.page = 0;
+        $scope.predicate = 'id';
+        $scope.reverse = true;
+        $scope.page = 1;
         $scope.loadAll = function() {
-            Ownership.query({page: $scope.page, size: 20}, function(result, headers) {
+            Ownership.query({page: $scope.page - 1, size: 20, sort: [$scope.predicate + ',' + ($scope.reverse ? 'asc' : 'desc'), 'id']}, function(result, headers) {
                 $scope.links = ParseLinks.parse(headers('link'));
+                $scope.totalItems = headers('X-Total-Count');
                 $scope.ownerships = result;
             });
         };
@@ -16,21 +20,6 @@ angular.module('aktivingatlanApp')
         };
         $scope.loadAll();
 
-        $scope.delete = function (id) {
-            Ownership.get({id: id}, function(result) {
-                $scope.ownership = result;
-                $('#deleteOwnershipConfirmation').modal('show');
-            });
-        };
-
-        $scope.confirmDelete = function (id) {
-            Ownership.delete({id: id},
-                function () {
-                    $scope.loadAll();
-                    $('#deleteOwnershipConfirmation').modal('hide');
-                    $scope.clear();
-                });
-        };
 
         $scope.refresh = function () {
             $scope.loadAll();

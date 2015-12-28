@@ -53,8 +53,8 @@ angular.module('aktivingatlanApp')
                 data: {
                     authorities: ['ROLE_USER'],
                 },
-                onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal) {
-                    $modal.open({
+                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                    $uibModal.open({
                         templateUrl: 'scripts/app/entities/ownership/ownership-dialog.html',
                         controller: 'OwnershipDialogController',
                         size: 'lg',
@@ -79,11 +79,34 @@ angular.module('aktivingatlanApp')
                 data: {
                     authorities: ['ROLE_USER'],
                 },
-                onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal) {
-                    $modal.open({
+                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                    $uibModal.open({
                         templateUrl: 'scripts/app/entities/ownership/ownership-dialog.html',
                         controller: 'OwnershipDialogController',
                         size: 'lg',
+                        resolve: {
+                            entity: ['Ownership', function(Ownership) {
+                                return Ownership.get({id : $stateParams.id});
+                            }]
+                        }
+                    }).result.then(function(result) {
+                        $state.go('ownership', null, { reload: true });
+                    }, function() {
+                        $state.go('^');
+                    })
+                }]
+            })
+            .state('ownership.delete', {
+                parent: 'ownership',
+                url: '/{id}/delete',
+                data: {
+                    authorities: ['ROLE_USER'],
+                },
+                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                    $uibModal.open({
+                        templateUrl: 'scripts/app/entities/ownership/ownership-delete-dialog.html',
+                        controller: 'OwnershipDeleteController',
+                        size: 'md',
                         resolve: {
                             entity: ['Ownership', function(Ownership) {
                                 return Ownership.get({id : $stateParams.id});

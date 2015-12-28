@@ -261,7 +261,7 @@ public class PropertyResourceIntTest {
         propertyRepository.saveAndFlush(property);
 
         // Get all the propertys
-        restPropertyMockMvc.perform(get("/api/propertys"))
+        restPropertyMockMvc.perform(get("/api/propertys?sort=id,desc"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(property.getId().intValue())))

@@ -1,13 +1,16 @@
 'use strict';
 
 angular.module('aktivingatlanApp')
-    .controller('PhotoController', function ($scope, $state, $modal, Photo, ParseLinks) {
-      
+    .controller('PhotoController', function ($scope, $state, Photo, ParseLinks) {
+
         $scope.photos = [];
-        $scope.page = 0;
+        $scope.predicate = 'id';
+        $scope.reverse = true;
+        $scope.page = 1;
         $scope.loadAll = function() {
-            Photo.query({page: $scope.page, size: 20}, function(result, headers) {
+            Photo.query({page: $scope.page - 1, size: 20, sort: [$scope.predicate + ',' + ($scope.reverse ? 'asc' : 'desc'), 'id']}, function(result, headers) {
                 $scope.links = ParseLinks.parse(headers('link'));
+                $scope.totalItems = headers('X-Total-Count');
                 $scope.photos = result;
             });
         };

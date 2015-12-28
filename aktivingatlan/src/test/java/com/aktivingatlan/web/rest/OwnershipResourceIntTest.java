@@ -106,7 +106,7 @@ public class OwnershipResourceIntTest {
         ownershipRepository.saveAndFlush(ownership);
 
         // Get all the ownerships
-        restOwnershipMockMvc.perform(get("/api/ownerships"))
+        restOwnershipMockMvc.perform(get("/api/ownerships?sort=id,desc"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(ownership.getId().intValue())))

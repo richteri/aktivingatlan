@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('aktivingatlanApp').controller('PhotoDialogController',
-    ['$scope', '$stateParams', '$modalInstance', 'entity', 'Photo', 'Property',
-        function($scope, $stateParams, $modalInstance, entity, Photo, Property) {
+    ['$scope', '$stateParams', '$uibModalInstance', 'entity', 'Photo', 'Property',
+        function($scope, $stateParams, $uibModalInstance, entity, Photo, Property) {
 
         $scope.photo = entity;
         $scope.propertys = Property.query();
@@ -14,7 +14,7 @@ angular.module('aktivingatlanApp').controller('PhotoDialogController',
 
         var onSaveSuccess = function (result) {
             $scope.$emit('aktivingatlanApp:photoUpdate', result);
-            $modalInstance.close(result);
+            $uibModalInstance.close(result);
             $scope.isSaving = false;
         };
 
@@ -32,6 +32,6 @@ angular.module('aktivingatlanApp').controller('PhotoDialogController',
         };
 
         $scope.clear = function() {
-            $modalInstance.dismiss('cancel');
+            $uibModalInstance.dismiss('cancel');
         };
 }]);

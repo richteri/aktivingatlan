@@ -27,15 +27,19 @@
         </div>
         <div class="form-group">
             <label class="control-label" translate="aktivingatlanApp.contract.startDate" for="field_startDate">StartDate</label>
-            <input type="date" class="form-control" name="startDate" id="field_startDate"
-                    ng-model="contract.startDate"
-                     />
+            <input id="field_startDate" type="text" class="form-control" uib-datepicker-popup="{{dateformat}}" ng-model="contract.startDate" is-open="datePickerForStartDate.status.opened"
+            />
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="datePickerForStartDateOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
         </div>
         <div class="form-group">
             <label class="control-label" translate="aktivingatlanApp.contract.endDate" for="field_endDate">EndDate</label>
-            <input type="date" class="form-control" name="endDate" id="field_endDate"
-                    ng-model="contract.endDate"
-                     />
+            <input id="field_endDate" type="text" class="form-control" uib-datepicker-popup="{{dateformat}}" ng-model="contract.endDate" is-open="datePickerForEndDate.status.opened"
+            />
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="datePickerForEndDateOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
         </div>
         <div class="form-group">
             <label class="control-label" translate="aktivingatlanApp.contract.note" for="field_note">Note</label>

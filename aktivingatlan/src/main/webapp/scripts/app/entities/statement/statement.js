@@ -53,8 +53,8 @@ angular.module('aktivingatlanApp')
                 data: {
                     authorities: ['ROLE_USER'],
                 },
-                onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal) {
-                    $modal.open({
+                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                    $uibModal.open({
                         templateUrl: 'scripts/app/entities/statement/statement-dialog.html',
                         controller: 'StatementDialogController',
                         size: 'lg',
@@ -80,8 +80,8 @@ angular.module('aktivingatlanApp')
                 data: {
                     authorities: ['ROLE_USER'],
                 },
-                onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal) {
-                    $modal.open({
+                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                    $uibModal.open({
                         templateUrl: 'scripts/app/entities/statement/statement-dialog.html',
                         controller: 'StatementDialogController',
                         size: 'lg',
@@ -103,8 +103,8 @@ angular.module('aktivingatlanApp')
                 data: {
                     authorities: ['ROLE_USER'],
                 },
-                onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal) {
-                    $modal.open({
+                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                    $uibModal.open({
                         templateUrl: 'scripts/app/entities/statement/statement-delete-dialog.html',
                         controller: 'StatementDeleteController',
                         size: 'md',

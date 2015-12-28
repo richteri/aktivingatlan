@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('aktivingatlanApp').controller('StatementDialogController',
-    ['$scope', '$stateParams', '$modalInstance', 'entity', 'Statement', 'Client', 'Property',
-        function($scope, $stateParams, $modalInstance, entity, Statement, Client, Property) {
+    ['$scope', '$stateParams', '$uibModalInstance', 'entity', 'Statement', 'Client', 'Property',
+        function($scope, $stateParams, $uibModalInstance, entity, Statement, Client, Property) {
 
         $scope.statement = entity;
         $scope.clients = Client.query();
@@ -15,7 +15,7 @@ angular.module('aktivingatlanApp').controller('StatementDialogController',
 
         var onSaveSuccess = function (result) {
             $scope.$emit('aktivingatlanApp:statementUpdate', result);
-            $modalInstance.close(result);
+            $uibModalInstance.close(result);
             $scope.isSaving = false;
         };
 
@@ -33,6 +33,15 @@ angular.module('aktivingatlanApp').controller('StatementDialogController',
         };
 
         $scope.clear = function() {
-            $modalInstance.dismiss('cancel');
+            $uibModalInstance.dismiss('cancel');
+        };
+        $scope.datePickerForDate = {};
+
+        $scope.datePickerForDate.status = {
+            opened: false
+        };
+
+        $scope.datePickerForDateOpen = function($event) {
+            $scope.datePickerForDate.status.opened = true;
         };
 }]);

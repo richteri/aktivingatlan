@@ -107,7 +107,7 @@ public class CategoryResourceIntTest {
         categoryRepository.saveAndFlush(category);
 
         // Get all the categorys
-        restCategoryMockMvc.perform(get("/api/categorys"))
+        restCategoryMockMvc.perform(get("/api/categorys?sort=id,desc"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(category.getId().intValue())))

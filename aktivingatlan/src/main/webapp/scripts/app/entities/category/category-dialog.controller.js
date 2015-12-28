@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('aktivingatlanApp').controller('CategoryDialogController',
-    ['$scope', '$stateParams', '$modalInstance', 'entity', 'Category',
-        function($scope, $stateParams, $modalInstance, entity, Category) {
+    ['$scope', '$stateParams', '$uibModalInstance', 'entity', 'Category',
+        function($scope, $stateParams, $uibModalInstance, entity, Category) {
 
         $scope.category = entity;
         $scope.load = function(id) {
@@ -13,7 +13,7 @@ angular.module('aktivingatlanApp').controller('CategoryDialogController',
 
         var onSaveSuccess = function (result) {
             $scope.$emit('aktivingatlanApp:categoryUpdate', result);
-            $modalInstance.close(result);
+            $uibModalInstance.close(result);
             $scope.isSaving = false;
         };
 
@@ -31,6 +31,6 @@ angular.module('aktivingatlanApp').controller('CategoryDialogController',
         };
 
         $scope.clear = function() {
-            $modalInstance.dismiss('cancel');
+            $uibModalInstance.dismiss('cancel');
         };
 }]);

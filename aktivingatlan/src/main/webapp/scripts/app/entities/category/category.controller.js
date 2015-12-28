@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('aktivingatlanApp')
-    .controller('CategoryController', function ($scope, $state, $modal, Category) {
-      
+    .controller('CategoryController', function ($scope, $state, Category) {
+
         $scope.categorys = [];
         $scope.loadAll = function() {
             Category.query(function(result) {

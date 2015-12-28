@@ -53,8 +53,8 @@ angular.module('aktivingatlanApp')
                 data: {
                     authorities: ['ROLE_USER'],
                 },
-                onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal) {
-                    $modal.open({
+                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                    $uibModal.open({
                         templateUrl: 'scripts/app/entities/feature/feature-dialog.html',
                         controller: 'FeatureDialogController',
                         size: 'lg',
@@ -81,8 +81,8 @@ angular.module('aktivingatlanApp')
                 data: {
                     authorities: ['ROLE_USER'],
                 },
-                onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal) {
-                    $modal.open({
+                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                    $uibModal.open({
                         templateUrl: 'scripts/app/entities/feature/feature-dialog.html',
                         controller: 'FeatureDialogController',
                         size: 'lg',
@@ -104,8 +104,8 @@ angular.module('aktivingatlanApp')
                 data: {
                     authorities: ['ROLE_USER'],
                 },
-                onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal) {
-                    $modal.open({
+                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                    $uibModal.open({
                         templateUrl: 'scripts/app/entities/feature/feature-delete-dialog.html',
                         controller: 'FeatureDeleteController',
                         size: 'md',

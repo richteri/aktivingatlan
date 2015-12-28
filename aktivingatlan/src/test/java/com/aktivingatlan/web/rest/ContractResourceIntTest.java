@@ -127,7 +127,7 @@ public class ContractResourceIntTest {
         contractRepository.saveAndFlush(contract);
 
         // Get all the contracts
-        restContractMockMvc.perform(get("/api/contracts"))
+        restContractMockMvc.perform(get("/api/contracts?sort=id,desc"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(contract.getId().intValue())))

@@ -14,19 +14,19 @@
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
-                <tr>
-                    <th translate="global.field.id">ID</th>
-                    <th translate="aktivingatlanApp.apartment.bed">Bed</th>
-                    <th translate="aktivingatlanApp.apartment.bathroom">Bathroom</th>
-                    <th translate="aktivingatlanApp.apartment.toilet">Toilet</th>
-                    <th translate="aktivingatlanApp.apartment.rentHuf">RentHuf</th>
-                    <th translate="aktivingatlanApp.apartment.rentEur">RentEur</th>
-                    <th translate="aktivingatlanApp.apartment.rentPeakHuf">RentPeakHuf</th>
-                    <th translate="aktivingatlanApp.apartment.rentPeakEur">RentPeakEur</th>
-                    <th translate="aktivingatlanApp.apartment.descriptionHu">DescriptionHu</th>
-                    <th translate="aktivingatlanApp.apartment.descriptionEn">DescriptionEn</th>
-                    <th translate="aktivingatlanApp.apartment.descriptionDe">DescriptionDe</th>
-                    <th translate="aktivingatlanApp.apartment.property">property</th>
+                <tr jh-sort="predicate" ascending="reverse" callback="loadAll()">
+                    <th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="bed"><span translate="aktivingatlanApp.apartment.bed">Bed</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="bathroom"><span translate="aktivingatlanApp.apartment.bathroom">Bathroom</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="toilet"><span translate="aktivingatlanApp.apartment.toilet">Toilet</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="rentHuf"><span translate="aktivingatlanApp.apartment.rentHuf">RentHuf</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="rentEur"><span translate="aktivingatlanApp.apartment.rentEur">RentEur</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="rentPeakHuf"><span translate="aktivingatlanApp.apartment.rentPeakHuf">RentPeakHuf</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="rentPeakEur"><span translate="aktivingatlanApp.apartment.rentPeakEur">RentPeakEur</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="descriptionHu"><span translate="aktivingatlanApp.apartment.descriptionHu">DescriptionHu</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="descriptionEn"><span translate="aktivingatlanApp.apartment.descriptionEn">DescriptionEn</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="descriptionDe"><span translate="aktivingatlanApp.apartment.descriptionDe">DescriptionDe</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="property.code"><span translate="aktivingatlanApp.apartment.property">property</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -66,18 +66,8 @@
                 </tr>
             </tbody>
         </table>
-        <nav>
-            <ul class="pagination">
-                <li ng-show="links['first'] >= 0" ng-click="loadPage(links['first'])"><a>&lt;&lt;</a></li>
-                <li ng-show="page > 0" ng-click="loadPage(links['prev'] || 0)"><a>&lt;</a></li>
-                <li ng-show="page > 1" ng-click="loadPage(page - 2)"><a>{{page - 1}}</a></li>
-                <li ng-show="page > 0" ng-click="loadPage(page - 1)"><a>{{page}}</a></li>
-                <li class="active"><a>{{page + 1}}</a></li>
-                <li ng-show="page < links['last']" ng-click="loadPage(page + 1)"><a>{{page + 2}}</a></li>
-                <li ng-show="page < links['last'] - 1" ng-click="loadPage(page + 2)"><a>{{page + 3}}</a></li>
-                <li ng-show="links['next']" ng-click="loadPage(links['next'])"><a>&gt;</a></li>
-                <li ng-show="links['last'] > 0" ng-click="loadPage(links['last'])"><a>&gt;&gt;</a></li>
-            </ul>
-        </nav>
+    </div>
+    <div class="text-center">
+        <uib-pagination class="pagination-sm" total-items="totalItems" ng-model="page" ng-change="loadAll()"></uib-pagination>
     </div>
 </div>

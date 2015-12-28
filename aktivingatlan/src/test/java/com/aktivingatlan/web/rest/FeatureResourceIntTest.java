@@ -107,7 +107,7 @@ public class FeatureResourceIntTest {
         featureRepository.saveAndFlush(feature);
 
         // Get all the features
-        restFeatureMockMvc.perform(get("/api/features"))
+        restFeatureMockMvc.perform(get("/api/features?sort=id,desc"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(feature.getId().intValue())))

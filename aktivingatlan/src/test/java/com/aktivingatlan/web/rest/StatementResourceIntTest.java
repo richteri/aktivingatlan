@@ -113,7 +113,7 @@ public class StatementResourceIntTest {
         statementRepository.saveAndFlush(statement);
 
         // Get all the statements
-        restStatementMockMvc.perform(get("/api/statements"))
+        restStatementMockMvc.perform(get("/api/statements?sort=id,desc"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(statement.getId().intValue())))

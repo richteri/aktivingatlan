@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('aktivingatlanApp').controller('ContractDialogController',
-    ['$scope', '$stateParams', '$modalInstance', 'entity', 'Contract', 'Property', 'Client',
-        function($scope, $stateParams, $modalInstance, entity, Contract, Property, Client) {
+    ['$scope', '$stateParams', '$uibModalInstance', 'entity', 'Contract', 'Property', 'Client',
+        function($scope, $stateParams, $uibModalInstance, entity, Contract, Property, Client) {
 
         $scope.contract = entity;
         $scope.propertys = Property.query();
@@ -15,7 +15,7 @@ angular.module('aktivingatlanApp').controller('ContractDialogController',
 
         var onSaveSuccess = function (result) {
             $scope.$emit('aktivingatlanApp:contractUpdate', result);
-            $modalInstance.close(result);
+            $uibModalInstance.close(result);
             $scope.isSaving = false;
         };
 
@@ -33,6 +33,24 @@ angular.module('aktivingatlanApp').controller('ContractDialogController',
         };
 
         $scope.clear = function() {
-            $modalInstance.dismiss('cancel');
+            $uibModalInstance.dismiss('cancel');
+        };
+        $scope.datePickerForStartDate = {};
+
+        $scope.datePickerForStartDate.status = {
+            opened: false
+        };
+
+        $scope.datePickerForStartDateOpen = function($event) {
+            $scope.datePickerForStartDate.status.opened = true;
+        };
+        $scope.datePickerForEndDate = {};
+
+        $scope.datePickerForEndDate.status = {
+            opened: false
+        };
+
+        $scope.datePickerForEndDateOpen = function($event) {
+            $scope.datePickerForEndDate.status.opened = true;
         };
 }]);

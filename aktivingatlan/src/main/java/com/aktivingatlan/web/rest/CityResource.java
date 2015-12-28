@@ -1,12 +1,10 @@
 package com.aktivingatlan.web.rest;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Optional;
-
-import javax.inject.Inject;
-
+import com.codahale.metrics.annotation.Timed;
+import com.aktivingatlan.domain.City;
+import com.aktivingatlan.repository.CityRepository;
+import com.aktivingatlan.web.rest.util.HeaderUtil;
+import com.aktivingatlan.web.rest.util.PaginationUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -15,17 +13,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.aktivingatlan.domain.City;
-import com.aktivingatlan.repository.CityRepository;
-import com.aktivingatlan.web.rest.util.HeaderUtil;
-import com.aktivingatlan.web.rest.util.PaginationUtil;
-import com.codahale.metrics.annotation.Timed;
+import javax.inject.Inject;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * REST controller for managing City.
@@ -35,26 +29,26 @@ import com.codahale.metrics.annotation.Timed;
 public class CityResource {
 
     private final Logger log = LoggerFactory.getLogger(CityResource.class);
-
+        
     @Inject
     private CityRepository cityRepository;
-
+    
     /**
      * POST  /citys -> Create a new city.
      */
     @RequestMapping(value = "/citys",
-            method = RequestMethod.POST,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+        method = RequestMethod.POST,
+        produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<City> createCity(@RequestBody City city) throws URISyntaxException {
         log.debug("REST request to save City : {}", city);
         if (city.getId() != null) {
-            return ResponseEntity.badRequest().header("Failure", "A new city cannot already have an ID").body(null);
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("city", "idexists", "A new city cannot already have an ID")).body(null);
         }
         City result = cityRepository.save(city);
         return ResponseEntity.created(new URI("/api/citys/" + result.getId()))
-                .headers(HeaderUtil.createEntityCreationAlert("city", result.getId().toString()))
-                .body(result);
+            .headers(HeaderUtil.createEntityCreationAlert("city", result.getId().toString()))
+            .body(result);
     }
 
     /**
@@ -71,20 +65,21 @@ public class CityResource {
         }
         City result = cityRepository.save(city);
         return ResponseEntity.ok()
-                .headers(HeaderUtil.createEntityUpdateAlert("city", city.getId().toString()))
-                .body(result);
+            .headers(HeaderUtil.createEntityUpdateAlert("city", city.getId().toString()))
+            .body(result);
     }
 
     /**
      * GET  /citys -> get all the citys.
      */
     @RequestMapping(value = "/citys",
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<List<City>> getAllCitys(Pageable pageable)
         throws URISyntaxException {
-        Page<City> page = cityRepository.findAll(pageable);
+        log.debug("REST request to get a page of Citys");
+        Page<City> page = cityRepository.findAll(pageable); 
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/citys");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
@@ -93,14 +88,15 @@ public class CityResource {
      * GET  /citys/:id -> get the "id" city.
      */
     @RequestMapping(value = "/citys/{id}",
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<City> getCity(@PathVariable Long id) {
         log.debug("REST request to get City : {}", id);
-        return Optional.ofNullable(cityRepository.findOne(id))
-            .map(city -> new ResponseEntity<>(
-                city,
+        City city = cityRepository.findOne(id);
+        return Optional.ofNullable(city)
+            .map(result -> new ResponseEntity<>(
+                result,
                 HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
@@ -109,8 +105,8 @@ public class CityResource {
      * DELETE  /citys/:id -> delete the "id" city.
      */
     @RequestMapping(value = "/citys/{id}",
-            method = RequestMethod.DELETE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+        method = RequestMethod.DELETE,
+        produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<Void> deleteCity(@PathVariable Long id) {
         log.debug("REST request to delete City : {}", id);
@@ -133,4 +129,5 @@ public class CityResource {
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/_search/citys");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
+
 }

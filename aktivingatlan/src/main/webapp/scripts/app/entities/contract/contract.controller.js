@@ -1,13 +1,16 @@
 'use strict';
 
 angular.module('aktivingatlanApp')
-    .controller('ContractController', function ($scope, $state, $modal, Contract, ParseLinks) {
-      
+    .controller('ContractController', function ($scope, $state, Contract, ParseLinks) {
+
         $scope.contracts = [];
-        $scope.page = 0;
+        $scope.predicate = 'id';
+        $scope.reverse = true;
+        $scope.page = 1;
         $scope.loadAll = function() {
-            Contract.query({page: $scope.page, size: 20}, function(result, headers) {
+            Contract.query({page: $scope.page - 1, size: 20, sort: [$scope.predicate + ',' + ($scope.reverse ? 'asc' : 'desc'), 'id']}, function(result, headers) {
                 $scope.links = ParseLinks.parse(headers('link'));
+                $scope.totalItems = headers('X-Total-Count');
                 $scope.contracts = result;
             });
         };

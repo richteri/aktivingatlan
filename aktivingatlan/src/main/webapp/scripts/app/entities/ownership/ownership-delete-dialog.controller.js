@@ -1,14 +1,14 @@
 'use strict';
 
 angular.module('aktivingatlanApp')
-	.controller('ContractDeleteController', function($scope, $uibModalInstance, entity, Contract) {
+	.controller('OwnershipDeleteController', function($scope, $uibModalInstance, entity, Ownership) {
 
-        $scope.contract = entity;
+        $scope.ownership = entity;
         $scope.clear = function() {
             $uibModalInstance.dismiss('cancel');
         };
         $scope.confirmDelete = function (id) {
-            Contract.delete({id: id},
+            Ownership.delete({id: id},
                 function () {
                     $uibModalInstance.close(true);
                 });
