@@ -8,8 +8,8 @@
     </div>
     <div class="modal-body">
         <jh-alert-error></jh-alert-error>
-		<tabset>
-			<tab heading="Általános">
+		<uib-tabset>
+			<uib-tab heading="Általános">
 			<br>
 			<div class="row">
 				<div class="col-lg-6">
@@ -79,10 +79,12 @@
 										for="field_feature">feature</label>
 									<ui-select multiple ng-model="property.features"
 										theme="bootstrap" class="form-control" id="field_feature">
-									<ui-select-match>{{$item.nameHu}}</ui-select-match> <ui-select-choices
-										repeat="feature in features | filter:{nameHu: $select.search} | filter:filterAlreadyAddedFeatures ">
-									<div ng-bind-html="feature.nameHu | highlight: $select.search"></div>
-									</ui-select-choices> </ui-select>
+										<ui-select-match>{{$item.nameHu}}</ui-select-match>
+										<ui-select-choices
+											repeat="feature in features | filter:{nameHu: $select.search} | filter:filterAlreadyAddedFeatures ">
+											<div ng-bind-html="feature.nameHu | highlight: $select.search"></div>
+										</ui-select-choices> 
+									</ui-select>
 								</div>
 								<div class="form-group col-sm-2">
 									<label translate="aktivingatlanApp.property.furnished"
@@ -107,11 +109,11 @@
 										for="field_city">city</label> <input type="text"
 										class="form-control input-sm" id="field_city" name="city"
 										ng-model="property.cityName"
-										typeahead="city as formatCityName(city) for city in findCity($viewValue)"
-										typeahead-on-select="onCitySelect($item, $model, $label)"
-										typeahead-editable="false" typeahead-select-on-exact="true"
-										typeahead-select-on-blur="true" typeahead-min-length="3"
-										typeahead-wait-ms="100">
+										uib-typeahead="city as formatCityName(city) for city in findCity($viewValue)"
+										uib-typeahead-on-select="onCitySelect($item, $model, $label)"
+										uib-typeahead-editable="false" uib-typeahead-select-on-exact="true"
+										uib-typeahead-select-on-blur="true" uib-typeahead-min-length="3"
+										uib-typeahead-wait-ms="100">
 								</div>
 								<div class="form-group col-sm-8">
 									<label translate="aktivingatlanApp.property.address1"
@@ -397,8 +399,8 @@
 					</div>
 				</div>
 			</div>
-			</tab>
-			<tab heading="Képek">
+			</uib-tab>
+			<uib-tab heading="Képek">
 			<br>
 			<div class="panel panel-info">
 				<div class="panel-heading">
@@ -440,17 +442,19 @@
 					</div>
 				</div>
 			</div>
-			</tab>
-			<tab heading="Apartmanok" disable="true"></tab>
-			<tab heading="Tulajdonosok és szerződések" disable="true"></tab>
-			<tab heading="Megtekintési nyiltkozatok" disable="true"></tab>	
-		</tabset>	
+			</uib-tab>
+			<uib-tab heading="Apartmanok" disable="true"></uib-tab>
+			<uib-tab heading="Tulajdonosok és szerződések" disable="true"></uib-tab>
+			<uib-tab heading="Megtekintési nyiltkozatok" disable="true"></uib-tab>	
+		</uib-tabset>	
 
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-default" ng-click="clear()">
-            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
-        </button>
+	    <button type="submit"
+	            onclick="window.history.back()"
+	            class="btn btn-info">
+	        <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+	    </button>
         <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
             <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
         </button>

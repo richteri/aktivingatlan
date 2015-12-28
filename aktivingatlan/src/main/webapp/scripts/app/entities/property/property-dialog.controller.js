@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('aktivingatlanApp').controller('PropertyDialogController',
-    ['$scope', '$stateParams', '$filter', 'entity', 'Property', 'PropertySearch', 'Category', 'Photo', 'Statement', 'Feature', 'Ownership', 'City', 'Contract', 'User', 'Apartment', 'CitySearch', 'Upload',
-        function($scope, $stateParams, $filter, entity, Property, PropertySearch, Category, Photo, Statement, Feature, Ownership, City, Contract, User, Apartment, CitySearch, Upload) {
+    ['$scope', '$stateParams', '$filter', '$sanitize', 'entity', 'Property', 'PropertySearch', 'Category', 'Photo', 'Statement', 'Feature', 'Ownership', 'City', 'Contract', 'User', 'Apartment', 'CitySearch', 'Upload',
+        function($scope, $stateParams, $filter, $sanitize, entity, Property, PropertySearch, Category, Photo, Statement, Feature, Ownership, City, Contract, User, Apartment, CitySearch, Upload) {
 
         $scope.property = entity;
         $scope.files = null;
@@ -18,7 +18,6 @@ angular.module('aktivingatlanApp').controller('PropertyDialogController',
 
         var onSaveSuccess = function (result) {
             $scope.$emit('aktivingatlanApp:propertyUpdate', result);
-            $uibModalInstance.close(result);
             $scope.isSaving = false;
         };
 
@@ -35,10 +34,6 @@ angular.module('aktivingatlanApp').controller('PropertyDialogController',
             }
         };
 
-        $scope.clear = function() {
-            $uibModalInstance.dismiss('cancel');
-        };
-        
         $scope.formatCityName = function (city) {
         	if (angular.isObject(city)) {
         		return city.zip + ' ' + city.name;

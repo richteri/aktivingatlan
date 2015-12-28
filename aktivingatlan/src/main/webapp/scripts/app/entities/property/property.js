@@ -53,57 +53,56 @@ angular.module('aktivingatlanApp')
                 data: {
                     authorities: ['ROLE_USER'],
                 },
-                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
-                    $uibModal.open({
+                views: {
+                    'content@': {
                         templateUrl: 'scripts/app/entities/property/property-dialog.html',
                         controller: 'PropertyDialogController',
-                        size: 'lg',
-                        resolve: {
-                            entity: function () {
-                                return {
-                                    code: null,
-                                    descriptionHu: null,
-                                    descriptionEn: null,
-                                    descriptionDe: null,
-                                    room: null,
-                                    halfRoom: null,
-                                    floorArea: null,
-                                    parcelArea: null,
-                                    pracelNumber: null,
-                                    address1: null,
-                                    address2: null,
-                                    active: null,
-                                    kitchen: null,
-                                    livingroom: null,
-                                    floor: null,
-                                    bathroom: null,
-                                    toilet: null,
-                                    furnished: null,
-                                    forSale: null,
-                                    saleHuf: null,
-                                    saleEur: null,
-                                    forRent: null,
-                                    rentHuf: null,
-                                    rentEur: null,
-                                    rentPeakHuf: null,
-                                    rentPeakEur: null,
-                                    forMediumTerm: null,
-                                    mediumTermHuf: null,
-                                    mediumTermEur: null,
-                                    forLongTerm: null,
-                                    longTermHuf: null,
-                                    longTermEur: null,
-                                    featured: null,
-                                    id: null
-                                };
-                            }
-                        }
-                    }).result.then(function(result) {
-                        $state.go('property', null, { reload: true });
-                    }, function() {
-                        $state.go('property');
-                    })
-                }]
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('property');
+                        return $translate.refresh();
+                    }],
+                    entity: function () {
+                        return {
+                            code: null,
+                            descriptionHu: null,
+                            descriptionEn: null,
+                            descriptionDe: null,
+                            room: null,
+                            halfRoom: null,
+                            floorArea: null,
+                            parcelArea: null,
+                            pracelNumber: null,
+                            address1: null,
+                            address2: null,
+                            active: null,
+                            kitchen: null,
+                            livingroom: null,
+                            floor: null,
+                            bathroom: null,
+                            toilet: null,
+                            furnished: null,
+                            forSale: null,
+                            saleHuf: null,
+                            saleEur: null,
+                            forRent: null,
+                            rentHuf: null,
+                            rentEur: null,
+                            rentPeakHuf: null,
+                            rentPeakEur: null,
+                            forMediumTerm: null,
+                            mediumTermHuf: null,
+                            mediumTermEur: null,
+                            forLongTerm: null,
+                            longTermHuf: null,
+                            longTermEur: null,
+                            featured: null,
+                            id: null
+                        };
+                    }
+                }
             })
             .state('property.edit', {
                 parent: 'property',
