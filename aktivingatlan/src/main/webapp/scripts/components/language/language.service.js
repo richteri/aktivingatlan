@@ -27,11 +27,7 @@ angular.module('aktivingatlanApp')
  They are written in English to avoid character encoding issues (not a perfect solution)
  */
     .constant('LANGUAGES', [
-    	'hu','en','de'
-        //JHipster will add new languages here
+        'hu','en','de'
+        // jhipster-needle-006 - JHipster will add new languages here
     ]
 );
-
-
-
-

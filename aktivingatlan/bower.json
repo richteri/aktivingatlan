@@ -23,6 +23,7 @@
         "bootstrap-sass": "3.3.5",
         "jquery": "2.1.4",
         "json3": "3.3.2",
+        "modernizr": "3.2.0",
         "ng-file-upload": "10.0.2",
         "ngInfiniteScroll": "1.2.1",
         "swagger-ui": "2.1.3",
