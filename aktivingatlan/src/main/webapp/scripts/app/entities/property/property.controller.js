@@ -136,9 +136,9 @@ angular.module('aktivingatlanApp')
 				 			width : 82,
 				 			//cellTemplate: 'scripts/app/entities/property/property-grid-actions.html',
 				 			cellTemplate : '<div class="ui-grid-cell-contents">' +
-					 			'<button type="submit" ui-sref="property.detail({id:row.entity.id})" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-eye-open"></span></button>' +
-					 			'<button type="submit" ui-sref="property.edit({id:row.entity.id})" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"></span></button>' +
-					 			'<button type="submit" ng-click="grid.appScope.delete(row.entity.id)" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove-circle"></span></button>' +
+					 			'<button ui-sref="property.detail({id:row.entity.id})" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-eye-open"></span></button>' +
+					 			'<button ui-sref="property.edit({id:row.entity.id})" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"></span></button>' +
+					 			'<button ui-sref="property.delete({id:row.entity.id})" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove-circle"></span></button>' +
 					 			'</div>'
 				 		}, {
 				 			field : 'code',

@@ -450,9 +450,7 @@
 
     </div>
     <div class="modal-footer">
-	    <button type="submit"
-	            onclick="window.history.back()"
-	            class="btn btn-info">
+	    <button type="button" class="btn btn-info" ui-sref="property">
 	        <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
 	    </button>
         <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">

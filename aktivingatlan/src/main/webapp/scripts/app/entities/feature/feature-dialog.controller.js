@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('aktivingatlanApp').controller('FeatureDialogController',
-    ['$scope', '$stateParams', '$uibModalInstance', 'entity', 'Feature',
-        function($scope, $stateParams, $uibModalInstance, entity, Feature) {
+    ['$scope', '$stateParams', 'entity', 'Feature',
+        function($scope, $stateParams, entity, Feature) {
 
         $scope.feature = entity;
         $scope.load = function(id) {
@@ -13,7 +13,6 @@ angular.module('aktivingatlanApp').controller('FeatureDialogController',
 
         var onSaveSuccess = function (result) {
             $scope.$emit('aktivingatlanApp:featureUpdate', result);
-            $uibModalInstance.close(result);
             $scope.isSaving = false;
         };
 
@@ -28,9 +27,5 @@ angular.module('aktivingatlanApp').controller('FeatureDialogController',
             } else {
                 Feature.save($scope.feature, onSaveSuccess, onSaveError);
             }
-        };
-
-        $scope.clear = function() {
-            $uibModalInstance.dismiss('cancel');
         };
 }]);
