@@ -31,6 +31,7 @@ angular.module('aktivingatlanApp', ['LocalStorageModule', 'tmh.dynamicLocale', '
             if (Principal.isIdentityResolved()) {
                 Auth.authorize();
             }
+			
             
             // Update the language
             Language.getCurrent().then(function (language) {
@@ -103,6 +104,7 @@ angular.module('aktivingatlanApp', ['LocalStorageModule', 'tmh.dynamicLocale', '
         $httpProvider.interceptors.push('authExpiredInterceptor');
         $httpProvider.interceptors.push('authInterceptor');
         $httpProvider.interceptors.push('notificationInterceptor');
+        // jhipster-needle-angularjs-add-interceptor JHipster will add new application interceptor here
         
         // Initialize angular-translate
         $translateProvider.useLoader('$translatePartialLoader', {
@@ -119,7 +121,7 @@ angular.module('aktivingatlanApp', ['LocalStorageModule', 'tmh.dynamicLocale', '
         tmhDynamicLocaleProvider.storageKey('NG_TRANSLATE_LANG_KEY');
         
     })
-    // jhipster-needle-angularjs-add-config JHipster will add new application configuration
+    // jhipster-needle-angularjs-add-config JHipster will add new application configuration here
     .config(['$urlMatcherFactoryProvider', function($urlMatcherFactory) {
         $urlMatcherFactory.type('boolean', {
             name : 'boolean',

@@ -1,4 +1,4 @@
-// Generated on 2015-12-28 using generator-jhipster 2.26.1
+// Generated on 2016-01-21 using generator-jhipster 2.27.0
 'use strict';
 var fs = require('fs');
 
@@ -100,7 +100,12 @@ module.exports = function (grunt) {
             },
             options: {
                 watchTask: true,
-                proxy: "localhost:8080"
+                proxy: {
+                    target: "localhost:8080",
+                    proxyOptions: {
+                        xfwd: true
+                    }
+                }
             }
         },
         clean: {
@@ -162,7 +167,7 @@ module.exports = function (grunt) {
             }
         },
         useminPrepare: {
-            html: 'src/main/webapp/**/*.html',
+            html: 'src/main/webapp/index.html',
             options: {
                 dest: '<%= yeoman.dist %>',
                 flow: {
@@ -281,14 +286,6 @@ module.exports = function (grunt) {
                         'generated/*'
                     ]
                 }]
-            },
-            generateOpenshiftDirectory: {
-                    expand: true,
-                    dest: 'deploy/openshift',
-                    src: [
-                        'pom.xml',
-                        'src/main/**'
-                ]
             }
         },
         karma: {
@@ -313,13 +310,6 @@ module.exports = function (grunt) {
                 push: false,
                 connectCommits: false,
                 message: 'Built %sourceName% from commit %sourceCommit% on branch %sourceBranch%'
-            },
-            openshift: {
-                options: {
-                    dir: 'deploy/openshift',
-                    remote: 'openshift',
-                    branch: 'master'
-                }
             }
         },
         ngconstant: {
@@ -390,19 +380,6 @@ module.exports = function (grunt) {
         'rev',
         'usemin',
         'htmlmin'
-    ]);
-
-    grunt.registerTask('buildOpenshift', [
-        'test',
-        'build',
-        'copy:generateOpenshiftDirectory',
-    ]);
-
-    grunt.registerTask('deployOpenshift', [
-        'test',
-        'build',
-        'copy:generateOpenshiftDirectory',
-        'buildcontrol:openshift'
     ]);
 
     
