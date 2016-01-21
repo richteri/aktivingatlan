@@ -5,13 +5,15 @@ angular.module('aktivingatlanApp')
         return {
             // Add authorization token to headers
             request: function (config) {
-                config.headers = config.headers || {};
-                var token = localStorageService.get('token');
-                
-                if (token && token.expires && token.expires > new Date().getTime()) {
-                  config.headers['x-auth-token'] = token.token;
-                }
-                
+            	// exclude cloudinary.com URLs
+            	if (config.url.indexOf('cloudinary') === -1) {
+	                config.headers = config.headers || {};
+	                var token = localStorageService.get('token');
+	                
+	                if (token && token.expires && token.expires > new Date().getTime()) {
+	                  config.headers['x-auth-token'] = token.token;
+	                }
+            	}                
                 return config;
             }
         };

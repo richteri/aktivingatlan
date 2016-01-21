@@ -409,7 +409,7 @@
 				<div class="panel-body">
 					<div class="btn btn-primary" ngf-select="uploadFiles($files)" ng-model="files" ngf-multiple="true">Kiválaszt...</div>
 					<div ng-repeat="file in files"> 
-						<progressbar animate="false" value="file.progress" type="success" ng-show="file.progress<100"><b>{{file.name}} {{file.progress}}%</b></progressbar>
+						<uib-progressbar animate="false" value="file.progress" type="success" ng-show="file.progress<100"><b>{{file.name}} {{file.progress}}%</b></uib-progressbar>
 					</div>
 					<hr>
 					<div ng-repeat="photo in property.photos">
