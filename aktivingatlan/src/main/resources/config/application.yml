@@ -64,3 +64,8 @@ jhipster:
         contact:
         license:
         licenseUrl:
+cloudinary:
+    apiKey: 184228148353236
+    apiSecret: gZTF4AThJLfbgsDI7Dx8PxBUOBs
+    apiBaseUrl: https://api.cloudinary.com/v1_1/aktivingatlan
+    url: cloudinary://184228148353236:gZTF4AThJLfbgsDI7Dx8PxBUOBs@aktivingatlan

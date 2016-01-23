@@ -374,6 +374,13 @@
             <version>${cucumber.version}</version>
             <scope>test</scope>
         </dependency>
+
+		<!-- Cloudinary -->        
+		<dependency>
+		    <groupId>com.cloudinary</groupId>
+		    <artifactId>cloudinary-http44</artifactId>
+		    <version>1.2.2</version>
+		</dependency>
         <!-- jhipster-needle-maven-add-dependency -->
     </dependencies>
     <build>

@@ -5,6 +5,8 @@ import com.aktivingatlan.domain.Photo;
 import com.aktivingatlan.repository.PhotoRepository;
 import com.aktivingatlan.web.rest.util.HeaderUtil;
 import com.aktivingatlan.web.rest.util.PaginationUtil;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.api.ApiResponse;
 import com.aktivingatlan.web.rest.dto.PhotoDTO;
 import com.aktivingatlan.web.rest.mapper.PhotoMapper;
 import org.slf4j.Logger;
@@ -22,6 +24,8 @@ import java.util.stream.StreamSupport;
 import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -41,6 +45,9 @@ public class PhotoResource {
     
     @Inject
     private PhotoMapper photoMapper;
+    
+    @Inject 
+    private Cloudinary cloudinary;
     
     /**
      * POST  /photos -> Create a new photo.
@@ -125,10 +132,21 @@ public class PhotoResource {
         method = RequestMethod.DELETE,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @Transactional
     public ResponseEntity<Void> deletePhoto(@PathVariable Long id) {
         log.debug("REST request to delete Photo : {}", id);
-        photoRepository.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("photo", id.toString())).build();
+        Photo photo = photoRepository.getOne(id);
+        ApiResponse apiResponse;
+        try {
+            apiResponse = cloudinary.api().deleteResources(Arrays.asList(photo.getFilename()), null);
+            photoRepository.delete(id);
+            return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("photo", id.toString())).build();
+        } catch (Exception e) {
+            log.error("Cannot delete photo {} because {}", id, e.getMessage());
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("photo", "deleteError", e.getMessage())).body(null);
+        }
+        
+        
     }
 
     /**

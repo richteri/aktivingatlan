@@ -1,0 +1,22 @@
+{"properties": [
+  {
+    "name": "cloudinary.api-key",
+    "type": "java.lang.String",
+    "description": "Coludinary authentication key"
+  },
+  {
+    "name": "cloudinary.api-secret",
+    "type": "java.lang.String",
+    "description": "Coludinary authentication secret"
+  },
+  {
+    "name": "cloudinary.api-base-url",
+    "type": "java.lang.String",
+    "description": "Cloudinary image manipulation API endpoint"
+  },
+  {
+    "name": "cloudinary.url",
+    "type": "java.lang.String",
+    "description": "Complete Cloudinary URL"
+  }
+]}
