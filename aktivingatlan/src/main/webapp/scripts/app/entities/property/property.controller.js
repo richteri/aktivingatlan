@@ -10,28 +10,28 @@ angular.module('aktivingatlanApp')
         $scope.predicate = 'id';
         $scope.reverse = true;
         $scope.page = 1;
-        
+
         User.query(function (result) {
         	angular.forEach(result, function(value) {
         		$scope.users.push({value: value.login, label: value.firstName + ' ' + value.lastName});
         	});
         });
-        
+
         Category.query(function (result) {
         	angular.forEach(result, function(value) {
         		$scope.categories.push({value: value.id, label: value.nameHu});
         	});
         });
-        
+
         $scope.loadAll = function() {
             Property.query(function(result, headers) {
                 $scope.propertys = result;
                 $scope.gridOptions.data = result;
             });
         };
-        
+
         $scope.loadAll();
-        
+
 
 
         $scope.refresh = function () {
@@ -77,25 +77,25 @@ angular.module('aktivingatlanApp')
                 id: null
             };
         };
-        
+
 		function saveState() {
 			var state = $scope.gridApi.saveState.save();
 			localStorageService.set('property-grid-state', state);
 		}
-		
+
 		function restoreState() {
 			$timeout(function() {
 				var state = localStorageService.get('property-grid-state');
 				if (state) $scope.gridApi.saveState.restore($scope, state);
 			});
 		}
-		
+
 		$scope.resetState = function() {
 			localStorageService.remove('property-grid-state');
 			$state.reload('property');
 		};
-        
-        
+
+
 		 $scope.gridOptions = {
 				 	enableGridMenu : true,
 				 	enableFiltering : true,
@@ -174,7 +174,8 @@ angular.module('aktivingatlanApp')
 				 						label : 'inaktív'
 				 					}
 				 				]
-				 			}
+				 			},
+                            cellTemplate : '<div class="ui-grid-cell-contents text-center"><span class="glyphicon glyphicon-{{row.entity[col.field]?\'ok\':\'minus\'}}"></span></div>'
 				 		}, {
 				 			field : 'featured',
 				 			headerCellFilter : 'translate',
@@ -190,7 +191,8 @@ angular.module('aktivingatlanApp')
 				 						label : 'nem kiemelt'
 				 					}
 				 				]
-				 			}
+				 			},
+                            cellTemplate : '<div class="ui-grid-cell-contents text-center"><span class="glyphicon glyphicon-{{row.entity[col.field]?\'ok\':\'minus\'}}"></span></div>'
 				 		}, {
 				 			field : 'categoryId',
 				 			headerCellFilter : 'translate',
@@ -270,7 +272,8 @@ angular.module('aktivingatlanApp')
 				 						label : 'nem eladó'
 				 					}
 				 				]
-				 			}
+				 			},
+                            cellTemplate : '<div class="ui-grid-cell-contents text-center"><span class="glyphicon glyphicon-{{row.entity[col.field]?\'ok\':\'minus\'}}"></span></div>'
 				 		}, {
 				 			field : 'saleHuf',
 				 			headerCellFilter : 'translate',
@@ -299,7 +302,8 @@ angular.module('aktivingatlanApp')
 				 						label : 'nem kiadó'
 				 					}
 				 				]
-				 			}
+				 			},
+                            cellTemplate : '<div class="ui-grid-cell-contents text-center"><span class="glyphicon glyphicon-{{row.entity[col.field]?\'ok\':\'minus\'}}"></span></div>'
 				 		}, {
 				 			field : 'rentHuf',
 				 			headerCellFilter : 'translate',
@@ -343,7 +347,8 @@ angular.module('aktivingatlanApp')
 				 						label : 'nem kiadó'
 				 					}
 				 				]
-				 			}
+				 			},
+                            cellTemplate : '<div class="ui-grid-cell-contents text-center"><span class="glyphicon glyphicon-{{row.entity[col.field]?\'ok\':\'minus\'}}"></span></div>'
 				 		}, {
 				 			field : 'mediumTermHuf',
 				 			headerCellFilter : 'translate',
@@ -374,7 +379,8 @@ angular.module('aktivingatlanApp')
 				 						label : 'nem kiadó'
 				 					}
 				 				]
-				 			}
+				 			},
+                            cellTemplate : '<div class="ui-grid-cell-contents text-center"><span class="glyphicon glyphicon-{{row.entity[col.field]?\'ok\':\'minus\'}}"></span></div>'
 				 		}, {
 				 			field : 'longTermHuf',
 				 			headerCellFilter : 'translate',
@@ -531,7 +537,8 @@ angular.module('aktivingatlanApp')
 				 						label : 'nem bútorozott'
 				 					}
 				 				]
-				 			}
+				 			},
+                            cellTemplate : '<div class="ui-grid-cell-contents text-center"><span class="glyphicon glyphicon-{{row.entity[col.field]?\'ok\':\'minus\'}}"></span></div>'
 				 		}, {
 				 			field : 'createdDate',
 				 			headerCellFilter : 'translate',
@@ -553,7 +560,7 @@ angular.module('aktivingatlanApp')
 				 		}
 				 	]
 				 };
-		 
+
 		 function parseDate(searchTerm) {
 			var parts = searchTerm.split('\\.');
 			switch (parts.length) {
@@ -565,5 +572,5 @@ angular.module('aktivingatlanApp')
 				return new Date(parts[0], parts[1]-1, parts[2]).getTime();
 			}
 		 }
-		 
+
     }]);

@@ -1,8 +1,10 @@
 'use strict';
 
 angular.module('aktivingatlanApp').controller('PropertyDialogController',
-    ['$scope', '$stateParams', '$filter', '$sanitize', 'entity', 'Property', 'PropertySearch', 'Category', 'Photo', 'Statement', 'Feature', 'Ownership', 'City', 'Contract', 'User', 'Apartment', 'CitySearch', 'Upload',
-        function ($scope, $stateParams, $filter, $sanitize, entity, Property, PropertySearch, Category, Photo, Statement, Feature, Ownership, City, Contract, User, Apartment, CitySearch, Upload) {
+    ['$scope', '$stateParams', '$filter', '$sanitize', 'AlertService', 'entity', 'Property', 'PropertySearch', 'Category',
+        'Photo', 'Statement', 'Feature', 'Ownership', 'City', 'Contract', 'User', 'Apartment', 'CitySearch', 'Upload',
+        function ($scope, $stateParams, $filter, $sanitize, AlertService, entity, Property, PropertySearch, Category,
+                  Photo, Statement, Feature, Ownership, City, Contract, User, Apartment, CitySearch, Upload) {
 
             $scope.property = entity;
             $scope.files = null;
@@ -19,7 +21,7 @@ angular.module('aktivingatlanApp').controller('PropertyDialogController',
             var onSaveSuccess = function (result) {
                 $scope.$emit('aktivingatlanApp:propertyUpdate', result);
                 $scope.isSaving = false;
-                console.log('Property saved successfully')
+                $scope.propertyEditForm.$setPristine();
             };
 
             var onSaveError = function (result) {
@@ -29,9 +31,9 @@ angular.module('aktivingatlanApp').controller('PropertyDialogController',
             $scope.save = function () {
                 $scope.isSaving = true;
                 if ($scope.property.id != null) {
-                    Property.update($scope.property, onSaveSuccess, onSaveError);
+                    $scope.property = Property.update($scope.property, onSaveSuccess, onSaveError);
                 } else {
-                    Property.save($scope.property, onSaveSuccess, onSaveError);
+                    $scope.property = Property.save($scope.property, onSaveSuccess, onSaveError);
                 }
             };
 
@@ -62,7 +64,8 @@ angular.module('aktivingatlanApp').controller('PropertyDialogController',
                 return true;
             };
 
-            $scope.uploadFiles = function (files) {
+            $scope.uploadPhotos = function (files) {
+                AlertService.warning("Képfeltöltés folyamatban");
                 $scope.files = files;
                 if (!$scope.files) return;
                 angular.forEach(files, function (file) {
@@ -72,7 +75,7 @@ angular.module('aktivingatlanApp').controller('PropertyDialogController',
                             url: 'https://api.cloudinary.com/v1_1/aktivingatlan/upload',
                             fields: {
                                 upload_preset: 'n2VjU5fy',
-                                tags: $scope.property.code,
+                                tags: $scope.property.code + ',ID' + $scope.property.id,
                                 public_id: file.public_id
                             },
                             file: file
@@ -93,10 +96,60 @@ angular.module('aktivingatlanApp').controller('PropertyDialogController',
                 });
             };
 
-            $scope.deleteFile = function (id) {
-                Photo.delete({id:id});
+            $scope.deletePhoto = function (photo) {
+                Photo.delete({id:photo.id}, function () {
+                    var index = $scope.property.photos.indexOf(photo);
+                    $scope.property.photos.splice(index, 1);
+                });
             };
 
+            $scope.updatePhoto = function (photo) {
+                Photo.update(photo);
+            };
+
+            $scope.updateApartment = function (apartment) {
+                var updated = null;
+
+                if (apartment.id != null) {
+                    updated = Apartment.update(apartment);
+                } else {
+                    updated = Apartment.save(apartment);
+                }
+
+                var index = $scope.property.apartments.indexOf(apartment);
+                $scope.property.apartments[index] = updated;
+            };
+
+            $scope.deleteApartment = function (apartment) {
+                var index = $scope.property.apartments.indexOf(apartment);
+                if (apartment.id != null) {
+                    Apartment.delete({id: apartment.id}, function () {
+                        $scope.property.apartments.splice(index, 1);
+                    });
+                } else {
+                    $scope.property.apartments.splice(index, 1);
+                }
+            };
+
+            $scope.addApartment = function () {
+              if ($scope.property.apartments == null) {
+                  $scope.property.apartments = [];
+              }
+              $scope.property.apartments.push({
+                  propertyId: $scope.property.id,
+                  bed: null,
+                  bathroom: null,
+                  toilet: null,
+                  rentHuf: null,
+                  rentEur: null,
+                  rentPeakHuf: null,
+                  rentPeakEur: null,
+                  descriptionHu: null,
+                  descriptionEn: null,
+                  descriptionDe: null,
+                  id: null
+              });
+            };
 
             $scope.tabPropertyDeselect = function () {
                 if ($scope.propertyEditForm.$dirty) {

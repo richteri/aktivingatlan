@@ -62,6 +62,8 @@ angular.module('aktivingatlanApp')
                 resolve: {
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('property');
+                        $translatePartialLoader.addPart('photo');
+                        $translatePartialLoader.addPart('global');
                         return $translate.refresh();
                     }],
                     entity: function () {
@@ -120,6 +122,9 @@ angular.module('aktivingatlanApp')
                 resolve: {
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('property');
+                        $translatePartialLoader.addPart('photo');
+                        $translatePartialLoader.addPart('apartment');
+                        $translatePartialLoader.addPart('global');
                         return $translate.refresh();
                     }],
                     entity: ['$stateParams', 'Property', function($stateParams, Property) {

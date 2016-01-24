@@ -13,7 +13,7 @@ import com.aktivingatlan.web.rest.dto.PropertyDTO;
 /**
  * Mapper for the entity Property and its DTO PropertyDTO.
  */
-@Mapper(componentModel = "spring", uses = { PhotoMapper.class })
+@Mapper(componentModel = "spring", uses = { PhotoMapper.class, ApartmentMapper.class })
 public interface PropertyMapper {
 
     @Mapping(source = "category.id", target = "categoryId")

@@ -2,10 +2,13 @@ package com.aktivingatlan.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.aktivingatlan.domain.Property;
+import com.aktivingatlan.repository.PhotoRepository;
 import com.aktivingatlan.repository.PropertyRepository;
 import com.aktivingatlan.web.rest.util.HeaderUtil;
 import com.aktivingatlan.web.rest.util.PaginationUtil;
+import com.cloudinary.Cloudinary;
 import com.aktivingatlan.web.rest.dto.PropertyDTO;
+import com.aktivingatlan.web.rest.mapper.PhotoMapper;
 import com.aktivingatlan.web.rest.mapper.PropertyMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +43,13 @@ public class PropertyResource {
     
     @Inject
     private PropertyMapper propertyMapper;
+    
+    @Inject
+    private PhotoRepository photoRepository;
+    
+    @Inject 
+    private Cloudinary cloudinary;
+
     
     /**
      * POST  /propertys -> Create a new property.
@@ -126,10 +136,23 @@ public class PropertyResource {
         method = RequestMethod.DELETE,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @Transactional
     public ResponseEntity<Void> deleteProperty(@PathVariable Long id) {
         log.debug("REST request to delete Property : {}", id);
-        propertyRepository.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("property", id.toString())).build();
+        Optional<Property> property = Optional.of(propertyRepository.findOne(id));
+        if (property.isPresent()) {
+            try {
+                cloudinary.api().deleteResourcesByTag("ID" + property.get().getId(), null);
+                photoRepository.delete(property.get().getPhotos());
+                propertyRepository.delete(id);
+                return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("property", id.toString())).build();
+            } catch (Exception e) {
+                log.error("Cannot delete photo {} because {}", id, e.getMessage());
+                return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("property", "deleteError", e.getMessage())).body(null);
+            }
+        } else {
+            return ResponseEntity.notFound().headers(HeaderUtil.createFailureAlert("property", "deleteError", "Not found")).build();
+        }
     }
 
     /**

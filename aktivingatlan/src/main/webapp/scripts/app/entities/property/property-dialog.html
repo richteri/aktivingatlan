@@ -1,21 +1,21 @@
 <form name="propertyEditForm" role="form" novalidate ng-submit="save()" ng>
-
-
     <div class="modal-header">
         <h2 class="modal-title" id="myPropertyLabel">
             <span translate="aktivingatlanApp.property.home.createOrEditLabel">Create
             or edit a Property</span></h2>
-        <button type="button" class="btn btn-info" ui-sref="property">
-            <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back">Back</span>
-        </button>
-        <button type="submit" ng-disabled="propertyEditForm.$invalid || isSaving" class="btn btn-primary">
-            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
-        </button>
+        <div class="btn-group">
+            <button type="button" class="btn btn-info" ui-sref="property">
+                <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back">Back</span>
+            </button>
+            <button type="submit" ng-disabled="propertyEditForm.$invalid || isSaving" class="btn btn-primary">
+                <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+            </button>
+        </div>
     </div>
     <div class="modal-body">
-        <jh-alert-error></jh-alert-error>
-		<uib-tabset>
-			<uib-tab heading="Általános" deselect="tabPropertyDeselect()">
+        <jh-alert></jh-alert>
+        <uib-tabset>
+            <uib-tab heading="Általános" deselect="tabPropertyDeselect()">
 			<br>
 			<div class="row">
 				<div class="col-lg-6">
@@ -405,63 +405,147 @@
 					</div>
 				</div>
 			</div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-danger" ui-sref="property.delete({id:property.id})">
+                    <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span translate="entity.action.delete">Delete</span>
+                </button>
+                <button type="button" class="btn btn-info" ui-sref="property">
+                    <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" ng-disabled="propertyEditForm.$invalid || isSaving" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+                </button>
+            </div>
 			</uib-tab>
 			<uib-tab heading="Képek" deselect="tabImagesDeselect()" disable="propertyEditForm.$invalid || isSaving">
-			<br>
-			<div class="panel panel-info">
-				<div class="panel-heading">
-					<h4 class="panel-title">Képek</h4>
-				</div>
-				<div class="panel-body">
-					<div class="btn btn-primary" ngf-select="uploadFiles($files)" ng-model="files" ngf-multiple="true">Kiválaszt...</div>
-					<div ng-repeat="file in files">
-						<uib-progressbar animate="false" value="file.progress" type="success" ng-show="file.progress<100"><b>{{file.name}} {{file.progress}}%</b></uib-progressbar>
-					</div>
-					<hr>
-					<div ng-repeat="photo in property.photos">
-						<div class="row">
-                            <button ng-click="deleteFile(photo.id)">Delete</button>
-							<div class="form-group col-sm-3">
-								<a href="http://res.cloudinary.com/aktivingatlan/image/upload/{{photo.filename}}.jpg" target="_blank"><img ng-src="http://res.cloudinary.com/aktivingatlan/image/upload/w_200/{{photo.filename}}.jpg" alt="{{photo.id}}"></a>
-							</div>
-							<div class="form-group col-sm-3">
-							<label translate="aktivingatlanApp.property.descriptionHu"
-									for="field_photoDescriptionHu">DescriptionHu</label>
-								<textarea rows="5" class="form-control input-sm"
-									name="descriptionHu" id="field_photoDescriptionHu"
-									ng-model="photo.descriptionHu"></textarea>
-							</div>
-							<div class="form-group col-sm-3">
-								<label translate="aktivingatlanApp.property.descriptionEn"
-									for="field_photoDescriptionEn">DescriptionEn</label>
-								<textarea rows="5" class="form-control input-sm"
-									name="descriptionEn" id="field_photoDescriptionEn"
-									ng-model="photo.descriptionEn"></textarea>
-							</div>
-							<div class="form-group col-sm-3">
-								<label translate="aktivingatlanApp.property.descriptionDe"
-									for="field_photoDescriptionDe">DescriptionDe</label>
-								<textarea rows="5" class="form-control input-sm"
-									name="descriptionDe" id="field_photoDescriptionDe"
-									ng-model="photo.descriptionDe"></textarea>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+                <h3>Képek</h3>
+                <div class="btn btn-primary" ngf-select="uploadPhotos($files)" ng-model="files" ngf-multiple="true">Kiválaszt...</div>
+                <div ng-repeat="file in files">
+                    <uib-progressbar animate="false" value="file.progress" type="success" ng-show="file.progress<100"><b>{{file.name}} {{file.progress}}%</b></uib-progressbar>
+                </div>
+                <hr>
+
+                <table class="table table-striped">
+                    <tr ng-repeat="photo in property.photos">
+                        <td>
+                            <div class="thumbnail text-center">
+                                <a href="http://res.cloudinary.com/aktivingatlan/image/upload/{{photo.filename}}.jpg" target="_blank">
+                                    <img ng-src="http://res.cloudinary.com/aktivingatlan/image/upload/w_200/{{photo.filename}}.jpg" alt="{{photo.id}}">
+                                </a>
+                                <div class="btn-group pad">
+                                    <button type="button" class="btn btn-primary btn-sm" ng-click="updatePhoto(photo)">
+                                        <span class="glyphicon glyphicon-save"></span>
+                                        <span translate="entity.action.save"></span>
+                                    </button>
+                                    <button type="button" class="btn btn-danger btn-sm" ng-click="deletePhoto(photo)">
+                                        <span class="glyphicon glyphicon-remove-circle"></span>
+                                        <span translate="entity.action.delete"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label translate="aktivingatlanApp.property.descriptionHu"
+                                            for="field_photoDescriptionHu">DescriptionHu</label>
+                                        <textarea rows="5" class="form-control input-sm"
+                                            name="descriptionHu" id="field_photoDescriptionHu"
+                                            ng-model="photo.descriptionHu"></textarea>
+                                </div>
+                                <div class="col-md-4">
+                                    <label translate="aktivingatlanApp.property.descriptionEn"
+                                        for="field_photoDescriptionEn">DescriptionEn</label>
+                                    <textarea rows="5" class="form-control input-sm"
+                                        name="descriptionEn" id="field_photoDescriptionEn"
+                                        ng-model="photo.descriptionEn"></textarea>
+                                </div>
+                                <div class="col-md-4">
+                                    <label translate="aktivingatlanApp.property.descriptionDe"
+                                           for="field_photoDescriptionDe">DescriptionDe</label>
+                                    <textarea rows="5" class="form-control input-sm"
+                                              name="descriptionDe" id="field_photoDescriptionDe"
+                                              ng-model="photo.descriptionDe"></textarea>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
 			</uib-tab>
-			<uib-tab heading="Apartmanok" disable="true"  deselect="tabApartmentsDeselect()"></uib-tab>
-			<uib-tab heading="Tulajdonosok és szerződések" disable="true" deselect="tabContractsDeselect()"></uib-tab>
+			<uib-tab heading="Apartmanok"  deselect="tabApartmentsDeselect()">
+                <h3>Apartmanok</h3>
+                <hr>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <tr>
+                            <th><span class="glyphicon glyphicon-cog"></span></th>
+                            <th><span translate="aktivingatlanApp.apartment.bed">Bed</span></th>
+                            <th><span translate="aktivingatlanApp.apartment.bathroom">Bathroom</span></th>
+                            <th><span translate="aktivingatlanApp.apartment.toilet">Toilet</span></th>
+                            <th><span translate="aktivingatlanApp.apartment.rentHuf">RentHuf</span></th>
+                            <th><span translate="aktivingatlanApp.apartment.rentEur">RentEur</span></th>
+                            <th><span translate="aktivingatlanApp.apartment.rentPeakHuf">RentPeakHuf</span></th>
+                            <th><span translate="aktivingatlanApp.apartment.rentPeakEur">RentPeakEur</span></th>
+                            <th><span translate="aktivingatlanApp.apartment.descriptionHu">DescriptionHu</span></th>
+                            <th><span translate="aktivingatlanApp.apartment.descriptionEn">DescriptionEn</span></th>
+                            <th><span translate="aktivingatlanApp.apartment.descriptionDe">DescriptionDe</span></th>
+                         </tr>
+                        <tr ng-repeat="apartment in property.apartments ">
+                            <td width="90">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-sm" ng-class="(apartment.id == null || apartment.$dirty === true) ? 'btn-success' : 'btn-primary' " ng-click="updateApartment(apartment)">
+                                        <span class="glyphicon glyphicon-save"></span>
+                                    </button>
+                                    <button type="button" class="btn btn-danger btn-sm" ng-click="deleteApartment(apartment)">
+                                        <span class="glyphicon glyphicon-remove-circle"></span>
+                                    </button>
+                                </div>
+                            </td>
+                            <td>
+                                <input type="number" ng-model="apartment.bed" class="form-control" ng-change="apartment.$dirty = true"/>
+                            </td>
+                            <td>
+                                <input type="checkbox" ng-model="apartment.bathroom" class="form-control" ng-change="apartment.$dirty = true"/>
+                            </td>
+                            <td>
+                                <input type="checkbox" ng-model="apartment.toilet" class="form-control" ng-change="apartment.$dirty = true"/>
+                            </td>
+                            <td>
+                                <input type="number" ng-model="apartment.rentHuf" class="form-control" ng-change="apartment.$dirty = true"/>
+                            </td>
+                            <td>
+                                <input type="number" ng-model="apartment.rentEur" class="form-control" ng-change="apartment.$dirty = true"/>
+                            </td>
+                            <td>
+                                <input type="number" ng-model="apartment.rentPeakHuf" class="form-control" ng-change="apartment.$dirty = true"/>
+                            </td>
+                            <td>
+                                <input type="number" ng-model="apartment.rentPeakEur" class="form-control" ng-change="apartment.$dirty = true"/>
+                            </td>
+                            <td>
+                                <input type="text" ng-model="apartment.descriptionHu" class="form-control" ng-change="apartment.$dirty = true"/>
+                            </td>
+                            <td>
+                                <input type="text" ng-model="apartment.descriptionEn" class="form-control" ng-change="apartment.$dirty = true"/>
+                            </td>
+                            <td>
+                                <input type="text" ng-model="apartment.descriptionDe" class="form-control" ng-change="apartment.$dirty = true"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <button type="button" class="btn btn-success" ng-click="addApartment()">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        <span translate="entity.action.add">New</span>
+                    </button>
+                </div>
+
+
+            </uib-tab>
+			<uib-tab heading="Ügyfelek" deselect="tabContractsDeselect()"></uib-tab>
 			<uib-tab heading="Megtekintési nyiltkozatok" disable="true" deselect="tabStatementsDeselect()"></uib-tab>
 		</uib-tabset>
 
     </div>
     <div class="modal-footer">
-	    <button type="button" class="btn btn-info" ui-sref="property">
-	        <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
-	    </button>
-        <button type="submit" ng-disabled="propertyEditForm.$invalid || isSaving" class="btn btn-primary">
-            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
-        </button>
     </div>
 </form>

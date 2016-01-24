@@ -159,7 +159,8 @@ public class Property extends AbstractAuditingEntity implements Serializable {
     private User user;
 
     @OneToMany(mappedBy = "property")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    // TODO FIX cache eviction 
+    // @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Apartment> apartments = new HashSet<>();
 
     public Long getId() {

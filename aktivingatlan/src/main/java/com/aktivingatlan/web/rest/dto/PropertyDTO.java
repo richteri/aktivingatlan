@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import com.aktivingatlan.domain.AbstractAuditingEntity;
+import com.aktivingatlan.domain.Apartment;
 import com.aktivingatlan.domain.Feature;
 
 
@@ -98,6 +99,8 @@ public class PropertyDTO extends AbstractAuditingEntity implements Serializable 
     private String userLogin;
     
     private Set<PhotoDTO> photos = new HashSet<>();
+    
+    private Set<ApartmentDTO> apartments = new HashSet<>();
     
     public Long getId() {
         return id;
@@ -435,7 +438,15 @@ public class PropertyDTO extends AbstractAuditingEntity implements Serializable 
 		this.photos = photos;
 	}
 
-	@Override
+	public Set<ApartmentDTO> getApartments() {
+        return apartments;
+    }
+
+    public void setApartments(Set<ApartmentDTO> apartments) {
+        this.apartments = apartments;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
