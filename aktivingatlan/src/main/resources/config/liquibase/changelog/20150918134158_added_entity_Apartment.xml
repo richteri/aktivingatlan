@@ -22,8 +22,8 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="bed" type="integer"/>
-            <column name="bathroom" type="bit"/>
-            <column name="toilet" type="bit"/>
+            <column name="bathroom" type="bit" defaultValueBoolean="false"/>
+            <column name="toilet" type="bit" defaultValueBoolean="false"/>
             <column name="rent_huf" type="decimal(10,2)"/>
             <column name="rent_eur" type="decimal(10,2)"/>
             <column name="rent_peak_huf" type="decimal(10,2)"/>

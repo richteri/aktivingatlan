@@ -32,28 +32,28 @@
             <column name="pracel_number" type="varchar(255)"/>
             <column name="address1" type="varchar(255)"/>
             <column name="address2" type="varchar(255)"/>
-            <column name="active" type="bit"/>
+            <column name="active" type="bit" defaultValueBoolean="true"/>
             <column name="kitchen" type="integer"/>
             <column name="livingroom" type="integer"/>
             <column name="floor" type="integer"/>
             <column name="bathroom" type="integer"/>
             <column name="toilet" type="integer"/>
-            <column name="furnished" type="bit"/>
-            <column name="for_sale" type="bit"/>
+            <column name="furnished" type="bit" defaultValueBoolean="false"/>
+            <column name="for_sale" type="bit" defaultValueBoolean="false"/>
             <column name="sale_huf" type="decimal(10,2)"/>
             <column name="sale_eur" type="decimal(10,2)"/>
-            <column name="for_rent" type="bit"/>
+            <column name="for_rent" type="bit" defaultValueBoolean="false"/>
             <column name="rent_huf" type="decimal(10,2)"/>
             <column name="rent_eur" type="decimal(10,2)"/>
             <column name="rent_peak_huf" type="decimal(10,2)"/>
             <column name="rent_peak_eur" type="decimal(10,2)"/>
-            <column name="for_medium_term" type="bit"/>
+            <column name="for_medium_term" type="bit" defaultValueBoolean="false"/>
             <column name="medium_term_huf" type="decimal(10,2)"/>
             <column name="medium_term_eur" type="decimal(10,2)"/>
-            <column name="for_long_term" type="bit"/>
+            <column name="for_long_term" type="bit" defaultValueBoolean="false"/>
             <column name="long_term_huf" type="decimal(10,2)"/>
             <column name="long_term_eur" type="decimal(10,2)"/>
-            <column name="featured" type="bit"/>
+            <column name="featured" type="bit" defaultValueBoolean="false"/>
             <column name="category_id" type="bigint"/>
             <column name="city_id" type="bigint"/>
             <column name="user_id" type="bigint"/>
