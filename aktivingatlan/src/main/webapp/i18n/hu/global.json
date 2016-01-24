@@ -84,6 +84,7 @@
     },
     "entity": {
         "action": {
+            "add": "Hozzáad",
             "addblob": "Fájl hozzáadása",
             "addimage": "Kép hozzáadása",
             "back": "Vissza",
