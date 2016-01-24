@@ -1,60 +1,52 @@
-package com.aktivingatlan.domain;
+package com.aktivingatlan.web.rest.dto;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
 
-/**
- * A Apartment.
- */
-@Entity
-@Table(name = "apartment")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Apartment extends AbstractAuditingEntity implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+/**
+ * A DTO for the Apartment entity.
+ */
+public class ApartmentDTO implements Serializable {
+
     private Long id;
 
-    @Column(name = "bed")
     private Integer bed;
-    
-    @Column(name = "bathroom")
+
+
     private Boolean bathroom;
-    
-    @Column(name = "toilet")
+
+
     private Boolean toilet;
-    
-    @Column(name = "rent_huf", precision=10, scale=2)
+
+
     private BigDecimal rentHuf;
-    
-    @Column(name = "rent_eur", precision=10, scale=2)
+
+
     private BigDecimal rentEur;
-    
-    @Column(name = "rent_peak_huf", precision=10, scale=2)
+
+
     private BigDecimal rentPeakHuf;
-    
-    @Column(name = "rent_peak_eur", precision=10, scale=2)
+
+
     private BigDecimal rentPeakEur;
-    
-    @Column(name = "description_hu")
+
+
     private String descriptionHu;
-    
-    @Column(name = "description_en")
+
+
     private String descriptionEn;
-    
-    @Column(name = "description_de")
+
+
     private String descriptionDe;
-    
-    @ManyToOne
-    @JoinColumn(name = "property_id")
-    private Property property;
+
+
+    private Long propertyId;
+
+    private String propertyCode;
 
     public Long getId() {
         return id;
@@ -63,93 +55,91 @@ public class Apartment extends AbstractAuditingEntity implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-
     public Integer getBed() {
         return bed;
     }
-    
+
     public void setBed(Integer bed) {
         this.bed = bed;
     }
-
     public Boolean getBathroom() {
         return bathroom;
     }
-    
+
     public void setBathroom(Boolean bathroom) {
         this.bathroom = bathroom;
     }
-
     public Boolean getToilet() {
         return toilet;
     }
-    
+
     public void setToilet(Boolean toilet) {
         this.toilet = toilet;
     }
-
     public BigDecimal getRentHuf() {
         return rentHuf;
     }
-    
+
     public void setRentHuf(BigDecimal rentHuf) {
         this.rentHuf = rentHuf;
     }
-
     public BigDecimal getRentEur() {
         return rentEur;
     }
-    
+
     public void setRentEur(BigDecimal rentEur) {
         this.rentEur = rentEur;
     }
-
     public BigDecimal getRentPeakHuf() {
         return rentPeakHuf;
     }
-    
+
     public void setRentPeakHuf(BigDecimal rentPeakHuf) {
         this.rentPeakHuf = rentPeakHuf;
     }
-
     public BigDecimal getRentPeakEur() {
         return rentPeakEur;
     }
-    
+
     public void setRentPeakEur(BigDecimal rentPeakEur) {
         this.rentPeakEur = rentPeakEur;
     }
-
     public String getDescriptionHu() {
         return descriptionHu;
     }
-    
+
     public void setDescriptionHu(String descriptionHu) {
         this.descriptionHu = descriptionHu;
     }
-
     public String getDescriptionEn() {
         return descriptionEn;
     }
-    
+
     public void setDescriptionEn(String descriptionEn) {
         this.descriptionEn = descriptionEn;
     }
-
     public String getDescriptionDe() {
         return descriptionDe;
     }
-    
+
     public void setDescriptionDe(String descriptionDe) {
         this.descriptionDe = descriptionDe;
     }
 
-    public Property getProperty() {
-        return property;
+    public Long getPropertyId() {
+        return propertyId;
     }
 
-    public void setProperty(Property property) {
-        this.property = property;
+    public void setPropertyId(Long propertyId) {
+        this.propertyId = propertyId;
+    }
+
+    public String getPropertyCode() {
+        return propertyCode;
+    }
+
+    public void setPropertyCode(String propertyCode) {
+        this.propertyCode = propertyCode;
     }
 
     @Override
@@ -160,11 +150,12 @@ public class Apartment extends AbstractAuditingEntity implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Apartment apartment = (Apartment) o;
-        if(apartment.id == null || id == null) {
-            return false;
-        }
-        return Objects.equals(id, apartment.id);
+
+        ApartmentDTO apartmentDTO = (ApartmentDTO) o;
+
+        if ( ! Objects.equals(id, apartmentDTO.id)) return false;
+
+        return true;
     }
 
     @Override
@@ -174,7 +165,7 @@ public class Apartment extends AbstractAuditingEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "Apartment{" +
+        return "ApartmentDTO{" +
             "id=" + id +
             ", bed='" + bed + "'" +
             ", bathroom='" + bathroom + "'" +

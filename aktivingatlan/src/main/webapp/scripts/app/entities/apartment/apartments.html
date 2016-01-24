@@ -1,18 +1,21 @@
 <div>
     <h2 translate="aktivingatlanApp.apartment.home.title">Apartments</h2>
     <jh-alert></jh-alert>
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-md-4">
-                <button class="btn btn-primary" ui-sref="apartment.new">
-                    <span class="glyphicon glyphicon-flash"></span> <span translate="aktivingatlanApp.apartment.home.createLabel">Create a new Apartment</span>
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="apartment.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span 
+                        translate="aktivingatlanApp.apartment.home.createLabel">Create new Apartment
+                    </span>
                 </button>
             </div>
         </div>
     </div>
-
+    <br/>
     <div class="table-responsive">
-        <table class="table table-striped">
+        <table class="jh-table table table-striped">
             <thead>
                 <tr jh-sort="predicate" ascending="reverse" callback="loadAll()">
                     <th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
@@ -26,7 +29,7 @@
                     <th jh-sort-by="descriptionHu"><span translate="aktivingatlanApp.apartment.descriptionHu">DescriptionHu</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="descriptionEn"><span translate="aktivingatlanApp.apartment.descriptionEn">DescriptionEn</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="descriptionDe"><span translate="aktivingatlanApp.apartment.descriptionDe">DescriptionDe</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="property.code"><span translate="aktivingatlanApp.apartment.property">property</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="propertyCode"><span translate="aktivingatlanApp.apartment.property">property</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -44,24 +47,29 @@
                     <td>{{apartment.descriptionEn}}</td>
                     <td>{{apartment.descriptionDe}}</td>
                     <td>
-                        <a ui-sref="property.detail({id:apartment.property.id})">{{apartment.property.code}}</a>
+                        <a ui-sref="property.detail({id:apartment.propertyId})">{{apartment.propertyCode}}</a>
                     </td>
-                    <td>
-                        <button type="submit"
-                                ui-sref="apartment.detail({id:apartment.id})"
-                                class="btn btn-info btn-sm">
-                            <span class="glyphicon glyphicon-eye-open"></span>&nbsp;<span translate="entity.action.view"> View</span>
-                        </button>
-                        <button type="submit"
-                                ui-sref="apartment.edit({id:apartment.id})"
-                                class="btn btn-primary btn-sm">
-                            <span class="glyphicon glyphicon-pencil"></span>&nbsp;<span translate="entity.action.edit"> Edit</span>
-                        </button>
-                        <button type="submit"
-                                ui-sref="apartment.delete({id:apartment.id})"
-                                class="btn btn-danger btn-sm">
-                            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span translate="entity.action.delete"> Delete</span>
-                        </button>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="apartment.detail({id:apartment.id})"
+                                    class="btn btn-info btn-sm"> 
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="apartment.edit({id:apartment.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="apartment.delete({id:apartment.id})"
+                                    class="btn btn-danger btn-sm">                                    
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>
+                            </button>
+                        </div>
                     </td>
                 </tr>
             </tbody>

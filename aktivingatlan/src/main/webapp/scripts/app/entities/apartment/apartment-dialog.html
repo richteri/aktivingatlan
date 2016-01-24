@@ -76,7 +76,7 @@
 
         <div class="form-group">
             <label translate="aktivingatlanApp.apartment.property" for="field_property">property</label>
-            <select class="form-control" id="field_property" name="property" ng-model="apartment.property" ng-options="property as property.code for property in propertys track by property.id">
+            <select class="form-control" id="field_property" name="property" ng-model="apartment.propertyId" ng-options="property.id as property.code for property in propertys">
                 <option value=""></option>
             </select>
         </div>

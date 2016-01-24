@@ -3,6 +3,8 @@ package com.aktivingatlan.web.rest;
 import com.aktivingatlan.Application;
 import com.aktivingatlan.domain.Apartment;
 import com.aktivingatlan.repository.ApartmentRepository;
+import com.aktivingatlan.web.rest.dto.ApartmentDTO;
+import com.aktivingatlan.web.rest.mapper.ApartmentMapper;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -74,6 +76,9 @@ public class ApartmentResourceIntTest {
     private ApartmentRepository apartmentRepository;
 
     @Inject
+    private ApartmentMapper apartmentMapper;
+
+    @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Inject
@@ -88,6 +93,7 @@ public class ApartmentResourceIntTest {
         MockitoAnnotations.initMocks(this);
         ApartmentResource apartmentResource = new ApartmentResource();
         ReflectionTestUtils.setField(apartmentResource, "apartmentRepository", apartmentRepository);
+        ReflectionTestUtils.setField(apartmentResource, "apartmentMapper", apartmentMapper);
         this.restApartmentMockMvc = MockMvcBuilders.standaloneSetup(apartmentResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setMessageConverters(jacksonMessageConverter).build();
@@ -114,10 +120,11 @@ public class ApartmentResourceIntTest {
         int databaseSizeBeforeCreate = apartmentRepository.findAll().size();
 
         // Create the Apartment
+        ApartmentDTO apartmentDTO = apartmentMapper.apartmentToApartmentDTO(apartment);
 
         restApartmentMockMvc.perform(post("/api/apartments")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(apartment)))
+                .content(TestUtil.convertObjectToJsonBytes(apartmentDTO)))
                 .andExpect(status().isCreated());
 
         // Validate the Apartment in the database
@@ -209,10 +216,11 @@ public class ApartmentResourceIntTest {
         apartment.setDescriptionHu(UPDATED_DESCRIPTION_HU);
         apartment.setDescriptionEn(UPDATED_DESCRIPTION_EN);
         apartment.setDescriptionDe(UPDATED_DESCRIPTION_DE);
+        ApartmentDTO apartmentDTO = apartmentMapper.apartmentToApartmentDTO(apartment);
 
         restApartmentMockMvc.perform(put("/api/apartments")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(apartment)))
+                .content(TestUtil.convertObjectToJsonBytes(apartmentDTO)))
                 .andExpect(status().isOk());
 
         // Validate the Apartment in the database

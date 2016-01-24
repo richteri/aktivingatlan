@@ -1,8 +1,10 @@
 package com.aktivingatlan.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.aktivingatlan.domain.Apartment;
+
+import org.springframework.data.jpa.repository.*;
+
+import java.util.List;
 
 /**
  * Spring Data JPA repository for the Apartment entity.
