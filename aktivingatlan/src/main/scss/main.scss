@@ -163,6 +163,7 @@ ul#strength {
 }
 
 .alerts .toast {
+    z-index: 1000;
     position: fixed;
     width: 100%;
 }

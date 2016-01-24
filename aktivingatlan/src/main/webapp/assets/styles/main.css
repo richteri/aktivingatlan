@@ -5972,6 +5972,7 @@ ul#strength {
   font-size: 10px; }
 
 .alerts .toast {
+  z-index: 1000;
   position: fixed;
   width: 100%; }
 
