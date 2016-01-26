@@ -6,7 +6,7 @@ import com.aktivingatlan.repository.StatementRepository;
 import com.aktivingatlan.web.rest.util.HeaderUtil;
 import com.aktivingatlan.web.rest.util.PaginationUtil;
 import com.aktivingatlan.web.rest.dto.StatementDTO;
-import com.aktivingatlan.web.rest.mapper.StatementMapper;
+import com.aktivingatlan.web.rest.mapper.StatementDetailsMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -40,7 +40,7 @@ public class StatementResource {
     private StatementRepository statementRepository;
     
     @Inject
-    private StatementMapper statementMapper;
+    private StatementDetailsMapper statementMapper;
     
     /**
      * POST  /statements -> Create a new statement.

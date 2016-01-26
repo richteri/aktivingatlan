@@ -13,8 +13,8 @@ import com.aktivingatlan.web.rest.dto.PropertyDTO;
 /**
  * Mapper for the entity Property and its DTO PropertyDTO.
  */
-@Mapper(componentModel = "spring", uses = { })
-public interface PropertyMapper {
+@Mapper(componentModel = "spring", uses = { PhotoMapper.class, ApartmentMapper.class, OwnershipMapper.class, ContractMapper.class, StatementDetailsMapper.class })
+public interface PropertyDetailsMapper {
 
     @Mapping(source = "category.id", target = "categoryId")
     @Mapping(source = "category.nameHu", target = "categoryNameHu")
@@ -22,21 +22,16 @@ public interface PropertyMapper {
     @Mapping(source = "city.name", target = "cityName")
     @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "user.login", target = "userLogin")
-    @Mapping(target = "statements", ignore = true)
-    @Mapping(target = "ownerships", ignore = true)
-    @Mapping(target = "contracts", ignore = true)
-    @Mapping(target = "apartments", ignore = true)
-    @Mapping(target = "photos", ignore = true)
     PropertyDTO propertyToPropertyDTO(Property property);
 
     @Mapping(source = "categoryId", target = "category")
-    @Mapping(source = "cityId", target = "city")
-    @Mapping(source = "userId", target = "user")
+    @Mapping(target = "photos", ignore = false)
     @Mapping(target = "statements", ignore = true)
     @Mapping(target = "ownerships", ignore = true)
+    @Mapping(source = "cityId", target = "city")
     @Mapping(target = "contracts", ignore = true)
+    @Mapping(source = "userId", target = "user")
     @Mapping(target = "apartments", ignore = true)
-    @Mapping(target = "photos", ignore = true)
     Property propertyDTOToProperty(PropertyDTO propertyDTO);
 
     default Category categoryFromId(Long id) {

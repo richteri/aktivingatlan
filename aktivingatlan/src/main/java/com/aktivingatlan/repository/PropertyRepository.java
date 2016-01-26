@@ -13,11 +13,6 @@ import com.aktivingatlan.domain.Property;
  */
 public interface PropertyRepository extends JpaRepository<Property,Long> {
 	
-    enum SearchQuery {
-    	FIND_BY_CODE, // exact search
-    	FIND_BY_CODE_CONTAINING // case insensitive substring search
-    }
-
     @Query("select property from Property property where property.user.login = ?#{principal.username}")
     List<Property> findByUserIsCurrentUser();
 

@@ -102,6 +102,12 @@ public class PropertyDTO extends AbstractAuditingEntity implements Serializable 
     
     private Set<ApartmentDTO> apartments = new HashSet<>();
     
+    private Set<ContractDTO> contracts = new HashSet<>();
+    
+    private Set<OwnershipDTO> ownerships = new HashSet<>();
+    
+    private Set<StatementDTO> statements = new HashSet<>();
+    
     public Long getId() {
         return id;
     }
@@ -444,6 +450,30 @@ public class PropertyDTO extends AbstractAuditingEntity implements Serializable 
 
     public void setApartments(Set<ApartmentDTO> apartments) {
         this.apartments = apartments;
+    }
+
+    public Set<ContractDTO> getContracts() {
+        return contracts;
+    }
+
+    public void setContracts(Set<ContractDTO> contracts) {
+        this.contracts = contracts;
+    }
+
+    public Set<OwnershipDTO> getOwnerships() {
+        return ownerships;
+    }
+
+    public void setOwnerships(Set<OwnershipDTO> ownerships) {
+        this.ownerships = ownerships;
+    }
+
+    public Set<StatementDTO> getStatements() {
+        return statements;
+    }
+
+    public void setStatements(Set<StatementDTO> statements) {
+        this.statements = statements;
     }
 
     @Override

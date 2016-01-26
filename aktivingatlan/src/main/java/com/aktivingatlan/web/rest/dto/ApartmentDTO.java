@@ -4,13 +4,16 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
+
+import com.aktivingatlan.domain.AbstractAuditingEntity;
+
 import java.util.Objects;
 
 
 /**
  * A DTO for the Apartment entity.
  */
-public class ApartmentDTO implements Serializable {
+public class ApartmentDTO extends AbstractAuditingEntity implements Serializable {
 
     private Long id;
 

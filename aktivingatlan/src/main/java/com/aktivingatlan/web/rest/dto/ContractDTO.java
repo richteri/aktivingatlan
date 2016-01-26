@@ -37,8 +37,6 @@ public class ContractDTO extends AbstractAuditingEntity implements Serializable 
 
     private String propertyCityName;
     
-    private Set<PhotoDTO> propertyPhotos = new HashSet<>();
-    
     private Set<ClientDTO> clients = new HashSet<>();
 
     public Long getId() {
@@ -111,14 +109,6 @@ public class ContractDTO extends AbstractAuditingEntity implements Serializable 
 
 	public void setPropertyDescriptionHu(String propertyDescriptionHu) {
 		this.propertyDescriptionHu = propertyDescriptionHu;
-	}
-
-	public Set<PhotoDTO> getPropertyPhotos() {
-		return propertyPhotos;
-	}
-
-	public void setPropertyPhotos(Set<PhotoDTO> propertyPhotos) {
-		this.propertyPhotos = propertyPhotos;
 	}
 
 	public Long getPropertyCityId() {

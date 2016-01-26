@@ -9,7 +9,7 @@ import com.aktivingatlan.web.rest.dto.ClientDTO;
 /**
  * Mapper for the entity Client and its DTO ClientDTO.
  */
-@Mapper(componentModel = "spring", uses = {OwnershipMapper.class, StatementMapper.class, ContractMapper.class})
+@Mapper(componentModel = "spring", uses = {OwnershipMapper.class, StatementDetailsMapper.class, ContractMapper.class})
 public interface ClientDetailsMapper {
 
     ClientDTO clientToClientDTO(Client client);

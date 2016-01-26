@@ -4,7 +4,7 @@ import com.aktivingatlan.Application;
 import com.aktivingatlan.domain.Statement;
 import com.aktivingatlan.repository.StatementRepository;
 import com.aktivingatlan.web.rest.dto.StatementDTO;
-import com.aktivingatlan.web.rest.mapper.StatementMapper;
+import com.aktivingatlan.web.rest.mapper.StatementDetailsMapper;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -55,7 +55,7 @@ public class StatementResourceIntTest {
     private StatementRepository statementRepository;
 
     @Inject
-    private StatementMapper statementMapper;
+    private StatementDetailsMapper statementMapper;
 
     @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;

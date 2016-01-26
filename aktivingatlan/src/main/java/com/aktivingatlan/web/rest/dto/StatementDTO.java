@@ -20,7 +20,9 @@ public class StatementDTO extends AbstractAuditingEntity implements Serializable
     private LocalDate date;
 
     private String note;
+    
     private Set<ClientDTO> clients = new HashSet<>();
+    
     private Set<PropertyDTO> propertys = new HashSet<>();
 
     public Long getId() {

@@ -132,7 +132,8 @@ public class Property extends AbstractAuditingEntity implements Serializable {
     private Set<Photo> photos = new HashSet<>();
 
     @ManyToMany(mappedBy = "propertys")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    // TODO FIX cache eviction 
+    // @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Statement> statements = new HashSet<>();
 
     @ManyToMany
@@ -143,7 +144,8 @@ public class Property extends AbstractAuditingEntity implements Serializable {
     private Set<Feature> features = new HashSet<>();
 
     @OneToMany(mappedBy = "property")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    // TODO FIX cache eviction 
+    // @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Ownership> ownerships = new HashSet<>();
 
     @ManyToOne
@@ -151,7 +153,8 @@ public class Property extends AbstractAuditingEntity implements Serializable {
     private City city;
 
     @OneToMany(mappedBy = "property")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    // TODO FIX cache eviction 
+    // @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Contract> contracts = new HashSet<>();
 
     @ManyToOne

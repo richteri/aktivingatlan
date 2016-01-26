@@ -9,7 +9,7 @@ import com.aktivingatlan.web.rest.util.PaginationUtil;
 import com.cloudinary.Cloudinary;
 import com.aktivingatlan.web.rest.dto.PropertyDTO;
 import com.aktivingatlan.web.rest.mapper.PhotoMapper;
-import com.aktivingatlan.web.rest.mapper.PropertyMapper;
+import com.aktivingatlan.web.rest.mapper.PropertyDetailsMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -42,7 +42,7 @@ public class PropertyResource {
     private PropertyRepository propertyRepository;
     
     @Inject
-    private PropertyMapper propertyMapper;
+    private PropertyDetailsMapper propertyMapper;
     
     @Inject
     private PhotoRepository photoRepository;
@@ -159,29 +159,15 @@ public class PropertyResource {
      * SEARCH  /_search/propertys/:query -> search for the property corresponding
      * to the query.
      */
-    @RequestMapping(value = "/_search/propertys",
-        method = {RequestMethod.GET, RequestMethod.GET},
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/_search/propertys/findByCode/{code}",
+            method = { RequestMethod.GET },
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional(readOnly = true)
-    public ResponseEntity<List<PropertyDTO>> search(
-            @RequestParam(value = "query", required = false) PropertyRepository.SearchQuery query,
-            @RequestParam(value = "param", required = false) String param) {
-        switch (query) {
-        case FIND_BY_CODE:
-            return 
-                    new ResponseEntity<>(propertyRepository.findByCode(param).stream()
-                            .map(propertyMapper::propertyToPropertyDTO)
-                            .collect(Collectors.toCollection(LinkedList::new)), HttpStatus.OK);
-        case FIND_BY_CODE_CONTAINING:
-            return 
-                    new ResponseEntity<>(propertyRepository.findByCodeContainingIgnoreCase(param).stream()
-                            .map(propertyMapper::propertyToPropertyDTO)
-                            .collect(Collectors.toCollection(LinkedList::new)), HttpStatus.OK);
-        default:
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
+    public ResponseEntity<List<PropertyDTO>> findByCode(@PathVariable String code) {
+        return new ResponseEntity<>(propertyRepository.findByCodeContainingIgnoreCase(code).stream()
+                .map(propertyMapper::propertyToPropertyDTO)
+                .collect(Collectors.toCollection(LinkedList::new)), HttpStatus.OK);
     }
 
 }

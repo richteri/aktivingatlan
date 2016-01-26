@@ -433,7 +433,7 @@
                                     <img ng-src="http://res.cloudinary.com/aktivingatlan/image/upload/w_200/{{photo.filename}}.jpg" alt="{{photo.id}}">
                                 </a>
                                 <div class="btn-group pad">
-                                    <button type="button" class="btn btn-primary btn-sm" ng-click="updatePhoto(photo)">
+                                    <button type="button" class="btn btn-sm" ng-class="photo.changed ? 'btn-success' : 'btn-primary'" ng-click="updatePhoto(photo)">
                                         <span class="glyphicon glyphicon-save"></span>
                                         <span translate="entity.action.save"></span>
                                     </button>
@@ -451,21 +451,21 @@
                                             for="field_photoDescriptionHu">DescriptionHu</label>
                                         <textarea rows="5" class="form-control input-sm"
                                             name="descriptionHu" id="field_photoDescriptionHu"
-                                            ng-model="photo.descriptionHu"></textarea>
+                                            ng-model="photo.descriptionHu" ng-change="photo.changed = true"></textarea>
                                 </div>
                                 <div class="col-md-4">
                                     <label translate="aktivingatlanApp.property.descriptionEn"
                                         for="field_photoDescriptionEn">DescriptionEn</label>
                                     <textarea rows="5" class="form-control input-sm"
                                         name="descriptionEn" id="field_photoDescriptionEn"
-                                        ng-model="photo.descriptionEn"></textarea>
+                                        ng-model="photo.descriptionEn" ng-change="photo.changed = true"></textarea>
                                 </div>
                                 <div class="col-md-4">
                                     <label translate="aktivingatlanApp.property.descriptionDe"
                                            for="field_photoDescriptionDe">DescriptionDe</label>
                                     <textarea rows="5" class="form-control input-sm"
                                               name="descriptionDe" id="field_photoDescriptionDe"
-                                              ng-model="photo.descriptionDe"></textarea>
+                                              ng-model="photo.descriptionDe" ng-change="photo.changed = true"></textarea>
                                 </div>
                             </div>
                         </td>
@@ -541,8 +541,10 @@
 
 
             </uib-tab>
-			<uib-tab heading="Ügyfelek" deselect="tabContractsDeselect()"></uib-tab>
-			<uib-tab heading="Megtekintési nyiltkozatok" disable="true" deselect="tabStatementsDeselect()"></uib-tab>
+			<uib-tab heading="Ügyfelek" deselect="tabContractsDeselect()">
+
+
+            </uib-tab>
 		</uib-tabset>
 
     </div>

@@ -37,7 +37,7 @@ import com.aktivingatlan.Application;
 import com.aktivingatlan.domain.Property;
 import com.aktivingatlan.repository.PropertyRepository;
 import com.aktivingatlan.web.rest.dto.PropertyDTO;
-import com.aktivingatlan.web.rest.mapper.PropertyMapper;
+import com.aktivingatlan.web.rest.mapper.PropertyDetailsMapper;
 
 
 /**
@@ -148,7 +148,7 @@ public class PropertyResourceTest {
     private PropertyRepository propertyRepository;
 
     @Inject
-    private PropertyMapper propertyMapper;
+    private PropertyDetailsMapper propertyMapper;
 
     @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;

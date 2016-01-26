@@ -1,37 +1,23 @@
 package com.aktivingatlan.web.rest.mapper;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
-import com.aktivingatlan.domain.Client;
-import com.aktivingatlan.domain.Property;
 import com.aktivingatlan.domain.Statement;
 import com.aktivingatlan.web.rest.dto.StatementDTO;
 
 /**
  * Mapper for the entity Statement and its DTO StatementDTO.
  */
-@Mapper(componentModel = "spring", uses = {ClientMapper.class, PropertyMapper.class, })
+@Mapper(componentModel = "spring", uses = { })
 public interface StatementMapper {
 
+    @Mapping(target = "clients", ignore = true)
+    @Mapping(target = "propertys", ignore = true)
     StatementDTO statementToStatementDTO(Statement statement);
 
+    @Mapping(target = "clients", ignore = true)
+    @Mapping(target = "propertys", ignore = true)
     Statement statementDTOToStatement(StatementDTO statementDTO);
 
-    default Client clientFromId(Long id) {
-        if (id == null) {
-            return null;
-        }
-        Client client = new Client();
-        client.setId(id);
-        return client;
-    }
-
-    default Property propertyFromId(Long id) {
-        if (id == null) {
-            return null;
-        }
-        Property property = new Property();
-        property.setId(id);
-        return property;
-    }
 }

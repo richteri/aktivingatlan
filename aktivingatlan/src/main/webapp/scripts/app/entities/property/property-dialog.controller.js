@@ -105,6 +105,7 @@ angular.module('aktivingatlanApp').controller('PropertyDialogController',
 
             $scope.updatePhoto = function (photo) {
                 Photo.update(photo);
+                delete photo.changed;
             };
 
             $scope.updateApartment = function (apartment) {

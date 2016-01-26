@@ -1,11 +1,14 @@
 'use strict';
 
 angular.module('aktivingatlanApp')
-    .factory('PropertySearch', function ($resource) {
-        return $resource('api/_search/propertys', {}, {
-            'query': {
-            	method: 'GET', 
-            	isArray: true
-            }
-        });
-    });
+    .factory('PropertySearch', ['$http', function ($http) {
+        var apiUrl = 'api/_search/propertys';
+
+        var PropertySearch = {};
+
+        PropertySearch.findByCode = function (code) {
+            return $http.get(apiUrl + '/findByCode/' + code);
+        }
+
+        return PropertySearch;
+    }]);
