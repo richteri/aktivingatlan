@@ -135,12 +135,12 @@ public class ClientResource {
      * SEARCH  /_search/clients/:query -> search for the client corresponding
      * to the query.
      */
-    @RequestMapping(value = "/_search/clients/{query}",
+    @RequestMapping(value = "/_search/clients/findByAny/{query}",
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional(readOnly = true)
-    public ResponseEntity<List<ClientDTO>> search(
+    public ResponseEntity<List<ClientDTO>> findByAny(
             @PathVariable String query, Pageable pageable)
         throws URISyntaxException {
         Page<Client> page = clientRepository.findByNameContainingOrPhone1ContainingOrAddress1ContainingOrIdNoContainingAllIgnoreCase(query, query, query, query,

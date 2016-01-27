@@ -1,8 +1,16 @@
 'use strict';
 
 angular.module('aktivingatlanApp')
-    .factory('ClientSearch', function ($resource) {
-        return $resource('api/_search/clients/:query', {}, {
-            'query': { method: 'GET', isArray: true}
-        });
-    });
+    .factory('ClientSearch', ['$http', function ($http) {
+        var apiUrl = 'api/_search/clients';
+
+        var ClientSearch = {};
+
+        ClientSearch.findByAny = function (query) {
+            return $http.get(apiUrl + '/findByAny/' + query).then(function (response) {
+                return response.data;
+            });
+        };
+
+        return ClientSearch;
+    }]);

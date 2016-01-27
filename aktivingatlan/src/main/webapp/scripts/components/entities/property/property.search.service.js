@@ -7,8 +7,10 @@ angular.module('aktivingatlanApp')
         var PropertySearch = {};
 
         PropertySearch.findByCode = function (code) {
-            return $http.get(apiUrl + '/findByCode/' + code);
-        }
+            return $http.get(apiUrl + '/findByCode/' + code).then(function (response) {
+                return response.data;
+            });
+        };
 
         return PropertySearch;
     }]);

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('aktivingatlanApp').controller('OwnershipDialogController',
-    ['$scope', '$stateParams', '$uibModalInstance', 'entity', 'Ownership', 'Property', 'Client',
+    ['$scope', '$stateParams', '$uibModalInstance', '$sanitize', 'entity', 'Ownership', 'Property', 'Client', 'PropertySearch', 'ClientSearch',
         function($scope, $stateParams, $uibModalInstance, $sanitize, entity, Ownership, Property, Client, PropertySearch, ClientSearch) {
 
         $scope.ownership = entity;
@@ -65,16 +65,16 @@ angular.module('aktivingatlanApp').controller('OwnershipDialogController',
         	} else {
         		return property;
         	}
-        }
+        };
 
         $scope.findPropertyByCode = function (code) {
         	return PropertySearch.findByCode(code);
-        }
+        };
 
         $scope.onPropertySelect = function ($item, $model, $label) {
         	$scope.ownership.propertyId = $item.id;
         	$scope.ownership.propertyCode = $item.code;
-        }
+        };
 
         $scope.formatClientName = function (client) {
         	if (angular.isObject(client)) {
@@ -82,17 +82,15 @@ angular.module('aktivingatlanApp').controller('OwnershipDialogController',
         	} else {
         		return client;
         	}
-        }
+        };
 
-        $scope.findClient = function (queryString) {
-        	return ClientSearch.query({
-        		query: queryString
-        	}).$promise;
-        }
+        $scope.findClient = function (query) {
+        	return ClientSearch.findByAny(query);
+        };
 
         $scope.onClientSelect = function ($item, $model, $label) {
         	$scope.ownership.clientId = $item.id;
         	$scope.ownership.clientName = $item.name;
-        }
+        };
 
 }]);
