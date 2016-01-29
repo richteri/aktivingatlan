@@ -3,8 +3,10 @@
 angular.module('aktivingatlanApp').controller('PropertyDialogController',
     ['$scope', '$stateParams', '$filter', '$sanitize', 'AlertService', 'entity', 'Property', 'PropertySearch', 'Category',
         'Photo', 'Statement', 'Feature', 'Ownership', 'City', 'Contract', 'User', 'Apartment', 'CitySearch', 'Upload',
+        'ClientSearch',
         function ($scope, $stateParams, $filter, $sanitize, AlertService, entity, Property, PropertySearch, Category,
-                  Photo, Statement, Feature, Ownership, City, Contract, User, Apartment, CitySearch, Upload) {
+                  Photo, Statement, Feature, Ownership, City, Contract, User, Apartment, CitySearch, Upload,
+            ClientSearch) {
 
             $scope.property = entity;
             $scope.files = null;
@@ -150,6 +152,60 @@ angular.module('aktivingatlanApp').controller('PropertyDialogController',
                   descriptionDe: null,
                   id: null
               });
+            };
+
+            $scope.updateOwnership = function (ownership) {
+                var updated = null;
+                if (ownership.id != null) {
+                    updated = Ownership.update(ownership);
+                } else {
+                    updated = Ownership.save(ownership);
+                }
+
+                var index = $scope.property.ownerships.indexOf(ownership);
+                $scope.property.ownerships[index].id = updated.id;
+                delete $scope.property.ownerships[index].$dirty;
+            };
+
+            $scope.deleteOwnership = function (ownership) {
+                var index = $scope.property.ownerships.indexOf(ownership);
+                if (ownership.id != null) {
+                    Ownership.delete({id: ownership.id}, function () {
+                        $scope.property.ownerships.splice(index, 1);
+                    });
+                } else {
+                    $scope.property.ownerships.splice(index, 1);
+                }
+            };
+
+            $scope.addOwnership = function () {
+                if ($scope.property.ownerships == null) {
+                    $scope.property.ownerships = [];
+                }
+                $scope.property.ownerships.push({
+                    propertyId: $scope.property.id,
+                    note: null,
+                    clientId: null,
+                    clientName: null,
+                    id: null
+                });
+            };
+
+            $scope.formatClientName = function (client) {
+                if (angular.isObject(client)) {
+                    return client.name + ' ' + client.phone1 + ' ' + client.address1 + ' ' + client.idNo;
+                } else {
+                    return client;
+                }
+            };
+
+            $scope.findClient = function (query) {
+                return ClientSearch.findByAny(query);
+            };
+
+            $scope.onClientSelect = function ($item, ownership) {
+                ownership.clientId = $item.id;
+                ownership.clientName = $item.name;
             };
 
             $scope.tabPropertyDeselect = function () {

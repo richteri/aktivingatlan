@@ -17,7 +17,8 @@
             },
             "note": "Note",
             "property": "Property",
-            "client": "Client"
+            "client": "Client",
+            "clientName": "Client Name"
         }
     }
 }

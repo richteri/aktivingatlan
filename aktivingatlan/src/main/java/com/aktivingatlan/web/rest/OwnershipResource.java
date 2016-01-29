@@ -49,6 +49,7 @@ public class OwnershipResource {
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @Transactional
     public ResponseEntity<OwnershipDTO> createOwnership(@RequestBody OwnershipDTO ownershipDTO) throws URISyntaxException {
         log.debug("REST request to save Ownership : {}", ownershipDTO);
         if (ownershipDTO.getId() != null) {
@@ -56,6 +57,7 @@ public class OwnershipResource {
         }
         Ownership ownership = ownershipMapper.ownershipDTOToOwnership(ownershipDTO);
         ownership = ownershipRepository.save(ownership);
+        
         OwnershipDTO result = ownershipMapper.ownershipToOwnershipDTO(ownership);
         return ResponseEntity.created(new URI("/api/ownerships/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("ownership", result.getId().toString()))
@@ -69,6 +71,7 @@ public class OwnershipResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @Transactional
     public ResponseEntity<OwnershipDTO> updateOwnership(@RequestBody OwnershipDTO ownershipDTO) throws URISyntaxException {
         log.debug("REST request to update Ownership : {}", ownershipDTO);
         if (ownershipDTO.getId() == null) {

@@ -124,6 +124,9 @@ angular.module('aktivingatlanApp')
                         $translatePartialLoader.addPart('property');
                         $translatePartialLoader.addPart('photo');
                         $translatePartialLoader.addPart('apartment');
+                        $translatePartialLoader.addPart('ownership');
+                        $translatePartialLoader.addPart('contract');
+                        $translatePartialLoader.addPart('statement');
                         $translatePartialLoader.addPart('global');
                         return $translate.refresh();
                     }],
