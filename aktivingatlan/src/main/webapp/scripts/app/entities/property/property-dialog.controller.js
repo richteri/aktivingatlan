@@ -111,16 +111,17 @@ angular.module('aktivingatlanApp').controller('PropertyDialogController',
             };
 
             $scope.updateApartment = function (apartment) {
-                var updated = null;
+                var index = $scope.property.apartments.indexOf(apartment);
 
                 if (apartment.id != null) {
-                    updated = Apartment.update(apartment);
+                    Apartment.update(apartment);
                 } else {
-                    updated = Apartment.save(apartment);
+                    Apartment.save(apartment).$promise.then(function(entity){
+                        $scope.property.apartments[index].id = entity.id;
+                    });
                 }
 
-                var index = $scope.property.apartments.indexOf(apartment);
-                $scope.property.apartments[index] = updated;
+                delete $scope.property.apartments[index].$dirty;
             };
 
             $scope.deleteApartment = function (apartment) {
@@ -155,15 +156,14 @@ angular.module('aktivingatlanApp').controller('PropertyDialogController',
             };
 
             $scope.updateOwnership = function (ownership) {
-                var updated = null;
-                if (ownership.id != null) {
-                    updated = Ownership.update(ownership);
-                } else {
-                    updated = Ownership.save(ownership);
-                }
-
                 var index = $scope.property.ownerships.indexOf(ownership);
-                $scope.property.ownerships[index].id = updated.id;
+                if (ownership.id != null) {
+                    Ownership.update(ownership);
+                } else {
+                    Ownership.save(ownership).$promise.then(function(entity){
+                        $scope.property.ownerships[index].id = entity.id;
+                    });
+                }
                 delete $scope.property.ownerships[index].$dirty;
             };
 
@@ -229,6 +229,27 @@ angular.module('aktivingatlanApp').controller('PropertyDialogController',
 
             $scope.tabStatementsDeselect = function () {
                 console.log('Statements deselected');
+            };
+
+
+            // Contract Date pickers
+            $scope.datePickerForStartDate = {};
+
+            $scope.datePickerForStartDate.status = {
+                opened: false
+            };
+
+            $scope.datePickerForStartDateOpen = function($event) {
+                $scope.datePickerForStartDate.status.opened = true;
+            };
+            $scope.datePickerForEndDate = {};
+
+            $scope.datePickerForEndDate.status = {
+                opened: false
+            };
+
+            $scope.datePickerForEndDateOpen = function($event) {
+                $scope.datePickerForEndDate.status.opened = true;
             };
 
 

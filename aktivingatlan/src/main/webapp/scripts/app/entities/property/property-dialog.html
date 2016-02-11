@@ -1,8 +1,12 @@
 <form name="propertyEditForm" role="form" novalidate ng-submit="save()" ng>
     <div class="modal-header">
         <h2 class="modal-title" id="myPropertyLabel">
+            <span class="label label-danger">{{property.code}}</span>
             <span translate="aktivingatlanApp.property.home.createOrEditLabel">Create
-            or edit a Property</span><span class="pull-right label label-danger">{{property.code}}</span></h2>
+            or edit a Property</span>
+        </h2>
+    </div>
+    <div class="modal-body">
         <div class="btn-group">
             <button type="button" class="btn btn-info" ui-sref="property">
                 <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back">Back</span>
@@ -11,8 +15,7 @@
                 <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
             </button>
         </div>
-    </div>
-    <div class="modal-body">
+        <hr>
         <jh-alert></jh-alert>
         <uib-tabset>
             <uib-tab heading="Általános" deselect="tabPropertyDeselect()">
@@ -476,7 +479,7 @@
                 <h3>Apartmanok</h3>
                 <hr>
                 <div class="table-responsive">
-                    <table class="table table-striped">
+                    <table class="table table-striped table-condensed">
                         <tr>
                             <th><span class="glyphicon glyphicon-cog"></span></th>
                             <th><span translate="aktivingatlanApp.apartment.bed">Bed</span></th>
@@ -544,43 +547,9 @@
 			<uib-tab heading="Ügyfelek" deselect="tabContractsDeselect()">
                 <div class="row">
                     <div class="col-lg-4">
-                        <h3>Statements</h3>
-                        <div class="table-responsive">
-                            <table class="table-striped">
-                                <tr>
-                                    <th><span class="glyphicon glyphicon-cog"></span></th>
-                                    <th><span translate="aktivingatlanApp.ownership.clientName">Client Name</span></th>
-                                    <th><span translate="aktivingatlanApp.ownership.note">Note</span></th>
-                                </tr>
-                                <tr ng-repeat="ownership in property.ownerships">
-                                    <td width="90">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-sm" ng-class="(ownership.id == null || ownership.$dirty === true) ? 'btn-success' : 'btn-primary' " ng-click="updateOwnership(ownership)">
-                                                <span class="glyphicon glyphicon-save"></span>
-                                            </button>
-                                            <button type="button" class="btn btn-danger btn-sm" ng-click="deleteOwnership(ownership)">
-                                                <span class="glyphicon glyphicon-remove-circle"></span>
-                                            </button>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <input type="text" ng-model="ownership.clientName" class="form-control" ng-change="ownership.$dirty = true"/>
-                                    </td>
-                                    <td>
-                                        <input type="text" ng-model="ownership.note" class="form-control" ng-change="ownership.$dirty = true"/>
-                                    </td>
-                                </tr>
-                            </table>
-                            <button type="button" class="btn btn-success" ng-click="addOwnership()">
-                                <span class="glyphicon glyphicon-plus"></span>
-                                <span translate="entity.action.add">New</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
                         <h3>Ownerships</h3>
                         <div class="table-responsive">
-                            <table class="table-striped">
+                            <table class="table table-striped table-condensed">
                                 <tr>
                                     <th><span class="glyphicon glyphicon-cog"></span></th>
                                     <th><span translate="aktivingatlanApp.ownership.clientName">Client Name</span></th>
@@ -598,18 +567,14 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" id="field_client" name="client" ng-model="ownership.clientName"
+                                        <input type="text" class="form-control" ng-model="ownership.clientName" ng-change="ownership.$dirty = true"
                                                uib-typeahead="client as formatClientName(client) for client in findClient($viewValue)"
                                                typeahead-on-select="onClientSelect($item, ownership)"
                                                typeahead-editable="false"
                                                typeahead-select-on-exact="true"
                                                typeahead-select-on-blur="true"
                                                typeahead-min-length="3"
-                                               typeahead-wait-ms="100"
-                                               typeahead-loading="loadingClients"
-                                               typeahead-no-results="noClientResults">
-                                        <i ng-show="loadingClients" class="glyphicon glyphicon-refresh"></i>
-                                        <span ng-show="noClientResults"><i class="glyphicon glyphicon-remove"></i> No Results Found</span>
+                                               typeahead-wait-ms="100">
                                     </td>
                                     <td>
                                         <input type="text" ng-model="ownership.note" class="form-control" ng-change="ownership.$dirty = true"/>
@@ -622,32 +587,61 @@
                             </button>
                         </div>
                     </div>
-                    </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-8">
                         <h3>Contracts</h3>
                         <div class="table-responsive">
-                            <table class="table-striped">
+                            <table class="table table-striped table-condensed">
                                 <tr>
-                                    <th><span class="glyphicon glyphicon-cog"></span></th>
-                                    <th><span translate="aktivingatlanApp.ownership.clientName">Client Name</span></th>
-                                    <th><span translate="aktivingatlanApp.ownership.note">Note</span></th>
+                                    <th width="90"><span class="glyphicon glyphicon-cog"></span></th>
+                                    <th><span translate="aktivingatlanApp.contract.idNo">idNo</span></th>
+                                    <th><span translate="aktivingatlanApp.contract.exclusive">exclusive</span></th>
+                                    <th width="160"><span translate="aktivingatlanApp.contract.startDate">startDate</span></th>
+                                    <th width="160"><span translate="aktivingatlanApp.contract.endDate">endDate</span></th>
+                                    <th><span translate="aktivingatlanApp.contract.note">note</span></th>
+                                    <th><span translate="aktivingatlanApp.contract.client">clients</span></th>
                                 </tr>
-                                <tr ng-repeat="ownership in property.ownerships">
-                                    <td width="90">
+                                <tr ng-repeat="contract in property.contracts">
+                                    <td>
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-sm" ng-class="(ownership.id == null || ownership.$dirty === true) ? 'btn-success' : 'btn-primary' " ng-click="updateOwnership(ownership)">
+                                            <button type="button" class="btn btn-sm" ng-class="(contract.id == null || contract.$dirty === true) ? 'btn-success' : 'btn-primary' " ng-click="updateContract(contract)">
                                                 <span class="glyphicon glyphicon-save"></span>
                                             </button>
-                                            <button type="button" class="btn btn-danger btn-sm" ng-click="deleteOwnership(ownership)">
+                                            <button type="button" class="btn btn-danger btn-sm" ng-click="deleteContract(contract)">
                                                 <span class="glyphicon glyphicon-remove-circle"></span>
                                             </button>
                                         </div>
                                     </td>
                                     <td>
-                                        <input type="text" ng-model="ownership.clientName" class="form-control" ng-change="ownership.$dirty = true"/>
+                                        <input type="text" ng-model="contract.idNo" class="form-control" ng-change="contract.$dirty = true"/>
                                     </td>
                                     <td>
-                                        <input type="text" ng-model="ownership.note" class="form-control" ng-change="ownership.$dirty = true"/>
+                                        <input type="checkbox" ng-model="contract.exclusive" class="form-control" ng-change="contract.$dirty = true"/>
+                                    </td>
+                                    <td>
+                                        <div class="input-group">
+                                            <input type="text" ng-model="contract.startDate" class="form-control" ng-change="contract.$dirty = true"
+                                                   uib-datepicker-popup="{{dateformat}}" is-open="datePickerForStartDate.status.opened" datepicker-append-to-body="true"/>
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default"
+                                                    ng-click="datePickerForStartDateOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-group">
+                                            <input type="text" ng-model="contract.startDate" class="form-control" ng-change="contract.$dirty = true"
+                                                   uib-datepicker-popup="{{dateformat}}" is-open="datePickerForEndDate.status.opened" datepicker-append-to-body="true"/>
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default"
+                                                    ng-click="datePickerForEndDateOpen($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <input type="text" ng-model="contract.note" class="form-control" ng-change="contract.$dirty = true"/>
+                                    </td>
+                                    <td>
+                                        <span ng-repeat="client in contract.clients">{{client.name}}</span>
                                     </td>
                                 </tr>
                             </table>
