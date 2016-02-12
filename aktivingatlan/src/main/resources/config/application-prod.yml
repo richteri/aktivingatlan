@@ -21,9 +21,9 @@ spring:
     datasource:
         driver-class-name: com.mysql.jdbc.jdbc2.optional.MysqlDataSource
         url: jdbc:mysql://localhost:3306/aktivingatlan?useUnicode=true&characterEncoding=utf8
-        name:
-        username: root
-        password:
+        name: aktivingatlan
+        username: aktivingatlan
+        password: titkos
     jpa:
         database-platform: org.hibernate.dialect.MySQLInnoDBDialect
         database: MYSQL
