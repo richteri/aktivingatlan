@@ -167,7 +167,7 @@ public class PropertyResource {
     public ResponseEntity<List<PropertyDTO>> findByCode(@PathVariable String code) {
         return new ResponseEntity<>(propertyRepository.findByCodeContainingIgnoreCase(code).stream()
                 .map(propertyMapper::propertyToPropertyDTO)
-                .collect(Collectors.toCollection(LinkedList::new)), HttpStatus.OK);
+                .collect(Collectors.toCollection(LinkedList::new)), null, HttpStatus.OK);
     }
-
+    
 }
