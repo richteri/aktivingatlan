@@ -3,6 +3,13 @@ package com.aktivingatlan.web.rest;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.StrictAssertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Matchers.anyList;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.isNull;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -13,6 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -38,6 +46,8 @@ import com.aktivingatlan.domain.Property;
 import com.aktivingatlan.repository.PropertyRepository;
 import com.aktivingatlan.web.rest.dto.PropertyDTO;
 import com.aktivingatlan.web.rest.mapper.PropertyDetailsMapper;
+import com.cloudinary.Api;
+import com.cloudinary.Cloudinary;
 
 
 /**
@@ -161,11 +171,17 @@ public class PropertyResourceTest {
     private Property property;
 
     @PostConstruct
-    public void setup() {
+    public void setup() throws Exception {
+    	Cloudinary cloudinary = mock(Cloudinary.class);
+    	Api api = mock(Api.class);
+    	when(cloudinary.api()).thenReturn(api);
+    	when(api.deleteResourcesByTag(any(), any())).thenReturn(null);
+    	
         MockitoAnnotations.initMocks(this);
         PropertyResource propertyResource = new PropertyResource();
         ReflectionTestUtils.setField(propertyResource, "propertyRepository", propertyRepository);
         ReflectionTestUtils.setField(propertyResource, "propertyMapper", propertyMapper);
+        ReflectionTestUtils.setField(propertyResource, "cloudinary", cloudinary);
         this.restPropertyMockMvc = MockMvcBuilders.standaloneSetup(propertyResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setMessageConverters(jacksonMessageConverter).build();

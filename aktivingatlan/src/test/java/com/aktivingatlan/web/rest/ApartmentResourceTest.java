@@ -3,6 +3,8 @@ package com.aktivingatlan.web.rest;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.StrictAssertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -36,6 +38,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.aktivingatlan.Application;
 import com.aktivingatlan.domain.Apartment;
 import com.aktivingatlan.repository.ApartmentRepository;
+import com.aktivingatlan.web.rest.mapper.ApartmentMapper;
+
+import cucumber.api.java.en.When;
 
 
 /**
@@ -79,6 +84,9 @@ public class ApartmentResourceTest {
 
     @Inject
     private ApartmentRepository apartmentRepository;
+    
+    @Inject
+    private ApartmentMapper apartmentMapper;
 
     @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -95,6 +103,7 @@ public class ApartmentResourceTest {
         MockitoAnnotations.initMocks(this);
         ApartmentResource apartmentResource = new ApartmentResource();
         ReflectionTestUtils.setField(apartmentResource, "apartmentRepository", apartmentRepository);
+        ReflectionTestUtils.setField(apartmentResource, "apartmentMapper", apartmentMapper);
         this.restApartmentMockMvc = MockMvcBuilders.standaloneSetup(apartmentResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setMessageConverters(jacksonMessageConverter).build();

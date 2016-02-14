@@ -143,7 +143,10 @@ public class PropertyResource {
         if (property.isPresent()) {
             try {
                 cloudinary.api().deleteResourcesByTag("ID" + property.get().getId(), null);
-                photoRepository.delete(property.get().getPhotos());
+                if (property.get().getPhotos() != null && !property.get().getPhotos().isEmpty()) {
+                	// check if any photo was present
+                	photoRepository.delete(property.get().getPhotos());
+                }
                 propertyRepository.delete(id);
                 return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("property", id.toString())).build();
             } catch (Exception e) {

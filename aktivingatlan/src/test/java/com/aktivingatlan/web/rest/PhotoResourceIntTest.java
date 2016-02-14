@@ -5,11 +5,18 @@ import com.aktivingatlan.domain.Photo;
 import com.aktivingatlan.repository.PhotoRepository;
 import com.aktivingatlan.web.rest.dto.PhotoDTO;
 import com.aktivingatlan.web.rest.mapper.PhotoMapper;
+import com.cloudinary.Api;
+import com.cloudinary.Cloudinary;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Matchers.anyList;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -72,11 +79,17 @@ public class PhotoResourceIntTest {
     private Photo photo;
 
     @PostConstruct
-    public void setup() {
+    public void setup() throws Exception {
+    	Cloudinary cloudinary = mock(Cloudinary.class);
+    	Api api = mock(Api.class);
+    	when(cloudinary.api()).thenReturn(api);
+    	when(api.deleteResources(anyList(), eq(null))).thenReturn(null);
+    	
         MockitoAnnotations.initMocks(this);
         PhotoResource photoResource = new PhotoResource();
         ReflectionTestUtils.setField(photoResource, "photoRepository", photoRepository);
         ReflectionTestUtils.setField(photoResource, "photoMapper", photoMapper);
+        ReflectionTestUtils.setField(photoResource, "cloudinary", cloudinary);
         this.restPhotoMockMvc = MockMvcBuilders.standaloneSetup(photoResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setMessageConverters(jacksonMessageConverter).build();

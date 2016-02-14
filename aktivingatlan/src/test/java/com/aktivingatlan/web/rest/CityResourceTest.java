@@ -106,16 +106,21 @@ public class CityResourceTest {
     @Test
     @Transactional
     public void getAllCitys() throws Exception {
-        // Initialize the database
-        cityRepository.saveAndFlush(city);
+    	// The database should contain all Hungarian cities already
 
+    	City city = new City();
+    	city.setId(1L);
+    	city.setZip("1010");
+    	city.setName("Budapest I.");
+    	
         // Get all the citys
+    	// only the first 20 results are returned
         restCityMockMvc.perform(get("/api/citys"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(city.getId().intValue())))
-                .andExpect(jsonPath("$.[*].zip").value(hasItem(DEFAULT_ZIP.toString())))
-                .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())));
+                .andExpect(jsonPath("$.[*].zip").value(hasItem(city.getZip())))
+                .andExpect(jsonPath("$.[*].name").value(hasItem(city.getName())));
     }
 
     @Test

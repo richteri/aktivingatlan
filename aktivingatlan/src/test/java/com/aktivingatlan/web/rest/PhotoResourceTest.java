@@ -11,15 +11,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import static org.mockito.Mockito.*;
+
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
+import org.hibernate.mapping.Map;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
+import org.mockito.Mock;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
@@ -37,6 +41,9 @@ import com.aktivingatlan.domain.Photo;
 import com.aktivingatlan.repository.PhotoRepository;
 import com.aktivingatlan.web.rest.dto.PhotoDTO;
 import com.aktivingatlan.web.rest.mapper.PhotoMapper;
+import com.cloudinary.Api;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.api.ApiResponse;
 
 
 /**
@@ -77,13 +84,21 @@ public class PhotoResourceTest {
     private MockMvc restPhotoMockMvc;
 
     private Photo photo;
+    
 
     @PostConstruct
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
+    public void setup() throws Exception {
+    	Cloudinary cloudinary = mock(Cloudinary.class);
+    	Api api = mock(Api.class);
+    	when(cloudinary.api()).thenReturn(api);
+    	when(api.deleteResources(anyList(), eq(null))).thenReturn(null);
+    	
+    	MockitoAnnotations.initMocks(this);
         PhotoResource photoResource = new PhotoResource();
         ReflectionTestUtils.setField(photoResource, "photoRepository", photoRepository);
         ReflectionTestUtils.setField(photoResource, "photoMapper", photoMapper);
+        ReflectionTestUtils.setField(photoResource, "cloudinary", cloudinary);
+        
         this.restPhotoMockMvc = MockMvcBuilders.standaloneSetup(photoResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setMessageConverters(jacksonMessageConverter).build();
