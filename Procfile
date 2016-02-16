@@ -1,0 +1,1 @@
+web: java -jar target/aktivingatlan-0.0.1-SNAPSHOT.war --spring.profiles.active=prod --server.port=80
