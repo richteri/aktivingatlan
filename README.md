@@ -34,11 +34,11 @@ See:
 
 1. Create droplet
 
-* One-click Apps / Dokku v0.4.12 on 14.04 
-* Size: $10/mo
-* Chose Region
-* Add SSH keys
-* Chose Hostname
+  * One-click Apps / Dokku v0.4.12 on 14.04 
+  * Size: $10/mo
+  * Chose Region
+  * Add SSH keys
+  * Chose Hostname
 
 2. Add swap (optional, but good to have during builds)
 
@@ -86,11 +86,11 @@ Guide: [https://www.digitalocean.com/community/tutorials/how-to-add-swap-on-ubun
 
     web: java $JAVA_OPTS -jar target/*.war  --spring.profiles.active=prod,heroku --server.port=$PORT --spring.datasource.heroku-url=$DATABASE_URL --metrics.jmx.enabled=false --spring.datasource.jmx-enabled=false --spring.jmx.enabled=false --management.security.enabled=false --endpoints.jmx.enabled=false
 
-10. Create Dokku specific DataSource bean
+0. Create Dokku specific DataSource bean
 
 [https://github.com/richteri/aktivingatlan/blob/master/src/main/java/com/aktivingatlan/config/HerokuDatabaseConfiguration.java](eg. HerokuDatabaseConfiguration.java)
 
-11. Setup the Git repository for pushing code to Dokku
+0. Setup the Git repository for pushing code to Dokku
 
     git remote add dokku dokku@<IP or HOST>:aktivingatlan-app
     git push dokku master
