@@ -1,4 +1,107 @@
-# aktivingatlan
+# aktivingatlan.com
+
+The project goal is to replace the legacy CRM system of a real estate agency. The legacy system consists of multiple windows desktop applications:
+
+* Real estate property DBMS (properties, owners, detailed information)
+* Satement/contract management software (agreements about revealing addresses)
+* Website (separate DB with images and contact information)
+* Image management software (processing images, watermarks, slideshows, etc.)
+
+Some of the drawbacks of the current system are:
+
+* The operation and maintenance of the legacy system proves to be more difficult with the new OS versions and Workstation/Server upgrades.
+* Only manual backups are available.
+* There are redundancies and related data anomalies in the data management process
+
+The goal is to provide a user-friendly, centralized, homogeneous system that scales with the number of employees and clients. The system also has to be open, secure and easy to maintain.
+
+## Stack
+
+See: 
+
+* [https://jhipster.github.io](https://jhipster.github.io) Spring, RESTful Services, SPA, AngularJS, etc.
+* [http://cloudinary.com](Cloudinary) Image And Video Management In The Cloud
+
+## DevOps
+
+See:
+
+* [https://www.digitalocean.com](DigitalOcean)
+* [http://dokku.viewdocs.io/dokku](Dokku)
+* [https://www.docker.com](Docker)
+
+### CI/CD
+
+1. Create droplet
+
+* One-click Apps / Dokku v0.4.12 on 14.04 
+* Size: $10/mo
+* Chose Region
+* Add SSH keys
+* Chose Hostname
+
+2. Add swap (optional, but good to have during builds)
+
+Guide: [https://www.digitalocean.com/community/tutorials/how-to-add-swap-on-ubuntu-14-04](How to add swap on Ubuntu @ DigitalOcean)
+
+    sudo fallocate -l 4G /swapfile
+    sudo chmod 600 /swapfile
+    sudo mkswap /swapfile
+    sudo swapon /swapfile
+    sudo echo "/swapfile   none    swap    sw    0   0" >> /etc/fstab
+    sudo sysctl vm.swappiness=10
+    sudo echo "vm.swappiness=10" >> /etc/sysctl.conf
+    sudo sysctl vm.vfs_cache_pressure=50
+    sudo echo "vm.vfs_cache_pressure=50" >> /etc/sysctl.conf
+
+3. Configure Dokku SSH keys
+
+    cat /root/.ssh/authorized_keys | sshcommand acl-add dokku default-dokku-acl
+
+
+4. Install Dokku DB plug-in
+
+    dokku plugin:install https://github.com/dokku/dokku-mysql.git mysql
+
+5. Create the App and its services
+
+    dokku apps:create aktivingatlan-app
+    dokku mysql:create aktivingatlan-db
+    dokku mysql:link aktivingatlan-db aktivingatlan-app
+    dokku config:set aktivingatlan-app MAVEN_CUSTOM_OPTS="-Pprod -DskipTests=true"
+    dokku config:set aktivingatlan-app MAVEN_CUSTOM_GOALS=package
+    
+6. Switch Node to development for CI
+
+    dokku config:set aktivingatlan-app NODE_ENV=development
+    
+7. Define build packs for (Herokuish) Dokku in file `.buildpacks` in project root with the contents:
+
+    https://github.com/heroku/heroku-buildpack-nodejs.git
+    https://github.com/heroku/heroku-buildpack-java.git
+
+8. Add `grunt-cli` to Node dependencies in `package.json`
+
+9. Add `Procfile` to indicate App type and its boot parameters
+
+    web: java $JAVA_OPTS -jar target/*.war  --spring.profiles.active=prod,heroku --server.port=$PORT --spring.datasource.heroku-url=$DATABASE_URL --metrics.jmx.enabled=false --spring.datasource.jmx-enabled=false --spring.jmx.enabled=false --management.security.enabled=false --endpoints.jmx.enabled=false
+
+10. Create Dokku specific DataSource bean
+
+[https://github.com/richteri/aktivingatlan/blob/master/src/main/java/com/aktivingatlan/config/HerokuDatabaseConfiguration.java](eg. HerokuDatabaseConfiguration.java)
+
+11. Setup the Git repository for pushing code to Dokku
+
+    git remote add dokku dokku@<IP or HOST>:aktivingatlan-app
+    git push dokku master
+
+## ToDo
+
+* Refactor spaghetti into directives
+* Find library for PDF generation
+* Find time for tinkering;) 
+
+# aktivingatlan (generated)
 
 This application was generated using JHipster, you can find documentation and help at [https://jhipster.github.io](https://jhipster.github.io).
 
