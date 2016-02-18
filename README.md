@@ -19,16 +19,16 @@ The goal is to provide a user-friendly, centralized, homogeneous system that sca
 
 See: 
 
-* [https://jhipster.github.io](https://jhipster.github.io) Spring, RESTful Services, SPA, AngularJS, etc.
-* [http://cloudinary.com](Cloudinary) Image And Video Management In The Cloud
+* [JHipster](https://jhipster.github.io): Spring, RESTful Services, SPA, AngularJS, etc.
+* [Cloudinary](http://cloudinary.com): Image And Video Management In The Cloud
 
 ## DevOps
 
 See:
 
-* [https://www.digitalocean.com](DigitalOcean)
-* [http://dokku.viewdocs.io/dokku](Dokku)
-* [https://www.docker.com](Docker)
+* [DigitalOcean](https://www.digitalocean.com)
+* [Dokku](http://dokku.viewdocs.io/dokku)
+* [Docker](https://www.docker.com)
 
 ### CI/CD
 
@@ -42,57 +42,66 @@ See:
 
 2. Add swap (optional, but good to have during builds)
 
-Guide: [https://www.digitalocean.com/community/tutorials/how-to-add-swap-on-ubuntu-14-04](How to add swap on Ubuntu @ DigitalOcean)
+  Guide: [How to add swap on Ubuntu @ DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-add-swap-on-ubuntu-14-04)
 
-    sudo fallocate -l 4G /swapfile
-    sudo chmod 600 /swapfile
-    sudo mkswap /swapfile
-    sudo swapon /swapfile
-    sudo echo "/swapfile   none    swap    sw    0   0" >> /etc/fstab
-    sudo sysctl vm.swappiness=10
-    sudo echo "vm.swappiness=10" >> /etc/sysctl.conf
-    sudo sysctl vm.vfs_cache_pressure=50
-    sudo echo "vm.vfs_cache_pressure=50" >> /etc/sysctl.conf
-
+  ```
+  sudo fallocate -l 4G /swapfile
+  sudo chmod 600 /swapfile
+  sudo mkswap /swapfile
+  sudo swapon /swapfile
+  sudo echo "/swapfile   none    swap    sw    0   0" >> /etc/fstab
+  sudo sysctl vm.swappiness=10
+  sudo echo "vm.swappiness=10" >> /etc/sysctl.conf
+  sudo sysctl vm.vfs_cache_pressure=50
+  sudo echo "vm.vfs_cache_pressure=50" >> /etc/sysctl.conf
+  ```
 3. Configure Dokku SSH keys
 
-      cat /root/.ssh/authorized_keys | sshcommand acl-add dokku default-dokku-acl
+  ```
+  cat /root/.ssh/authorized_keys | sshcommand acl-add dokku default-dokku-acl
+  ```
 
 4. Install Dokku DB plug-in
 
-      dokku plugin:install https://github.com/dokku/dokku-mysql.git mysql
+  ```
+  dokku plugin:install https://github.com/dokku/dokku-mysql.git mysql
+  ```
 
 5. Create the App and its services
-
-      dokku apps:create aktivingatlan-app
-      dokku mysql:create aktivingatlan-db
-      dokku mysql:link aktivingatlan-db aktivingatlan-app
-      dokku config:set aktivingatlan-app MAVEN_CUSTOM_OPTS="-Pprod -DskipTests=true"
-      dokku config:set aktivingatlan-app MAVEN_CUSTOM_GOALS=package
-    
+  ```
+  dokku apps:create aktivingatlan-app
+  dokku mysql:create aktivingatlan-db
+  dokku mysql:link aktivingatlan-db aktivingatlan-app
+  dokku config:set aktivingatlan-app MAVEN_CUSTOM_OPTS="-Pprod -DskipTests=true"
+  dokku config:set aktivingatlan-app MAVEN_CUSTOM_GOALS=package
+  ```
 6. Switch Node to development for CI
 
-      dokku config:set aktivingatlan-app NODE_ENV=development
-    
+  ```
+  dokku config:set aktivingatlan-app NODE_ENV=development
+  ```
 7. Define build packs for (Herokuish) Dokku in file `.buildpacks` in project root with the contents:
 
-      https://github.com/heroku/heroku-buildpack-nodejs.git
-      https://github.com/heroku/heroku-buildpack-java.git
+  ```
+  https://github.com/heroku/heroku-buildpack-nodejs.git
+  https://github.com/heroku/heroku-buildpack-java.git
+  ```
 
 8. Add `grunt-cli` to Node dependencies in `package.json`
 
 9. Add `Procfile` to indicate App type and its boot parameters
-
-      web: java $JAVA_OPTS -jar target/*.war  --spring.profiles.active=prod,heroku --server.port=$PORT --spring.datasource.heroku-url=$DATABASE_URL --metrics.jmx.enabled=false --spring.datasource.jmx-enabled=false --spring.jmx.enabled=false --management.security.enabled=false --endpoints.jmx.enabled=false
-
-0. Create Dokku specific DataSource bean
-
-    [https://github.com/richteri/aktivingatlan/blob/master/src/main/java/com/aktivingatlan/config/HerokuDatabaseConfiguration.java](eg. HerokuDatabaseConfiguration.java)
+  ```
+  web: java $JAVA_OPTS -jar target/*.war  --spring.profiles.active=prod,heroku --server.port=$PORT --spring.datasource.heroku-url=$DATABASE_URL --metrics.jmx.enabled=false --spring.datasource.jmx-enabled=false --spring.jmx.enabled=false --management.security.enabled=false --endpoints.jmx.enabled=false
+  ```
+0. Create Dokku specific DataSource bean 
+  [eg. HerokuDatabaseConfiguration.java](../blob/master/src/main/java/com/aktivingatlan/config/HerokuDatabaseConfiguration.java)
 
 0. Setup the Git repository for pushing code to Dokku
 
-      git remote add dokku dokku@<IP or HOST>:aktivingatlan-app
-      git push dokku master
+  ```
+  git remote add dokku dokku@<IP or HOST>:aktivingatlan-app
+  git push dokku master
+  ```
 
 ## ToDo
 
