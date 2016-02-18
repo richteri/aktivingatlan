@@ -94,7 +94,7 @@ See:
   web: java $JAVA_OPTS -jar target/*.war  --spring.profiles.active=prod,heroku --server.port=$PORT --spring.datasource.heroku-url=$DATABASE_URL --metrics.jmx.enabled=false --spring.datasource.jmx-enabled=false --spring.jmx.enabled=false --management.security.enabled=false --endpoints.jmx.enabled=false
   ```
 0. Create Dokku specific DataSource bean 
-  [eg. HerokuDatabaseConfiguration.java](../blob/master/src/main/java/com/aktivingatlan/config/HerokuDatabaseConfiguration.java)
+  [eg. HerokuDatabaseConfiguration.java](../master/src/main/java/com/aktivingatlan/config/HerokuDatabaseConfiguration.java)
 
 0. Setup the Git repository for pushing code to Dokku
 
