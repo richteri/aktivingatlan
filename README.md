@@ -56,44 +56,43 @@ Guide: [https://www.digitalocean.com/community/tutorials/how-to-add-swap-on-ubun
 
 3. Configure Dokku SSH keys
 
-    cat /root/.ssh/authorized_keys | sshcommand acl-add dokku default-dokku-acl
-
+      cat /root/.ssh/authorized_keys | sshcommand acl-add dokku default-dokku-acl
 
 4. Install Dokku DB plug-in
 
-    dokku plugin:install https://github.com/dokku/dokku-mysql.git mysql
+      dokku plugin:install https://github.com/dokku/dokku-mysql.git mysql
 
 5. Create the App and its services
 
-    dokku apps:create aktivingatlan-app
-    dokku mysql:create aktivingatlan-db
-    dokku mysql:link aktivingatlan-db aktivingatlan-app
-    dokku config:set aktivingatlan-app MAVEN_CUSTOM_OPTS="-Pprod -DskipTests=true"
-    dokku config:set aktivingatlan-app MAVEN_CUSTOM_GOALS=package
+      dokku apps:create aktivingatlan-app
+      dokku mysql:create aktivingatlan-db
+      dokku mysql:link aktivingatlan-db aktivingatlan-app
+      dokku config:set aktivingatlan-app MAVEN_CUSTOM_OPTS="-Pprod -DskipTests=true"
+      dokku config:set aktivingatlan-app MAVEN_CUSTOM_GOALS=package
     
 6. Switch Node to development for CI
 
-    dokku config:set aktivingatlan-app NODE_ENV=development
+      dokku config:set aktivingatlan-app NODE_ENV=development
     
 7. Define build packs for (Herokuish) Dokku in file `.buildpacks` in project root with the contents:
 
-    https://github.com/heroku/heroku-buildpack-nodejs.git
-    https://github.com/heroku/heroku-buildpack-java.git
+      https://github.com/heroku/heroku-buildpack-nodejs.git
+      https://github.com/heroku/heroku-buildpack-java.git
 
 8. Add `grunt-cli` to Node dependencies in `package.json`
 
 9. Add `Procfile` to indicate App type and its boot parameters
 
-    web: java $JAVA_OPTS -jar target/*.war  --spring.profiles.active=prod,heroku --server.port=$PORT --spring.datasource.heroku-url=$DATABASE_URL --metrics.jmx.enabled=false --spring.datasource.jmx-enabled=false --spring.jmx.enabled=false --management.security.enabled=false --endpoints.jmx.enabled=false
+      web: java $JAVA_OPTS -jar target/*.war  --spring.profiles.active=prod,heroku --server.port=$PORT --spring.datasource.heroku-url=$DATABASE_URL --metrics.jmx.enabled=false --spring.datasource.jmx-enabled=false --spring.jmx.enabled=false --management.security.enabled=false --endpoints.jmx.enabled=false
 
 0. Create Dokku specific DataSource bean
 
-[https://github.com/richteri/aktivingatlan/blob/master/src/main/java/com/aktivingatlan/config/HerokuDatabaseConfiguration.java](eg. HerokuDatabaseConfiguration.java)
+    [https://github.com/richteri/aktivingatlan/blob/master/src/main/java/com/aktivingatlan/config/HerokuDatabaseConfiguration.java](eg. HerokuDatabaseConfiguration.java)
 
 0. Setup the Git repository for pushing code to Dokku
 
-    git remote add dokku dokku@<IP or HOST>:aktivingatlan-app
-    git push dokku master
+      git remote add dokku dokku@<IP or HOST>:aktivingatlan-app
+      git push dokku master
 
 ## ToDo
 
