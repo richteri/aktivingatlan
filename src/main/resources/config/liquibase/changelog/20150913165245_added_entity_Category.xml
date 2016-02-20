@@ -28,7 +28,7 @@
         <loadData encoding="UTF-8"
             file="config/liquibase/categories.csv"
             separator=";"
-            tableName="CATEGORY">
+            tableName="category">
         </loadData>
     </changeSet>
 </databaseChangeLog>

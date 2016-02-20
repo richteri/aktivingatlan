@@ -75,6 +75,28 @@ See:
   dokku config:set aktivingatlan-app MAVEN_CUSTOM_OPTS="-Pprod -DskipTests=true"
   dokku config:set aktivingatlan-app MAVEN_CUSTOM_GOALS=package
   ```
+  
+6. Force mysql to use UTF-8 collation and charset
+
+  ```
+  # connect to mysql container
+  docker exec -it dokku.mysql.aktivingatlan-db bash -l
+  
+  # add extra configuration parameters to /etc/mysql/conf.d/charset-utf8mb4.cnf
+  sprintf '[client]\ndefault-character-set = utf8mb4\n\n[mysql]\ndefault-character-set = utf8mb4\n\n[mysqld]\ncharacter-set-client-handshake = FALSE\ncharacter-set-server = utf8mb4\ncollation-server = utf8mb4_unicode_ci' > /etc/mysql/conf.d/charset-utf8mb4.cnf
+  
+  # logout and restart container
+  dokku mysql:restart aktivingatlan-db
+  
+  # alter database and check settings
+  ALTER DATABASE `aktivingatlan-db` CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+  SHOW VARIABLES WHERE Variable_name LIKE 'character\_set\_%' OR Variable_name LIKE 'collation%';
+  
+  
+  # restart all linked apps
+  dokku ps:restart aktivingatlan-app
+  
+  ```
 6. Switch Node to development for CI
 
   ```
@@ -102,6 +124,19 @@ See:
   git remote add dokku dokku@<IP or HOST>:aktivingatlan-app
   git push dokku master
   ```
+## Useful commands
+
+Connect to a Docker container:
+
+    docker exec -it <container-name> bash -l
+
+Connect to MySQL:
+
+    mysql -u <username> -p <database-name>
+    
+Display container logs/output on the fly:
+
+    docker logs -f <container-id>
 
 ## ToDo
 
