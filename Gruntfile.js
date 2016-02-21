@@ -260,9 +260,9 @@ module.exports = function (grunt) {
                     dot: true,
                     flatten: true,
                     cwd: 'src/main/webapp',
-                    dest: '<%= yeoman.dist %>/assets/fonts',
+                    dest: '<%= yeoman.dist %>/assets/styles',
                     src: [
-                      'bower_components/bootstrap/fonts/*.*'
+                      'bower_components/angular-ui-grid/*.{woff,ttf}'
                     ]
                 }]
             },
