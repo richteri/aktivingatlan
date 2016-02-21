@@ -1,12 +1,10 @@
 'use strict';
 
 angular.module('aktivingatlanApp').controller('PropertyDialogController',
-    ['$scope', '$stateParams', '$filter', '$sanitize', 'AlertService', 'entity', 'Property', 'PropertySearch', 'Category',
-        'Photo', 'Statement', 'Feature', 'Ownership', 'City', 'Contract', 'User', 'Apartment', 'CitySearch', 'Upload',
-        'ClientSearch',
-        function ($scope, $stateParams, $filter, $sanitize, AlertService, entity, Property, PropertySearch, Category,
-                  Photo, Statement, Feature, Ownership, City, Contract, User, Apartment, CitySearch, Upload,
-            ClientSearch) {
+    ['$scope', '$filter', 'AlertService', 'entity', 'Property', 'Category',
+        'Photo', 'Statement', 'Feature', 'Ownership', 'Contract', 'User', 'Apartment', 'Upload',
+        function ($scope, $filter, AlertService, entity, Property, Category,
+                  Photo, Statement, Feature, Ownership, Contract, User, Apartment, Upload) {
 
             $scope.property = entity;
             $scope.files = null;
@@ -37,25 +35,6 @@ angular.module('aktivingatlanApp').controller('PropertyDialogController',
                 } else {
                     $scope.property = Property.save($scope.property, onSaveSuccess, onSaveError);
                 }
-            };
-
-            $scope.formatCityName = function (city) {
-                if (angular.isObject(city)) {
-                    return city.zip + ' ' + city.name;
-                } else {
-                    return city;
-                }
-            };
-
-            $scope.findCity = function (param) {
-                return CitySearch.query({
-                    query: param
-                }).$promise;
-            };
-
-            $scope.onCitySelect = function ($item, $model, $label) {
-                $scope.property.cityId = $item.id;
-                $scope.property.cityName = $item.name;
             };
 
             $scope.filterAlreadyAddedFeatures = function (value, index, array) {
@@ -191,44 +170,11 @@ angular.module('aktivingatlanApp').controller('PropertyDialogController',
                 });
             };
 
-            $scope.formatClientName = function (client) {
-                if (angular.isObject(client)) {
-                    return client.name + ' ' + client.phone1 + ' ' + client.address1 + ' ' + client.idNo;
-                } else {
-                    return client;
-                }
-            };
-
-            $scope.findClient = function (query) {
-                return ClientSearch.findByAny(query);
-            };
-
-            $scope.onClientSelect = function ($item, ownership) {
-                ownership.clientId = $item.id;
-                ownership.clientName = $item.name;
-            };
-
             $scope.tabPropertyDeselect = function () {
                 if ($scope.propertyEditForm.$dirty) {
                     console.log('Property form is dirty: saving');
                     $scope.save();
                 }
-            };
-
-            $scope.tabImagesDeselect = function () {
-                console.log('Images deselected');
-            };
-
-            $scope.tabApartmentsDeselect = function () {
-                console.log('Apartments deselected');
-            };
-
-            $scope.tabContractsDeselect = function () {
-                console.log('Contracts deselected');
-            };
-
-            $scope.tabStatementsDeselect = function () {
-                console.log('Statements deselected');
             };
 
 

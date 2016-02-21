@@ -1,0 +1,10 @@
+<input type="text" autocomplete="off" placeholder="Ügyfél keresése..." class="form-control"
+	ng-model="ngModel"
+	id-model="idModel"
+    uib-typeahead="entity.name as format(entity) for entity in find($viewValue)"
+    typeahead-on-select="onSelect($item, $model, $label)"
+    typeahead-editable="false"
+    typeahead-select-on-exact="true"
+    typeahead-select-on-blur="true"
+    typeahead-min-length="3"
+    typeahead-wait-ms="200">

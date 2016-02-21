@@ -1,27 +1,17 @@
 <div>
     <h2 translate="aktivingatlanApp.client.home.title">Clients</h2>
     <jh-alert></jh-alert>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-                <button class="btn btn-primary" ui-sref="client.new">
-                    <span class="glyphicon glyphicon-flash"></span> <span translate="aktivingatlanApp.client.home.createLabel">Create a new Client</span>
-                </button>
-            </div>
-        </div>
-    </div>
+    <button class="btn btn-primary" ui-sref="client.new">
+        <span class="glyphicon glyphicon-flash"></span> <span translate="aktivingatlanApp.client.home.createLabel">Create a new Client</span>
+    </button>
 
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
                 <tr jh-sort="predicate" ascending="reverse" callback="loadAll()">
-                    <th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="name"><span translate="aktivingatlanApp.client.name">Name</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="email"><span translate="aktivingatlanApp.client.email">Email</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="phone1"><span translate="aktivingatlanApp.client.phone1">Phone1</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="phone2"><span translate="aktivingatlanApp.client.phone2">Phone2</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="address1"><span translate="aktivingatlanApp.client.address1">Address1</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="address2"><span translate="aktivingatlanApp.client.address2">Address2</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="idNo"><span translate="aktivingatlanApp.client.idNo">IdNo</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="note"><span translate="aktivingatlanApp.client.note">Note</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
@@ -33,6 +23,7 @@
                     <td>{{client.phone1}}</td>
                     <td>{{client.address1}}</td>
                     <td>{{client.idNo}}</td>
+                    <td>{{client.note}}</td>
                     <td>
                         <button type="submit"
                                 ui-sref="client.detail({id:client.id})"

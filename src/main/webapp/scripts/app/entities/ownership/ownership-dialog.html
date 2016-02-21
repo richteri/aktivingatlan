@@ -18,37 +18,12 @@
 
         <div class="form-group">
             <label translate="aktivingatlanApp.ownership.property" for="field_property">property</label>
-            <i ng-show="loadingProperties" class="glyphicon glyphicon-refresh"></i>
-            <span ng-show="noPropertyResults"><i class="glyphicon glyphicon-remove"></i> No Results Found</span>
-
-            <input type="text" class="form-control" id="field_property" name="property" ng-model="ownership.propertyCode"
-            	ng-readonly="!propertyEditable"
-            	uib-typeahead="property as formatPropertyName(property) for property in findPropertyByCode($viewValue)"
-            	typeahead-on-select="onPropertySelect($item, $model, $label)"
-            	typeahead-editable="false"
-            	typeahead-select-on-exact="true"
-            	typeahead-select-on-blur="true"
-            	typeahead-wait-ms="100"
-            	typeahead-loading="loadingProperties"
-            	typeahead-no-results="noPropertyResults">
+            <property-search-typeahead ng-model="ownership.propertyCode" id-model="ownership.propertyId" />
 
         </div>
         <div class="form-group">
             <label translate="aktivingatlanApp.ownership.client" for="field_client">client</label>
-            <i ng-show="loadingClients" class="glyphicon glyphicon-refresh"></i>
-            <span ng-show="noClientResults"><i class="glyphicon glyphicon-remove"></i> No Results Found</span>
-
-            <input type="text" class="form-control" id="field_client" name="client" ng-model="ownership.clientName"
-            	ng-readonly="!clientEditable"
-                uib-typeahead="client as formatClientName(client) for client in findClient($viewValue)"
-            	typeahead-on-select="onClientSelect($item, $model, $label)"
-            	typeahead-editable="false"
-            	typeahead-select-on-exact="true"
-            	typeahead-select-on-blur="true"
-            	typeahead-min-length="3"
-            	typeahead-wait-ms="100"
-            	typeahead-loading="loadingClients"
-            	typeahead-no-results="noClientResults">
+            <client-search-typeahead ng-model="ownership.clientName" id-model="ownership.clientId" />
         </div>
     </div>
     <div class="modal-footer">
