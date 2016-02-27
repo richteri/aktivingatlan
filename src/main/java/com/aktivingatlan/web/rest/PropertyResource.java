@@ -1,6 +1,7 @@
 package com.aktivingatlan.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.aktivingatlan.domain.Photo;
 import com.aktivingatlan.domain.Property;
 import com.aktivingatlan.repository.PhotoRepository;
 import com.aktivingatlan.repository.PropertyRepository;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -142,9 +144,11 @@ public class PropertyResource {
         Optional<Property> property = Optional.of(propertyRepository.findOne(id));
         if (property.isPresent()) {
             try {
-                cloudinary.api().deleteResourcesByTag("ID" + property.get().getId(), null);
+                // cloudinary.api().deleteResourcesByTag("ID" + property.get().getId(), null);
                 if (property.get().getPhotos() != null && !property.get().getPhotos().isEmpty()) {
                 	// check if any photo was present
+                	// delete by name instead of tag
+                	cloudinary.api().deleteResources(property.get().getPhotos().stream().map(Photo::getFilename).collect(Collectors.toSet()), null);
                 	photoRepository.delete(property.get().getPhotos());
                 }
                 propertyRepository.delete(id);
