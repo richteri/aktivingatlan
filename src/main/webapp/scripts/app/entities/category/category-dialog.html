@@ -32,6 +32,12 @@
                      />
         </div>
 
+        <div class="form-group">
+            <label translate="aktivingatlanApp.category.parent" for="field_parent">parent</label>
+            <select class="form-control" id="field_parent" name="parent" ng-model="category.parentId" ng-options="category.id as category.nameHu for category in categorys">
+                <option value=""></option>
+            </select>
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">

@@ -3,6 +3,8 @@ package com.aktivingatlan.web.rest;
 import com.aktivingatlan.Application;
 import com.aktivingatlan.domain.Category;
 import com.aktivingatlan.repository.CategoryRepository;
+import com.aktivingatlan.web.rest.dto.CategoryDTO;
+import com.aktivingatlan.web.rest.mapper.CategoryMapper;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -52,6 +54,9 @@ public class CategoryResourceIntTest {
     private CategoryRepository categoryRepository;
 
     @Inject
+    private CategoryMapper categoryMapper;
+
+    @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Inject
@@ -66,6 +71,7 @@ public class CategoryResourceIntTest {
         MockitoAnnotations.initMocks(this);
         CategoryResource categoryResource = new CategoryResource();
         ReflectionTestUtils.setField(categoryResource, "categoryRepository", categoryRepository);
+        ReflectionTestUtils.setField(categoryResource, "categoryMapper", categoryMapper);
         this.restCategoryMockMvc = MockMvcBuilders.standaloneSetup(categoryResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setMessageConverters(jacksonMessageConverter).build();
@@ -85,10 +91,11 @@ public class CategoryResourceIntTest {
         int databaseSizeBeforeCreate = categoryRepository.findAll().size();
 
         // Create the Category
+        CategoryDTO categoryDTO = categoryMapper.categoryToCategoryDTO(category);
 
         restCategoryMockMvc.perform(post("/api/categorys")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(category)))
+                .content(TestUtil.convertObjectToJsonBytes(categoryDTO)))
                 .andExpect(status().isCreated());
 
         // Validate the Category in the database
@@ -152,10 +159,11 @@ public class CategoryResourceIntTest {
         category.setNameHu(UPDATED_NAME_HU);
         category.setNameEn(UPDATED_NAME_EN);
         category.setNameDe(UPDATED_NAME_DE);
+        CategoryDTO categoryDTO = categoryMapper.categoryToCategoryDTO(category);
 
         restCategoryMockMvc.perform(put("/api/categorys")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(category)))
+                .content(TestUtil.convertObjectToJsonBytes(categoryDTO)))
                 .andExpect(status().isOk());
 
         // Validate the Category in the database

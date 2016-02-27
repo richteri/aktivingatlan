@@ -1,5 +1,13 @@
 {
-    "relationships": [],
+    "relationships": [
+        {
+            "relationshipId": 1,
+            "relationshipName": "parent",
+            "otherEntityName": "category",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "nameHu"
+        }
+    ],
     "fields": [
         {
             "fieldId": 1,
@@ -17,7 +25,8 @@
             "fieldType": "String"
         }
     ],
-    "changelogDate": "20150913165245",
-    "dto": "no",
+    "changelogDate": "20160227094027",
+    "dto": "mapstruct",
+    "service": "no",
     "pagination": "no"
 }

@@ -5,6 +5,7 @@ angular.module('aktivingatlanApp').controller('CategoryDialogController',
         function($scope, $stateParams, $uibModalInstance, entity, Category) {
 
         $scope.category = entity;
+        $scope.categorys = Category.query();
         $scope.load = function(id) {
             Category.get({id : id}, function(result) {
                 $scope.category = result;

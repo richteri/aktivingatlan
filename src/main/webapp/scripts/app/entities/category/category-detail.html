@@ -34,6 +34,14 @@
                     <span class="form-control-static">{{category.nameDe}}</span>
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <span translate="aktivingatlanApp.category.parent">parent</span>
+                </td>
+                <td>
+                    <a class="form-control-static" ui-sref="category.detail({id:category.parentId})">{{category.parentNameHu}}</a>
+                </td>
+            </tr>
             </tbody>
         </table>
     </div>

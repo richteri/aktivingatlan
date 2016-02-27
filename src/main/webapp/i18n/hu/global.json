@@ -3,7 +3,8 @@
         "title": "Aktivingatlan.com",
         "browsehappy": "Ön egy <strong>nem támogatott</strong> böngészőt használ. Kérjük <a href=\"http://browsehappy.com/?locale=en\">frissítse a böngészőjét</a> az oldal használatához.",
         "menu": {
-            "home": "Nyitólap",
+            "home": "Home",
+            "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
                 "main": "Törzsadatok",
                 "city": "Városok",
@@ -16,7 +17,7 @@
                 "contract": "Szerződések",
                 "photo": "Fényképek",
                 "apartment": "Apartmanok",
-                "additionalEntity": "JHipster will add additional entities here (do not translate!)"
+                "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
                 "main": "Felhasználók",
@@ -36,7 +37,8 @@
                 "logs": "Naplózás",
                 "audits": "Biztonsági napló",
                 "apidocs": "API",
-                "database": "Adatbázis"
+                "database": "Database",
+                "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)"
             },
             "language": "Nyelv"
         },
@@ -115,8 +117,12 @@
         }
     },
     "error" : {
-        "serverNotReachable" : "A szerver nem érhető el",
-        "NotNull" : "A(z) {{fieldName}} mező nem lehet üres!"
+        "server.not.reachable": "Server not reachable",
+        "NotNull": "Field {{ fieldName }} cannot be empty!",
+        "Size": "Field {{ fieldName }} does not meet min/max size requirements!",
+        "userexists": "Login name already used!",
+        "emailexists": "E-mail is already in use!",
+        "idexists": "A new {{ entityName }} cannot already have an ID"
     },
     "footer": "Ide jön a lábléc"
 }

@@ -1,24 +1,28 @@
 <div>
     <h2 translate="aktivingatlanApp.category.home.title">Categorys</h2>
     <jh-alert></jh-alert>
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-md-4">
-                <button class="btn btn-primary" ui-sref="category.new">
-                    <span class="glyphicon glyphicon-flash"></span> <span translate="aktivingatlanApp.category.home.createLabel">Create a new Category</span>
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="category.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span 
+                        translate="aktivingatlanApp.category.home.createLabel">Create new Category
+                    </span>
                 </button>
             </div>
         </div>
     </div>
-
+    <br/>
     <div class="table-responsive">
-        <table class="table table-striped">
+        <table class="jh-table table table-striped">
             <thead>
                 <tr>
                     <th><span translate="global.field.id">ID</span></th>
                     <th><span translate="aktivingatlanApp.category.nameHu">NameHu</span></th>
                     <th><span translate="aktivingatlanApp.category.nameEn">NameEn</span></th>
                     <th><span translate="aktivingatlanApp.category.nameDe">NameDe</span></th>
+                    <th><span translate="aktivingatlanApp.category.parent">parent</span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -29,21 +33,29 @@
                     <td>{{category.nameEn}}</td>
                     <td>{{category.nameDe}}</td>
                     <td>
-                        <button type="submit"
-                                ui-sref="category.detail({id:category.id})"
-                                class="btn btn-info btn-sm">
-                            <span class="glyphicon glyphicon-eye-open"></span>&nbsp;<span translate="entity.action.view"> View</span>
-                        </button>
-                        <button type="submit"
-                                ui-sref="category.edit({id:category.id})"
-                                class="btn btn-primary btn-sm">
-                            <span class="glyphicon glyphicon-pencil"></span>&nbsp;<span translate="entity.action.edit"> Edit</span>
-                        </button>
-                        <button type="submit"
-                                ui-sref="category.delete({id:category.id})"
-                                class="btn btn-danger btn-sm">
-                            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span translate="entity.action.delete"> Delete</span>
-                        </button>
+                        <a ui-sref="category.detail({id:category.parentId})">{{category.parentNameHu}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="category.detail({id:category.id})"
+                                    class="btn btn-info btn-sm"> 
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="category.edit({id:category.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="category.delete({id:category.id})"
+                                    class="btn btn-danger btn-sm">                                    
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>
+                            </button>
+                        </div>
                     </td>
                 </tr>
             </tbody>
