@@ -53,6 +53,8 @@ public class PropertyDTO extends AbstractAuditingEntity implements Serializable 
     private Integer toilet;
 
     private Boolean furnished;
+    
+    private Integer bed;
 
     private Boolean forSale;
 
@@ -260,7 +262,15 @@ public class PropertyDTO extends AbstractAuditingEntity implements Serializable 
         this.furnished = furnished;
     }
 
-    public Boolean getForSale() {
+    public Integer getBed() {
+		return bed;
+	}
+
+	public void setBed(Integer bed) {
+		this.bed = bed;
+	}
+
+	public Boolean getForSale() {
         return forSale;
     }
 

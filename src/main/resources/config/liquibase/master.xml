@@ -18,5 +18,7 @@
 	<include file="classpath:config/liquibase/changelog/20151010122300_added_auditing.xml" relativeToChangelogFile="false"/>
 	<include file="classpath:config/liquibase/changelog/20151018120200_added_property_code_unique_constraint.xml" relativeToChangelogFile="false"/>
    
+     <include file="classpath:config/liquibase/changelog/20160227094027_added_parent_id_column_Category.xml" relativeToChangelogFile="false"/>
+     <include file="classpath:config/liquibase/changelog/20160227125227_added_bed_column_Property.xml" relativeToChangelogFile="false"/>
      <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
 </databaseChangeLog>

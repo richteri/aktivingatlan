@@ -76,6 +76,9 @@ public class Property extends AbstractAuditingEntity implements Serializable {
 
     @Column(name = "furnished")
     private Boolean furnished;
+    
+    @Column(name = "bed")
+    private Integer bed;    
 
     @Column(name = "for_sale")
     private Boolean forSale;
@@ -318,7 +321,15 @@ public class Property extends AbstractAuditingEntity implements Serializable {
         this.furnished = furnished;
     }
 
-    public Boolean getForSale() {
+    public Integer getBed() {
+		return bed;
+	}
+
+	public void setBed(Integer bed) {
+		this.bed = bed;
+	}
+
+	public Boolean getForSale() {
         return forSale;
     }
 
