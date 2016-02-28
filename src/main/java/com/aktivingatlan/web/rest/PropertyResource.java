@@ -102,14 +102,13 @@ public class PropertyResource {
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional(readOnly = true)
-    public ResponseEntity<List<PropertyDTO>> getAllPropertys(Pageable pageable)
+    public ResponseEntity<List<PropertyDTO>> getAllPropertys()
         throws URISyntaxException {
         log.debug("REST request to get a page of Propertys");
-        Page<Property> page = propertyRepository.findAll(pageable); 
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/propertys");
-        return new ResponseEntity<>(page.getContent().stream()
+        List<Property> page = propertyRepository.findAll(); 
+        return new ResponseEntity<>(page.stream()
             .map(propertyMapper::propertyToPropertyDTO)
-            .collect(Collectors.toCollection(LinkedList::new)), headers, HttpStatus.OK);
+            .collect(Collectors.toCollection(LinkedList::new)), null, HttpStatus.OK);
     }
 
     /**
