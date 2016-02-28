@@ -3,7 +3,12 @@
         "title": "Aktivingatlan.com",
         "browsehappy": "Ön egy <strong>nem támogatott</strong> böngészőt használ. Kérjük <a href=\"http://browsehappy.com/?locale=en\">frissítse a böngészőjét</a> az oldal használatához.",
         "menu": {
-            "home": "Home",
+            "forSale": "ELADÓ INGATLANOK",
+            "forRent": "KIADÓ INGATLANOK",
+            "maintenance": "INGATLAN KARBANTARTÁS",
+            "about": "IRODÁNK",
+            "contact": "KAPCSOLAT",
+            "press": "SAJTÓ",
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
                 "main": "Törzsadatok",

@@ -1,0 +1,68 @@
+* {
+  -webkit-border-radius: 0 !important;
+  -moz-border-radius: 0 !important;
+  border-radius: 0 !important; }
+
+.aktiv-top-bar {
+  min-height: 40px;
+  background-color: #eeeeee;
+  background-image: url("../images/bg.png"); }
+
+.aktiv-address {
+  margin-top: 6px;
+  margin-bottom: 6px; }
+
+.aktiv-top-menu {
+  background-color: #9CA903;
+  z-index: 5000;
+  width: 100%; }
+
+.aktiv-top-menu .navbar-brand {
+  padding: 0;
+  margin: 30px 0 0 0; }
+
+#aktiv-brand {
+  display: inline-block;
+  width: 300px;
+  border-top: 1px solid #666666;
+  border-bottom: 1px solid #666666;
+  font-size: 24px;
+  margin: 12px;
+  padding: 6px;
+  letter-spacing: 4px;
+  font-weight: bold; }
+
+#language-selector .active a {
+  color: #888; }
+
+.ui-scrollpoint {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100; }
+
+.nav > li > a:hover,
+.nav > li > a:focus {
+  background-color: #888888; }
+
+.navbar-default .navbar-nav > li > a {
+  color: #fff;
+  font-size: 16px; }
+
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  color: #fff;
+  background-color: #888888; }
+
+.navbar-default {
+  background-color: #9CA903;
+  border: none; }
+
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+  background-color: #888888;
+  color: #fff; }
+
+.navbar {
+  margin-bottom: 0px; }

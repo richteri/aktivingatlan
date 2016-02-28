@@ -1,9 +1,15 @@
 {
     "global": {
-        "title": "aktivingatlan",
+        "title": "Aktivingatlan.com",
         "browsehappy": "Sie benutzen einen <strong>veralteten</strong> Browser. Bitte <a href=\"http://browsehappy.com/?locale=de/\">aktualisieren Sie Ihren Browser</a>, um die Benutzerfreundlichkeit zu erhöhen.",
         "menu": {
-            "home": "Startseite",
+            "forSale": "KAUFEN",
+            "forRent": "MIETEN",
+            "maintenance": "IMMOBILIEN SERVICE",
+            "about": "ÜBER UNS",
+            "contact": "KONTAKT",
+            "press": "PRESSE",
+            "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
                 "main": "Entitäten",
                 "property": "Property",
@@ -16,7 +22,7 @@
                 "ownership": "Ownership",
                 "photo": "Photo",
                 "statement": "Statement",
-                "additionalEntity": "JHipster will add additional entities here (do not translate!)"
+                "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
                 "main": "Zugang",

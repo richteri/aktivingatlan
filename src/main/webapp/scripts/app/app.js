@@ -5,7 +5,8 @@ angular.module('aktivingatlanApp', ['LocalStorageModule', 'tmh.dynamicLocale', '
     'ui.bootstrap', 'ui.router',  'infinite-scroll', 'angular-loading-bar',
                'ui.bootstrap.tabs',
                'ui.select', // for tag-like multi-select
-               'ui.grid', 'ui.grid.pinning', 'ui.grid.saveState', 'ui.grid.resizeColumns'])
+               'ui.grid', 'ui.grid.pinning', 'ui.grid.saveState', 'ui.grid.resizeColumns',
+               'ui.scrollpoint'])
 
     .run(function ($rootScope, $location, $window, $http, $state, $translate, Language, Auth, Principal, ENV, VERSION) {
         // update the window title using params in the following
