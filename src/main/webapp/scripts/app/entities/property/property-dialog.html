@@ -427,7 +427,7 @@
                         <td>
                             <div class="thumbnail text-center">
                                 <a href="http://res.cloudinary.com/aktivingatlan/image/upload/{{photo.filename}}.jpg" target="_blank">
-                                    <img ng-src="http://res.cloudinary.com/aktivingatlan/image/upload/w_200/{{photo.filename}}.jpg" alt="{{photo.id}}">
+                                    <img ng-src="http://res.cloudinary.com/aktivingatlan/image/upload/{{photo.filename}}.jpg" alt="{{photo.id}}" class="img img-thumbnail" style="width:200px">
                                 </a>
                                 <div class="btn-group pad">
                                     <button type="button" class="btn btn-sm" ng-class="photo.changed ? 'btn-success' : 'btn-primary'" ng-click="updatePhoto(photo)">
