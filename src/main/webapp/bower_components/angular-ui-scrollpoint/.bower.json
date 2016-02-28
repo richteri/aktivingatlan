@@ -20,6 +20,5 @@
   },
   "_source": "git://github.com/angular-ui/ui-scrollpoint.git",
   "_target": "~2.1.1",
-  "_originalSource": "angular-ui-scrollpoint",
-  "_direct": true
+  "_originalSource": "angular-ui-scrollpoint"
 }

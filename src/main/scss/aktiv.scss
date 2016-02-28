@@ -4,10 +4,13 @@
           border-radius: 0 !important;
 }
 
-.aktiv-top-bar {
-	min-height: 40px;
+body {
 	background-color:#eeeeee;
 	background-image: url("../images/bg.png");
+}
+
+.aktiv-top-bar {
+	min-height: 40px;
 }
 
 .aktiv-address {
@@ -78,4 +81,57 @@
 
 .navbar {
 	margin-bottom: 0px;
+}
+
+.main-carousel {
+	width: 1000px;
+	-webkit-box-shadow: 10px 10px 21px -2px rgba(0,0,0,0.51);
+	-moz-box-shadow: 10px 10px 21px -2px rgba(0,0,0,0.51);
+	box-shadow: 10px 10px 21px -2px rgba(0,0,0,0.51);
+	z-index: -1;
+}
+
+.main-carousel .carousel-caption {
+	background-color: rgba(255, 255, 255, 0.33);
+	padding-top: 4px;
+	padding-bottom: 4px;
+	padding-left: 24px;
+	padding-right: 24px;
+	left: inherit;
+	right: inherit;
+}
+
+.main-carousel .carousel-caption h3 {
+	margin-top: 4px;
+	margin-bottom: 4px;
+}
+
+.main-carousel .carousel-control,
+.main-carousel .carousel-indicators {
+	display: none;
+}
+
+.featured-container {
+	background-color: #9CA903;
+	padding-top: 12px;
+	padding-bottom: 12px;
+}
+
+.featured {
+	border: 3px solid #bbbbbb;
+	padding: 12px;
+	background-image: url("../images/bg-condensed.png");
+}
+
+.footer {
+	font-size: 16px;
+	font-weight: bold;
+	margin: 12px;
+	letter-spacing: 1px;
+}
+
+.footer a.partner-link {
+	color: #9CA903;
+	font-size: 24px;
+	letter-spacing: 3px;
 }

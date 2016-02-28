@@ -1,9 +1,10 @@
 'use strict';
 
 angular.module('aktivingatlanApp', ['LocalStorageModule', 'tmh.dynamicLocale', 'pascalprecht.translate',
-    'ngResource', 'ngCookies', 'ngAria', 'ngCacheBuster', 'ngFileUpload', 'ngSanitize',
+    'ngResource', 'ngCookies', 'ngAria', 'ngCacheBuster', 'ngFileUpload', 'ngSanitize', 'ngAnimate',
     'ui.bootstrap', 'ui.router',  'infinite-scroll', 'angular-loading-bar',
                'ui.bootstrap.tabs',
+               'ui.bootstrap.carousel',
                'ui.select', // for tag-like multi-select
                'ui.grid', 'ui.grid.pinning', 'ui.grid.saveState', 'ui.grid.resizeColumns',
                'ui.scrollpoint'])

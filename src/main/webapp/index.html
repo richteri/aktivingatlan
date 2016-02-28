@@ -25,13 +25,14 @@
         <![endif]-->
         <div ng-show="{{ENV === 'dev'}}" class="development" ng-cloak=""></div>
         <div ui-view="navbar" ng-cloak=""></div>
-        <div class="container-fluid">
-            <div class="well" ui-view="content"></div>
+        <div ui-view="content"></div>
 
-            <div class="footer">
-                <p translate="footer">This is your footer</p>
-            </div>
-        </div>
+		<div class="container">
+	        <footer class="footer text-center">
+	            <a href="www.panoramasingatlanok.com" target="_blank" class="partner-link">WWW.PANORAMASINGATLANOK.COM</a>
+	            <p translate="footer">PRECIZITÁS | RUGALMASSÁG | BIZALOM</p>
+	        </footer>
+		</div>
 
         <!-- Google Analytics: uncomment and change UA-XXXXX-X to be your site's ID.
         <script>
@@ -69,6 +70,7 @@
         <script src="bower_components/angular-ui-select/dist/select.js"></script>
         <script src="bower_components/angular-ui-grid/ui-grid.js"></script>
         <script src="bower_components/angular-ui-scrollpoint/dist/scrollpoint.js"></script>
+        <script src="bower_components/angular-animate/angular-animate.js"></script>
         <!-- endbower -->
         <!-- endbuild -->
 

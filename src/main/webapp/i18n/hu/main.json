@@ -1,7 +1,9 @@
 {
     "main": {
-        "title": "Üdvözöljük az Aktivingatlan.com oldalon!",
-        "subtitle": "Ez a nyitólap",
+		"carousel" : {
+			"experience" : "TÖBB MINT 20 ÉV TAPASZTALAT",
+			"professional" : "PROFESSZIONÁLIS SEGTSÉG"
+		},
         "logged": {
             "message": "Ön bejelentkezett a(z) \"{{username}}\" fiókba."
         }
