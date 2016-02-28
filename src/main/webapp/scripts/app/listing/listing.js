@@ -3,21 +3,21 @@
 angular.module('aktivingatlanApp')
     .config(function ($stateProvider) {
         $stateProvider
-            .state('listing', {
+            .state('home', {
                 parent: 'site',
-                url: '/listing',
+                url: '/',
                 data: {
                     authorities: []
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'scripts/app/listing/listing.html',
-                        controller: 'ListingController'
+                        templateUrl: 'scripts/app/main/main.html',
+                        controller: 'MainController'
                     }
                 },
                 resolve: {
                     mainTranslatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate,$translatePartialLoader) {
-                        $translatePartialLoader.addPart('listing');
+                        $translatePartialLoader.addPart('main');
                         return $translate.refresh();
                     }]
                 }

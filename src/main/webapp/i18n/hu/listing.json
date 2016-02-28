@@ -1,0 +1,19 @@
+{
+    "listing": {
+		"title": "AKTUÁLIS KÍNÁLATUNK",
+		"search": {
+			"search": "KERESÉS",
+			"city": "VÁROS",
+			"price": "ÁR",
+			"view": "PANORÁMA",
+			"category": "TÍPUS",
+			"code": "KÓDSZÁM"
+		},
+		"floorArea": "Lakóterület:",
+		"parcelArea": "Telek:",
+		"room": "Szobák száma:",
+		"bathroom": "Fürdőszoba:",
+		"price": "Irányár:",
+		"details": "BŐVEBBEN"
+    }
+}

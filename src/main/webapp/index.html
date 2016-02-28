@@ -19,7 +19,7 @@
         <link rel="stylesheet" href="assets/styles/main.css">
         <!-- endbuild -->
     </head>
-    <body ng-app="aktivingatlanApp">
+    <body ng-app="aktivingatlanApp" ng-cloak>
         <!--[if lt IE 9]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
@@ -148,6 +148,8 @@
     <script src="scripts/app/error/error.js"></script>
     <script src="scripts/app/main/main.js"></script>
     <script src="scripts/app/main/main.controller.js"></script>
+    <script src="scripts/app/listing/listing.js"></script>
+    <script src="scripts/app/listing/listing.controller.js"></script>
     <script src="bower_components/messageformat/locale/hu.js"></script>
     <script src="bower_components/messageformat/locale/en.js"></script>
     <script src="bower_components/messageformat/locale/de.js"></script>
@@ -160,6 +162,7 @@
     <script src="scripts/app/entities/property/property-detail.controller.js"></script>
     <script src="scripts/components/entities/property/property.service.js"></script>
 	<script src="scripts/components/entities/property/property.search.service.js"></script>
+	<script src="scripts/components/entities/property/property.public.service.js"></script>
     <script src="scripts/components/entities/property/property.unique-code.directive.js"></script>
     <script src="scripts/app/entities/client/client.js"></script>
     <script src="scripts/app/entities/client/client.controller.js"></script>

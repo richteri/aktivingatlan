@@ -1,0 +1,19 @@
+{
+    "listing": {
+		"title": "CURRENT LISTINGS",
+		"search": {
+			"search": "SEARCH",
+			"city": "CITY",
+			"price": "PRICE",
+			"view": "VIEW",
+			"category": "CATEGORY",
+			"code": "CODE"
+		},
+		"floorArea": "Living area:",
+		"parcelArea": "Land:",
+		"room": "Rooms:",
+		"bathroom": "Bathrooms:",
+		"price": "Listing Price:",
+		"details": "DETAILS"
+    }
+}

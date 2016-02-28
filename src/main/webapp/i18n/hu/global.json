@@ -3,6 +3,7 @@
         "title": "Aktivingatlan.com",
         "browsehappy": "Ön egy <strong>nem támogatott</strong> böngészőt használ. Kérjük <a href=\"http://browsehappy.com/?locale=en\">frissítse a böngészőjét</a> az oldal használatához.",
         "menu": {
+        	"home": "NYITÓLAP",
             "forSale": "ELADÓ INGATLANOK",
             "forRent": "KIADÓ INGATLANOK",
             "maintenance": "INGATLAN KARBANTARTÁS",

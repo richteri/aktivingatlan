@@ -27,4 +27,12 @@ public interface PropertyRepository extends JpaRepository<Property,Long> {
     
     List<Property> findByCodeContainingIgnoreCase(String code);
     
+    List<Property> findByFeaturedIsTrue();
+    
+    @Query("select property from Property property where " + 
+    "(null = :cityId or property.city.id = :cityId) " + 
+    "and (null = :code or property.code like :code) " + 
+    "and (null = :categoryId or property.category.id = :categoryId)")
+    List<Property> findBySearchParameters(@Param("cityId") Long cityId, @Param("categoryId") Long categoryId, @Param("code") String code);
+    
 }

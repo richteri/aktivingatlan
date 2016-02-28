@@ -1,6 +1,9 @@
 package com.aktivingatlan.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+
+import java.util.Collections;
+
 import com.aktivingatlan.domain.Photo;
 import com.aktivingatlan.domain.Property;
 import com.aktivingatlan.repository.PhotoRepository;
@@ -15,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,6 +27,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
@@ -176,4 +185,46 @@ public class PropertyResource {
                 .collect(Collectors.toCollection(LinkedList::new)), null, HttpStatus.OK);
     }
     
+    
+    /**
+     * GET  /_public/propertys -> get random featured properties.
+     */
+    @RequestMapping(value = "/_public/propertys/findFeatured",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    @Transactional(readOnly = true)
+    public ResponseEntity<List<PropertyDTO>> findFeaturedPropertys()
+        throws URISyntaxException {
+        log.debug("REST request to get all featured Properties");
+        List<Property> page = propertyRepository.findByFeaturedIsTrue();
+        Collections.shuffle(page);
+        return new ResponseEntity<>(page.stream()
+            .map(propertyMapper::propertyToPropertyDTO)
+            .collect(Collectors.toCollection(LinkedList::new)), null, HttpStatus.OK);
+    }
+    
+    /**
+     * GET  /_public/propertys -> get properties matching search criteria.
+     */
+    @RequestMapping(value = "/_public/propertys/find",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    @Transactional(readOnly = true)
+    public ResponseEntity<List<PropertyDTO>> findAllPropertys(
+    		@RequestParam(required = false) Long cityId,
+    		@RequestParam(required = false) Long categoryId,
+    		@RequestParam(required = false) String code
+    		)
+        throws URISyntaxException {
+        log.debug("REST request to get all featured Properties");
+        if (code != null) {
+        	code = "%" + code + "%";
+        }
+        List<Property> page = propertyRepository.findBySearchParameters(cityId, categoryId, code);
+        return new ResponseEntity<>(page.stream()
+            .map(propertyMapper::propertyToPropertyDTO)
+            .collect(Collectors.toCollection(LinkedList::new)), null, HttpStatus.OK);
+    }
 }

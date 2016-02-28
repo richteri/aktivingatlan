@@ -1,4 +1,4 @@
-<div ng-cloak>
+<div>
 	<div class="container">
 		<uib-carousel active="active" interval="5000" class="main-carousel center-block">
 	      <uib-slide>
@@ -18,16 +18,19 @@
 	<div class="featured-container">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-4">
-					<div class="featured">
+				<div class="col-lg-4" ng-repeat="property in featured | filter:{featured: true} | limitTo: 3">
+					<div class="col-md-12">
+					<div class="featured row">
+						<div class="col-lg-8">
+							<span ng-repeat="photo in property.photos | filter:{header:true}">
+								<img class="img img-thumbnail img-responsive" ng-src="http://res.cloudinary.com/aktivingatlan/image/upload/{{photo.filename}}.jpg">
+							</span>
+						</div>
+						<div class="col-lg-4 text-capitalize" style="height:160px">
+							<p class="text-capitalize"><small>{{property.descriptionHu | limitTo: 72}}</small></p>
+							<a href="#" class="bottom-align-text">Részletek</a>
+						</div>
 					</div>
-				</div>
-				<div class="col-lg-4">
-					<div class="featured">
-					</div>
-				</div>
-				<div class="col-lg-4">
-					<div class="featured">
 					</div>
 				</div>
 			</div>

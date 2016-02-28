@@ -132,6 +132,79 @@ body {
 
 .footer a.partner-link {
 	color: #9CA903;
-	font-size: 24px;
+	font-size: 20px;
 	letter-spacing: 3px;
+}
+
+.bottom-align-text {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+  
+.listing {
+	background-color: #ccc;
+}
+
+.listing .wrapper {
+	margin-bottom: 24px;
+	margin-right: 12px;
+	padding: 12px;
+	border: 3px solid #aaa;
+	background-color: #bbb;
+}
+
+.search-box {
+	background-color: #aaa;
+	padding-bottom: 16px;
+	margin-bottom: 24px;
+}
+
+.search-box input, 
+.search-box textarea,
+.search-box select {
+    background-color:#999;
+    border: 1px solid #666;
+    color: #fff;
+}
+
+.search-box .btn-success {
+    background-color:#9CA903;
+    border: 1px solid #9CA903;
+}
+
+.listing img {
+	-webkit-box-shadow: 10px 10px 21px -2px rgba(0,0,0,0.51);
+	-moz-box-shadow: 10px 10px 21px -2px rgba(0,0,0,0.51);
+	box-shadow: 10px 10px 21px -2px rgba(0,0,0,0.51);
+}
+
+.listing .city {
+	text-align: center;
+	padding: 24px;
+	background-color: #aaa;
+	font-weight:bold;
+	letter-spacing:2px;
+}
+
+.listing .code {
+	color:#9CA903;
+	font-weight:bold;
+	letter-spacing:2px;
+	font-size: 20px;
+	padding: 12px;
+}
+
+.listing .dl-horizontal {
+	padding-left: 12px;
+}
+
+.listing .dl-horizontal dt {
+	text-align: left;
+}
+
+.listing .details {
+	color: #000;
+	letter-spacing: 2px;
+	font-size: 14px;
 }
