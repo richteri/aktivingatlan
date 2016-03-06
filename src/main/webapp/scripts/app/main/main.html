@@ -19,18 +19,18 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-4" ng-repeat="property in featured | filter:{featured: true} | limitTo: 3">
-					<div class="col-md-12">
-					<div class="featured row">
-						<div class="col-lg-8">
-							<span ng-repeat="photo in property.photos | filter:{header:true}">
-								<img class="img img-thumbnail img-responsive" ng-src="http://res.cloudinary.com/aktivingatlan/image/upload/{{photo.filename}}.jpg">
-							</span>
+					<div class="featured">
+						<div class="row">
+							<div class="col-lg-8 col-md-6 col-sm-6 col-xs-12 photo"
+								ng-repeat="photo in property.photos | filter:{header:true}">
+								<img class="img img-responsive" ng-src="http://res.cloudinary.com/aktivingatlan/image/upload/{{photo.filename}}.jpg">
+							</div>
+							<div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 details">
+								<p><small>{{property.descriptionHu}}</small></p>
+								<a href="#" class="link"><small>Részletek</small></a>
+							</div>
+							<div class="clearfix"></div>
 						</div>
-						<div class="col-lg-4 text-capitalize" style="height:160px">
-							<p class="text-capitalize"><small>{{property.descriptionHu | limitTo: 72}}</small></p>
-							<a href="#" class="bottom-align-text">Részletek</a>
-						</div>
-					</div>
 					</div>
 				</div>
 			</div>
